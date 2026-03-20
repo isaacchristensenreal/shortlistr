@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /library
+Disallow: /settings
+Disallow: /welcome
+Disallow: /upgrade-success
+
+Sitemap: https://shortlistr.us/sitemap.xml
