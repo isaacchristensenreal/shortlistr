@@ -72,7 +72,7 @@ export default function ResumePreview({ data, atsScore }) {
   return (
     <div className="flex flex-col gap-4">
       {/* Toolbar */}
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-3 flex-wrap">
           <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Optimized Resume</label>
           {atsScore !== null && (
@@ -88,12 +88,12 @@ export default function ResumePreview({ data, atsScore }) {
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 shrink-0">
           {exportError && <p className="text-xs text-red-500">{exportError}</p>}
           <button
             onClick={handleExport}
             disabled={exporting}
-            className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-xl border transition-all bg-slate-50 dark:bg-navy-800 border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-electric-500/50 hover:text-electric-600 dark:hover:text-electric-400 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl border transition-all bg-slate-50 dark:bg-navy-800 border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-electric-500/50 hover:text-electric-600 dark:hover:text-electric-400 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
           >
             {exporting ? (
               <>
