@@ -149,6 +149,7 @@ export default function Settings() {
           <div className="space-y-5">
 
             {/* ── Profile ────────────────────────────────────────────── */}
+            <div data-reveal data-delay="1">
             <Section title="Profile" description="Customize how you appear across the app.">
               {/* Avatar */}
               <div className="flex items-center gap-5 mb-6 pb-6 border-b border-slate-100 dark:border-white/10">
@@ -220,7 +221,10 @@ export default function Settings() {
               </div>
             </Section>
 
+            </div>
+
             {/* ── Account Info ──────────────────────────────────────── */}
+            <div data-reveal data-delay="2">
             <Section title="Account" description="Your account details.">
               <div className="space-y-3">
                 <div className="flex items-center justify-between py-3 border-b border-slate-100 dark:border-white/10">
@@ -256,8 +260,11 @@ export default function Settings() {
               </div>
             </Section>
 
+            </div>
+
             {/* ── Subscription ──────────────────────────────────────── */}
             {isPro && !cancelDone && (
+            <div data-reveal data-delay="3">
               <Section title="Subscription" description="Manage your Pro subscription.">
                 <div className="flex items-center justify-between">
                   <div>
@@ -281,10 +288,11 @@ export default function Settings() {
                   </div>
                 </div>
               </Section>
+            </div>
             )}
 
             {cancelDone && (
-              <div className="bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-4">
+              <div data-reveal className="bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-4">
                 <p className="text-slate-700 dark:text-slate-300 text-sm font-medium mb-0.5">Subscription cancelled.</p>
                 <p className="text-slate-500 dark:text-slate-400 text-sm">
                   {cancelAt
@@ -295,6 +303,7 @@ export default function Settings() {
             )}
 
             {/* ── Danger Zone ───────────────────────────────────────── */}
+            <div data-reveal data-delay="4">
             <Section title="Danger Zone" description="Permanent actions that cannot be undone.">
               <div className="border border-red-200 dark:border-red-500/30 rounded-xl p-4 bg-red-50/50 dark:bg-red-500/5">
                 <p className="text-sm font-medium text-red-700 dark:text-red-400 mb-1">Delete Account</p>
@@ -323,6 +332,7 @@ export default function Settings() {
                 </div>
               </div>
             </Section>
+            </div>
 
           </div>
         </div>

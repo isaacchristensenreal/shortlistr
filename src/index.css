@@ -163,6 +163,45 @@
 }
 .count-up { animation: countUp 0.5s cubic-bezier(0.22,1,0.36,1) both; }
 
+/* ══ Universal scroll-reveal system ════════════════════════════ */
+
+/* Base hidden state */
+[data-reveal] {
+  opacity: 0;
+  will-change: opacity, transform;
+  transition:
+    opacity  0.72s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Direction variants */
+[data-reveal],
+[data-reveal="up"]    { transform: translateY(30px); }
+[data-reveal="down"]  { transform: translateY(-20px); }
+[data-reveal="left"]  { transform: translateX(-30px); }
+[data-reveal="right"] { transform: translateX(30px); }
+[data-reveal="scale"] { transform: scale(0.93) translateY(14px); }
+[data-reveal="fade"]  { transform: none; }
+
+/* Revealed state — overrides everything */
+[data-reveal].is-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Stagger delay helpers */
+[data-delay="1"] { transition-delay: 80ms; }
+[data-delay="2"] { transition-delay: 160ms; }
+[data-delay="3"] { transition-delay: 240ms; }
+[data-delay="4"] { transition-delay: 320ms; }
+[data-delay="5"] { transition-delay: 400ms; }
+[data-delay="6"] { transition-delay: 480ms; }
+
+/* Slightly slower for hero / big elements */
+[data-reveal][data-slow] {
+  transition-duration: 1s;
+}
+
 /* ── Smooth scrolling & prevent horizontal overflow ──────────── */
 html { scroll-behavior: smooth; overflow-x: hidden; }
 body { overflow-x: hidden; }

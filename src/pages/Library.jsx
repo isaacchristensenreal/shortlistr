@@ -82,7 +82,7 @@ export default function Library() {
   return (
     <Layout>
       {/* ── Page header ─────────────────────────────────────── */}
-      <div className="bg-white dark:bg-navy-900 border-b border-slate-200 dark:border-white/10">
+      <div data-reveal="fade" className="bg-white dark:bg-navy-900 border-b border-slate-200 dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 flex items-center justify-between gap-4 flex-wrap">
           <div>
             <div className="flex items-center gap-3 mb-1">
@@ -143,7 +143,7 @@ export default function Library() {
             <div className="flex gap-5 items-start">
 
               {/* ── Sidebar ───────────────────────────────── */}
-              <div className={`w-full lg:w-72 xl:w-80 shrink-0 space-y-2 ${mobileView === 'preview' ? 'hidden lg:block' : 'block'}`}>
+              <div data-reveal="left" className={`w-full lg:w-72 xl:w-80 shrink-0 space-y-2 ${mobileView === 'preview' ? 'hidden lg:block' : 'block'}`}>
 
                 {/* Section label */}
                 <div className="flex items-center justify-between mb-3 px-1">
@@ -230,6 +230,7 @@ export default function Library() {
 
               {/* ── Preview panel ─────────────────────────── */}
               <div
+                data-reveal="right"
                 className={`flex-1 min-w-0 ${mobileView === 'list' ? 'hidden lg:block' : 'block'}`}
                 style={{ opacity: previewVisible ? 1 : 0, transition: 'opacity 0.18s ease' }}
               >

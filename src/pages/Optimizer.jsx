@@ -170,7 +170,7 @@ export default function Optimizer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
 
           {/* Header */}
-          <div className="flex items-start justify-between mb-8 flex-wrap gap-4">
+          <div data-reveal="fade" className="flex items-start justify-between mb-8 flex-wrap gap-4">
             <div>
               <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Optimize My Resume</h1>
               <p className="text-slate-500 dark:text-slate-400 text-sm">
@@ -212,7 +212,7 @@ export default function Optimizer() {
           <div className={`grid grid-cols-1 lg:grid-cols-2 gap-6 ${!canOptimize && !isPro ? 'opacity-40 pointer-events-none select-none' : ''}`}>
 
             {/* ── LEFT: inputs ──────────────────────────── */}
-            <div className="space-y-6">
+            <div data-reveal="left" className="space-y-6">
 
               {/* Resume */}
               <div>
@@ -371,7 +371,7 @@ export default function Optimizer() {
             </div>
 
             {/* ── RIGHT: result ──────────────────────────── */}
-            <div className="flex flex-col gap-4">
+            <div data-reveal="right" className="flex flex-col gap-4">
               {optimizing ? (
                 <>
                   <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Optimized Resume</label>
@@ -418,7 +418,7 @@ export default function Optimizer() {
           </div>
 
           {/* ── Cover Letter Section ─────────────────────── */}
-          <div className="mt-8 border-t border-slate-200 dark:border-white/10 pt-8">
+          <div data-reveal className="mt-8 border-t border-slate-200 dark:border-white/10 pt-8">
             <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
               <div>
                 <div className="flex items-center gap-2 mb-1">

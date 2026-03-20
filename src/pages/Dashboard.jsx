@@ -71,7 +71,7 @@ export default function Dashboard() {
       {showPaywall && <Paywall onDismiss={handleDismiss} />}
 
       {/* ── Hero welcome banner ──────────────────────────────────────── */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-navy-900 to-slate-900 dark:from-black dark:via-navy-950 dark:to-black border-b border-white/5">
+      <div data-reveal="fade" className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-navy-900 to-slate-900 dark:from-black dark:via-navy-950 dark:to-black border-b border-white/5">
         <div className="absolute -top-24 -left-24 w-96 h-96 bg-electric-500/10 rounded-full blur-3xl orb-drift pointer-events-none" />
         <div className="absolute -bottom-16 right-0 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl orb-drift2 pointer-events-none" />
 
@@ -136,7 +136,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
 
             {/* Optimizations usage card */}
-            <div className="stagger-item bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-5 hover-lift" style={{ animationDelay: '0ms' }}>
+            <div data-reveal data-delay="1" className="stagger-item bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-5 hover-lift" style={{ animationDelay: '0ms' }}>
               <div className="flex items-start justify-between mb-4">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-electric-500/15 to-violet-500/15 flex items-center justify-center">
                   <svg className="w-5 h-5 text-electric-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
@@ -176,7 +176,7 @@ export default function Dashboard() {
             </div>
 
             {/* Plan card */}
-            <div className="stagger-item bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-5 hover-lift" style={{ animationDelay: '60ms' }}>
+            <div data-reveal data-delay="2" className="stagger-item bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-5 hover-lift" style={{ animationDelay: '60ms' }}>
               <div className="flex items-start justify-between mb-4">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                   isPro
@@ -200,7 +200,7 @@ export default function Dashboard() {
             </div>
 
             {/* Library card */}
-            <div className="stagger-item bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-5 hover-lift" style={{ animationDelay: '120ms' }}>
+            <div data-reveal data-delay="3" className="stagger-item bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-5 hover-lift" style={{ animationDelay: '120ms' }}>
               <div className="flex items-start justify-between mb-4">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/15 to-pink-500/15 flex items-center justify-center">
                   <svg className="w-5 h-5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
@@ -230,6 +230,7 @@ export default function Dashboard() {
           {/* ── Upgrade banner (free users only) ──────────────────────── */}
           {!isPro && profile && (
             <div
+              data-reveal="scale"
               className="stagger-item mb-8 relative overflow-hidden rounded-2xl border border-glow"
               style={{
                 animationDelay: '180ms',
@@ -287,7 +288,7 @@ export default function Dashboard() {
           )}
 
           {/* ── Recent Resumes card ────────────────────────────────────── */}
-          <div className="bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden">
+          <div data-reveal className="bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden">
             <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-white/10">
               <div className="flex items-center gap-2.5">
                 <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-electric-500/15 to-violet-500/15 flex items-center justify-center">
