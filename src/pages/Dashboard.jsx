@@ -95,7 +95,7 @@ export default function Dashboard() {
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
-            <div className="stagger-item bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-6" style={{ animationDelay: '0ms' }}>
+            <div className="stagger-item hover-lift bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-6" style={{ animationDelay: '0ms' }}>
               <p className="text-slate-400 text-xs uppercase tracking-wider mb-3">Optimizations this month</p>
               {isPro ? (
                 <p className="text-3xl font-bold text-slate-900 dark:text-white">Unlimited</p>
@@ -107,7 +107,7 @@ export default function Dashboard() {
                   </p>
                   <div className="h-1.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full transition-all ${optimizationsRemaining === 0 ? 'bg-red-500' : 'bg-gradient-to-r from-electric-500 to-violet-500'}`}
+                      className={`h-full rounded-full bar-fill ${optimizationsRemaining === 0 ? 'bg-red-500' : 'bg-gradient-to-r from-electric-500 to-violet-500'}`}
                       style={{ width: `${(usedThisMonth / FREE_LIMIT) * 100}%` }}
                     />
                   </div>
@@ -118,13 +118,13 @@ export default function Dashboard() {
               )}
             </div>
 
-            <div className="stagger-item bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-6" style={{ animationDelay: '60ms' }}>
+            <div className="stagger-item hover-lift bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-6" style={{ animationDelay: '60ms' }}>
               <p className="text-slate-400 text-xs uppercase tracking-wider mb-3">Current plan</p>
               <p className="text-3xl font-bold text-slate-900 dark:text-white mb-1">{isPro ? 'Pro' : 'Free'}</p>
               <p className="text-slate-400 text-xs">{isPro ? '$10 / month · All features included' : '3 optimizations / month'}</p>
             </div>
 
-            <div className="stagger-item bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-6 flex flex-col justify-between" style={{ animationDelay: '120ms' }}>
+            <div className="stagger-item hover-lift bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-6 flex flex-col justify-between" style={{ animationDelay: '120ms' }}>
               <div>
                 <p className="text-slate-400 text-xs uppercase tracking-wider mb-3">Quick action</p>
                 <p className="text-slate-900 dark:text-white font-medium text-sm mb-1">Ready to apply?</p>
@@ -143,7 +143,7 @@ export default function Dashboard() {
 
           {/* Upgrade banner — triggers Stripe Checkout directly, not a link to /pricing */}
           {!isPro && profile && (
-            <div className="stagger-item bg-gradient-to-r from-electric-500/10 to-violet-500/10 border border-electric-500/30 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10" style={{ animationDelay: '180ms' }}>
+            <div className="stagger-item border-glow bg-gradient-to-r from-electric-500/10 to-violet-500/10 border border-electric-500/30 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10" style={{ animationDelay: '180ms' }}>
               <div>
                 <p className="text-slate-900 dark:text-white font-semibold mb-1">Unlock unlimited optimizations with Pro</p>
                 <p className="text-slate-500 dark:text-slate-400 text-sm">AI bullet rewriting, cover letter generation, full version history — $10/month.</p>
@@ -201,10 +201,10 @@ export default function Dashboard() {
                   <Link
                     key={r.id}
                     to="/library"
-                    className="flex items-center justify-between p-4 bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-xl hover:border-electric-500/30 hover:shadow-sm transition-all group"
+                    className="flex items-center justify-between p-4 bg-slate-50 dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-xl hover:border-electric-500/30 hover:shadow-sm transition-all group card-hover"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-electric-500/20 to-violet-500/20 flex items-center justify-center shrink-0">
+                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-electric-500/20 to-violet-500/20 flex items-center justify-center shrink-0 group-hover:from-electric-500/30 group-hover:to-violet-500/30 transition-all duration-300 group-hover:scale-110">
                         <svg className="w-4 h-4 text-electric-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
@@ -224,7 +224,7 @@ export default function Dashboard() {
                           {r.ats_score}% ATS
                         </span>
                       )}
-                      <svg className="w-4 h-4 text-slate-300 group-hover:text-electric-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <svg className="w-4 h-4 text-slate-300 group-hover:text-electric-500 transition-all group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                       </svg>
                     </div>

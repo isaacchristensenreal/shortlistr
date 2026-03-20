@@ -18,7 +18,7 @@ function AIIcon({ className = 'w-3.5 h-3.5' }) {
 function Message({ msg }) {
   const isUser = msg.role === 'user'
   return (
-    <div className={`flex gap-2.5 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+    <div className={`flex gap-2.5 stagger-item ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
       {/* Avatar */}
       {!isUser && (
         <div className="w-7 h-7 rounded-full bg-gradient-to-br from-electric-500 to-violet-500 flex items-center justify-center shrink-0 mt-0.5">
@@ -124,7 +124,7 @@ export default function ChatWidget() {
     <>
       {/* Chat panel */}
       {open && (
-        <div className="fixed right-24 top-1/2 -translate-y-1/2 z-50 w-[360px] max-h-[560px] flex flex-col bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl shadow-slate-300/30 dark:shadow-black/40 overflow-hidden">
+        <div className="scale-in fixed right-24 top-1/2 -translate-y-1/2 z-50 w-[360px] max-h-[560px] flex flex-col bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl shadow-slate-300/30 dark:shadow-black/40 overflow-hidden">
 
           {/* Header */}
           <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-100 dark:border-white/10 bg-gradient-to-r from-electric-500 to-violet-500 shrink-0">
@@ -194,7 +194,7 @@ export default function ChatWidget() {
               <button
                 onClick={send}
                 disabled={!input.trim() || loading}
-                className="w-8 h-8 bg-gradient-to-br from-electric-500 to-blue-600 hover:from-electric-400 hover:to-blue-500 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg flex items-center justify-center transition-all shrink-0"
+                className="w-8 h-8 bg-gradient-to-br from-electric-500 to-blue-600 hover:from-electric-400 hover:to-blue-500 disabled:opacity-40 disabled:cursor-not-allowed rounded-lg flex items-center justify-center transition-all shrink-0 hover:scale-110 active:scale-95"
               >
                 <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -209,7 +209,7 @@ export default function ChatWidget() {
       {/* Floating toggle button */}
       <button
         onClick={() => open ? handleClose() : setOpen(true)}
-        className="fixed right-5 top-1/2 -translate-y-1/2 z-50 w-14 h-14 bg-gradient-to-br from-electric-500 to-violet-500 hover:from-electric-400 hover:to-violet-400 rounded-2xl shadow-lg shadow-electric-500/30 hover:shadow-xl hover:shadow-electric-500/40 transition-all flex items-center justify-center group"
+        className="fixed right-5 top-1/2 -translate-y-1/2 z-50 w-14 h-14 bg-gradient-to-br from-electric-500 to-violet-500 hover:from-electric-400 hover:to-violet-400 rounded-2xl shadow-lg shadow-electric-500/30 hover:shadow-xl hover:shadow-electric-500/40 transition-all flex items-center justify-center group hover:scale-110 active:scale-95"
         aria-label={open ? 'Close chat' : 'Open chat'}
       >
         {open ? (

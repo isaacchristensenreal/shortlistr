@@ -47,6 +47,7 @@ export default function Optimizer() {
   const [jobText, setJobText] = useState('')
   const [fetchingJob, setFetchingJob] = useState(false)
   const [fetchError, setFetchError] = useState(null)
+  const [dragging, setDragging] = useState(false)
 
   // Result
   const [resultData, setResultData] = useState(null)
@@ -81,9 +82,11 @@ export default function Optimizer() {
     }
   }
 
-  const handleDragOver = (e) => { e.preventDefault() }
+  const handleDragOver = (e) => { e.preventDefault(); setDragging(true) }
+  const handleDragLeave = () => setDragging(false)
   const handleDrop = (e) => {
     e.preventDefault()
+    setDragging(false)
     const file = e.dataTransfer.files?.[0]
     if (file) handleFile(file)
   }
@@ -226,10 +229,13 @@ export default function Optimizer() {
                   <div>
                     <div
                       onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
                       onDrop={handleDrop}
                       onClick={() => fileInputRef.current?.click()}
                       className={`relative border-2 border-dashed rounded-xl px-6 py-10 text-center cursor-pointer transition-all group ${
-                        pdfName
+                        dragging
+                          ? 'border-electric-500 bg-electric-500/8 scale-[1.01] shadow-lg shadow-electric-500/15 glow-pulse'
+                          : pdfName
                           ? 'border-electric-500/50 bg-electric-500/5 dark:bg-electric-500/5'
                           : 'border-slate-300 dark:border-white/20 hover:border-electric-500/50 hover:bg-slate-50 dark:hover:bg-white/5'
                       }`}
@@ -262,8 +268,8 @@ export default function Optimizer() {
                         </div>
                       ) : (
                         <div className="flex flex-col items-center gap-2">
-                          <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-navy-700 flex items-center justify-center group-hover:bg-electric-500/10 transition-colors">
-                            <svg className="w-6 h-6 text-slate-400 group-hover:text-electric-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>
+                          <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-navy-700 flex items-center justify-center group-hover:bg-electric-500/10 transition-all group-hover:scale-110">
+                            <svg className="w-6 h-6 text-slate-400 group-hover:text-electric-500 transition-colors group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>
                           </div>
                           <p className="text-slate-700 dark:text-slate-300 font-medium text-sm">Drop your resume PDF here</p>
                           <p className="text-slate-400 text-xs">or click to browse</p>
@@ -346,7 +352,17 @@ export default function Optimizer() {
                   onClick={handleOptimize}
                   className="w-full"
                 >
-                  {optimizing ? 'Optimizing…' : 'Optimize My Resume'}
+                  {optimizing ? (
+                    <span className="flex items-center gap-2">
+                      <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                      Optimizing…
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                      Optimize My Resume
+                    </span>
+                  )}
                 </Button>
                 {optimizeError && (
                   <p className="text-red-500 dark:text-red-400 text-xs text-center mt-2">{optimizeError}</p>

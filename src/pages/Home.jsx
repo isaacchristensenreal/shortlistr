@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Layout from '../components/layout/Layout'
 import Button from '../components/ui/Button'
 import { useAuth } from '../context/AuthContext'
+import { useScrollReveal, useStaggerReveal } from '../hooks/useScrollReveal'
 
 const stats = [
   { value: '< 60s', label: 'Average optimization time' },
@@ -224,6 +225,10 @@ const tiers = [
 export default function Home() {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const statsRef = useScrollReveal()
+  const featuresRef = useStaggerReveal('.reveal-child')
+  const pricingRef = useStaggerReveal('.reveal-child')
+  const ctaRef = useScrollReveal()
 
   // Signed-in users don't need to see the marketing page
   useEffect(() => {
@@ -238,16 +243,20 @@ export default function Home() {
         <div className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.1)_1px,transparent_0)] dark:[background-image:radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.08)_1px,transparent_0)] [background-size:32px_32px]" />
         {/* Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-radial from-electric-500/20 to-transparent rounded-full blur-3xl pointer-events-none" />
+        {/* Floating orbs */}
+        <div className="orb-drift absolute top-16 left-[8%] w-64 h-64 bg-gradient-to-br from-electric-500/10 to-violet-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="orb-drift2 absolute bottom-20 right-[6%] w-80 h-80 bg-gradient-to-br from-violet-500/10 to-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="float-slow absolute top-1/2 left-[3%] w-20 h-20 bg-electric-500/8 rounded-full blur-2xl pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-12 sm:pb-16 text-center">
-          <div className="inline-flex items-center gap-2 bg-electric-500/10 border border-electric-500/30 text-electric-600 dark:text-electric-400 text-sm px-4 py-1.5 rounded-full mb-8 font-medium">
+          <div className="inline-flex items-center gap-2 bg-electric-500/10 border border-electric-500/30 text-electric-600 dark:text-electric-400 text-sm px-4 py-1.5 rounded-full mb-8 font-medium float hover:scale-105 transition-transform cursor-default">
             <span className="w-1.5 h-1.5 bg-electric-500 rounded-full animate-pulse" />
             AI-powered resume optimization
           </div>
 
           <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-slate-900 dark:text-white leading-[1.05] tracking-tight max-w-4xl mx-auto mb-6">
             AI resume optimization{' '}
-            <span className="bg-gradient-to-r from-electric-500 via-blue-500 to-violet-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-electric-500 via-blue-500 to-violet-500 bg-clip-text text-transparent gradient-animate">
               for any job description.
             </span>
           </h1>
@@ -270,7 +279,7 @@ export default function Home() {
           </div>
 
           {/* Mockup UI card */}
-          <div className="max-w-4xl mx-auto bg-white dark:bg-navy-800 rounded-2xl border border-slate-200 dark:border-white/10 shadow-2xl shadow-slate-300/30 dark:shadow-black/40 overflow-hidden">
+          <div className="max-w-4xl mx-auto bg-white dark:bg-navy-800 rounded-2xl border border-slate-200 dark:border-white/10 shadow-2xl shadow-slate-300/30 dark:shadow-black/40 overflow-hidden float-b hover:shadow-electric-500/10 hover:border-electric-500/20 transition-all duration-500">
             {/* Window chrome */}
             <div className="flex items-center gap-2 px-5 py-3 border-b border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-navy-900/60">
               <div className="w-3 h-3 rounded-full bg-red-400/70" />
@@ -318,9 +327,9 @@ export default function Home() {
 
       {/* Stats bar */}
       <section className="bg-slate-50 dark:bg-navy-800 border-y border-slate-200 dark:border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
-          {stats.map((s) => (
-            <div key={s.label}>
+        <div ref={statsRef} className="reveal max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
+          {stats.map((s, i) => (
+            <div key={s.label} className={`reveal reveal-delay-${i + 1}`}>
               <p className="text-3xl font-bold bg-gradient-to-r from-electric-500 to-violet-500 bg-clip-text text-transparent mb-1">{s.value}</p>
               <p className="text-slate-500 dark:text-slate-400 text-sm">{s.label}</p>
             </div>
@@ -357,11 +366,11 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            {featureCards.map((f) => (
+          <div ref={featuresRef} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {featureCards.map((f, i) => (
               <div
                 key={f.title}
-                className="group bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-electric-500/30 hover:shadow-xl hover:shadow-electric-500/5 dark:hover:border-white/20 transition-all"
+                className={`reveal reveal-child reveal-delay-${i + 1} group bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-electric-500/30 hover:shadow-xl hover:shadow-electric-500/5 dark:hover:border-white/20 transition-all hover:-translate-y-1`}
               >
                 {/* Header */}
                 <div className="flex items-center justify-between mb-1">
@@ -393,11 +402,11 @@ export default function Home() {
             </h2>
             <p className="text-slate-500 dark:text-slate-400 text-lg">Start free. Upgrade when you need more.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {tiers.map((tier) => (
+          <div ref={pricingRef} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {tiers.map((tier, i) => (
               <div
                 key={tier.name}
-                className={`rounded-2xl p-8 border flex flex-col ${
+                className={`reveal reveal-child reveal-delay-${i + 1} rounded-2xl p-8 border flex flex-col hover:-translate-y-1 transition-all duration-300 ${
                   tier.highlight
                     ? 'bg-gradient-to-b from-electric-500/10 to-violet-500/5 border-electric-500/40 ring-1 ring-electric-500/20 dark:from-electric-500/10 dark:to-violet-500/5'
                     : 'bg-white dark:bg-navy-800 border-slate-200 dark:border-white/10'
@@ -437,7 +446,7 @@ export default function Home() {
       <section className="bg-gradient-to-br from-navy-900 via-blue-950 to-violet-950 dark:from-navy-900 dark:via-blue-950 dark:to-violet-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center relative overflow-hidden">
           <div className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.04)_1px,transparent_0)] [background-size:28px_28px]" />
-          <div className="relative">
+          <div ref={ctaRef} className="reveal relative">
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-5 tracking-tight">
               See what your resume looks like{' '}
               <span className="bg-gradient-to-r from-electric-400 to-violet-400 bg-clip-text text-transparent">

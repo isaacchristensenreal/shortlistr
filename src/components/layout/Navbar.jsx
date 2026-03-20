@@ -71,8 +71,7 @@ function UserMenu({ user, profile, onSignOut }) {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-56 bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-xl shadow-xl shadow-slate-200/50 dark:shadow-black/30 z-50 overflow-hidden"
-          style={{ animation: 'staggerIn 0.2s cubic-bezier(0.22,1,0.36,1) both' }}>
+        <div className="absolute right-0 top-full mt-2 w-56 bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-xl shadow-xl shadow-slate-200/50 dark:shadow-black/30 z-50 overflow-hidden scale-in">
           <div className="px-4 py-3 border-b border-slate-100 dark:border-white/10">
             <p className="text-xs text-slate-400 mb-0.5">Signed in as</p>
             <p className="text-sm font-medium text-slate-700 dark:text-slate-200 truncate">{user?.email}</p>
@@ -128,6 +127,13 @@ export default function Navbar() {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   // Close mobile menu on route change
   useEffect(() => { setMobileOpen(false) }, [pathname])
@@ -138,17 +144,19 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-white/95 dark:bg-navy-900/95 backdrop-blur-md border-b border-slate-200 dark:border-white/10 sticky top-0 z-50">
+    <nav className={`bg-white/95 dark:bg-navy-900/95 backdrop-blur-md border-b border-slate-200 dark:border-white/10 sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? 'shadow-lg shadow-slate-200/60 dark:shadow-black/30' : 'shadow-none'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
 
         {/* Logo */}
         <Link
           to={user ? '/dashboard' : '/'}
           onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
-          className="flex items-center gap-2.5 shrink-0"
+          className="flex items-center gap-2.5 shrink-0 group"
         >
-          <Logo size={34} />
-          <span className="text-slate-900 dark:text-white font-bold text-lg tracking-tight">ShortListr</span>
+          <div className="transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[-6deg]">
+            <Logo size={34} />
+          </div>
+          <span className="text-slate-900 dark:text-white font-bold text-lg tracking-tight transition-all duration-300 group-hover:text-electric-500">ShortListr</span>
         </Link>
 
         {/* Desktop nav links */}

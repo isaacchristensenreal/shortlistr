@@ -98,7 +98,7 @@ export default function Library() {
                     key={r.id}
                     onClick={() => handleSelect(r.id)}
                     style={{ animation: `staggerIn 0.35s cubic-bezier(0.22,1,0.36,1) both`, animationDelay: `${i * 40}ms` }}
-                    className={`w-full text-left p-3.5 rounded-xl border transition-all group ${
+                    className={`w-full text-left p-3.5 rounded-xl border transition-all group card-hover ${
                       selected === r.id
                         ? 'bg-white dark:bg-navy-700 border-electric-500/30 shadow-sm ring-1 ring-electric-500/20'
                         : 'bg-slate-50 dark:bg-navy-800 border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20'

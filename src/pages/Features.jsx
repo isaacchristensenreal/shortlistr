@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Layout from '../components/layout/Layout'
 import Button from '../components/ui/Button'
 import { useAuth } from '../context/AuthContext'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 
 /* ─── SVG Icons ─────────────────────────────────────────────────────────── */
 function IconScan() {
@@ -60,7 +61,7 @@ function IconArrowRight() {
 /* ─── Browser Chrome Wrapper ─────────────────────────────────────────────── */
 function BrowserWindow({ children, url = 'app.shortlistr.io/optimize', className = '' }) {
   return (
-    <div className={`rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl shadow-slate-300/40 dark:shadow-black/40 ${className}`}>
+    <div className={`float-b rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl shadow-slate-300/40 dark:shadow-black/40 ${className}`}>
       {/* Title bar */}
       <div className="bg-slate-100 dark:bg-navy-700 px-4 py-3 flex items-center gap-3 border-b border-slate-200 dark:border-white/10">
         <div className="flex items-center gap-1.5">
@@ -116,7 +117,7 @@ function ATSMockup() {
         </div>
         <div className="h-2 bg-slate-100 dark:bg-navy-700 rounded-full mb-5 overflow-hidden">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-electric-500 to-violet-500 transition-all duration-1000"
+            className="h-full rounded-full bg-gradient-to-r from-electric-500 to-violet-500 bar-fill"
             style={{ width: `${score}%` }}
           />
         </div>
@@ -388,7 +389,7 @@ function VersionMockup() {
 /* ─── Stat Pill ──────────────────────────────────────────────────────────── */
 function StatPill({ value, label }) {
   return (
-    <div className="bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-4 text-center shadow-sm">
+    <div className="hover-lift bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl px-5 py-4 text-center shadow-sm">
       <p className="text-2xl font-bold text-slate-900 dark:text-white">{value}</p>
       <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{label}</p>
     </div>
@@ -403,9 +404,10 @@ function FeatureSection({ tag, title, description, bullets, mockup, reverse = fa
     emerald: 'text-emerald-500 dark:text-emerald-400',
     amber: 'text-amber-500 dark:text-amber-400',
   }
+  const sectionRef = useScrollReveal()
 
   return (
-    <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-center ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+    <div ref={sectionRef} className={`reveal grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-center ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}>
       <div>
         <p className={`text-sm font-semibold uppercase tracking-wider mb-3 ${accentClasses[accent]}`}>{tag}</p>
         <h2 className="text-3xl xl:text-4xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">{title}</h2>
@@ -440,8 +442,8 @@ export default function Features() {
       <section className="relative overflow-hidden bg-white dark:bg-navy-900 border-b border-slate-200 dark:border-white/10">
         <div className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.09)_1px,transparent_0)] [background-size:28px_28px]" />
         {/* Glow blobs */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-electric-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="orb-drift absolute top-0 left-1/4 w-96 h-96 bg-electric-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="orb-drift2 absolute bottom-0 right-1/4 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative max-w-5xl mx-auto px-6 py-28 text-center">
           <div className="inline-flex items-center gap-2 bg-electric-500/10 border border-electric-500/30 text-electric-600 dark:text-electric-400 text-sm px-4 py-1.5 rounded-full mb-7 font-medium">
@@ -450,7 +452,7 @@ export default function Features() {
           </div>
           <h1 className="text-5xl md:text-6xl xl:text-7xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.05]">
             Four tools for{' '}
-            <span className="bg-gradient-to-r from-electric-500 via-blue-500 to-violet-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-electric-500 via-blue-500 to-violet-500 bg-clip-text text-transparent gradient-animate">
               resume optimization
             </span>
           </h1>
