@@ -13,7 +13,7 @@ const FONTS = [
   { id: 'serif', label: 'Traditional', value: "Georgia, 'Times New Roman', serif" },
 ]
 
-export default function ResumePreview({ data, atsScore }) {
+export default function ResumePreview({ data, atsScore, hideLabel = false }) {
   const ref = useRef(null)
   const [themeId, setThemeId] = useState('navy')
   const [fontId, setFontId] = useState('sans')
@@ -74,7 +74,7 @@ export default function ResumePreview({ data, atsScore }) {
       {/* Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-3 flex-wrap">
-          <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Optimized Resume</label>
+          {!hideLabel && <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Optimized Resume</label>}
           {atsScore !== null && (
             <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-bold border ${
               atsScore >= 85
