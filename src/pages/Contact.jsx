@@ -6,7 +6,7 @@ export default function ContactPage() {
   return (
     <Layout>
       <div className="bg-white dark:bg-navy-900 min-h-screen">
-        <div className="max-w-2xl mx-auto px-6 py-20">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
 
           {/* Header */}
           <div className="text-center mb-12">

@@ -304,7 +304,7 @@ export default function Auth() {
                   <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
                   Welcome back
                 </span>
-                <h2 className="text-4xl font-bold text-white leading-tight mt-4 mb-4">
+                <h2 className="text-2xl sm:text-4xl font-bold text-white leading-tight mt-4 mb-4">
                   Good to see<br />
                   <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">you again</span>
                 </h2>
@@ -320,7 +320,7 @@ export default function Auth() {
                   <span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" />
                   Free to start
                 </span>
-                <h2 className="text-4xl font-bold text-white leading-tight mt-4 mb-4">
+                <h2 className="text-2xl sm:text-4xl font-bold text-white leading-tight mt-4 mb-4">
                   Your resume,<br />
                   <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">optimized in 60s</span>
                 </h2>

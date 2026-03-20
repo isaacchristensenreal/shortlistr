@@ -163,8 +163,9 @@
 }
 .count-up { animation: countUp 0.5s cubic-bezier(0.22,1,0.36,1) both; }
 
-/* ── Smooth scrolling ─────────────────────────────────────────── */
-html { scroll-behavior: smooth; }
+/* ── Smooth scrolling & prevent horizontal overflow ──────────── */
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body { overflow-x: hidden; }
 
 /* ── Link & button transitions ───────────────────────────────── */
 a, button {

@@ -64,9 +64,9 @@ export default function Pricing() {
   return (
     <Layout>
       <div className="bg-white dark:bg-navy-900 min-h-screen">
-        <div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
               Simple pricing, no surprises
             </h1>
             <p className="text-slate-500 dark:text-slate-400 text-xl max-w-xl mx-auto">
@@ -78,7 +78,7 @@ export default function Pricing() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-20">
 
             {/* Free tier */}
-            <div className="rounded-2xl p-8 border flex flex-col bg-slate-50 dark:bg-navy-800 border-slate-200 dark:border-white/10">
+            <div className="rounded-2xl p-5 sm:p-8 border flex flex-col bg-slate-50 dark:bg-navy-800 border-slate-200 dark:border-white/10">
               <div className="mb-6">
                 <h2 className="text-slate-900 dark:text-white font-bold text-2xl mb-1">Free</h2>
                 <div className="flex items-baseline gap-1 mb-2">
@@ -102,7 +102,7 @@ export default function Pricing() {
             </div>
 
             {/* Pro tier */}
-            <div className="rounded-2xl p-8 border flex flex-col bg-gradient-to-b from-electric-500/10 to-violet-500/5 border-electric-500/40 ring-1 ring-electric-500/20">
+            <div className="rounded-2xl p-5 sm:p-8 border flex flex-col bg-gradient-to-b from-electric-500/10 to-violet-500/5 border-electric-500/40 ring-1 ring-electric-500/20">
               <span className="text-xs font-semibold text-electric-500 dark:text-electric-400 uppercase tracking-wider mb-4">Most Popular</span>
               <div className="mb-6">
                 <h2 className="text-slate-900 dark:text-white font-bold text-2xl mb-1">Pro</h2>

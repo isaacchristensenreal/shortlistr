@@ -11,7 +11,7 @@ const getPdfUtils = () => import('../lib/pdfUtils')
 
 function Tabs({ value, onChange, options }) {
   return (
-    <div className="flex bg-slate-100 dark:bg-navy-900 rounded-lg p-0.5 gap-0.5 w-fit mb-3">
+    <div className="flex bg-slate-100 dark:bg-navy-900 rounded-lg p-0.5 gap-0.5 w-fit">
       {options.map((o) => (
         <button
           key={o.value}
@@ -216,7 +216,7 @@ export default function Optimizer() {
 
               {/* Resume */}
               <div>
-                <div className="flex items-center justify-between mb-1">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
                   <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Your Resume</label>
                   <Tabs
                     value={resumeMode}
@@ -293,7 +293,7 @@ export default function Optimizer() {
 
               {/* Job description */}
               <div>
-                <div className="flex items-center justify-between mb-1">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
                   <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Job Description</label>
                   <Tabs
                     value={jobMode}

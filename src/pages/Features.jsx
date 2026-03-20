@@ -407,10 +407,10 @@ function FeatureSection({ tag, title, description, bullets, mockup, reverse = fa
   const sectionRef = useScrollReveal()
 
   return (
-    <div ref={sectionRef} className={`reveal grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-center ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+    <div ref={sectionRef} className={`reveal grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-20 items-center ${reverse ? 'lg:[&>*:first-child]:order-2' : ''}`}>
       <div>
         <p className={`text-sm font-semibold uppercase tracking-wider mb-3 ${accentClasses[accent]}`}>{tag}</p>
-        <h2 className="text-3xl xl:text-4xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">{title}</h2>
+        <h2 className="text-2xl sm:text-3xl xl:text-4xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">{title}</h2>
         <p className="text-slate-500 dark:text-slate-400 leading-relaxed mb-7 text-base">{description}</p>
         <ul className="space-y-3">
           {bullets.map(b => (
@@ -445,12 +445,12 @@ export default function Features() {
         <div className="orb-drift absolute top-0 left-1/4 w-96 h-96 bg-electric-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="orb-drift2 absolute bottom-0 right-1/4 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative max-w-5xl mx-auto px-6 py-28 text-center">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-28 text-center">
           <div className="inline-flex items-center gap-2 bg-electric-500/10 border border-electric-500/30 text-electric-600 dark:text-electric-400 text-sm px-4 py-1.5 rounded-full mb-7 font-medium">
             <span className="w-1.5 h-1.5 bg-electric-500 rounded-full animate-pulse" />
             Everything included in Pro
           </div>
-          <h1 className="text-5xl md:text-6xl xl:text-7xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.05]">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.05]">
             Four tools for{' '}
             <span className="bg-gradient-to-r from-electric-500 via-blue-500 to-violet-500 bg-clip-text text-transparent gradient-animate">
               resume optimization
@@ -487,7 +487,7 @@ export default function Features() {
 
       {/* ── ATS Keyword Matching ── */}
       <section className="bg-white dark:bg-navy-900 border-b border-slate-200 dark:border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-24">
           <FeatureSection
             tag="ATS Keyword Matching"
             title="See exactly which keywords your resume is missing"
@@ -506,7 +506,7 @@ export default function Features() {
 
       {/* ── AI Bullet Rewriting ── */}
       <section className="bg-slate-50 dark:bg-navy-800/60 border-b border-slate-200 dark:border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-24">
           <FeatureSection
             tag="AI Bullet Rewriting"
             title="Rewrite experience bullets using the STAR method"
@@ -526,7 +526,7 @@ export default function Features() {
 
       {/* ── Cover Letter ── */}
       <section className="bg-white dark:bg-navy-900 border-b border-slate-200 dark:border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-24">
           <FeatureSection
             tag="Cover Letter Generation"
             title="A tailored cover letter in 30 seconds"
@@ -545,7 +545,7 @@ export default function Features() {
 
       {/* ── Version History ── */}
       <section className="bg-slate-50 dark:bg-navy-800/60 border-b border-slate-200 dark:border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-24">
           <FeatureSection
             tag="Version History"
             title="Never lose a perfectly tailored draft again"
@@ -565,7 +565,7 @@ export default function Features() {
 
       {/* ── How It Works ── */}
       <section className="bg-white dark:bg-navy-900 border-b border-slate-200 dark:border-white/10">
-        <div className="max-w-5xl mx-auto px-6 py-24 text-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-24 text-center">
           <p className="text-electric-500 dark:text-electric-400 text-sm font-semibold uppercase tracking-wider mb-3">Simple by design</p>
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
             Three steps. Under 60 seconds.
@@ -616,7 +616,7 @@ export default function Features() {
 
       {/* ── Feature Grid ── */}
       <section className="bg-slate-50 dark:bg-navy-800/60 border-b border-slate-200 dark:border-white/10">
-        <div className="max-w-5xl mx-auto px-6 py-24">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-24">
           <div className="text-center mb-14">
             <p className="text-electric-500 dark:text-electric-400 text-sm font-semibold uppercase tracking-wider mb-3">Everything you need</p>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
@@ -670,7 +670,7 @@ export default function Features() {
         <div className="absolute top-0 left-1/3 w-96 h-64 bg-electric-500/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 right-1/3 w-80 h-48 bg-violet-500/20 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative max-w-4xl mx-auto px-6 py-24 text-center">
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-14 sm:py-24 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-5 tracking-tight leading-tight">
             See what your resume looks like optimized.
           </h2>

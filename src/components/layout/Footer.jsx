@@ -32,7 +32,7 @@ const legalLinks = [
 export default function Footer() {
   return (
     <footer className="bg-slate-50 dark:bg-navy-900 border-t border-slate-200 dark:border-white/10">
-      <div className="max-w-7xl mx-auto px-6 py-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
 
         {/* Top section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">

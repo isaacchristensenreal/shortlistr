@@ -7,7 +7,7 @@ export default function Layout({ children }) {
   const { pathname } = useLocation()
 
   return (
-    <div className="min-h-screen bg-white dark:bg-navy-900 flex flex-col">
+    <div className="min-h-screen bg-white dark:bg-navy-900 flex flex-col overflow-x-hidden">
       <Navbar />
       <main key={pathname} className="flex-1 page-enter">
         {children}

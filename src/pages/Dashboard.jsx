@@ -73,7 +73,7 @@ export default function Dashboard() {
       {showPaywall && <Paywall onDismiss={handleDismiss} />}
 
       <div className="bg-white dark:bg-navy-900 min-h-screen">
-        <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
 
           <div className="flex items-start justify-between mb-10 flex-wrap gap-4">
             <div>

@@ -124,7 +124,9 @@ export default function ChatWidget() {
     <>
       {/* Chat panel */}
       {open && (
-        <div className="scale-in fixed right-24 top-1/2 -translate-y-1/2 z-50 w-[360px] max-h-[560px] flex flex-col bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl shadow-slate-300/30 dark:shadow-black/40 overflow-hidden">
+        <div className="scale-in fixed z-50 flex flex-col bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl shadow-slate-300/30 dark:shadow-black/40 overflow-hidden
+          inset-x-3 bottom-24 max-h-[75vh]
+          sm:inset-x-auto sm:bottom-auto sm:right-24 sm:top-1/2 sm:-translate-y-1/2 sm:w-[360px] sm:max-h-[560px]">
 
           {/* Header */}
           <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-100 dark:border-white/10 bg-gradient-to-r from-electric-500 to-violet-500 shrink-0">
@@ -209,7 +211,7 @@ export default function ChatWidget() {
       {/* Floating toggle button */}
       <button
         onClick={() => open ? handleClose() : setOpen(true)}
-        className="fixed right-5 top-1/2 -translate-y-1/2 z-50 w-14 h-14 bg-gradient-to-br from-electric-500 to-violet-500 hover:from-electric-400 hover:to-violet-400 rounded-2xl shadow-lg shadow-electric-500/30 hover:shadow-xl hover:shadow-electric-500/40 transition-all flex items-center justify-center group hover:scale-110 active:scale-95"
+        className="fixed bottom-5 right-5 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 sm:right-5 z-50 w-14 h-14 bg-gradient-to-br from-electric-500 to-violet-500 hover:from-electric-400 hover:to-violet-400 rounded-2xl shadow-lg shadow-electric-500/30 hover:shadow-xl hover:shadow-electric-500/40 transition-all flex items-center justify-center group hover:scale-110 active:scale-95"
         aria-label={open ? 'Close chat' : 'Open chat'}
       >
         {open ? (
