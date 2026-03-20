@@ -17,34 +17,49 @@ export default function ResumePreview({ data, atsScore }) {
   const ref = useRef(null)
   const [themeId, setThemeId] = useState('navy')
   const [fontId, setFontId] = useState('sans')
+  const [exporting, setExporting] = useState(false)
+  const [exportError, setExportError] = useState(null)
   const theme = THEMES.find(t => t.id === themeId)
   const font = FONTS.find(f => f.id === fontId)
 
   const handleExport = async () => {
     const el = ref.current
-    if (!el) return
-    const html2canvas = (await import('html2canvas')).default
-    const { jsPDF } = await import('jspdf')
+    if (!el || exporting) return
+    setExporting(true)
+    setExportError(null)
+    try {
+      const html2canvas = (await import('html2canvas')).default
+      const { jsPDF } = await import('jspdf')
 
-    const canvas = await html2canvas(el, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      logging: false,
-    })
+      const canvas = await html2canvas(el, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+        width: el.scrollWidth,
+        height: el.scrollHeight,
+        windowWidth: el.scrollWidth,
+      })
 
-    const imgData = canvas.toDataURL('image/png')
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-    const pdfW = pdf.internal.pageSize.getWidth()
-    const pdfH = (canvas.height * pdfW) / canvas.width
-    let yOffset = 0
-    const pageH = pdf.internal.pageSize.getHeight()
-    while (yOffset < pdfH) {
-      if (yOffset > 0) pdf.addPage()
-      pdf.addImage(imgData, 'PNG', 0, -yOffset, pdfW, pdfH)
-      yOffset += pageH
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+      const pdfW = pdf.internal.pageSize.getWidth()
+      const pdfH = (canvas.height * pdfW) / canvas.width
+      let yOffset = 0
+      const pageH = pdf.internal.pageSize.getHeight()
+      while (yOffset < pdfH) {
+        if (yOffset > 0) pdf.addPage()
+        pdf.addImage(imgData, 'PNG', 0, -yOffset, pdfW, pdfH)
+        yOffset += pageH
+      }
+      pdf.save(data.name ? `${data.name.replace(/\s+/g, '_')}_Resume.pdf` : 'Resume.pdf')
+    } catch (err) {
+      console.error('PDF export failed:', err)
+      setExportError('Export failed. Please try again.')
+    } finally {
+      setExporting(false)
     }
-    pdf.save(data.name ? `${data.name.replace(/\s+/g, '_')}_Resume.pdf` : 'Resume.pdf')
   }
 
   const contactItems = [
@@ -73,15 +88,28 @@ export default function ResumePreview({ data, atsScore }) {
             </div>
           )}
         </div>
-        <button
-          onClick={handleExport}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl border transition-all bg-slate-50 dark:bg-navy-800 border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-electric-500/50 hover:text-electric-600 dark:hover:text-electric-400"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-          </svg>
-          Download PDF
-        </button>
+        <div className="flex flex-col items-end gap-1">
+          {exportError && <p className="text-xs text-red-500">{exportError}</p>}
+          <button
+            onClick={handleExport}
+            disabled={exporting}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl border transition-all bg-slate-50 dark:bg-navy-800 border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:border-electric-500/50 hover:text-electric-600 dark:hover:text-electric-400 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {exporting ? (
+              <>
+                <span className="w-4 h-4 border-2 border-slate-300 border-t-electric-500 rounded-full animate-spin" />
+                Generating…
+              </>
+            ) : (
+              <>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                </svg>
+                Download PDF
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Format customizer */}
