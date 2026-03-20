@@ -87,6 +87,17 @@ export function AuthProvider({ children }) {
     if (user) await fetchProfile(user.id)
   }, [user, fetchProfile])
 
+  // Update profile fields (username, avatar_url, etc.)
+  const updateProfile = useCallback(async (updates) => {
+    if (!user) return { error: 'Not authenticated' }
+    const { error } = await supabase
+      .from('profiles')
+      .update(updates)
+      .eq('id', user.id)
+    if (!error) await fetchProfile(user.id)
+    return { error }
+  }, [user, fetchProfile])
+
   // Call this after a successful optimization to increment the counter
   const incrementUsage = async () => {
     if (!user) return
@@ -104,6 +115,7 @@ export function AuthProvider({ children }) {
       optimizationsRemaining,
       incrementUsage,
       refreshProfile,
+      updateProfile,
       signUp,
       signIn,
       signInWithProvider,

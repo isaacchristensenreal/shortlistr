@@ -64,7 +64,7 @@ export default function Dashboard() {
   }, [user])
 
   const formatDate = (ts) => new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-  const firstName = user?.email?.split('@')[0] ?? ''
+  const firstName = profile?.username || user?.email?.split('@')[0] || ''
 
   return (
     <Layout>

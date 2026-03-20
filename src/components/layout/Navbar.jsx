@@ -51,7 +51,9 @@ function UserMenu({ user, profile, onSignOut }) {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  const initials = user?.email?.[0]?.toUpperCase() ?? '?'
+  const initials = (profile?.username || user?.email || '?')[0].toUpperCase()
+  const avatarUrl = profile?.avatar_url
+  const displayName = profile?.username || user?.email
 
   return (
     <div className="relative" ref={ref}>
@@ -59,11 +61,13 @@ function UserMenu({ user, profile, onSignOut }) {
         onClick={() => setOpen(o => !o)}
         className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
       >
-        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-electric-500 to-violet-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
-          {initials}
+        <div className="w-7 h-7 rounded-lg overflow-hidden bg-gradient-to-br from-electric-500 to-violet-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
+          {avatarUrl
+            ? <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+            : initials}
         </div>
         <span className="text-sm text-slate-700 dark:text-slate-300 max-w-[120px] truncate hidden sm:block">
-          {user?.email}
+          {profile?.username ? `@${profile.username}` : user?.email}
         </span>
         <svg className={`w-3.5 h-3.5 text-slate-400 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -71,11 +75,22 @@ function UserMenu({ user, profile, onSignOut }) {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-56 bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-xl shadow-xl shadow-slate-200/50 dark:shadow-black/30 z-50 overflow-hidden scale-in">
+        <div className="absolute right-0 top-full mt-2 w-60 bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-xl shadow-xl shadow-slate-200/50 dark:shadow-black/30 z-50 overflow-hidden scale-in">
           <div className="px-4 py-3 border-b border-slate-100 dark:border-white/10">
-            <p className="text-xs text-slate-400 mb-0.5">Signed in as</p>
-            <p className="text-sm font-medium text-slate-700 dark:text-slate-200 truncate">{user?.email}</p>
-            <span className={`inline-flex items-center gap-1 mt-1.5 text-xs font-semibold px-2 py-0.5 rounded-full ${
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl overflow-hidden bg-gradient-to-br from-electric-500 to-violet-500 flex items-center justify-center text-white text-sm font-bold shrink-0">
+                {avatarUrl
+                  ? <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+                  : initials}
+              </div>
+              <div className="min-w-0">
+                {profile?.username && (
+                  <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate">@{profile.username}</p>
+                )}
+                <p className={`text-xs text-slate-400 truncate ${!profile?.username ? 'mt-0.5' : ''}`}>{user?.email}</p>
+              </div>
+            </div>
+            <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full ${
               isPro
                 ? 'bg-electric-500/10 text-electric-600 dark:text-electric-400'
                 : 'bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-slate-400'
