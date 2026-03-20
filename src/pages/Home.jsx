@@ -239,20 +239,20 @@ export default function Home() {
         {/* Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-radial from-electric-500/20 to-transparent rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-6 pt-24 pb-16 text-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-12 sm:pb-16 text-center">
           <div className="inline-flex items-center gap-2 bg-electric-500/10 border border-electric-500/30 text-electric-600 dark:text-electric-400 text-sm px-4 py-1.5 rounded-full mb-8 font-medium">
             <span className="w-1.5 h-1.5 bg-electric-500 rounded-full animate-pulse" />
             AI-powered resume optimization
           </div>
 
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-slate-900 dark:text-white leading-[1.05] tracking-tight max-w-4xl mx-auto mb-6">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-slate-900 dark:text-white leading-[1.05] tracking-tight max-w-4xl mx-auto mb-6">
             AI resume optimization{' '}
             <span className="bg-gradient-to-r from-electric-500 via-blue-500 to-violet-500 bg-clip-text text-transparent">
               for any job description.
             </span>
           </h1>
 
-          <p className="text-slate-500 dark:text-slate-400 text-xl max-w-2xl mx-auto mb-4 leading-relaxed">
+          <p className="text-slate-500 dark:text-slate-400 text-base sm:text-xl max-w-2xl mx-auto mb-4 leading-relaxed">
             ShortListr uses AI to rewrite your resume, match keywords from any job description,
             and generate a cover letter — all in under 60 seconds.
           </p>
@@ -281,8 +281,8 @@ export default function Home() {
               </div>
             </div>
             {/* App interior */}
-            <div className="grid grid-cols-2 gap-0 text-left">
-              <div className="p-5 border-r border-slate-100 dark:border-white/5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 text-left">
+              <div className="p-5 border-b sm:border-b-0 border-r-0 sm:border-r border-slate-100 dark:border-white/5">
                 <p className="text-xs text-slate-400 dark:text-slate-500 mb-3 font-medium uppercase tracking-wider">Your Resume</p>
                 <div className="space-y-2">
                   {[80, 60, 90, 55, 70].map((w, i) => (
@@ -318,7 +318,7 @@ export default function Home() {
 
       {/* Stats bar */}
       <section className="bg-slate-50 dark:bg-navy-800 border-y border-slate-200 dark:border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
           {stats.map((s) => (
             <div key={s.label}>
               <p className="text-3xl font-bold bg-gradient-to-r from-electric-500 to-violet-500 bg-clip-text text-transparent mb-1">{s.value}</p>
@@ -343,7 +343,7 @@ export default function Home() {
 
       {/* Features */}
       <section className="bg-white dark:bg-navy-900 border-b border-slate-200 dark:border-white/10">
-        <div className="max-w-5xl mx-auto px-6 py-24">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-24">
           <div className="text-center mb-16">
             <p className="text-electric-500 dark:text-electric-400 text-sm font-semibold uppercase tracking-wider mb-3">Four AI-powered tools</p>
             <h2 className="text-3xl md:text-4xl xl:text-5xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
@@ -386,7 +386,7 @@ export default function Home() {
 
       {/* Pricing */}
       <section className="bg-slate-50 dark:bg-navy-800/50 border-b border-slate-200 dark:border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
               Simple, transparent pricing
@@ -435,10 +435,10 @@ export default function Home() {
 
       {/* Final CTA */}
       <section className="bg-gradient-to-br from-navy-900 via-blue-950 to-violet-950 dark:from-navy-900 dark:via-blue-950 dark:to-violet-950">
-        <div className="max-w-7xl mx-auto px-6 py-24 text-center relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center relative overflow-hidden">
           <div className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.04)_1px,transparent_0)] [background-size:28px_28px]" />
           <div className="relative">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-5 tracking-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-5 tracking-tight">
               See what your resume looks like{' '}
               <span className="bg-gradient-to-r from-electric-400 to-violet-400 bg-clip-text text-transparent">
                 optimized for a real job.

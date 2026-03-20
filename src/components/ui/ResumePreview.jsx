@@ -146,8 +146,14 @@ export default function ResumePreview({ data, atsScore }) {
         </div>
       </div>
 
+      {/* Mobile scroll hint */}
+      <p className="sm:hidden text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1.5">
+        <svg className="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 9l4-4 4 4m0 6l-4 4-4-4" /></svg>
+        Scroll sideways to see the full resume
+      </p>
+
       {/* Document wrapper */}
-      <div style={{ background: '#e5e7eb', borderRadius: '12px', padding: '24px', overflowX: 'auto' }}>
+      <div style={{ background: '#e5e7eb', borderRadius: '12px', padding: '16px', overflowX: 'auto' }}>
         <div
           ref={ref}
           style={{

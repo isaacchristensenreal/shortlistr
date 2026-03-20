@@ -14,6 +14,7 @@ export default function Library() {
   const [selected, setSelected] = useState(null)
   const [previewVisible, setPreviewVisible] = useState(true)
   const [deleting, setDeleting] = useState(null)
+  const [mobileView, setMobileView] = useState('list') // 'list' | 'preview'
 
   useEffect(() => {
     if (!user) return
@@ -31,12 +32,16 @@ export default function Library() {
   }, [user])
 
   const handleSelect = (id) => {
-    if (id === selected) return
+    if (id === selected) {
+      setMobileView('preview')
+      return
+    }
     setPreviewVisible(false)
     setTimeout(() => {
       setSelected(id)
       setPreviewVisible(true)
     }, 180)
+    setMobileView('preview')
   }
 
   const handleDelete = async (id) => {
@@ -57,7 +62,7 @@ export default function Library() {
   return (
     <Layout>
       <div className="bg-white dark:bg-navy-900 min-h-screen">
-        <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
 
           <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
             <div>
@@ -86,7 +91,7 @@ export default function Library() {
             <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
 
               {/* Sidebar list */}
-              <div className="space-y-2">
+              <div className={`space-y-2 ${mobileView === 'preview' ? 'hidden lg:block' : 'block'}`}>
                 <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-3">{resumes.length} saved resume{resumes.length !== 1 ? 's' : ''}</p>
                 {resumes.map((r, i) => (
                   <button
@@ -128,7 +133,15 @@ export default function Library() {
               </div>
 
               {/* Preview panel */}
-              <div style={{ transition: 'opacity 0.2s ease', opacity: previewVisible ? 1 : 0 }}>
+              <div className={mobileView === 'list' ? 'hidden lg:block' : 'block'} style={{ transition: 'opacity 0.2s ease', opacity: previewVisible ? 1 : 0 }}>
+                {/* Mobile back button */}
+                <button
+                  onClick={() => setMobileView('list')}
+                  className="lg:hidden flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 mb-4 font-medium"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                  Back to list
+                </button>
                 {selectedResume && (
                   <ResumePreview data={selectedResume.resume_data} atsScore={selectedResume.ats_score} />
                 )}
