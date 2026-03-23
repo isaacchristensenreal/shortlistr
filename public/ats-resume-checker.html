@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO -->
+  <title>ATS Resume Checker Free | ShortListr</title>
+  <meta name="description" content="Check if your resume passes ATS filters instantly. Most resumes are rejected automatically — find out if yours makes the cut with ShortListr." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://shortlistr.us/ats-resume-checker" />
+  <meta name="author" content="ShortListr" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://shortlistr.us/ats-resume-checker" />
+  <meta property="og:site_name" content="ShortListr" />
+  <meta property="og:title" content="Free ATS Resume Checker — See If Your Resume Passes | ShortListr" />
+  <meta property="og:description" content="Check if your resume passes ATS filters instantly. 73% of resumes are rejected before a human reads them — find out if yours makes the cut." />
+  <meta property="og:image" content="https://shortlistr.us/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@shortlistr" />
+  <meta name="twitter:title" content="Free ATS Resume Checker — See If Your Resume Passes" />
+  <meta name="twitter:description" content="73% of resumes are rejected before a human reads them. Check if yours passes ATS screening with ShortListr." />
+  <meta name="twitter:image" content="https://shortlistr.us/og-image.png" />
+
+  <!-- Schema.org WebPage + SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Free ATS Resume Checker",
+    "description": "Check if your resume passes ATS filters instantly. Most resumes are rejected automatically — find out if yours makes the cut with ShortListr.",
+    "url": "https://shortlistr.us/ats-resume-checker",
+    "isPartOf": { "@type": "WebSite", "name": "ShortListr", "url": "https://shortlistr.us" },
+    "about": {
+      "@type": "SoftwareApplication",
+      "name": "ShortListr ATS Resume Checker",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+  }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy-900: #0a0f1e;
+      --navy-800: #0d1426;
+      --navy-700: #111b33;
+      --navy-600: #162040;
+      --electric-500: #3b82f6;
+      --electric-400: #60a5fa;
+      --electric-300: #93c5fd;
+      --violet-500: #6366f1;
+      --violet-400: #818cf8;
+      --white: #f0f6fc;
+      --slate-900: #0f172a;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --border: rgba(255,255,255,0.08);
+      --border-light: rgba(255,255,255,0.05);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--navy-900);
+      color: #c9d1d9;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes float-b {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(8px); }
+    }
+    @keyframes orb-drift {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(30px,-20px) scale(1.05); }
+      66% { transform: translate(-20px,15px) scale(0.97); }
+    }
+    @keyframes orb-drift2 {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(-25px,20px) scale(1.03); }
+      66% { transform: translate(20px,-15px) scale(0.98); }
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+    @keyframes scan-line {
+      0% { top: 0%; }
+      100% { top: 100%; }
+    }
+    @keyframes reveal-up {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .float { animation: float 5s ease-in-out infinite; }
+    .float-b { animation: float-b 6s ease-in-out infinite; }
+    .orb-drift { animation: orb-drift 18s ease-in-out infinite; }
+    .orb-drift2 { animation: orb-drift2 22s ease-in-out infinite; }
+    .pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,15,30,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--slate-400);
+      text-decoration: none;
+      transition: color 0.2s;
+      font-weight: 500;
+    }
+    .back-link:hover { color: var(--white); }
+    .back-link svg { transition: transform 0.2s; }
+    .back-link:hover svg { transform: translateX(-3px); }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #6366f1 100%);
+      box-shadow: 0 4px 14px rgba(59,130,246,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .logo-link:hover .logo-icon { transform: scale(1.1) rotate(-6deg); }
+    .logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.3px;
+      transition: color 0.2s;
+    }
+    .logo-link:hover .logo-text { color: var(--electric-400); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(to right, var(--electric-500), #2563eb);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 9px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(59,130,246,0.3);
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 96px 24px 80px;
+      text-align: center;
+    }
+
+    /* Dot grid — matches main site exactly */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(59,130,246,0.08) 1px, transparent 0);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+    /* Top glow */
+    .hero-glow {
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(59,130,246,0.2) 0%, transparent 70%);
+      filter: blur(40px);
+      pointer-events: none;
+    }
+    /* Floating orbs */
+    .orb-1 {
+      position: absolute;
+      top: 80px;
+      left: 8%;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(59,130,246,0.1), rgba(99,102,241,0.06) 70%, transparent);
+      border-radius: 50%;
+      filter: blur(40px);
+      pointer-events: none;
+    }
+    .orb-2 {
+      position: absolute;
+      bottom: 40px;
+      right: 6%;
+      width: 340px;
+      height: 340px;
+      background: radial-gradient(circle, rgba(99,102,241,0.1), rgba(59,130,246,0.05) 70%, transparent);
+      border-radius: 50%;
+      filter: blur(50px);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: var(--electric-400);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 68px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.08;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(to right, var(--electric-500), #3b6cf6, var(--violet-500));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-shift 4s ease infinite;
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--slate-400);
+      max-width: 580px;
+      margin: 0 auto 12px;
+      line-height: 1.6;
+    }
+
+    /* Urgency stat */
+    .urgency-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 100px;
+      padding: 6px 18px;
+      margin: 0 auto 40px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fca5a5;
+    }
+    .urgency-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ef4444;
+      flex-shrink: 0;
+    }
+
+    /* CTA button */
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), #2563eb 50%, var(--violet-500));
+      background-size: 200% 200%;
+      animation: gradient-shift 4s ease infinite;
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;
+      padding: 18px 42px;
+      border-radius: 16px;
+      text-decoration: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.4), 0 2px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s;
+      margin-bottom: 16px;
+    }
+    .hero-cta:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 16px 48px rgba(59,130,246,0.5), 0 4px 12px rgba(0,0,0,0.3);
+      color: #fff;
+    }
+    .hero-note {
+      font-size: 13px;
+      color: var(--slate-500);
+      margin-bottom: 64px;
+    }
+
+    /* ── BROWSER CHROME MOCK ── */
+    .mock-browser {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--navy-800);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(59,130,246,0.08);
+      overflow: hidden;
+      transition: box-shadow 0.4s;
+    }
+    .mock-browser:hover {
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 60px rgba(59,130,246,0.08);
+    }
+    .mock-chrome {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 16px;
+      background: rgba(10,15,30,0.8);
+      border-bottom: 1px solid var(--border);
+    }
+    .mock-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .mock-dot.red { background: rgba(255,95,86,0.7); }
+    .mock-dot.yellow { background: rgba(255,189,46,0.7); }
+    .mock-dot.green { background: rgba(39,201,63,0.7); }
+    .mock-url {
+      flex: 1;
+      margin: 0 16px;
+      height: 22px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+    }
+    .mock-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 200px;
+    }
+    .mock-col {
+      padding: 20px;
+    }
+    .mock-col.left {
+      border-right: 1px solid var(--border);
+    }
+    .mock-col.right {
+      background: linear-gradient(135deg, rgba(59,130,246,0.04), rgba(99,102,241,0.04));
+    }
+    .mock-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .mock-label.muted { color: rgba(148,163,184,0.7); }
+    .mock-label.electric { color: var(--electric-400); }
+    .mock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+    .mock-badge.green { background: rgba(34,197,94,0.15); color: #4ade80; }
+    .mock-line {
+      height: 7px;
+      border-radius: 100px;
+      margin-bottom: 8px;
+    }
+    .mock-line.before { background: rgba(255,255,255,0.08); }
+    .mock-line.after { background: linear-gradient(to right, rgba(59,130,246,0.5), rgba(99,102,241,0.4)); }
+    .mock-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .mock-chip {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.2);
+      color: var(--electric-300);
+    }
+    .mock-score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .mock-score-label { font-size: 12px; font-weight: 600; color: var(--white); }
+    .mock-score-track {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 100px;
+      overflow: hidden;
+      margin: 0 12px;
+    }
+    .mock-score-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(to right, var(--electric-500), var(--violet-500));
+    }
+    .mock-score-pct { font-size: 11px; font-weight: 700; color: var(--electric-400); }
+
+    /* ── SECTIONS ── */
+    section { padding: 80px 24px; }
+
+    .section-inner { max-width: 1000px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--electric-400);
+      margin-bottom: 12px;
+    }
+    .section-h2 {
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-h2 .gradient-text {
+      background: linear-gradient(to right, var(--electric-400), var(--violet-400));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-sub {
+      font-size: 18px;
+      color: var(--slate-400);
+      max-width: 580px;
+      line-height: 1.65;
+      margin-bottom: 56px;
+    }
+
+    /* ── WHAT IS ATS SECTION ── */
+    .ats-explain {
+      background: var(--navy-800);
+      border-bottom: 1px solid var(--border);
+    }
+    .ats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 680px) { .ats-grid { grid-template-columns: 1fr; } }
+
+    .ats-text p {
+      font-size: 16px;
+      color: #c9d1d9;
+      margin-bottom: 18px;
+      line-height: 1.75;
+    }
+    .ats-text p strong { color: var(--white); }
+
+    /* ATS flow diagram */
+    .ats-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 20px;
+      background: var(--navy-700);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 8px;
+      transition: border-color 0.2s;
+    }
+    .flow-step:hover { border-color: rgba(59,130,246,0.3); }
+    .flow-step-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .flow-step-body { flex: 1; }
+    .flow-step-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+    .flow-step-desc {
+      font-size: 13px;
+      color: var(--slate-400);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .flow-arrow {
+      text-align: center;
+      color: var(--slate-500);
+      font-size: 18px;
+      margin: -4px 0;
+      line-height: 1;
+    }
+    .flow-step.rejected {
+      background: rgba(239,68,68,0.06);
+      border-color: rgba(239,68,68,0.18);
+    }
+    .flow-step.passed {
+      background: rgba(59,130,246,0.06);
+      border-color: rgba(59,130,246,0.2);
+    }
+
+    /* ── WHY RESUMES FAIL ── */
+    .fail-section { background: var(--navy-900); }
+    .fail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 760px) { .fail-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .fail-grid { grid-template-columns: 1fr; } }
+
+    .fail-card {
+      background: var(--navy-800);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .fail-card:hover {
+      border-color: rgba(59,130,246,0.25);
+      transform: translateY(-3px);
+    }
+    .fail-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 20px;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.15);
+    }
+    .fail-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .fail-desc {
+      font-size: 14px;
+      color: var(--slate-400);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* big number callout */
+    .stat-callout {
+      background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(99,102,241,0.08));
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-callout::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(59,130,246,0.12) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.5;
+    }
+    .stat-callout-inner { position: relative; z-index: 1; }
+    .stat-big {
+      font-size: clamp(64px, 12vw, 96px);
+      font-weight: 900;
+      letter-spacing: -4px;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--electric-400), var(--violet-400));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .stat-big-label {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .stat-big-sub { font-size: 14px; color: var(--slate-400); }
+
+    /* ── HOW SHORTLISTR FIXES IT ── */
+    .fix-section {
+      background: var(--navy-800);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .fix-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .fix-step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 24px;
+      padding-bottom: 40px;
+      position: relative;
+    }
+    .fix-step:last-child { padding-bottom: 0; }
+    .fix-step::after {
+      content: '';
+      position: absolute;
+      left: 27px;
+      top: 56px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(59,130,246,0.3), transparent);
+    }
+    .fix-step:last-child::after { display: none; }
+    .fix-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      box-shadow: 0 8px 24px rgba(59,130,246,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .fix-body { padding-top: 10px; }
+    .fix-body h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+    .fix-body p {
+      font-size: 16px;
+      color: var(--slate-400);
+      margin: 0;
+      line-height: 1.7;
+    }
+    .fix-body p strong { color: #c9d1d9; }
+
+    /* keyword chips inside fix section */
+    .inline-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .inline-chip {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.2);
+      color: var(--electric-300);
+    }
+    .inline-chip.found {
+      background: rgba(34,197,94,0.08);
+      border-color: rgba(34,197,94,0.2);
+      color: #4ade80;
+    }
+    .inline-chip.missing {
+      background: rgba(239,68,68,0.08);
+      border-color: rgba(239,68,68,0.2);
+      color: #f87171;
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    /* ── FINAL CTA SECTION ── */
+    .final-cta {
+      background: linear-gradient(135deg, var(--navy-900) 0%, #050d1f 40%, #0d0a1e 100%);
+      padding: 100px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta-grid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    .final-cta-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(59,130,246,0.12) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .final-cta-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .final-cta h2 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .final-cta h2 .gradient-text {
+      background: linear-gradient(to right, var(--electric-400), var(--violet-400));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .final-cta p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    .final-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+      color: var(--navy-900);
+      font-weight: 800;
+      font-size: 18px;
+      padding: 18px 44px;
+      border-radius: 16px;
+      text-decoration: none;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+      transition: transform 0.2s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s, background 0.2s;
+    }
+    .final-cta-btn:hover {
+      background: rgba(240,246,252,0.92);
+      transform: translateY(-3px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+      color: var(--navy-900);
+    }
+    .final-cta-note {
+      margin-top: 20px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-900);
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-copy { font-size: 13px; color: var(--slate-500); }
+    .footer-copy a { color: var(--slate-400); text-decoration: none; }
+    .footer-copy a:hover { color: var(--white); }
+
+    @media (max-width: 640px) {
+      .footer-inner { justify-content: center; }
+      .hero { padding: 72px 24px 60px; }
+      .mock-body { grid-template-columns: 1fr; }
+      .mock-col.left { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="https://shortlistr.us" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to ShortListr
+      </a>
+      <a href="https://shortlistr.us" class="logo-link">
+        <div class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="14" height="18" rx="2" fill="white" fill-opacity="0.2" stroke="white" stroke-opacity="0.5" stroke-width="1.2"/>
+            <rect x="5" y="7" width="8" height="1.5" rx="0.75" fill="white" fill-opacity="0.85"/>
+            <rect x="5" y="11" width="5" height="1.5" rx="0.75" fill="white" fill-opacity="0.65"/>
+            <rect x="5" y="15" width="7" height="1.5" rx="0.75" fill="white" fill-opacity="0.55"/>
+            <path d="M18 2L13 12H17L12 22L23 10H19L18 2Z" fill="white"/>
+          </svg>
+        </div>
+        <span class="logo-text">ShortListr</span>
+      </a>
+      <a href="https://shortlistr.us" class="nav-cta">Check My Resume Free →</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="orb-1 orb-drift"></div>
+    <div class="orb-2 orb-drift2"></div>
+
+    <div class="hero-inner">
+      <div class="hero-badge float">
+        <span class="pulse-dot" style="width:8px;height:8px;border-radius:50%;background:var(--electric-500);display:inline-block;"></span>
+        Free ATS Resume Checker
+      </div>
+
+      <h1>
+        Find out if your resume<br>
+        <span class="gradient-text">passes ATS screening.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Most resumes are rejected by software before a recruiter reads a single word. ShortListr checks your resume against any job description and shows you exactly where you stand.
+      </p>
+
+      <div style="display:flex;justify-content:center;margin-bottom:36px;">
+        <div class="urgency-bar">
+          <div class="urgency-dot pulse-dot"></div>
+          73% of resumes are rejected before a human ever reads them
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <a href="https://shortlistr.us" class="hero-cta">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Check My Resume Free
+        </a>
+      </div>
+      <p class="hero-note">No account required to start &nbsp;·&nbsp; Results in under 60 seconds &nbsp;·&nbsp; Free plan available</p>
+
+      <!-- Browser mock -->
+      <div class="mock-browser float-b">
+        <div class="mock-chrome">
+          <div class="mock-dot red"></div>
+          <div class="mock-dot yellow"></div>
+          <div class="mock-dot green"></div>
+          <div class="mock-url"></div>
+        </div>
+        <div class="mock-body">
+          <div class="mock-col left">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+              <span class="mock-label muted">Your Resume</span>
+            </div>
+            <div class="mock-score-row">
+              <span class="mock-score-label" style="font-size:13px;color:#f87171;">ATS Score</span>
+              <div class="mock-score-track">
+                <div class="mock-score-fill" style="width:41%;background:linear-gradient(to right,#ef4444,#f97316);"></div>
+              </div>
+              <span class="mock-score-pct" style="color:#f87171;">41%</span>
+            </div>
+            <div class="mock-line before" style="width:90%"></div>
+            <div class="mock-line before" style="width:70%"></div>
+            <div class="mock-line before" style="width:80%"></div>
+            <div class="mock-line before" style="width:55%"></div>
+            <div style="margin-top:14px;">
+              <div style="font-size:11px;color:#f87171;font-weight:600;margin-bottom:8px;">✗ Missing keywords</div>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;">
+                <span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#f87171;">quota attainment</span>
+                <span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#f87171;">CRM</span>
+                <span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#f87171;">pipeline management</span>
+              </div>
+            </div>
+          </div>
+          <div class="mock-col right">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+              <span class="mock-label electric">Optimized ✦</span>
+              <span class="mock-badge green">94% match</span>
+            </div>
+            <div class="mock-score-row">
+              <span class="mock-score-label" style="font-size:13px;">ATS Score</span>
+              <div class="mock-score-track">
+                <div class="mock-score-fill" style="width:94%;"></div>
+              </div>
+              <span class="mock-score-pct">94%</span>
+            </div>
+            <div class="mock-line after" style="width:92%"></div>
+            <div class="mock-line after" style="width:76%"></div>
+            <div class="mock-line after" style="width:88%"></div>
+            <div class="mock-line after" style="width:60%"></div>
+            <div class="mock-chips">
+              <span class="mock-chip">quota attainment</span>
+              <span class="mock-chip">CRM</span>
+              <span class="mock-chip">pipeline</span>
+              <span class="mock-chip">B2B sales</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS ATS -->
+  <section class="ats-explain">
+    <div class="section-inner">
+      <div class="ats-grid">
+        <div class="ats-text reveal-on-scroll">
+          <p class="section-label">What is ATS?</p>
+          <h2 class="section-h2">The software that decides if <span class="gradient-text">a human ever sees your resume</span></h2>
+          <p>An Applicant Tracking System (ATS) is software that companies use to filter job applications before any human reviews them. When you apply online, your resume goes directly into the ATS — not into a recruiter's inbox.</p>
+          <p>The system parses your resume into plain text, scans it for specific keywords from the job description, and assigns a match score. If your score falls below the company's threshold — often 60–75% — your resume is automatically moved to a rejection folder. <strong>The recruiter never opens it.</strong></p>
+          <p>Over 99% of Fortune 500 companies and most mid-size companies use ATS software on every application they receive. If you've been sending applications and hearing nothing back, the ATS is almost certainly why.</p>
+        </div>
+        <div class="ats-flow reveal-on-scroll delay-2">
+          <div class="flow-step">
+            <div class="flow-step-icon" style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);">📤</div>
+            <div class="flow-step-body">
+              <div class="flow-step-title">You submit your application</div>
+              <p class="flow-step-desc">You upload your resume and hit submit. It enters the ATS queue instantly.</p>
+            </div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">
+            <div class="flow-step-icon" style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);">🔍</div>
+            <div class="flow-step-body">
+              <div class="flow-step-title">ATS parses and scores your resume</div>
+              <p class="flow-step-desc">Software extracts text, identifies keywords, and generates a match score against the job description. This takes under one second.</p>
+            </div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step rejected">
+            <div class="flow-step-icon" style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.18);">✗</div>
+            <div class="flow-step-body">
+              <div class="flow-step-title" style="color:#f87171;">Score too low → rejected automatically</div>
+              <p class="flow-step-desc">73% of resumes fall below the threshold. They go to a rejection folder no recruiter will open.</p>
+            </div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step passed">
+            <div class="flow-step-icon" style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);">✓</div>
+            <div class="flow-step-body">
+              <div class="flow-step-title" style="color:var(--electric-400);">Score high enough → human review</div>
+              <p class="flow-step-desc">Only resumes above the threshold reach a recruiter. Now you actually have a shot.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY RESUMES FAIL -->
+  <section class="fail-section">
+    <div class="section-inner">
+      <div class="reveal-on-scroll" style="text-align:center;margin-bottom:52px;">
+        <p class="section-label" style="text-align:center;">Why resumes get rejected</p>
+        <h2 class="section-h2" style="text-align:center;">The 6 reasons your resume <span class="gradient-text">never reaches a human</span></h2>
+        <p class="section-sub" style="margin:0 auto;text-align:center;">None of these are about your qualifications. They're all about how your resume is read by software.</p>
+      </div>
+
+      <div class="stat-callout reveal-on-scroll">
+        <div class="stat-callout-inner">
+          <span class="stat-big">73%</span>
+          <p class="stat-big-label">of resumes are rejected before a human reads them</p>
+          <p class="stat-big-sub">Source: Jobscan 2025 ATS Report — and the number has been rising every year as ATS adoption grows</p>
+        </div>
+      </div>
+
+      <div class="fail-grid">
+        <div class="fail-card reveal-on-scroll delay-1">
+          <div class="fail-icon">🔑</div>
+          <div class="fail-title">Wrong keywords</div>
+          <p class="fail-desc">Your resume uses different words than the job description — even if they mean the same thing. "Led a team" ≠ "cross-functional leadership" to an ATS parser.</p>
+        </div>
+        <div class="fail-card reveal-on-scroll delay-2">
+          <div class="fail-icon">📐</div>
+          <div class="fail-title">Two-column layout</div>
+          <p class="fail-desc">ATS reads horizontally across both columns simultaneously, producing garbled text. Your Python experience gets merged with a bullet about team leadership. Both score zero.</p>
+        </div>
+        <div class="fail-card reveal-on-scroll delay-3">
+          <div class="fail-icon">🎨</div>
+          <div class="fail-title">Design tool export</div>
+          <p class="fail-desc">Canva, InDesign, and Figma embed text as image layers. The ATS receives a PDF with no extractable text. Your entire resume is blank to the system.</p>
+        </div>
+        <div class="fail-card reveal-on-scroll delay-1">
+          <div class="fail-icon">📁</div>
+          <div class="fail-title">Contact info in header</div>
+          <p class="fail-desc">Word and Docs document headers — the same region used for page numbers — are skipped by most ATS parsers. Your name and email are invisible to the system.</p>
+        </div>
+        <div class="fail-card reveal-on-scroll delay-2">
+          <div class="fail-icon">📋</div>
+          <div class="fail-title">Generic resume</div>
+          <p class="fail-desc">Sending the same resume to every job means your keyword match score is low for all of them. Every job description is different. Your resume needs to reflect each one.</p>
+        </div>
+        <div class="fail-card reveal-on-scroll delay-3">
+          <div class="fail-icon">🔤</div>
+          <div class="fail-title">Unusual section headers</div>
+          <p class="fail-desc">"Where I've Made an Impact" fails. ATS expects "Work Experience." Nonstandard headers cause your experience to be misfiled — or ignored entirely.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW SHORTLISTR FIXES IT -->
+  <section class="fix-section">
+    <div class="section-inner">
+      <div class="reveal-on-scroll" style="text-align:center;margin-bottom:64px;">
+        <p class="section-label" style="text-align:center;">How ShortListr fixes it</p>
+        <h2 class="section-h2" style="text-align:center;">From rejected to <span class="gradient-text">reaching a recruiter</span></h2>
+        <p class="section-sub" style="margin:0 auto;text-align:center;">ShortListr reads your resume and any job description, then automatically closes the gap between what you have and what the ATS is scanning for.</p>
+      </div>
+
+      <div class="fix-steps">
+        <div class="fix-step reveal-on-scroll">
+          <div class="fix-num">1</div>
+          <div class="fix-body">
+            <h3>Upload your resume and paste any job posting</h3>
+            <p>ShortListr accepts your resume as a PDF. Paste the full job description — or just a URL. The AI reads both in seconds. <strong>No reformatting, no manual work.</strong></p>
+          </div>
+        </div>
+        <div class="fix-step reveal-on-scroll delay-1">
+          <div class="fix-num">2</div>
+          <div class="fix-body">
+            <h3>See your ATS score and every keyword gap</h3>
+            <p>You get a live ATS match score and a full keyword analysis — the exact terms the job description is using that your resume is missing. No guessing, no vague feedback.</p>
+            <div class="inline-chips">
+              <span class="inline-chip found">✓ project management</span>
+              <span class="inline-chip found">✓ stakeholder alignment</span>
+              <span class="inline-chip missing">✗ cross-functional teams</span>
+              <span class="inline-chip missing">✗ Jira</span>
+              <span class="inline-chip missing">✗ OKRs</span>
+            </div>
+          </div>
+        </div>
+        <div class="fix-step reveal-on-scroll delay-2">
+          <div class="fix-num">3</div>
+          <div class="fix-body">
+            <h3>AI rewrites your bullet points to close the gaps</h3>
+            <p>ShortListr rewrites your experience bullets to naturally incorporate the missing keywords — using the STAR method with action verbs and measurable impact. <strong>Your experience, better described.</strong></p>
+          </div>
+        </div>
+        <div class="fix-step reveal-on-scroll delay-3">
+          <div class="fix-num">4</div>
+          <div class="fix-body">
+            <h3>Download your ATS-optimized resume in one click</h3>
+            <p>Export as a clean PDF or DOCX — single column, standard fonts, ATS-safe formatting. Every version is saved in your library with its score and date so you can track progress across applications.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <div class="final-cta">
+    <div class="final-cta-grid"></div>
+    <div class="final-cta-glow"></div>
+    <div class="final-cta-inner reveal-on-scroll">
+      <h2>
+        Stop applying into the void.<br>
+        <span class="gradient-text">Start getting callbacks.</span>
+      </h2>
+      <p>
+        Check your resume against any job description for free. See your ATS score, find your keyword gaps, and get a rewritten resume that actually passes — in under 60 seconds.
+      </p>
+      <a href="https://shortlistr.us" class="final-cta-btn">
+        Check My Resume Free →
+      </a>
+      <p class="final-cta-note">Free plan available &nbsp;·&nbsp; No credit card required &nbsp;·&nbsp; Pro plan from $10/month</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <a href="https://shortlistr.us" class="logo-link">
+        <div class="logo-icon" style="width:26px;height:26px;border-radius:7px;box-shadow:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="14" height="18" rx="2" fill="white" fill-opacity="0.2" stroke="white" stroke-opacity="0.5" stroke-width="1.2"/>
+            <rect x="5" y="7" width="8" height="1.5" rx="0.75" fill="white" fill-opacity="0.85"/>
+            <rect x="5" y="11" width="5" height="1.5" rx="0.75" fill="white" fill-opacity="0.65"/>
+            <rect x="5" y="15" width="7" height="1.5" rx="0.75" fill="white" fill-opacity="0.55"/>
+            <path d="M18 2L13 12H17L12 22L23 10H19L18 2Z" fill="white"/>
+          </svg>
+        </div>
+        <span class="logo-text" style="font-size:15px;">ShortListr</span>
+      </a>
+      <p class="footer-copy">© 2026 <a href="https://shortlistr.us">ShortListr</a> · Free ATS Resume Checker</p>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
