@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume for First Job — Beat ATS With No Experience | Shortlistr</title>
+  <meta name="description" content="No work experience? Here's how to write a first resume that passes ATS and actually gets seen by recruiters." />
+  <link rel="canonical" href="https://shortlistr.us/resume-for-first-job" />
+
+  <meta property="og:title" content="Resume for First Job — Beat ATS With No Experience | Shortlistr" />
+  <meta property="og:description" content="No work experience? Here's how to write a first resume that passes ATS and actually gets seen by recruiters." />
+  <meta property="og:url" content="https://shortlistr.us/resume-for-first-job" />
+  <meta property="og:type" content="article" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy-900: #0a0f1e;
+      --navy-800: #0d1426;
+      --navy-700: #111b33;
+      --navy-600: #162040;
+      --electric-500: #3b82f6;
+      --electric-400: #60a5fa;
+      --electric-300: #93c5fd;
+      --violet-500: #6366f1;
+      --violet-400: #818cf8;
+      --violet-300: #a5b4fc;
+      --emerald-400: #34d399;
+      --emerald-500: #10b981;
+      --rose-400: #fb7185;
+      --amber-400: #fbbf24;
+      --slate-400: #94a3b8;
+      --slate-300: #cbd5e1;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy-900);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(59,130,246,0.08) 1px, transparent 0);
+      background-size: 32px 32px;
+      pointer-events: none; z-index: 0;
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%;
+      filter: blur(80px); pointer-events: none; z-index: 0;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      animation: orb-drift 18s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(59,130,246,0.10) 0%, transparent 70%);
+      bottom: -150px; left: -150px;
+      animation: orb-drift2 22s ease-in-out infinite alternate;
+    }
+    @keyframes orb-drift  { from { transform: translate(0,0); } to { transform: translate(40px,60px); } }
+    @keyframes orb-drift2 { from { transform: translate(0,0); } to { transform: translate(-30px,-50px); } }
+
+    /* NAV */
+    nav {
+      position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(10,15,30,0.8); backdrop-filter: blur(12px);
+    }
+    .logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #6366f1 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 20px; height: 20px; }
+    .logo-text { font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 600; font-size: 0.85rem;
+      padding: 9px 20px; border-radius: 8px; text-decoration: none;
+      transition: opacity .2s, transform .2s;
+    }
+    .nav-cta:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 90px 24px 70px;
+      max-width: 800px; margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.25);
+      color: var(--emerald-400); font-size: 0.8rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 28px;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 5vw, 3.3rem);
+      font-weight: 900; line-height: 1.12; letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.75) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 22px;
+    }
+    .hero p {
+      font-size: 1.15rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 620px; margin: 0 auto 36px;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 1.05rem;
+      padding: 16px 36px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,130,246,0.4); }
+    .hero-sub { margin-top: 14px; font-size: 0.82rem; color: rgba(148,163,184,0.6); }
+
+    /* SECTIONS */
+    section {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 70px 24px;
+    }
+    section + section { padding-top: 0; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--electric-400); margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800; line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 16px;
+    }
+    .section-intro {
+      font-size: 1.05rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 680px; margin-bottom: 44px;
+    }
+    .divider {
+      position: relative; z-index: 1;
+      height: 1px; background: rgba(255,255,255,0.06);
+      max-width: 900px; margin: 0 auto;
+    }
+
+    /* RESUME SKELETON CARD */
+    .skeleton-wrap {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 32px;
+      align-items: start;
+    }
+    @media (max-width: 720px) { .skeleton-wrap { grid-template-columns: 1fr; } }
+
+    .skeleton-explainer { display: flex; flex-direction: column; gap: 16px; }
+    .explainer-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: rgba(13,20,38,0.6);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; padding: 18px;
+      cursor: pointer; transition: border-color .2s, background .2s;
+    }
+    .explainer-item:hover,
+    .explainer-item.active { border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.06); }
+    .exp-dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+    }
+    .exp-dot.blue   { background: var(--electric-400); box-shadow: 0 0 6px rgba(96,165,250,0.5); }
+    .exp-dot.violet { background: var(--violet-400);   box-shadow: 0 0 6px rgba(129,140,248,0.5); }
+    .exp-dot.emerald{ background: var(--emerald-400);  box-shadow: 0 0 6px rgba(52,211,153,0.5); }
+    .exp-dot.amber  { background: var(--amber-400);    box-shadow: 0 0 6px rgba(251,191,36,0.5); }
+    .exp-dot.rose   { background: var(--rose-400);     box-shadow: 0 0 6px rgba(251,113,133,0.5); }
+    .exp-dot.slate  { background: var(--slate-400); }
+    .explainer-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+    .explainer-item p  { font-size: 0.82rem; color: var(--slate-400); line-height: 1.5; }
+
+    /* Resume paper card */
+    .resume-paper {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 28px 24px;
+      color: #1e293b;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+      position: relative;
+    }
+    .resume-paper::before {
+      content: 'Resume Preview';
+      position: absolute; top: -10px; left: 20px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: #fff; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 6px;
+    }
+
+    .rp-header { margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0; }
+    .rp-name { font-size: 1.1rem; font-weight: 800; color: #0f172a; letter-spacing: -0.02em; }
+    .rp-contact { font-size: 0.62rem; color: #64748b; margin-top: 3px; }
+
+    .rp-section { margin-bottom: 14px; }
+    .rp-section-label {
+      font-size: 0.6rem; font-weight: 800; letter-spacing: .1em;
+      text-transform: uppercase; margin-bottom: 6px;
+      padding-bottom: 3px; border-bottom: 1px solid;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .rp-section-label.blue   { color: #2563eb; border-color: rgba(37,99,235,0.2); }
+    .rp-section-label.violet { color: #6366f1; border-color: rgba(99,102,241,0.2); }
+    .rp-section-label.emerald{ color: #059669; border-color: rgba(5,150,105,0.2); }
+    .rp-section-label.amber  { color: #d97706; border-color: rgba(217,119,6,0.2); }
+    .rp-section-label.rose   { color: #e11d48; border-color: rgba(225,29,72,0.2); }
+    .rp-section-label.slate  { color: #475569; border-color: rgba(71,85,105,0.2); }
+
+    .highlight-ring {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .highlight-ring.blue   { background: #2563eb; box-shadow: 0 0 5px rgba(37,99,235,0.6); }
+    .highlight-ring.violet { background: #6366f1; box-shadow: 0 0 5px rgba(99,102,241,0.6); }
+    .highlight-ring.emerald{ background: #059669; box-shadow: 0 0 5px rgba(5,150,105,0.6); }
+    .highlight-ring.amber  { background: #d97706; box-shadow: 0 0 5px rgba(217,119,6,0.6); }
+    .highlight-ring.rose   { background: #e11d48; box-shadow: 0 0 5px rgba(225,29,72,0.6); }
+    .highlight-ring.slate  { background: #94a3b8; }
+
+    .rp-line  { height: 5px; background: #e2e8f0; border-radius: 3px; margin-bottom: 4px; }
+    .rp-line.w100 { width: 100%; }
+    .rp-line.w90  { width: 90%; }
+    .rp-line.w80  { width: 80%; }
+    .rp-line.w70  { width: 70%; }
+    .rp-line.w60  { width: 60%; }
+    .rp-line.w50  { width: 50%; }
+    .rp-line.w40  { width: 40%; }
+    .rp-line.dark { background: #cbd5e1; }
+    .rp-line.blue-tint   { background: rgba(37,99,235,0.15); }
+    .rp-line.violet-tint { background: rgba(99,102,241,0.15); }
+    .rp-line.emerald-tint{ background: rgba(5,150,105,0.15); }
+    .rp-line.amber-tint  { background: rgba(217,119,6,0.15); }
+    .rp-line.rose-tint   { background: rgba(225,29,72,0.15); }
+
+    .rp-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .rp-sub { font-size: 0.58rem; color: #94a3b8; margin-bottom: 5px; }
+    .rp-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+    .rp-chip {
+      font-size: 0.55rem; font-weight: 600; padding: 2px 7px; border-radius: 4px;
+    }
+    .rp-chip.blue   { background: rgba(37,99,235,0.1); color: #2563eb; }
+    .rp-chip.violet { background: rgba(99,102,241,0.1); color: #6366f1; }
+
+    /* highlight pulse on active section */
+    .rp-section.highlighted .rp-line { transition: background .3s; }
+    .rp-section.highlighted.blue-hl    .rp-line { background: rgba(37,99,235,0.25) !important; }
+    .rp-section.highlighted.violet-hl  .rp-line { background: rgba(99,102,241,0.25) !important; }
+    .rp-section.highlighted.emerald-hl .rp-line { background: rgba(5,150,105,0.25) !important; }
+    .rp-section.highlighted.amber-hl   .rp-line { background: rgba(217,119,6,0.25) !important; }
+    .rp-section.highlighted.rose-hl    .rp-line { background: rgba(225,29,72,0.25) !important; }
+
+    /* ATS SOURCE CARDS */
+    .source-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .source-card {
+      background: rgba(13,20,38,0.7);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 28px 24px;
+      transition: transform .2s, border-color .2s;
+    }
+    .source-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
+    .src-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 16px;
+    }
+    .src-icon.blue   { background: rgba(59,130,246,0.1); }
+    .src-icon.violet { background: rgba(129,140,248,0.1); }
+    .src-icon.emerald{ background: rgba(52,211,153,0.1); }
+    .src-icon.amber  { background: rgba(251,191,36,0.1); }
+    .source-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .source-card p  { font-size: 0.87rem; color: var(--slate-400); line-height: 1.6; margin-bottom: 14px; }
+    .src-examples { display: flex; flex-wrap: wrap; gap: 6px; }
+    .src-chip {
+      font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 6px;
+    }
+    .src-chip.blue   { background: rgba(59,130,246,0.12); color: var(--electric-400); border: 1px solid rgba(59,130,246,0.2); }
+    .src-chip.violet { background: rgba(129,140,248,0.12); color: var(--violet-400);   border: 1px solid rgba(129,140,248,0.2); }
+    .src-chip.emerald{ background: rgba(52,211,153,0.12); color: var(--emerald-400);   border: 1px solid rgba(52,211,153,0.2); }
+    .src-chip.amber  { background: rgba(251,191,36,0.12); color: var(--amber-400);     border: 1px solid rgba(251,191,36,0.2); }
+
+    /* STAT ROW */
+    .stat-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px; margin-top: 48px;
+    }
+    .stat-box {
+      background: rgba(13,20,38,0.7);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px 20px; text-align: center;
+    }
+    .stat-num {
+      font-size: 2.4rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, var(--electric-400), var(--violet-400));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px;
+    }
+    .stat-label { font-size: 0.85rem; color: var(--slate-400); line-height: 1.4; }
+
+    /* FORMAT RULES */
+    .rules-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 600px) { .rules-grid { grid-template-columns: 1fr; } }
+    .rule-card {
+      border-radius: 14px; padding: 22px 20px;
+      border: 1px solid transparent;
+    }
+    .rule-card.do {
+      background: rgba(52,211,153,0.05); border-color: rgba(52,211,153,0.15);
+    }
+    .rule-card.dont {
+      background: rgba(251,113,133,0.05); border-color: rgba(251,113,133,0.15);
+    }
+    .rule-header {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .rule-header.green { color: var(--emerald-400); }
+    .rule-header.red   { color: var(--rose-400); }
+    .rule-list { list-style: none; }
+    .rule-list li {
+      font-size: 0.87rem; color: var(--slate-400); line-height: 1.6;
+      padding-left: 20px; position: relative; margin-bottom: 6px;
+    }
+    .rule-list.do-list   li::before { content: '✓'; position: absolute; left: 0; color: var(--emerald-400); font-weight: 700; }
+    .rule-list.dont-list li::before { content: '✗'; position: absolute; left: 0; color: var(--rose-400); font-weight: 700; }
+
+    /* BEFORE / AFTER BULLETS */
+    .ba-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    @media (max-width: 600px) { .ba-grid { grid-template-columns: 1fr; } }
+    .ba-panel {
+      border-radius: 14px; padding: 24px;
+      border: 1px solid transparent;
+    }
+    .ba-panel.before { background: rgba(251,113,133,0.05); border-color: rgba(251,113,133,0.15); }
+    .ba-panel.after  { background: rgba(52,211,153,0.05);  border-color: rgba(52,211,153,0.15); }
+    .ba-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .ba-label.red   { color: var(--rose-400); }
+    .ba-label.green { color: var(--emerald-400); }
+    .ba-bullet { font-size: 0.87rem; color: var(--slate-300); line-height: 1.6; margin-bottom: 10px; }
+    .ba-bullet:last-child { margin-bottom: 0; }
+    .ba-why {
+      margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.78rem; color: rgba(148,163,184,0.7); line-height: 1.5;
+    }
+
+    /* STEPS */
+    .steps { display: flex; flex-direction: column; gap: 20px; }
+    .step-row {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: rgba(13,20,38,0.6); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px;
+      transition: border-color .2s;
+    }
+    .step-row:hover { border-color: rgba(59,130,246,0.2); }
+    .step-num {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(99,102,241,0.2));
+      border: 1px solid rgba(59,130,246,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; font-weight: 800; color: var(--electric-400);
+    }
+    .step-body h4 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .step-body p  { font-size: 0.88rem; color: var(--slate-400); line-height: 1.6; }
+    .step-badge {
+      margin-top: 8px; display: inline-block;
+      font-size: 0.75rem; font-weight: 600; color: var(--emerald-400);
+      background: rgba(52,211,153,0.1); padding: 3px 9px; border-radius: 6px;
+    }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: rgba(13,20,38,0.7); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: none;
+      color: var(--white); font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      padding: 20px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq-q:hover { color: var(--electric-400); }
+    .faq-arrow { font-size: 1rem; transition: transform .25s; flex-shrink: 0; }
+    .faq-q[aria-expanded="true"] .faq-arrow { transform: rotate(180deg); }
+    .faq-a {
+      display: none; padding: 0 24px 20px;
+      font-size: 0.88rem; color: var(--slate-400); line-height: 1.7;
+    }
+    .faq-a.open { display: block; }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      position: relative; z-index: 1; text-align: center;
+      padding: 80px 24px;
+      background: linear-gradient(180deg, transparent, rgba(13,20,38,0.6));
+    }
+    .bottom-cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900;
+      letter-spacing: -0.025em; margin-bottom: 16px;
+      max-width: 600px; margin-left: auto; margin-right: auto;
+    }
+    .bottom-cta p {
+      font-size: 1.05rem; color: var(--slate-400); max-width: 500px;
+      margin: 0 auto 36px; line-height: 1.7;
+    }
+    .bottom-cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 1.05rem;
+      padding: 16px 40px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .bottom-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,130,246,0.4); }
+
+    /* SCROLL REVEAL */
+    .reveal-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity .55s, transform .55s; }
+    .reveal-on-scroll.visible { opacity: 1; transform: none; }
+
+    /* CALLOUT */
+    .callout {
+      background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 14px; padding: 22px 24px;
+      display: flex; gap: 14px; align-items: flex-start;
+      margin-bottom: 36px;
+    }
+    .callout-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+    .callout p { font-size: 0.9rem; color: var(--slate-300); line-height: 1.7; }
+    .callout strong { color: var(--white); }
+
+    footer {
+      position: relative; z-index: 1; text-align: center;
+      padding: 32px 24px; border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem; color: rgba(148,163,184,0.4);
+    }
+    footer a { color: rgba(148,163,184,0.5); text-decoration: none; }
+    footer a:hover { color: var(--electric-400); }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 60px 20px 50px; }
+      section { padding: 50px 20px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Resume for First Job — Beat ATS With No Experience",
+        "description": "No work experience? Here's how to write a first resume that passes ATS and actually gets seen by recruiters.",
+        "url": "https://shortlistr.us/resume-for-first-job",
+        "author": { "@type": "Organization", "name": "Shortlistr" },
+        "publisher": { "@type": "Organization", "name": "Shortlistr", "url": "https://shortlistr.us" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can a first resume with no experience pass ATS?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. ATS doesn't automatically penalize you for having no work experience. It scans for keyword matches from the job description — and those keywords can come from your education, coursework, projects, clubs, and volunteer work. A well-structured first resume with the right keywords can absolutely pass ATS." }
+          },
+          {
+            "@type": "Question",
+            "name": "What sections should a first resume have?",
+            "acceptedAnswer": { "@type": "Answer", "text": "For a first resume: Contact Info, a brief Summary or Objective, Education (with relevant coursework), Projects or Relevant Experience, Skills, and optionally Activities or Awards. Lead with Education since it's your strongest asset at this stage. Work experience goes above Education only once you have 2+ years." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I include GPA on my first resume?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Include GPA if it's 3.5 or higher and you're a recent graduate with limited work experience. It signals academic performance to employers and adds credibility when your work history is thin. You can drop it once you have 2-3 years of experience." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I write resume bullets with no work experience?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use the same formula as experienced candidates: action verb + what you did + result or scale. 'Developed a Python data pipeline that processed 50,000 records for a senior capstone project' is a strong bullet even without paid work. Quantify everything you can — team size, project scope, outcomes." }
+          },
+          {
+            "@type": "Question",
+            "name": "What keywords should I put on my first resume?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Pull keywords directly from the job description you're applying to. Hard skills (specific tools, languages, software), soft skills mentioned explicitly (e.g., 'cross-functional collaboration'), and role-specific terms all matter. Use Shortlistr to identify which keywords from the JD are missing from your resume." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should my first resume be one page?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes — one page is correct for a first resume with limited experience. ATS doesn't care about page count, but recruiters spend very little time on early-career resumes. A focused, one-page document is easier to read and looks more confident than a padded two-pager." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://shortlistr.us" class="logo-link">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="2" width="13" height="17" rx="2" fill="white" fill-opacity="0.9"/>
+          <path d="M13 2L17 6H14C13.4 6 13 5.6 13 5V2Z" fill="white" fill-opacity="0.5"/>
+          <path d="M16 14L18.5 20L20 17.5L22.5 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">Shortlistr</span>
+    </a>
+    <a href="https://shortlistr.us/app" class="nav-cta">Make My Resume ATS-Ready →</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">✦ First Resume Guide</div>
+    <h1>Writing Your First Resume?<br>Here's What ATS Actually Looks For.</h1>
+    <p>No work history doesn't mean no keywords. ATS scans your education, projects, and skills just as carefully as experience — here's how to make every line count.</p>
+    <a href="https://shortlistr.us/app" class="hero-cta">Make My First Resume ATS-Ready →</a>
+    <p class="hero-sub">No account required · paste any job description · instant keyword score</p>
+  </div>
+
+  <!-- RESUME SKELETON CARD -->
+  <section>
+    <div class="section-label">Ideal First Resume Structure</div>
+    <h2>What Your Resume Should Look Like</h2>
+    <p class="section-intro">Click any section below to see why it matters for ATS and what to include. The order here is intentional — lead with your strengths.</p>
+
+    <div class="skeleton-wrap reveal-on-scroll">
+
+      <!-- Explainer list -->
+      <div class="skeleton-explainer">
+        <div class="explainer-item active" id="exp-header" onclick="highlightSection('header','blue')">
+          <div class="exp-dot blue"></div>
+          <div>
+            <h4>Contact &amp; Header</h4>
+            <p>Name, email, phone, LinkedIn, city. Keep it plain text — no tables, no columns. ATS skips content in text boxes or graphic headers.</p>
+          </div>
+        </div>
+        <div class="explainer-item" id="exp-summary" onclick="highlightSection('summary','violet')">
+          <div class="exp-dot violet"></div>
+          <div>
+            <h4>Summary / Objective</h4>
+            <p>2–3 sentences tailored to the role. Pack in job-title keywords and 2–3 relevant skills. This is the first thing ATS scores — make it count.</p>
+          </div>
+        </div>
+        <div class="explainer-item" id="exp-education" onclick="highlightSection('education','emerald')">
+          <div class="exp-dot emerald"></div>
+          <div>
+            <h4>Education (lead here)</h4>
+            <p>Degree, school, graduation year. Add a "Relevant Coursework" line with course names that match job description keywords — ATS reads them.</p>
+          </div>
+        </div>
+        <div class="explainer-item" id="exp-projects" onclick="highlightSection('projects','amber')">
+          <div class="exp-dot amber"></div>
+          <div>
+            <h4>Projects &amp; Experience</h4>
+            <p>Your most powerful keyword source. Describe capstone projects, internships, freelance work, and class assignments with measurable outcomes.</p>
+          </div>
+        </div>
+        <div class="explainer-item" id="exp-skills" onclick="highlightSection('skills','rose')">
+          <div class="exp-dot rose"></div>
+          <div>
+            <h4>Skills</h4>
+            <p>A plain-text list of hard skills — tools, languages, platforms, certifications. ATS keyword-scans this section heavily. Mirror exact terms from the JD.</p>
+          </div>
+        </div>
+        <div class="explainer-item" id="exp-activities" onclick="highlightSection('activities','slate')">
+          <div class="exp-dot slate"></div>
+          <div>
+            <h4>Activities &amp; Awards</h4>
+            <p>Leadership roles, clubs, honors, volunteer work. Useful for soft-skill keywords and showing initiative. Keep it brief — 2–4 lines max.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resume paper -->
+      <div class="resume-paper">
+        <!-- Header -->
+        <div class="rp-header" id="sec-header">
+          <div class="rp-name">Jordan M. Rivera</div>
+          <div class="rp-contact">jordan@email.com · (555) 000-1234 · linkedin.com/in/jordan · Austin, TX</div>
+        </div>
+
+        <!-- Summary -->
+        <div class="rp-section" id="sec-summary">
+          <div class="rp-section-label violet">
+            <div class="highlight-ring violet"></div>
+            Summary
+          </div>
+          <div class="rp-line w100 violet-tint"></div>
+          <div class="rp-line w90 violet-tint"></div>
+          <div class="rp-line w70 violet-tint"></div>
+        </div>
+
+        <!-- Education -->
+        <div class="rp-section" id="sec-education">
+          <div class="rp-section-label emerald">
+            <div class="highlight-ring emerald"></div>
+            Education
+          </div>
+          <div class="rp-row">
+            <div class="rp-line w60 dark" style="margin:0"></div>
+            <div class="rp-line w30 dark" style="margin:0"></div>
+          </div>
+          <div class="rp-sub" style="margin-top:4px">B.S. Business Administration · GPA 3.7</div>
+          <div class="rp-line w90 emerald-tint"></div>
+          <div class="rp-line w80 emerald-tint"></div>
+        </div>
+
+        <!-- Projects -->
+        <div class="rp-section" id="sec-projects">
+          <div class="rp-section-label amber">
+            <div class="highlight-ring amber"></div>
+            Projects &amp; Experience
+          </div>
+          <div class="rp-row">
+            <div class="rp-line w50 dark" style="margin:0"></div>
+            <div class="rp-line w25 dark" style="margin:0"></div>
+          </div>
+          <div class="rp-sub" style="margin-top:4px">Capstone / Internship / Freelance</div>
+          <div class="rp-line w100 amber-tint"></div>
+          <div class="rp-line w90 amber-tint"></div>
+          <div class="rp-line w80 amber-tint"></div>
+          <div style="height:8px"></div>
+          <div class="rp-row">
+            <div class="rp-line w45 dark" style="margin:0"></div>
+            <div class="rp-line w25 dark" style="margin:0"></div>
+          </div>
+          <div class="rp-sub" style="margin-top:4px">Class Project / Volunteer Role</div>
+          <div class="rp-line w100 amber-tint"></div>
+          <div class="rp-line w75 amber-tint"></div>
+        </div>
+
+        <!-- Skills -->
+        <div class="rp-section" id="sec-skills">
+          <div class="rp-section-label rose">
+            <div class="highlight-ring rose"></div>
+            Skills
+          </div>
+          <div class="rp-chips">
+            <span class="rp-chip blue">Excel</span>
+            <span class="rp-chip blue">Python</span>
+            <span class="rp-chip violet">SQL</span>
+            <span class="rp-chip blue">Salesforce</span>
+            <span class="rp-chip violet">Google Analytics</span>
+            <span class="rp-chip blue">Figma</span>
+            <span class="rp-chip violet">Tableau</span>
+          </div>
+        </div>
+
+        <!-- Activities -->
+        <div class="rp-section" id="sec-activities">
+          <div class="rp-section-label slate">
+            <div class="highlight-ring slate"></div>
+            Activities &amp; Awards
+          </div>
+          <div class="rp-line w90"></div>
+          <div class="rp-line w70"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHAT ATS SCANS WITH NO EXPERIENCE -->
+  <section>
+    <div class="section-label">ATS &amp; Entry-Level Resumes</div>
+    <h2>What ATS Scans When You Have No Experience</h2>
+    <p class="section-intro">ATS doesn't know you're a first-time applicant. It scans everything on your resume for keyword matches against the job description. Here's where those matches come from.</p>
+
+    <div class="callout reveal-on-scroll">
+      <div class="callout-icon">💡</div>
+      <p><strong>The good news:</strong> ATS doesn't require paid work experience. It requires keyword alignment. That means a well-written first resume with the right terms from your education and projects can score just as high as a candidate with two years of experience who didn't tailor their resume.</p>
+    </div>
+
+    <div class="source-grid">
+      <div class="source-card reveal-on-scroll">
+        <div class="src-icon blue">🎓</div>
+        <h3>Education &amp; Coursework</h3>
+        <p>Your degree title, major, and relevant course names are all scannable text. Course names often directly mirror job description keywords — especially in technical and business roles.</p>
+        <div class="src-examples">
+          <span class="src-chip blue">Data Structures</span>
+          <span class="src-chip blue">Financial Modeling</span>
+          <span class="src-chip blue">Marketing Analytics</span>
+          <span class="src-chip blue">UX Research</span>
+        </div>
+      </div>
+
+      <div class="source-card reveal-on-scroll" style="transition-delay:.1s">
+        <div class="src-icon violet">💻</div>
+        <h3>Projects &amp; Capstones</h3>
+        <p>Class projects, personal projects, and capstone work are treated the same as job experience by ATS. Describe them with the same action-verb + result structure — and name the tools explicitly.</p>
+        <div class="src-examples">
+          <span class="src-chip violet">Python</span>
+          <span class="src-chip violet">SQL</span>
+          <span class="src-chip violet">Tableau</span>
+          <span class="src-chip violet">A/B testing</span>
+        </div>
+      </div>
+
+      <div class="source-card reveal-on-scroll" style="transition-delay:.2s">
+        <div class="src-icon emerald">🛠️</div>
+        <h3>Skills Section</h3>
+        <p>A dedicated Skills section is your most efficient ATS tool. List hard skills — tools, platforms, languages — as plain comma-separated text. ATS keyword-matches directly against this list.</p>
+        <div class="src-examples">
+          <span class="src-chip emerald">Salesforce</span>
+          <span class="src-chip emerald">Google Analytics</span>
+          <span class="src-chip emerald">Figma</span>
+          <span class="src-chip emerald">Excel</span>
+        </div>
+      </div>
+
+      <div class="source-card reveal-on-scroll" style="transition-delay:.3s">
+        <div class="src-icon amber">🏆</div>
+        <h3>Activities &amp; Leadership</h3>
+        <p>Club leadership, volunteer roles, and academic awards carry soft-skill keywords: "team leadership," "project management," "client communication." These matter when JDs require them.</p>
+        <div class="src-examples">
+          <span class="src-chip amber">team leadership</span>
+          <span class="src-chip amber">event planning</span>
+          <span class="src-chip amber">cross-functional</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box reveal-on-scroll">
+        <div class="stat-num">75%</div>
+        <div class="stat-label">of resumes — including first resumes — are auto-rejected before a human sees them</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.1s">
+        <div class="stat-num">~40</div>
+        <div class="stat-label">keywords the average job description contains that ATS checks against your resume</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.2s">
+        <div class="stat-num">30s</div>
+        <div class="stat-label">to find your keyword gaps with Shortlistr — regardless of experience level</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- KEYWORD BULLETS BEFORE / AFTER -->
+  <section>
+    <div class="section-label">Before &amp; After</div>
+    <h2>How to Write Bullets That Score High</h2>
+    <p class="section-intro">The difference between a bullet ATS ignores and one it scores isn't work experience — it's specificity. Here's the same entry-level experience written two ways.</p>
+
+    <div class="ba-grid">
+      <div class="ba-panel before reveal-on-scroll">
+        <div class="ba-label red">✗ Low ATS score · ~28%</div>
+        <div class="ba-bullet">Helped with a group project on customer data</div>
+        <div class="ba-bullet">Did research for marketing class assignment</div>
+        <div class="ba-bullet">Used Excel for finance homework</div>
+        <div class="ba-why">Vague language. No tool names. No outcomes. ATS can't match these against a job description for a data analyst role.</div>
+      </div>
+      <div class="ba-panel after reveal-on-scroll" style="transition-delay:.1s">
+        <div class="ba-label green">✓ High ATS score · ~79%</div>
+        <div class="ba-bullet">Analyzed 3,000-row customer dataset using Python and Pandas; identified 4 churn predictors for capstone presentation</div>
+        <div class="ba-bullet">Conducted competitive market analysis using Google Analytics and SEMrush; presented findings to class of 24 peers</div>
+        <div class="ba-bullet">Built dynamic financial model in Excel with pivot tables and VLOOKUP; projected revenue scenarios for 3 growth paths</div>
+        <div class="ba-why">Exact tool names, quantified scope, outcome language. Every underlined term is a potential keyword match against a data/marketing JD.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FORMAT RULES -->
+  <section>
+    <div class="section-label">Format Rules for First Resumes</div>
+    <h2>Format Changes That Help You Rank Higher</h2>
+    <p class="section-intro">First-time job seekers often use design-heavy templates that look impressive but parse terribly. These rules apply regardless of experience level.</p>
+
+    <div class="rules-grid">
+      <div class="rule-card do reveal-on-scroll">
+        <div class="rule-header green">✓ Do this</div>
+        <ul class="rule-list do-list">
+          <li>Single-column layout top to bottom</li>
+          <li>Standard section headers: Education, Skills, Experience, Projects</li>
+          <li>Plain text bullet points with a simple dash or circle</li>
+          <li>11–12pt font, standard typeface (Arial, Calibri, Georgia)</li>
+          <li>Contact info in main body — not the header/footer zone</li>
+          <li>Save as .docx or text-based PDF (not a scanned image)</li>
+          <li>Lead with Education when you have limited work history</li>
+          <li>Include a Skills section with exact tool names from the JD</li>
+        </ul>
+      </div>
+      <div class="rule-card dont reveal-on-scroll" style="transition-delay:.1s">
+        <div class="rule-header red">✗ Avoid this</div>
+        <ul class="rule-list dont-list">
+          <li>Two-column or side-bar layouts (very common in Canva templates)</li>
+          <li>Tables used to organize skills or experience</li>
+          <li>Icons, graphics, or progress bars for skills</li>
+          <li>Name or contact info in a designed header box</li>
+          <li>Colored text sections or shaded background blocks</li>
+          <li>"Creative" resume templates from design sites</li>
+          <li>Objective statements that are generic ("seeking a challenging role")</li>
+          <li>Saving as an image PDF or .png file</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW SHORTLISTR HELPS -->
+  <section>
+    <div class="section-label">How Shortlistr Levels the Field</div>
+    <h2>Your ATS Score Doesn't Care About Experience — Only Keywords</h2>
+    <p class="section-intro">Shortlistr shows you which keywords are missing from your resume for any job description — so you can close the gap even without a work history to lean on.</p>
+
+    <div class="steps">
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Find the job you want to apply to</h4>
+          <p>Copy the full job description from LinkedIn, Indeed, or the company's site. You need the exact language they use — that's your ATS target.</p>
+          <span class="step-badge">10 seconds</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Paste your resume — even a draft</h4>
+          <p>Shortlistr works on incomplete resumes. Even a rough draft will surface missing keywords and formatting issues worth fixing before you send anything.</p>
+          <span class="step-badge">10 seconds</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>See your keyword match score instantly</h4>
+          <p>Shortlistr compares your resume against the JD and shows your current ATS score. Most first resumes start around 25–40% — and can reach 70%+ with the right additions.</p>
+          <span class="step-badge">Instant</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Get the exact keywords you're missing</h4>
+          <p>Not a vague suggestion — a specific list of terms from the job description that aren't in your resume yet, prioritized by how much they'll move your score.</p>
+          <span class="step-badge">Prioritized list</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Add them naturally to your resume sections</h4>
+          <p>Weave missing keywords into your project bullets, coursework line, and skills section. Re-check your score in real time as you edit. Most first resumes improve 30–50 points.</p>
+          <span class="step-badge">Iterative</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-label">Common Questions</div>
+    <h2>First Resume FAQ</h2>
+
+    <div class="faq-list">
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Can a first resume with no experience pass ATS?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Yes. ATS doesn't automatically penalize you for having no work experience. It scans for keyword matches from the job description — and those keywords can come from your education, coursework, projects, clubs, and volunteer work. A well-structured first resume with the right keywords can absolutely pass ATS.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          What sections should a first resume have?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">For a first resume: Contact Info, a brief Summary or Objective, Education (with relevant coursework), Projects or Relevant Experience, Skills, and optionally Activities or Awards. Lead with Education since it's your strongest asset at this stage. Work experience goes above Education only once you have 2+ years.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Should I include GPA on my first resume?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Include GPA if it's 3.5 or higher and you're a recent graduate with limited work experience. It signals academic performance to employers and adds credibility when your work history is thin. You can drop it once you have 2–3 years of experience and stronger bullets to fill that space.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          How do I write resume bullets with no work experience?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Use the same formula as experienced candidates: action verb + what you did + result or scale. "Developed a Python data pipeline that processed 50,000 records for a senior capstone project" is a strong bullet even without paid work. Quantify everything you can — team size, project scope, outcomes, and tools used.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          What keywords should I put on my first resume?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Pull keywords directly from the job description you're applying to. Hard skills (specific tools, languages, software), soft skills mentioned explicitly (e.g., "cross-functional collaboration"), and role-specific terms all matter. Use Shortlistr to identify which keywords from the JD are missing from your resume — it works on first resumes just as well as experienced ones.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Should my first resume be one page?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Yes — one page is correct for a first resume with limited experience. ATS doesn't care about page count, but recruiters spend very little time on early-career resumes. A focused, one-page document is easier to read and looks more confident than a padded two-pager. You can move to two pages once you have 5+ years of experience.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta">
+    <h2>You Have More to Work With Than You Think.</h2>
+    <p>Shortlistr finds keyword gaps in your first resume — and shows you exactly where to add them so recruiters actually see you.</p>
+    <a href="https://shortlistr.us/app" class="bottom-cta-btn">Make My First Resume ATS-Ready →</a>
+    <p class="hero-sub" style="margin-top:14px">Free · no account · works on drafts and first resumes</p>
+  </div>
+
+  <footer>
+    <p><a href="https://shortlistr.us">← Back to Shortlistr</a> &nbsp;·&nbsp; © 2025 Shortlistr</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal-on-scroll');
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // FAQ accordion
+    function toggleFaq(btn) {
+      const ans = btn.nextElementSibling;
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.classList.remove('open');
+      });
+      if (!open) {
+        btn.setAttribute('aria-expanded', 'true');
+        ans.classList.add('open');
+      }
+    }
+
+    // Resume skeleton highlighting
+    const sectionMap = {
+      header:     { sec: 'sec-header',     exp: 'exp-header',     color: 'blue' },
+      summary:    { sec: 'sec-summary',    exp: 'exp-summary',    color: 'violet' },
+      education:  { sec: 'sec-education',  exp: 'exp-education',  color: 'emerald' },
+      projects:   { sec: 'sec-projects',   exp: 'exp-projects',   color: 'amber' },
+      skills:     { sec: 'sec-skills',     exp: 'exp-skills',     color: 'rose' },
+      activities: { sec: 'sec-activities', exp: 'exp-activities', color: 'slate' },
+    };
+
+    let activeSection = 'header';
+
+    function highlightSection(key, color) {
+      // Remove all active states
+      Object.values(sectionMap).forEach(m => {
+        document.getElementById(m.exp).classList.remove('active');
+        const sec = document.getElementById(m.sec);
+        sec.classList.remove('highlighted', 'blue-hl', 'violet-hl', 'emerald-hl', 'amber-hl', 'rose-hl', 'slate-hl');
+      });
+
+      // Activate selected
+      document.getElementById(sectionMap[key].exp).classList.add('active');
+      const sec = document.getElementById(sectionMap[key].sec);
+      sec.classList.add('highlighted', color + '-hl');
+      activeSection = key;
+
+      // Pulse animation
+      sec.style.transition = 'all .3s';
+    }
+
+    // Init: highlight header on load
+    highlightSection('header', 'blue');
+  </script>
+</body>
+</html>
