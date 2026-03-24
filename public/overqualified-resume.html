@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overqualified Resume — How to Pass ATS Anyway | Shortlistr</title>
+  <meta name="description" content="ATS rejects overqualified candidates automatically based on keywords. Here's how to adjust your resume without hiding your experience." />
+  <link rel="canonical" href="https://shortlistr.us/overqualified-resume" />
+
+  <meta property="og:title" content="Overqualified Resume — How to Pass ATS Anyway | Shortlistr" />
+  <meta property="og:description" content="ATS rejects overqualified candidates automatically based on keywords. Here's how to adjust your resume without hiding your experience." />
+  <meta property="og:url" content="https://shortlistr.us/overqualified-resume" />
+  <meta property="og:type" content="article" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy-900: #0a0f1e;
+      --navy-800: #0d1426;
+      --navy-700: #111b33;
+      --navy-600: #162040;
+      --electric-500: #3b82f6;
+      --electric-400: #60a5fa;
+      --electric-300: #93c5fd;
+      --violet-500: #6366f1;
+      --violet-400: #818cf8;
+      --violet-300: #a5b4fc;
+      --emerald-400: #34d399;
+      --emerald-500: #10b981;
+      --rose-400: #fb7185;
+      --amber-400: #fbbf24;
+      --amber-300: #fcd34d;
+      --slate-400: #94a3b8;
+      --slate-300: #cbd5e1;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy-900);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(59,130,246,0.08) 1px, transparent 0);
+      background-size: 32px 32px;
+      pointer-events: none; z-index: 0;
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%;
+      filter: blur(80px); pointer-events: none; z-index: 0;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      animation: orb-drift 18s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(59,130,246,0.10) 0%, transparent 70%);
+      bottom: -150px; left: -150px;
+      animation: orb-drift2 22s ease-in-out infinite alternate;
+    }
+    @keyframes orb-drift  { from { transform: translate(0,0); } to { transform: translate(40px,60px); } }
+    @keyframes orb-drift2 { from { transform: translate(0,0); } to { transform: translate(-30px,-50px); } }
+
+    /* NAV */
+    nav {
+      position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(10,15,30,0.8); backdrop-filter: blur(12px);
+    }
+    .logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #6366f1 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 20px; height: 20px; }
+    .logo-text { font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 600; font-size: 0.85rem;
+      padding: 9px 20px; border-radius: 8px; text-decoration: none;
+      transition: opacity .2s, transform .2s;
+    }
+    .nav-cta:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 90px 24px 70px;
+      max-width: 820px; margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.25);
+      color: var(--amber-400); font-size: 0.8rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 28px;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 5vw, 3.3rem);
+      font-weight: 900; line-height: 1.12; letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.75) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 22px;
+    }
+    .hero p {
+      font-size: 1.15rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 640px; margin: 0 auto 36px;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 1.05rem;
+      padding: 16px 36px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,130,246,0.4); }
+    .hero-sub { margin-top: 14px; font-size: 0.82rem; color: rgba(148,163,184,0.6); }
+
+    /* LAYOUT */
+    section {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 70px 24px;
+    }
+    section + section { padding-top: 0; }
+    .divider {
+      position: relative; z-index: 1;
+      height: 1px; background: rgba(255,255,255,0.06);
+      max-width: 900px; margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--electric-400); margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800; line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 16px;
+    }
+    .section-intro {
+      font-size: 1.05rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 700px; margin-bottom: 44px;
+    }
+
+    /* CALLOUT */
+    .callout {
+      border-radius: 14px; padding: 22px 24px;
+      display: flex; gap: 14px; align-items: flex-start;
+      margin-bottom: 40px;
+    }
+    .callout.amber { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.2); }
+    .callout.blue  { background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.2); }
+    .callout-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+    .callout p { font-size: 0.9rem; color: var(--slate-300); line-height: 1.7; }
+    .callout strong { color: var(--white); }
+
+    /* ATS FILTER PIPELINE */
+    .pipeline {
+      display: flex; flex-direction: column; gap: 0;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px; overflow: hidden;
+      background: rgba(13,20,38,0.8);
+    }
+    .pipe-row {
+      display: grid; grid-template-columns: 48px 1fr 1fr;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .pipe-row:last-child { border-bottom: none; }
+    .pipe-row.header-row {
+      background: rgba(255,255,255,0.03);
+      font-size: 0.7rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--slate-400);
+    }
+    .pipe-cell {
+      padding: 16px 20px;
+      font-size: 0.87rem; line-height: 1.5;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center;
+    }
+    .pipe-cell:last-child { border-right: none; }
+    .pipe-num {
+      width: 48px; justify-content: center;
+      font-size: 0.75rem; font-weight: 800; color: var(--slate-400);
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .pipe-row.flagged .pipe-num { color: var(--rose-400); }
+    .pipe-row.safe    .pipe-num { color: var(--emerald-400); }
+    .pipe-row.flagged { background: rgba(251,113,133,0.03); }
+    .pipe-row.safe    { background: rgba(52,211,153,0.02); }
+    .flag-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.72rem; font-weight: 700; padding: 3px 8px;
+      border-radius: 5px; white-space: nowrap;
+    }
+    .flag-badge.red    { background: rgba(251,113,133,0.12); color: var(--rose-400); }
+    .flag-badge.amber  { background: rgba(251,191,36,0.12);  color: var(--amber-400); }
+    .flag-badge.green  { background: rgba(52,211,153,0.12);  color: var(--emerald-400); }
+    .flag-badge.slate  { background: rgba(148,163,184,0.1);  color: var(--slate-400); }
+    .pipe-col-title { font-weight: 600; color: var(--white); }
+    .pipe-col-sub   { font-size: 0.8rem; color: var(--slate-400); margin-top: 3px; }
+
+    /* CALIBRATION CARD */
+    .calib-card {
+      background: rgba(13,20,38,0.85);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px; overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .calib-header {
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 20px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .calib-header h3 { font-size: 1rem; font-weight: 700; }
+    .calib-tabs {
+      display: flex; gap: 8px;
+    }
+    .calib-tab {
+      font-size: 0.78rem; font-weight: 600; padding: 6px 14px;
+      border-radius: 8px; border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: all .2s;
+    }
+    .calib-tab.active {
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white);
+    }
+    .calib-tab:not(.active) {
+      background: rgba(255,255,255,0.06); color: var(--slate-400);
+    }
+    .calib-tab:not(.active):hover { background: rgba(255,255,255,0.1); color: var(--white); }
+
+    .calib-body { padding: 0; }
+    .calib-panel { display: none; }
+    .calib-panel.active { display: block; }
+
+    .calib-row {
+      display: grid; grid-template-columns: 1fr 48px 1fr;
+      align-items: center; gap: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 0;
+    }
+    .calib-row:last-child { border-bottom: none; }
+    .calib-col {
+      padding: 18px 24px;
+    }
+    .calib-col.before { border-right: 1px solid rgba(255,255,255,0.05); }
+    .calib-col.after  { border-left: 1px solid rgba(255,255,255,0.05); }
+    .calib-arrow {
+      text-align: center; font-size: 0.9rem;
+      color: var(--slate-400);
+    }
+    .calib-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .calib-label.red   { color: var(--rose-400); }
+    .calib-label.green { color: var(--emerald-400); }
+    .calib-text {
+      font-size: 0.9rem; font-weight: 600; color: var(--white); line-height: 1.4;
+    }
+    .calib-sub {
+      font-size: 0.77rem; color: var(--slate-400); margin-top: 4px; line-height: 1.5;
+    }
+    .calib-footer {
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8rem; color: var(--slate-400); line-height: 1.6;
+    }
+    .calib-footer strong { color: var(--emerald-400); }
+
+    /* TRIGGER SIGNALS GRID */
+    .signal-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .signal-card {
+      border-radius: 14px; padding: 24px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(13,20,38,0.7);
+      transition: transform .2s, border-color .2s;
+    }
+    .signal-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
+    .signal-card.danger { border-color: rgba(251,113,133,0.15); background: rgba(251,113,133,0.04); }
+    .signal-card.caution{ border-color: rgba(251,191,36,0.15);  background: rgba(251,191,36,0.04); }
+    .sig-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .sig-icon { font-size: 1.4rem; }
+    .sig-risk {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 5px;
+    }
+    .sig-risk.high   { background: rgba(251,113,133,0.15); color: var(--rose-400); }
+    .sig-risk.medium { background: rgba(251,191,36,0.15);  color: var(--amber-400); }
+    .sig-risk.low    { background: rgba(148,163,184,0.1);  color: var(--slate-400); }
+    .signal-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .signal-card p  { font-size: 0.85rem; color: var(--slate-400); line-height: 1.6; }
+    .sig-example {
+      margin-top: 12px; padding: 10px 12px; border-radius: 8px;
+      font-size: 0.78rem; font-family: 'Inter', monospace;
+      background: rgba(0,0,0,0.2); color: var(--slate-300); line-height: 1.5;
+    }
+
+    /* STAT ROW */
+    .stat-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px; margin-top: 48px;
+    }
+    .stat-box {
+      background: rgba(13,20,38,0.7); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px 20px; text-align: center;
+    }
+    .stat-num {
+      font-size: 2.4rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, var(--electric-400), var(--violet-400));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px;
+    }
+    .stat-label { font-size: 0.85rem; color: var(--slate-400); line-height: 1.4; }
+
+    /* WHAT ATS CAN'T SEE */
+    .context-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    @media (max-width: 600px) { .context-row { grid-template-columns: 1fr; } }
+    .context-panel {
+      border-radius: 14px; padding: 24px;
+      border: 1px solid transparent;
+    }
+    .context-panel.cant { border-color: rgba(251,113,133,0.15); background: rgba(251,113,133,0.04); }
+    .context-panel.can  { border-color: rgba(52,211,153,0.15);  background: rgba(52,211,153,0.04); }
+    .ctx-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    .ctx-label.red   { color: var(--rose-400); }
+    .ctx-label.green { color: var(--emerald-400); }
+    .ctx-list { list-style: none; }
+    .ctx-list li {
+      font-size: 0.87rem; color: var(--slate-400); line-height: 1.6;
+      padding-left: 20px; position: relative; margin-bottom: 6px;
+    }
+    .ctx-list.cant-list li::before { content: '✗'; position: absolute; left: 0; color: var(--rose-400); font-weight: 700; }
+    .ctx-list.can-list  li::before { content: '✓'; position: absolute; left: 0; color: var(--emerald-400); font-weight: 700; }
+
+    /* STEPS */
+    .steps { display: flex; flex-direction: column; gap: 20px; }
+    .step-row {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: rgba(13,20,38,0.6); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px; transition: border-color .2s;
+    }
+    .step-row:hover { border-color: rgba(59,130,246,0.2); }
+    .step-num {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(99,102,241,0.2));
+      border: 1px solid rgba(59,130,246,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; font-weight: 800; color: var(--electric-400);
+    }
+    .step-body h4 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .step-body p  { font-size: 0.88rem; color: var(--slate-400); line-height: 1.6; }
+    .step-badge {
+      margin-top: 8px; display: inline-block;
+      font-size: 0.75rem; font-weight: 600; color: var(--emerald-400);
+      background: rgba(52,211,153,0.1); padding: 3px 9px; border-radius: 6px;
+    }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: rgba(13,20,38,0.7); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: none;
+      color: var(--white); font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      padding: 20px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq-q:hover { color: var(--electric-400); }
+    .faq-arrow { font-size: 1rem; transition: transform .25s; flex-shrink: 0; }
+    .faq-q[aria-expanded="true"] .faq-arrow { transform: rotate(180deg); }
+    .faq-a {
+      display: none; padding: 0 24px 20px;
+      font-size: 0.88rem; color: var(--slate-400); line-height: 1.7;
+    }
+    .faq-a.open { display: block; }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      position: relative; z-index: 1; text-align: center;
+      padding: 80px 24px;
+      background: linear-gradient(180deg, transparent, rgba(13,20,38,0.6));
+    }
+    .bottom-cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900;
+      letter-spacing: -0.025em; margin-bottom: 16px;
+      max-width: 640px; margin-left: auto; margin-right: auto;
+    }
+    .bottom-cta p {
+      font-size: 1.05rem; color: var(--slate-400); max-width: 520px;
+      margin: 0 auto 36px; line-height: 1.7;
+    }
+    .bottom-cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 1.05rem;
+      padding: 16px 40px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .bottom-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,130,246,0.4); }
+
+    /* SCROLL REVEAL */
+    .reveal-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity .55s, transform .55s; }
+    .reveal-on-scroll.visible { opacity: 1; transform: none; }
+
+    footer {
+      position: relative; z-index: 1; text-align: center;
+      padding: 32px 24px; border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem; color: rgba(148,163,184,0.4);
+    }
+    footer a { color: rgba(148,163,184,0.5); text-decoration: none; }
+    footer a:hover { color: var(--electric-400); }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 60px 20px 50px; }
+      section { padding: 50px 20px; }
+      .pipe-row { grid-template-columns: 36px 1fr; }
+      .pipe-cell.ats-col { display: none; }
+      .calib-row { grid-template-columns: 1fr 32px 1fr; }
+      .calib-col { padding: 14px 16px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Overqualified Resume — How to Pass ATS Anyway",
+        "description": "ATS rejects overqualified candidates automatically based on keywords. Here's how to adjust your resume without hiding your experience.",
+        "url": "https://shortlistr.us/overqualified-resume",
+        "author": { "@type": "Organization", "name": "Shortlistr" },
+        "publisher": { "@type": "Organization", "name": "Shortlistr", "url": "https://shortlistr.us" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Does ATS actually filter out overqualified candidates?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Many ATS systems have configurable filters that flag resumes based on years of experience, salary history fields, or seniority-level keywords (VP, Director, C-suite). When these thresholds are exceeded, the resume can be automatically deprioritized or rejected before any human reviews it." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it dishonest to downscale your resume title?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not if you do it accurately. Titles vary widely across companies and industries. If your company called you 'VP of Engineering' but the actual scope was equivalent to a Senior Staff Engineer elsewhere, using the more common title is honest framing, not deception. You're translating your role into a language the market understands — not fabricating experience." }
+          },
+          {
+            "@type": "Question",
+            "name": "What keywords trigger ATS overqualified filters?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Common triggers include: seniority titles (VP, Director, C-suite, Principal, Managing Director), years of experience that far exceed the job requirement, total compensation ranges in salary fields, and scope language (P&L responsibility, board-level, enterprise-wide). Not all ATS systems filter on all of these, but title and experience years are the most common." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I remove experience from my resume to avoid looking overqualified?",
+            "acceptedAnswer": { "@type": "Answer", "text": "You can, selectively. Removing roles older than 10–15 years is standard practice and not considered deceptive. What you keep should be relevant to the target role. Omitting a C-suite role from 12 years ago to reduce noise is reasonable. Hiding recent, directly relevant senior experience is a different matter — that's likely to create problems at the interview stage anyway." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I explain being overqualified in a cover letter?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Address it directly and briefly: explain your reason for targeting this level (career pivot, location, industry change, work-life balance, returning after a break), and make clear you've made a deliberate choice — not a desperate one. Employers worry overqualified candidates will leave quickly, so the goal is to show intent and commitment, not to apologize for your experience." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://shortlistr.us" class="logo-link">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="2" width="13" height="17" rx="2" fill="white" fill-opacity="0.9"/>
+          <path d="M13 2L17 6H14C13.4 6 13 5.6 13 5V2Z" fill="white" fill-opacity="0.5"/>
+          <path d="M16 14L18.5 20L20 17.5L22.5 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">Shortlistr</span>
+    </a>
+    <a href="https://shortlistr.us/app" class="nav-cta">Recalibrate My Resume →</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">⚡ Overqualified Job Search</div>
+    <h1>Getting Rejected for Being Overqualified?<br>ATS Might Be the Real Problem.</h1>
+    <p>You've earned every line on your resume — and some of those lines are quietly getting you filtered out before anyone reads the rest. Here's what's triggering it and how to fix it without pretending to be someone you're not.</p>
+    <a href="https://shortlistr.us/app" class="hero-cta">Recalibrate My Resume for ATS →</a>
+    <p class="hero-sub">No account required · paste any job description · see exactly what's flagging</p>
+  </div>
+
+  <!-- HOW ATS FILTERS OVERQUALIFIED -->
+  <section>
+    <div class="section-label">How ATS Flags Overqualification</div>
+    <h2>It's Not Always a Human Deciding You're "Too Senior"</h2>
+    <p class="section-intro">Before a recruiter ever sees your resume, ATS applies automated filters. Some of those filters are specifically designed to screen for candidates outside the target experience band — and your resume language is what trips them.</p>
+
+    <div class="callout amber reveal-on-scroll">
+      <div class="callout-icon">⚠️</div>
+      <p><strong>Here's the frustrating part:</strong> most ATS systems don't tell you why you were filtered. You apply, you wait, you get a form rejection — and the word "overqualified" never appears anywhere. It just looks like silence. That silence is often an automated rule, not a human opinion.</p>
+    </div>
+
+    <!-- Pipeline table -->
+    <div class="pipeline reveal-on-scroll">
+      <div class="pipe-row header-row">
+        <div class="pipe-num">#</div>
+        <div class="pipe-cell">What ATS checks</div>
+        <div class="pipe-cell ats-col">Risk level &amp; how it flags you</div>
+      </div>
+
+      <div class="pipe-row flagged">
+        <div class="pipe-num">1</div>
+        <div class="pipe-cell">
+          <div>
+            <div class="pipe-col-title">Seniority keywords in your title</div>
+            <div class="pipe-col-sub">VP, Director, Managing Director, Principal, C-suite, SVP, EVP</div>
+          </div>
+        </div>
+        <div class="pipe-cell ats-col">
+          <span class="flag-badge red">⚑ High — often auto-filtered</span>
+        </div>
+      </div>
+
+      <div class="pipe-row flagged">
+        <div class="pipe-num">2</div>
+        <div class="pipe-cell">
+          <div>
+            <div class="pipe-col-title">Years of experience count</div>
+            <div class="pipe-col-sub">ATS can infer total experience from date spans. A JD asking for "3–5 years" and a resume showing 18 years can trigger thresholds.</div>
+          </div>
+        </div>
+        <div class="pipe-cell ats-col">
+          <span class="flag-badge red">⚑ High — configurable filter</span>
+        </div>
+      </div>
+
+      <div class="pipe-row flagged">
+        <div class="pipe-num">3</div>
+        <div class="pipe-cell">
+          <div>
+            <div class="pipe-col-title">Scope and scale language</div>
+            <div class="pipe-col-sub">"P&amp;L responsibility," "board-level," "enterprise-wide," "$50M budget," "100+ direct reports" — signals mismatch with a mid-level role</div>
+          </div>
+        </div>
+        <div class="pipe-cell ats-col">
+          <span class="flag-badge amber">~ Medium — signals to humans</span>
+        </div>
+      </div>
+
+      <div class="pipe-row flagged">
+        <div class="pipe-num">4</div>
+        <div class="pipe-cell">
+          <div>
+            <div class="pipe-col-title">Compensation fields (if required)</div>
+            <div class="pipe-col-sub">Some applications require salary history or expectations. Entering a number above the role's band can trigger automatic disqualification.</div>
+          </div>
+        </div>
+        <div class="pipe-cell ats-col">
+          <span class="flag-badge red">⚑ High — hard disqualifier</span>
+        </div>
+      </div>
+
+      <div class="pipe-row safe">
+        <div class="pipe-num">5</div>
+        <div class="pipe-cell">
+          <div>
+            <div class="pipe-col-title">Too many advanced degree credentials</div>
+            <div class="pipe-col-sub">MBA + PhD + multiple executive certifications listed prominently can signal mismatch for roles that don't require them</div>
+          </div>
+        </div>
+        <div class="pipe-cell ats-col">
+          <span class="flag-badge slate">Low — human judgment call</span>
+        </div>
+      </div>
+
+      <div class="pipe-row safe">
+        <div class="pipe-num">6</div>
+        <div class="pipe-cell">
+          <div>
+            <div class="pipe-col-title">Keyword mismatch (too senior)</div>
+            <div class="pipe-col-sub">Your resume uses senior-level vocabulary that doesn't match the JD's language — ATS scores it low because the terms don't align, not because of seniority filtering</div>
+          </div>
+        </div>
+        <div class="pipe-cell ats-col">
+          <span class="flag-badge amber">~ Medium — fixable with calibration</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box reveal-on-scroll">
+        <div class="stat-num">98%</div>
+        <div class="stat-label">of Fortune 500 companies use ATS with configurable screening rules</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.1s">
+        <div class="stat-num">~50%</div>
+        <div class="stat-label">of overqualification rejections happen before a human ever opens the file</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.2s">
+        <div class="stat-num">No log</div>
+        <div class="stat-label">ATS almost never tells you which rule filtered you — it just looks like silence</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHAT ATS CAN'T SEE -->
+  <section>
+    <div class="section-label">The ATS Blind Spot</div>
+    <h2>ATS Can't Read Context — Only Words</h2>
+    <p class="section-intro">The reason overqualification filtering is such a blunt instrument: ATS has no concept of nuance. It sees keywords, not intent. It doesn't know why you're applying down-level — and it doesn't ask.</p>
+
+    <div class="context-row">
+      <div class="context-panel cant reveal-on-scroll">
+        <div class="ctx-label red">✗ What ATS cannot see</div>
+        <ul class="ctx-list cant-list">
+          <li>That you're pivoting industries intentionally</li>
+          <li>That you're prioritizing flexibility over seniority</li>
+          <li>That you're relocating and starting fresh</li>
+          <li>That your "VP" title was at a 12-person startup</li>
+          <li>That you genuinely want this specific type of work</li>
+          <li>That you've had a career break and are re-entering</li>
+          <li>That you're trading scope for work-life balance</li>
+          <li>Your motivation, your commitment, your reasoning</li>
+        </ul>
+      </div>
+      <div class="context-panel can reveal-on-scroll" style="transition-delay:.1s">
+        <div class="ctx-label green">✓ What ATS does see</div>
+        <ul class="ctx-list can-list">
+          <li>Job title strings — exact words, seniority level</li>
+          <li>Experience span dates — calculated years</li>
+          <li>Scope keywords — "managed," "led," "oversaw" + scale</li>
+          <li>Keyword match score against the JD</li>
+          <li>Salary field values if the form requires them</li>
+          <li>Credential density — degrees, certifications listed</li>
+          <li>Section headers and structure</li>
+          <li>The words you chose — nothing else</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout blue reveal-on-scroll" style="margin-top:32px; margin-bottom:0">
+      <div class="callout-icon">💡</div>
+      <p><strong>The implication:</strong> because ATS can only see words, changing words is a completely legitimate strategy. You're not hiding anything — you're translating your experience into language that accurately represents what you did <em>for this role</em>. The meaning stays true; the framing changes.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CALIBRATION CARD -->
+  <section>
+    <div class="section-label">Language Calibration</div>
+    <h2>How to Adjust Your Resume Without Being Dishonest</h2>
+    <p class="section-intro">Calibration isn't fabrication. Every adjustment below reflects the same real work — described in language that's appropriate for the target role rather than your previous title hierarchy. Switch between categories to see examples.</p>
+
+    <div class="calib-card reveal-on-scroll">
+      <div class="calib-header">
+        <h3>Before → After: Same experience, recalibrated language</h3>
+        <div class="calib-tabs">
+          <button class="calib-tab active" onclick="switchCalib('titles')">Titles</button>
+          <button class="calib-tab" onclick="switchCalib('scope')">Scope language</button>
+          <button class="calib-tab" onclick="switchCalib('bullets')">Bullet framing</button>
+        </div>
+      </div>
+
+      <!-- TITLES -->
+      <div class="calib-body">
+        <div class="calib-panel active" id="calib-titles">
+          <div class="calib-row">
+            <div class="calib-col before">
+              <div class="calib-label red">As written (flags ATS)</div>
+              <div class="calib-text">Vice President of Marketing</div>
+              <div class="calib-sub">Triggers seniority filters at mid-level roles</div>
+            </div>
+            <div class="calib-arrow">→</div>
+            <div class="calib-col after">
+              <div class="calib-label green">Recalibrated (ATS-safe)</div>
+              <div class="calib-text">Senior Marketing Manager</div>
+              <div class="calib-sub">Accurate if scope was functionally equivalent</div>
+            </div>
+          </div>
+          <div class="calib-row">
+            <div class="calib-col before">
+              <div class="calib-label red">As written (flags ATS)</div>
+              <div class="calib-text">Chief Technology Officer</div>
+              <div class="calib-sub">C-suite keyword — auto-filtered by many ATS systems</div>
+            </div>
+            <div class="calib-arrow">→</div>
+            <div class="calib-col after">
+              <div class="calib-label green">Recalibrated (ATS-safe)</div>
+              <div class="calib-text">Head of Engineering / Engineering Director</div>
+              <div class="calib-sub">Conveys leadership without C-suite flag</div>
+            </div>
+          </div>
+          <div class="calib-row">
+            <div class="calib-col before">
+              <div class="calib-label red">As written (flags ATS)</div>
+              <div class="calib-text">Managing Director, APAC</div>
+              <div class="calib-sub">"Managing Director" is a senior-filter trigger</div>
+            </div>
+            <div class="calib-arrow">→</div>
+            <div class="calib-col after">
+              <div class="calib-label green">Recalibrated (ATS-safe)</div>
+              <div class="calib-text">Regional Business Lead, APAC</div>
+              <div class="calib-sub">Retains regional scope, removes seniority flag</div>
+            </div>
+          </div>
+          <div class="calib-footer">
+            <strong>Important:</strong> Only use a recalibrated title if it's a reasonable industry equivalent — not a fabricated one. You're describing the same job in a vocabulary that's more common across companies at the target level. This is standard practice; resume titles aren't legally binding documents.
+          </div>
+        </div>
+
+        <!-- SCOPE -->
+        <div class="calib-panel" id="calib-scope">
+          <div class="calib-row">
+            <div class="calib-col before">
+              <div class="calib-label red">Signals overqualification</div>
+              <div class="calib-text">"Full P&amp;L responsibility for $80M business unit"</div>
+              <div class="calib-sub">Scope massively exceeds a mid-level role</div>
+            </div>
+            <div class="calib-arrow">→</div>
+            <div class="calib-col after">
+              <div class="calib-label green">Recalibrated</div>
+              <div class="calib-text">"Managed budget planning and financial reporting for business unit"</div>
+              <div class="calib-sub">Accurate; omits scale that's irrelevant to target role</div>
+            </div>
+          </div>
+          <div class="calib-row">
+            <div class="calib-col before">
+              <div class="calib-label red">Signals overqualification</div>
+              <div class="calib-text">"Led 120-person organization across 6 global offices"</div>
+              <div class="calib-sub">Headcount dwarfs anything at the target level</div>
+            </div>
+            <div class="calib-arrow">→</div>
+            <div class="calib-col after">
+              <div class="calib-label green">Recalibrated</div>
+              <div class="calib-text">"Built and managed cross-functional teams in a distributed environment"</div>
+              <div class="calib-sub">Demonstrates leadership without overwhelming scale</div>
+            </div>
+          </div>
+          <div class="calib-row">
+            <div class="calib-col before">
+              <div class="calib-label red">Signals overqualification</div>
+              <div class="calib-text">"Board-level presentations; reported directly to CEO"</div>
+              <div class="calib-sub">Implies a seniority tier above the role</div>
+            </div>
+            <div class="calib-arrow">→</div>
+            <div class="calib-col after">
+              <div class="calib-label green">Recalibrated</div>
+              <div class="calib-text">"Prepared executive briefings and strategic recommendations for senior leadership"</div>
+              <div class="calib-sub">Shows communication skill without the org-chart signal</div>
+            </div>
+          </div>
+          <div class="calib-footer">
+            <strong>The principle:</strong> you can be selective about which details you include. Omitting a headcount number or budget figure isn't lying — it's editing for relevance. Every resume is already a curated document.
+          </div>
+        </div>
+
+        <!-- BULLETS -->
+        <div class="calib-panel" id="calib-bullets">
+          <div class="calib-row">
+            <div class="calib-col before">
+              <div class="calib-label red">As written (overqualified signal)</div>
+              <div class="calib-text">"Spearheaded enterprise-wide digital transformation initiative across 14 countries"</div>
+              <div class="calib-sub">Vocabulary and scale are C-suite, not manager-level</div>
+            </div>
+            <div class="calib-arrow">→</div>
+            <div class="calib-col after">
+              <div class="calib-label green">Recalibrated</div>
+              <div class="calib-text">"Led digital transformation program; coordinated across regional teams and technology vendors"</div>
+              <div class="calib-sub">Same work; language aligns with senior IC or manager</div>
+            </div>
+          </div>
+          <div class="calib-row">
+            <div class="calib-col before">
+              <div class="calib-label red">As written (overqualified signal)</div>
+              <div class="calib-text">"Served as executive sponsor for $12M cloud migration program"</div>
+              <div class="calib-sub">"Executive sponsor" = explicit seniority keyword</div>
+            </div>
+            <div class="calib-arrow">→</div>
+            <div class="calib-col after">
+              <div class="calib-label green">Recalibrated</div>
+              <div class="calib-text">"Oversaw cloud migration program from planning through deployment; managed vendor relationships and stakeholder alignment"</div>
+              <div class="calib-sub">Demonstrates ownership without the seniority flag</div>
+            </div>
+          </div>
+          <div class="calib-row">
+            <div class="calib-col before">
+              <div class="calib-label red">As written (overqualified signal)</div>
+              <div class="calib-text">"Negotiated and closed $40M strategic partnership with Fortune 500 partner"</div>
+              <div class="calib-sub">Deal size signals a seniority tier above most manager roles</div>
+            </div>
+            <div class="calib-arrow">→</div>
+            <div class="calib-col after">
+              <div class="calib-label green">Recalibrated</div>
+              <div class="calib-text">"Developed and closed strategic partnership; managed negotiation process and cross-functional deal team"</div>
+              <div class="calib-sub">Shows the same skill set; removes the scale that flags you</div>
+            </div>
+          </div>
+          <div class="calib-footer">
+            <strong>The test:</strong> for each bullet, ask "does this detail help or hurt me for this specific role?" If a number or keyword signals a tier above the job, you can accurately describe the work without it.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- REJECTION TRIGGER SIGNALS -->
+  <section>
+    <div class="section-label">Automatic Rejection Triggers</div>
+    <h2>The Specific Signals That Get You Auto-Filtered</h2>
+    <p class="section-intro">These are the patterns that most commonly cause automated overqualification filtering across major ATS platforms — and what to do about each one.</p>
+
+    <div class="signal-grid">
+      <div class="signal-card danger reveal-on-scroll">
+        <div class="sig-header">
+          <span class="sig-icon">🏷️</span>
+          <span class="sig-risk high">High risk</span>
+        </div>
+        <h4>C-suite &amp; VP-level title keywords</h4>
+        <p>Many ATS systems have hard filters for title tiers. "VP," "Vice President," "SVP," "EVP," "Chief," "C-suite," and "Managing Director" are common triggers.</p>
+        <div class="sig-example">❌ Vice President of Product<br>✓ Senior Product Leader / Product Director</div>
+      </div>
+
+      <div class="signal-card danger reveal-on-scroll" style="transition-delay:.1s">
+        <div class="sig-header">
+          <span class="sig-icon">📅</span>
+          <span class="sig-risk high">High risk</span>
+        </div>
+        <h4>Experience years that far exceed the requirement</h4>
+        <p>ATS infers total experience from your date spans. A job requiring "3–5 years" may auto-filter anyone showing 15+ years, especially with the wrong title density.</p>
+        <div class="sig-example">❌ 22 years of progressive experience<br>✓ List only roles relevant to the target level</div>
+      </div>
+
+      <div class="signal-card caution reveal-on-scroll" style="transition-delay:.2s">
+        <div class="sig-header">
+          <span class="sig-icon">💰</span>
+          <span class="sig-risk medium">Medium risk</span>
+        </div>
+        <h4>Salary history or expectation fields</h4>
+        <p>When a form asks for current or desired salary and the number exceeds the role's band, some systems apply an automatic disqualification threshold.</p>
+        <div class="sig-example">Strategy: enter a range or leave blank where allowed — check state laws on salary history requirements</div>
+      </div>
+
+      <div class="signal-card caution reveal-on-scroll" style="transition-delay:.3s">
+        <div class="sig-header">
+          <span class="sig-icon">🌐</span>
+          <span class="sig-risk medium">Medium risk</span>
+        </div>
+        <h4>Global or enterprise-scale language</h4>
+        <p>"Enterprise-wide," "global operations," "across 40 countries," "Fortune 100 clients" — scale language signals a seniority mismatch and can surface in human review even if ATS passes you.</p>
+        <div class="sig-example">❌ Global enterprise transformation<br>✓ Cross-functional program delivery</div>
+      </div>
+
+      <div class="signal-card reveal-on-scroll" style="transition-delay:.4s">
+        <div class="sig-header">
+          <span class="sig-icon">🎓</span>
+          <span class="sig-risk low">Lower risk</span>
+        </div>
+        <h4>Advanced credential stacking</h4>
+        <p>MBA + JD + PhD + 6 certifications listed prominently can signal to human reviewers (less so ATS) that you're overqualified or will quickly leave for a more senior role.</p>
+        <div class="sig-example">Strategy: include degrees; de-emphasize or omit certifications not relevant to the target role</div>
+      </div>
+
+      <div class="signal-card reveal-on-scroll" style="transition-delay:.5s">
+        <div class="sig-header">
+          <span class="sig-icon">🔑</span>
+          <span class="sig-risk medium">Medium risk</span>
+        </div>
+        <h4>Keyword mismatch — too senior, not misaligned</h4>
+        <p>Your resume uses vocabulary appropriate for your level but not for the JD's level. ATS scores it low — not for seniority, but because the word choices don't align with what the posting asked for.</p>
+        <div class="sig-example">Strategy: run your resume through Shortlistr to surface the specific keyword gaps for each JD</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW SHORTLISTR HELPS -->
+  <section>
+    <div class="section-label">How Shortlistr Helps You Recalibrate</div>
+    <h2>Know Exactly What's Flagging Before You Apply</h2>
+    <p class="section-intro">Guessing which signals are hurting you is a slow game. Shortlistr shows you your keyword alignment — and the gap between your current language and the target role's language — so you can make targeted changes before submitting.</p>
+
+    <div class="steps">
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Paste the job description for the role you're targeting</h4>
+          <p>Use the exact JD — the specific language in that posting is what ATS is matching against. Mid-level JDs use different vocabulary than senior-level ones, and that gap is exactly what you need to close.</p>
+          <span class="step-badge">10 seconds</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Upload your current resume as-is</h4>
+          <p>Don't edit first. See your baseline score — the keyword match between what your resume currently says and what the JD is looking for. This tells you whether the problem is seniority language, keyword mismatch, or both.</p>
+          <span class="step-badge">10 seconds</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>See which keywords are misaligned — too senior or just missing</h4>
+          <p>Shortlistr identifies the specific terms in the JD that your resume isn't matching. For overqualified candidates, this often reveals that the vocabulary itself is the issue — not the experience behind it.</p>
+          <span class="step-badge">Instant</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Recalibrate language, then re-check in real time</h4>
+          <p>Apply the calibration changes — recalibrated titles, scaled-back scope language, JD-aligned vocabulary in your bullets — then paste your updated resume and watch your score move.</p>
+          <span class="step-badge">Iterative</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Apply with a version that can actually reach a human</h4>
+          <p>You still have every year of experience. You still brought everything you've earned. Now your resume is in a language that gets it past the filter — and into the hands of someone who can actually make a decision.</p>
+          <span class="step-badge">Your experience, readable by ATS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-label">Common Questions</div>
+    <h2>Overqualified Resume FAQ</h2>
+
+    <div class="faq-list">
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Does ATS actually filter out overqualified candidates?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Yes. Many ATS systems have configurable filters that flag resumes based on years of experience, salary history fields, or seniority-level keywords (VP, Director, C-suite). When these thresholds are exceeded, the resume can be automatically deprioritized or rejected before any human reviews it — and you'll never know which rule caught you.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Is it dishonest to downscale your resume title?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Not if you do it accurately. Titles vary wildly across companies, industries, and company sizes. If your company called you "VP of Engineering" but the actual scope was equivalent to a Senior Staff Engineer elsewhere, using the more common title is honest framing — not deception. You're translating your role into a language the market understands. Resume titles aren't legally binding documents.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          What keywords trigger ATS overqualified filters?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Common triggers include: seniority titles (VP, Director, C-suite, Principal, Managing Director, SVP), years of experience that far exceed the job requirement, scope language (P&L responsibility, board-level, enterprise-wide, 100+ direct reports), and total compensation in salary fields. Not all ATS systems filter on all of these, but title keywords and experience years are the most common.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Should I remove experience from my resume to avoid looking overqualified?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Selectively, yes. Removing roles older than 10–15 years is standard practice and not considered deceptive — it's just editing for relevance. What you keep should be relevant to the target role. Omitting a C-suite role from 12 years ago is reasonable noise-reduction. Hiding recent, directly relevant senior experience is more fraught — it may pass ATS but create problems at the interview stage.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          How do I explain being overqualified in a cover letter?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Address it directly and briefly: explain your reason for targeting this level (career pivot, location change, industry transition, work-life balance, returning after a break), and make clear you've made a deliberate choice — not a desperate one. Employers worry overqualified candidates will leave quickly, so the goal is to demonstrate intent and commitment rather than apologize for your history.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta">
+    <h2>You Earned Every Line on That Resume.<br>Don't Let a Filter Bury It.</h2>
+    <p>Shortlistr shows you which words are flagging your seniority — and what to change so your resume reaches someone who can actually read it.</p>
+    <a href="https://shortlistr.us/app" class="bottom-cta-btn">Recalibrate My Resume for ATS →</a>
+    <p class="hero-sub" style="margin-top:14px">Free · no account · paste any job description</p>
+  </div>
+
+  <footer>
+    <p><a href="https://shortlistr.us">← Back to Shortlistr</a> &nbsp;·&nbsp; © 2025 Shortlistr</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal-on-scroll');
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // FAQ accordion
+    function toggleFaq(btn) {
+      const ans = btn.nextElementSibling;
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.classList.remove('open');
+      });
+      if (!open) {
+        btn.setAttribute('aria-expanded', 'true');
+        ans.classList.add('open');
+      }
+    }
+
+    // Calibration tab switching
+    function switchCalib(tab) {
+      document.querySelectorAll('.calib-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.calib-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('calib-' + tab).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
