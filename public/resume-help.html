@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Help — Find Out What's Wrong and Fix It | Shortlistr</title>
+  <meta name="description" content="Not sure what's wrong with your resume? Shortlistr diagnoses keyword gaps, formatting issues, and ATS problems in 30 seconds." />
+  <link rel="canonical" href="https://shortlistr.us/resume-help" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Resume Help — Find Out What's Wrong and Fix It | Shortlistr" />
+  <meta property="og:description" content="Not sure what's wrong with your resume? Shortlistr diagnoses keyword gaps, formatting issues, and ATS problems in 30 seconds." />
+  <meta property="og:url" content="https://shortlistr.us/resume-help" />
+  <meta property="og:type" content="article" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy-900: #0a0f1e;
+      --navy-800: #0d1426;
+      --navy-700: #111b33;
+      --navy-600: #162040;
+      --electric-500: #3b82f6;
+      --electric-400: #60a5fa;
+      --electric-300: #93c5fd;
+      --violet-500: #6366f1;
+      --violet-400: #818cf8;
+      --violet-300: #a5b4fc;
+      --emerald-400: #34d399;
+      --emerald-500: #10b981;
+      --rose-400: #fb7185;
+      --amber-400: #fbbf24;
+      --slate-400: #94a3b8;
+      --slate-300: #cbd5e1;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy-900);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(59,130,246,0.08) 1px, transparent 0);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      animation: orb-drift 18s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(59,130,246,0.10) 0%, transparent 70%);
+      bottom: -150px; left: -150px;
+      animation: orb-drift2 22s ease-in-out infinite alternate;
+    }
+    @keyframes orb-drift  { from { transform: translate(0,0); }  to { transform: translate(40px, 60px); } }
+    @keyframes orb-drift2 { from { transform: translate(0,0); }  to { transform: translate(-30px, -50px); } }
+
+    /* NAV */
+    nav {
+      position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(10,15,30,0.8);
+      backdrop-filter: blur(12px);
+    }
+    .logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #6366f1 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 20px; height: 20px; }
+    .logo-text { font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 600; font-size: 0.85rem;
+      padding: 9px 20px; border-radius: 8px; text-decoration: none;
+      transition: opacity .2s, transform .2s;
+    }
+    .nav-cta:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 90px 24px 70px;
+      max-width: 800px; margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25);
+      color: var(--electric-400); font-size: 0.8rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 28px;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 900; line-height: 1.12;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.75) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 22px;
+    }
+    .hero p {
+      font-size: 1.15rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 620px; margin: 0 auto 36px;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 1.05rem;
+      padding: 16px 36px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,130,246,0.4); }
+    .hero-sub {
+      margin-top: 14px; font-size: 0.82rem;
+      color: rgba(148,163,184,0.6);
+    }
+
+    /* SECTIONS */
+    section {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 70px 24px;
+    }
+    section + section { padding-top: 0; }
+
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--electric-400);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800; line-height: 1.2;
+      letter-spacing: -0.025em; margin-bottom: 16px;
+    }
+    .section-intro {
+      font-size: 1.05rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 680px; margin-bottom: 44px;
+    }
+
+    /* DIAGNOSTIC CARD */
+    .diag-card {
+      background: rgba(13,20,38,0.8);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    }
+    .diag-header {
+      text-align: center; margin-bottom: 32px;
+    }
+    .diag-header p {
+      font-size: 1rem; color: var(--slate-400);
+      margin-top: 8px;
+    }
+    .diag-header h3 {
+      font-size: 1.2rem; font-weight: 700;
+    }
+    .diag-tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .diag-tile {
+      background: rgba(255,255,255,0.03);
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 24px 20px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s, transform .15s;
+      text-align: left;
+      user-select: none;
+    }
+    .diag-tile:hover {
+      background: rgba(255,255,255,0.05);
+      transform: translateY(-2px);
+    }
+    .diag-tile.active-format {
+      border-color: var(--amber-400);
+      background: rgba(251,191,36,0.06);
+    }
+    .diag-tile.active-keywords {
+      border-color: var(--electric-500);
+      background: rgba(59,130,246,0.08);
+    }
+    .diag-tile.active-content {
+      border-color: var(--violet-400);
+      background: rgba(129,140,248,0.08);
+    }
+    .tile-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 14px;
+    }
+    .icon-format  { background: rgba(251,191,36,0.12); }
+    .icon-kw      { background: rgba(59,130,246,0.12); }
+    .icon-content { background: rgba(129,140,248,0.12); }
+    .tile-title {
+      font-size: 1rem; font-weight: 700; margin-bottom: 6px;
+    }
+    .tile-desc {
+      font-size: 0.85rem; color: var(--slate-400); line-height: 1.5;
+    }
+    .tile-check {
+      display: none; width: 20px; height: 20px; border-radius: 50%;
+      align-items: center; justify-content: center;
+      font-size: 0.75rem; margin-left: auto; margin-top: 12px;
+    }
+    .diag-tile.active-format  .tile-check { display: flex; background: rgba(251,191,36,0.2); color: var(--amber-400); }
+    .diag-tile.active-keywords .tile-check { display: flex; background: rgba(59,130,246,0.2); color: var(--electric-400); }
+    .diag-tile.active-content  .tile-check { display: flex; background: rgba(129,140,248,0.2); color: var(--violet-400); }
+
+    .diag-detail {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 24px;
+      display: none;
+    }
+    .diag-detail.visible { display: block; }
+    .detail-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    @media (max-width: 560px) { .detail-inner { grid-template-columns: 1fr; } }
+    .detail-col h4 {
+      font-size: 0.85rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .detail-col h4.amber  { color: var(--amber-400); }
+    .detail-col h4.blue   { color: var(--electric-400); }
+    .detail-col h4.violet { color: var(--violet-400); }
+    .detail-list { list-style: none; }
+    .detail-list li {
+      font-size: 0.85rem; color: var(--slate-400); line-height: 1.6;
+      padding-left: 16px; position: relative; margin-bottom: 4px;
+    }
+    .detail-list li::before {
+      content: '→'; position: absolute; left: 0;
+      color: rgba(148,163,184,0.4);
+    }
+    .detail-cta {
+      margin-top: 20px;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 600; font-size: 0.9rem;
+      padding: 12px 24px; border-radius: 10px; text-decoration: none;
+      transition: opacity .2s;
+    }
+    .detail-cta:hover { opacity: .9; }
+
+    /* PROBLEM TYPES */
+    .problem-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .problem-card {
+      background: rgba(13,20,38,0.7);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 28px 24px;
+      transition: transform .2s, border-color .2s;
+    }
+    .problem-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
+    .prob-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 16px;
+    }
+    .prob-icon.amber  { background: rgba(251,191,36,0.1); }
+    .prob-icon.blue   { background: rgba(59,130,246,0.1); }
+    .prob-icon.violet { background: rgba(129,140,248,0.1); }
+    .problem-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .problem-card p  { font-size: 0.88rem; color: var(--slate-400); line-height: 1.6; margin-bottom: 14px; }
+    .prob-signals { list-style: none; }
+    .prob-signals li {
+      font-size: 0.82rem; color: var(--slate-400); padding-left: 16px;
+      position: relative; margin-bottom: 4px; line-height: 1.5;
+    }
+    .prob-signals li::before { content: '·'; position: absolute; left: 0; color: var(--slate-400); }
+
+    /* STAT ROW */
+    .stat-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px; margin-top: 48px;
+    }
+    .stat-box {
+      background: rgba(13,20,38,0.7);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px 20px; text-align: center;
+    }
+    .stat-num {
+      font-size: 2.4rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, var(--electric-400), var(--violet-400));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px;
+    }
+    .stat-label { font-size: 0.85rem; color: var(--slate-400); line-height: 1.4; }
+
+    /* ATS EXPLAINER */
+    .ats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .ats-row {
+      background: rgba(13,20,38,0.7);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .ats-type {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 6px;
+      display: inline-block; width: fit-content;
+    }
+    .ats-type.amber  { background: rgba(251,191,36,0.12); color: var(--amber-400); }
+    .ats-type.blue   { background: rgba(59,130,246,0.12); color: var(--electric-400); }
+    .ats-type.violet { background: rgba(129,140,248,0.12); color: var(--violet-400); }
+    .ats-row h4 { font-size: 0.95rem; font-weight: 700; }
+    .ats-row p  { font-size: 0.85rem; color: var(--slate-400); line-height: 1.6; }
+    .ats-impact {
+      margin-top: auto;
+      font-size: 0.8rem; font-weight: 600; padding: 6px 10px;
+      border-radius: 6px; display: inline-block; width: fit-content;
+    }
+    .ats-impact.high { background: rgba(251,113,133,0.1); color: var(--rose-400); }
+    .ats-impact.med  { background: rgba(251,191,36,0.1);  color: var(--amber-400); }
+    .ats-impact.mod  { background: rgba(148,163,184,0.1); color: var(--slate-400); }
+
+    /* HOW IT WORKS */
+    .steps { display: flex; flex-direction: column; gap: 20px; }
+    .step-row {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: rgba(13,20,38,0.6);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px;
+      transition: border-color .2s;
+    }
+    .step-row:hover { border-color: rgba(59,130,246,0.2); }
+    .step-num {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(99,102,241,0.2));
+      border: 1px solid rgba(59,130,246,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; font-weight: 800; color: var(--electric-400);
+    }
+    .step-body h4 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .step-body p  { font-size: 0.88rem; color: var(--slate-400); line-height: 1.6; }
+    .step-badge {
+      margin-top: 8px; display: inline-block;
+      font-size: 0.75rem; font-weight: 600; color: var(--emerald-400);
+      background: rgba(52,211,153,0.1); padding: 3px 9px; border-radius: 6px;
+    }
+
+    /* WHICH IS KILLING YOUR SEARCH */
+    .killing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .killing-card {
+      border-radius: 16px; padding: 28px 24px;
+      border: 1px solid transparent;
+    }
+    .killing-card.likely {
+      background: rgba(59,130,246,0.06);
+      border-color: rgba(59,130,246,0.2);
+    }
+    .killing-card.possible {
+      background: rgba(251,191,36,0.04);
+      border-color: rgba(251,191,36,0.15);
+    }
+    .killing-card.rare {
+      background: rgba(148,163,184,0.03);
+      border-color: rgba(148,163,184,0.1);
+    }
+    .kill-badge {
+      display: inline-block; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 6px; margin-bottom: 14px;
+    }
+    .kill-badge.likely   { background: rgba(59,130,246,0.15); color: var(--electric-400); }
+    .kill-badge.possible { background: rgba(251,191,36,0.15); color: var(--amber-400); }
+    .kill-badge.rare     { background: rgba(148,163,184,0.1); color: var(--slate-400); }
+    .killing-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .killing-card p  { font-size: 0.87rem; color: var(--slate-400); line-height: 1.6; }
+    .kill-pct {
+      margin-top: 14px; font-size: 1.8rem; font-weight: 900;
+      line-height: 1;
+    }
+    .kill-pct.blue   { color: var(--electric-400); }
+    .kill-pct.amber  { color: var(--amber-400); }
+    .kill-pct.slate  { color: var(--slate-400); }
+    .kill-pct-label { font-size: 0.78rem; color: rgba(148,163,184,0.6); margin-top: 4px; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: rgba(13,20,38,0.7);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: none;
+      color: var(--white); font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      padding: 20px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq-q:hover { color: var(--electric-400); }
+    .faq-arrow { font-size: 1rem; transition: transform .25s; flex-shrink: 0; }
+    .faq-q[aria-expanded="true"] .faq-arrow { transform: rotate(180deg); }
+    .faq-a {
+      display: none; padding: 0 24px 20px;
+      font-size: 0.88rem; color: var(--slate-400); line-height: 1.7;
+    }
+    .faq-a.open { display: block; }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 80px 24px;
+      background: linear-gradient(180deg, transparent, rgba(13,20,38,0.6));
+    }
+    .bottom-cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 900; letter-spacing: -0.025em;
+      margin-bottom: 16px; max-width: 600px; margin-left: auto; margin-right: auto;
+    }
+    .bottom-cta p {
+      font-size: 1.05rem; color: var(--slate-400); max-width: 500px;
+      margin: 0 auto 36px; line-height: 1.7;
+    }
+    .bottom-cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 1.05rem;
+      padding: 16px 40px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .bottom-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,130,246,0.4); }
+
+    /* DIVIDER */
+    .divider {
+      position: relative; z-index: 1;
+      height: 1px; background: rgba(255,255,255,0.06);
+      max-width: 900px; margin: 0 auto;
+    }
+
+    /* SCROLL REVEAL */
+    .reveal-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity .55s, transform .55s; }
+    .reveal-on-scroll.visible { opacity: 1; transform: none; }
+
+    /* FOOTER */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 32px 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem; color: rgba(148,163,184,0.4);
+    }
+    footer a { color: rgba(148,163,184,0.5); text-decoration: none; }
+    footer a:hover { color: var(--electric-400); }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 60px 20px 50px; }
+      section { padding: 50px 20px; }
+      .diag-card { padding: 24px 18px; }
+    }
+  </style>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Resume Help — Find Out What's Wrong and Fix It",
+        "description": "Not sure what's wrong with your resume? Learn the three types of resume problems — format, keywords, and content — and how ATS affects all of them.",
+        "url": "https://shortlistr.us/resume-help",
+        "author": { "@type": "Organization", "name": "Shortlistr" },
+        "publisher": { "@type": "Organization", "name": "Shortlistr", "url": "https://shortlistr.us" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why isn't my resume working even though I'm qualified?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Most qualified candidates are filtered out before a human reads their resume. ATS systems score your resume against the job description — if your keywords don't match, you're rejected automatically regardless of experience." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the most common resume problem?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Keyword mismatch is the most common and most fixable problem. Most resumes use slightly different language than the job description, causing ATS systems to score them low — even when the candidate is a strong fit." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does resume formatting really affect ATS?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Tables, columns, text boxes, headers/footers, and graphics can all cause ATS parsing errors that scramble your resume's content — making an otherwise strong resume unreadable to the system." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I find out what's wrong with my resume?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Shortlistr analyzes your resume against any job description in about 30 seconds. It identifies keyword gaps, formatting issues, and ATS score — and tells you exactly what to fix." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I fix my resume without rewriting it completely?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Almost always, yes. Most resume problems come from keyword phrasing and minor formatting issues — not missing experience. Small, targeted changes can raise your ATS score significantly." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://shortlistr.us" class="logo-link">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="2" width="13" height="17" rx="2" fill="white" fill-opacity="0.9"/>
+          <path d="M13 2L17 6H14C13.4 6 13 5.6 13 5V2Z" fill="white" fill-opacity="0.5"/>
+          <path d="M16 14L18.5 20L20 17.5L22.5 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">Shortlistr</span>
+    </a>
+    <a href="https://shortlistr.us/app" class="nav-cta">Diagnose My Resume →</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">Free Resume Diagnosis</div>
+    <h1>Need Resume Help?<br>Start Here.</h1>
+    <p>There are only three things that kill a job search. Most people guess wrong about which one is hurting them — and fix the wrong thing. Here's how to find out fast.</p>
+    <a href="https://shortlistr.us/app" class="hero-cta">Diagnose My Resume Free →</a>
+    <p class="hero-sub">No account required · 30 seconds · paste any job description</p>
+  </div>
+
+  <!-- DIAGNOSTIC CARD -->
+  <section>
+    <div class="section-label">Interactive Diagnosis</div>
+    <h2>Which Type of Problem Do You Have?</h2>
+    <p class="section-intro">Select the description that sounds most like your situation. Most people have one primary problem — and fixing it is faster than they expect.</p>
+
+    <div class="diag-card reveal-on-scroll">
+      <div class="diag-header">
+        <h3>My resume isn't working. The problem is probably...</h3>
+        <p>Select one to see what it means and how to fix it.</p>
+      </div>
+
+      <div class="diag-tiles">
+        <!-- FORMAT -->
+        <div class="diag-tile" id="tile-format" onclick="selectTile('format')">
+          <div class="tile-icon icon-format">📐</div>
+          <div class="tile-title">Format / Layout</div>
+          <div class="tile-desc">I'm using tables, columns, or a creative design. Or I copied a template from the internet.</div>
+          <div class="tile-check">✓</div>
+        </div>
+        <!-- KEYWORDS -->
+        <div class="diag-tile" id="tile-keywords" onclick="selectTile('keywords')">
+          <div class="tile-icon icon-kw">🔑</div>
+          <div class="tile-title">Keywords / ATS</div>
+          <div class="tile-desc">My experience matches the job but I'm still not hearing back. It feels like no one reads it.</div>
+          <div class="tile-check">✓</div>
+        </div>
+        <!-- CONTENT -->
+        <div class="diag-tile" id="tile-content" onclick="selectTile('content')">
+          <div class="tile-icon icon-content">✍️</div>
+          <div class="tile-title">Content / Story</div>
+          <div class="tile-desc">I make it to interviews but don't land offers, or I'm not sure my resume reflects my real value.</div>
+          <div class="tile-check">✓</div>
+        </div>
+      </div>
+
+      <!-- FORMAT DETAIL -->
+      <div class="diag-detail" id="detail-format">
+        <div class="detail-inner">
+          <div class="detail-col">
+            <h4 class="amber">What's happening</h4>
+            <ul class="detail-list">
+              <li>ATS can't parse multi-column layouts — text gets scrambled</li>
+              <li>Tables cause content to appear in the wrong order or disappear</li>
+              <li>Text in headers/footers is often skipped entirely</li>
+              <li>Graphics, icons, and charts are invisible to ATS</li>
+              <li>Your resume looks great to humans but reads as garbled to bots</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <h4 class="amber">Quick fixes</h4>
+            <ul class="detail-list">
+              <li>Switch to a single-column, left-to-right layout</li>
+              <li>Replace tables with plain text with consistent spacing</li>
+              <li>Move all content into the main body (not headers/footers)</li>
+              <li>Use standard section headers: Experience, Education, Skills</li>
+              <li>Save as .docx or plain PDF — not image PDF</li>
+            </ul>
+          </div>
+        </div>
+        <a href="https://shortlistr.us/app" class="detail-cta">Check My Formatting Score →</a>
+      </div>
+
+      <!-- KEYWORDS DETAIL -->
+      <div class="diag-detail" id="detail-keywords">
+        <div class="detail-inner">
+          <div class="detail-col">
+            <h4 class="blue">What's happening</h4>
+            <ul class="detail-list">
+              <li>ATS scores your resume against the exact words in the job description</li>
+              <li>You say "client relationship management" — JD says "CRM" — ATS scores it as a miss</li>
+              <li>Most resumes score below 50% on ATS keyword matching</li>
+              <li>Below ~60%, your resume never reaches a human recruiter</li>
+              <li>This affects every application unless you tailor keywords each time</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <h4 class="blue">Quick fixes</h4>
+            <ul class="detail-list">
+              <li>Pull exact phrases from the job description into your resume</li>
+              <li>Match both spelled-out terms and abbreviations (e.g., "CRM" and "customer relationship management")</li>
+              <li>Add a Skills section with hard skills from the JD</li>
+              <li>Rewrite bullet points to include role-specific language</li>
+              <li>Tailor keywords for every application — or use Shortlistr to do it in 30 seconds</li>
+            </ul>
+          </div>
+        </div>
+        <a href="https://shortlistr.us/app" class="detail-cta">Find My Keyword Gaps →</a>
+      </div>
+
+      <!-- CONTENT DETAIL -->
+      <div class="diag-detail" id="detail-content">
+        <div class="detail-inner">
+          <div class="detail-col">
+            <h4 class="violet">What's happening</h4>
+            <ul class="detail-list">
+              <li>Resume reads like a job description, not an achievement record</li>
+              <li>Bullet points describe duties, not impact ("managed X" vs "reduced X by Y%")</li>
+              <li>Generic language doesn't differentiate you from 200 other applicants</li>
+              <li>Summary (if present) is vague or uses overused phrases like "results-driven"</li>
+              <li>Scope and scale of work isn't visible — reader can't gauge seniority</li>
+            </ul>
+          </div>
+          <div class="detail-col">
+            <h4 class="violet">Quick fixes</h4>
+            <ul class="detail-list">
+              <li>Rewrite bullets with: action verb + what you did + the result/scale</li>
+              <li>Add numbers wherever possible — %, $, headcount, time saved</li>
+              <li>Replace the objective statement with a 2-sentence positioning summary</li>
+              <li>Remove anything from more than 10–15 years ago unless it's directly relevant</li>
+              <li>Start by fixing keywords first — content issues are secondary if ATS filters you out</li>
+            </ul>
+          </div>
+        </div>
+        <a href="https://shortlistr.us/app" class="detail-cta">Analyze My Resume Content →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- THE 3 PROBLEM TYPES -->
+  <section>
+    <div class="section-label">The Three Resume Problems</div>
+    <h2>What's Actually Stopping Your Search</h2>
+    <p class="section-intro">Every resume problem falls into one of three buckets. Each one has a different fix — and they're not equally likely to be hurting you.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card reveal-on-scroll">
+        <div class="prob-icon amber">📐</div>
+        <h3>Format Problems</h3>
+        <p>Your resume's structure breaks ATS parsing. The system misreads or skips entire sections — so even great content never gets scored.</p>
+        <ul class="prob-signals">
+          <li>Two-column or multi-column layout</li>
+          <li>Tables used for skills or experience</li>
+          <li>Creative templates from design sites</li>
+          <li>Text in headers, footers, or text boxes</li>
+          <li>Saved as an image or scanned PDF</li>
+        </ul>
+      </div>
+
+      <div class="problem-card reveal-on-scroll" style="transition-delay:.1s">
+        <div class="prob-icon blue">🔑</div>
+        <h3>Keyword Problems</h3>
+        <p>Your resume doesn't use the same language as the job description. ATS matches exact phrases — different words for the same skill = no match.</p>
+        <ul class="prob-signals">
+          <li>Applied to 10+ jobs with zero callbacks</li>
+          <li>Never tailoring resume for each application</li>
+          <li>Using outdated or informal terms for tools</li>
+          <li>Missing abbreviations or acronyms from JD</li>
+          <li>No Skills section with hard skills listed</li>
+        </ul>
+      </div>
+
+      <div class="problem-card reveal-on-scroll" style="transition-delay:.2s">
+        <div class="prob-icon violet">✍️</div>
+        <h3>Content Problems</h3>
+        <p>Your resume passes ATS but doesn't impress the human reader. Weak bullet points, no numbers, or a story that doesn't match the role.</p>
+        <ul class="prob-signals">
+          <li>Getting interviews but not advancing</li>
+          <li>Bullets that list tasks, not achievements</li>
+          <li>No quantifiable results or metrics</li>
+          <li>Generic summary or objective statement</li>
+          <li>Experience that doesn't clearly map to the role</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box reveal-on-scroll">
+        <div class="stat-num">75%</div>
+        <div class="stat-label">of resumes are auto-rejected by ATS before any human sees them</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.1s">
+        <div class="stat-num">~60%</div>
+        <div class="stat-label">of resume problems are keyword-related — the easiest type to fix</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.2s">
+        <div class="stat-num">30s</div>
+        <div class="stat-label">is all it takes Shortlistr to diagnose all three problem types</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHICH IS KILLING YOUR SEARCH -->
+  <section>
+    <div class="section-label">Likelihood by Problem Type</div>
+    <h2>Which One Is Most Likely Hurting You</h2>
+    <p class="section-intro">Not all problems are equally common. Based on what we see across thousands of resumes, here's how likely each problem type is to be your issue.</p>
+
+    <div class="killing-grid">
+      <div class="killing-card likely reveal-on-scroll">
+        <span class="kill-badge likely">Most Likely</span>
+        <h3>Keyword / ATS mismatch</h3>
+        <p>The vast majority of job seekers aren't tailoring their resume to each posting — or are using slightly different language than the job description. This causes ATS filters to reject resumes from genuinely qualified candidates every day.</p>
+        <div class="kill-pct blue">~6 in 10</div>
+        <div class="kill-pct-label">job seekers have a keyword problem</div>
+      </div>
+
+      <div class="killing-card possible reveal-on-scroll" style="transition-delay:.1s">
+        <span class="kill-badge possible">Possible</span>
+        <h3>Format / parsing errors</h3>
+        <p>Creative templates and design-forward resumes are popular — and often terrible for ATS. If you pulled your resume from a design site or use columns and tables, formatting is probably a secondary problem even if keywords are the bigger one.</p>
+        <div class="kill-pct amber">~3 in 10</div>
+        <div class="kill-pct-label">resumes have significant parsing issues</div>
+      </div>
+
+      <div class="killing-card rare reveal-on-scroll" style="transition-delay:.2s">
+        <span class="kill-badge rare">Less Common</span>
+        <h3>Content / storytelling</h3>
+        <p>Weak content is a real problem, but it usually shows up at the interview stage — not the application stage. If you're not getting interviews at all, fix keywords first. Content becomes the bottleneck only once you're getting through ATS.</p>
+        <div class="kill-pct slate">~1 in 10</div>
+        <div class="kill-pct-label">early rejections are pure content issues</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW ATS FITS INTO ALL THREE -->
+  <section>
+    <div class="section-label">ATS & Your Resume</div>
+    <h2>How ATS Affects Every Problem Type</h2>
+    <p class="section-intro">Applicant Tracking Systems are involved at every layer of the resume problem — not just keywords. Here's how ATS intersects with all three problem types.</p>
+
+    <div class="ats-grid">
+      <div class="ats-row reveal-on-scroll">
+        <span class="ats-type amber">Format</span>
+        <h4>ATS Parsing Failure</h4>
+        <p>If your format is broken, ATS can't extract your content correctly. It may score your resume at 0% — not because your keywords are missing, but because it can't read them. This is the most silent killer.</p>
+        <span class="ats-impact high">High risk · silent failure</span>
+      </div>
+
+      <div class="ats-row reveal-on-scroll" style="transition-delay:.1s">
+        <span class="ats-type blue">Keywords</span>
+        <h4>ATS Keyword Scoring</h4>
+        <p>ATS compares your resume text against the job description word by word. Each missing phrase lowers your score. Most systems set a threshold — usually around 60–70% — below which resumes don't reach a recruiter.</p>
+        <span class="ats-impact high">High risk · most common</span>
+      </div>
+
+      <div class="ats-row reveal-on-scroll" style="transition-delay:.2s">
+        <span class="ats-type violet">Content</span>
+        <h4>ATS Has Lower Stakes Here</h4>
+        <p>Content quality — the strength of your bullet points and the story your resume tells — matters mostly to human readers. ATS doesn't evaluate impact or nuance. Fix format and keywords first, then polish content for the humans who see it.</p>
+        <span class="ats-impact mod">Lower risk from ATS</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW SHORTLISTR DIAGNOSES IT -->
+  <section>
+    <div class="section-label">How Shortlistr Helps</div>
+    <h2>Instant Diagnosis in 30 Seconds</h2>
+    <p class="section-intro">Instead of guessing which problem is holding you back, Shortlistr checks all three — and tells you exactly what to fix and why.</p>
+
+    <div class="steps">
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Paste your target job description</h4>
+          <p>Copy any job posting — from LinkedIn, Indeed, a company site — and paste it into Shortlistr. That's your target.</p>
+          <span class="step-badge">10 seconds</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Upload your current resume</h4>
+          <p>Paste your resume text or upload your file. Shortlistr accepts .docx, .pdf, and plain text — and checks formatting automatically.</p>
+          <span class="step-badge">10 seconds</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Get your ATS score and problem diagnosis</h4>
+          <p>Shortlistr shows your keyword match score, flags parsing-risk formatting, and highlights the exact phrases you're missing versus the job description.</p>
+          <span class="step-badge">Instant</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>See exactly what to fix — in priority order</h4>
+          <p>No vague advice. Shortlistr shows you the specific keywords to add, which ones have the most impact, and how each change will move your score.</p>
+          <span class="step-badge">Prioritized list</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Make changes and re-check in real time</h4>
+          <p>Edit your resume, re-paste, and watch your score update. Most people see a 20–40 point improvement in under 15 minutes.</p>
+          <span class="step-badge">Iterative</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-label">Common Questions</div>
+    <h2>Resume Help FAQ</h2>
+
+    <div class="faq-list">
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Why isn't my resume working even though I'm qualified?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Most qualified candidates are filtered out before a human reads their resume. ATS systems score your resume against the job description — if your keywords don't match, you're rejected automatically regardless of experience. The problem is language alignment, not qualifications.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          What is the most common resume problem?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Keyword mismatch is the most common and most fixable problem. Most resumes use slightly different language than the job description, causing ATS systems to score them low — even when the candidate is a strong fit. Small changes to phrasing can have a dramatic effect on your match score.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Does resume formatting really affect ATS?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Yes. Tables, columns, text boxes, headers/footers, and graphics can all cause ATS parsing errors that scramble your resume's content — making an otherwise strong resume unreadable to the system. A single-column, text-based format is always safest for ATS compatibility.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          How do I find out what's wrong with my resume?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Shortlistr analyzes your resume against any job description in about 30 seconds. It identifies keyword gaps, formatting issues, and ATS score — and tells you exactly what to fix, in priority order, without needing to guess.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Can I fix my resume without rewriting it completely?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Almost always, yes. Most resume problems come from keyword phrasing and minor formatting issues — not missing experience. Small, targeted changes can raise your ATS score by 20–40 points. A complete rewrite is rarely necessary and often a waste of time if you haven't addressed the keyword layer first.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Should I tailor my resume for every job?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Yes — but not by rewriting from scratch. You need to align your resume's keywords with each specific job description. Shortlistr shows you which keywords to add for any given posting, so tailoring takes minutes instead of hours.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta">
+    <h2>Stop Guessing. Find Out What's Wrong.</h2>
+    <p>Shortlistr diagnoses format, keywords, and ATS score in 30 seconds — and shows you exactly what to fix first.</p>
+    <a href="https://shortlistr.us/app" class="bottom-cta-btn">Diagnose My Resume Free →</a>
+    <p class="hero-sub" style="margin-top:14px">No account · paste any job description · instant results</p>
+  </div>
+
+  <footer>
+    <p><a href="https://shortlistr.us">← Back to Shortlistr</a> &nbsp;·&nbsp; © 2025 Shortlistr</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal-on-scroll');
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // FAQ accordion
+    function toggleFaq(btn) {
+      const ans = btn.nextElementSibling;
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.classList.remove('open');
+      });
+      if (!open) {
+        btn.setAttribute('aria-expanded', 'true');
+        ans.classList.add('open');
+      }
+    }
+
+    // Diagnostic tile selection
+    let current = null;
+    function selectTile(type) {
+      const types = ['format', 'keywords', 'content'];
+
+      // Reset all tiles
+      types.forEach(t => {
+        const tile = document.getElementById('tile-' + t);
+        const detail = document.getElementById('detail-' + t);
+        tile.className = 'diag-tile';
+        detail.classList.remove('visible');
+      });
+
+      if (current === type) {
+        // Toggle off
+        current = null;
+        return;
+      }
+
+      // Activate selected
+      const tile = document.getElementById('tile-' + type);
+      const detail = document.getElementById('detail-' + type);
+      tile.classList.add('active-' + type);
+      detail.classList.add('visible');
+      current = type;
+
+      // Scroll detail into view
+      setTimeout(() => {
+        detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 50);
+    }
+  </script>
+</body>
+</html>
