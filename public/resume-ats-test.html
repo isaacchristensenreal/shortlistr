@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free ATS Test for Your Resume | Shortlistr</title>
+  <meta name="description" content="Test your resume against ATS the same way employers do. See your score, find the gaps, fix them in minutes." />
+  <link rel="canonical" href="https://shortlistr.us/resume-ats-test" />
+
+  <meta property="og:title" content="Free ATS Test for Your Resume | Shortlistr" />
+  <meta property="og:description" content="Test your resume against ATS the same way employers do. See your score, find the gaps, fix them in minutes." />
+  <meta property="og:url" content="https://shortlistr.us/resume-ats-test" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy-900: #0a0f1e;
+      --navy-800: #0d1426;
+      --navy-700: #111b33;
+      --electric-500: #3b82f6;
+      --electric-400: #60a5fa;
+      --electric-300: #93c5fd;
+      --violet-500: #6366f1;
+      --violet-400: #818cf8;
+      --violet-300: #a5b4fc;
+      --emerald-400: #34d399;
+      --emerald-500: #10b981;
+      --rose-400: #fb7185;
+      --rose-500: #f43f5e;
+      --amber-400: #fbbf24;
+      --amber-300: #fcd34d;
+      --slate-400: #94a3b8;
+      --slate-300: #cbd5e1;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy-900);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(59,130,246,0.08) 1px, transparent 0);
+      background-size: 32px 32px;
+      pointer-events: none; z-index: 0;
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%;
+      filter: blur(80px); pointer-events: none; z-index: 0;
+    }
+    .orb-1 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(99,102,241,0.14) 0%, transparent 70%);
+      top: -250px; right: -250px;
+      animation: orb-drift 18s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(59,130,246,0.10) 0%, transparent 70%);
+      bottom: -150px; left: -150px;
+      animation: orb-drift2 22s ease-in-out infinite alternate;
+    }
+    @keyframes orb-drift  { from { transform: translate(0,0); } to { transform: translate(40px,60px); } }
+    @keyframes orb-drift2 { from { transform: translate(0,0); } to { transform: translate(-30px,-50px); } }
+
+    /* NAV */
+    nav {
+      position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(10,15,30,0.8); backdrop-filter: blur(12px);
+    }
+    .logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #6366f1 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 20px; height: 20px; }
+    .logo-text { font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 600; font-size: 0.85rem;
+      padding: 9px 20px; border-radius: 8px; text-decoration: none;
+      transition: opacity .2s, transform .2s;
+    }
+    .nav-cta:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* HERO — tool-seeker layout: big CTA above the fold */
+    .hero {
+      position: relative; z-index: 1;
+      text-align: center; padding: 80px 24px 60px;
+      max-width: 720px; margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3);
+      color: var(--emerald-400); font-size: 0.8rem; font-weight: 700;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 24px;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+      font-weight: 900; line-height: 1.08; letter-spacing: -0.035em;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.78) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.15rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 580px; margin: 0 auto 40px;
+    }
+
+    /* PRIMARY CTA — large, prominent */
+    .primary-cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .primary-cta {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 800; font-size: 1.15rem;
+      padding: 20px 48px; border-radius: 14px; text-decoration: none;
+      box-shadow: 0 8px 40px rgba(59,130,246,0.4), 0 0 0 1px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s;
+      letter-spacing: -0.01em;
+    }
+    .primary-cta:hover { transform: translateY(-3px); box-shadow: 0 16px 50px rgba(59,130,246,0.5), 0 0 0 1px rgba(59,130,246,0.4); }
+    .primary-cta-arrow {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .cta-meta {
+      font-size: 0.82rem; color: rgba(148,163,184,0.55);
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;
+    }
+    .cta-meta-item { display: flex; align-items: center; gap: 5px; }
+    .cta-meta-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--emerald-400); opacity: .7;
+    }
+
+    /* TRUST ROW */
+    .trust-row {
+      position: relative; z-index: 1;
+      display: flex; justify-content: center; align-items: center;
+      gap: 32px; padding: 0 24px 60px; flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; color: var(--slate-400);
+    }
+    .trust-icon { font-size: 1rem; }
+    .trust-divider { width: 1px; height: 18px; background: rgba(255,255,255,0.1); }
+
+    /* LAYOUT */
+    section {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 70px 24px;
+    }
+    section + section { padding-top: 0; }
+    .divider {
+      position: relative; z-index: 1;
+      height: 1px; background: rgba(255,255,255,0.06);
+      max-width: 900px; margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--electric-400); margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800; line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 16px;
+    }
+    .section-intro {
+      font-size: 1.05rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 680px; margin-bottom: 44px;
+    }
+
+    /* ═══════════════════════════════════════
+       MOCK TEST RESULT CARD
+    ═══════════════════════════════════════ */
+    .result-card {
+      background: rgba(13,20,38,0.9);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(59,130,246,0.1);
+    }
+
+    /* Result header */
+    .rc-header {
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 22px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .rc-header-left h3 { font-size: 1rem; font-weight: 700; }
+    .rc-header-left p  { font-size: 0.8rem; color: var(--slate-400); margin-top: 3px; }
+    .rc-overall {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .rc-score-ring {
+      position: relative; width: 72px; height: 72px;
+    }
+    .rc-score-ring svg { transform: rotate(-90deg); }
+    .ring-bg   { fill: none; stroke: rgba(255,255,255,0.06); stroke-width: 5; }
+    .ring-fill { fill: none; stroke-width: 5; stroke-linecap: round;
+                 stroke-dasharray: 188; stroke-dashoffset: 188;
+                 transition: stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1); }
+    .ring-fill.low    { stroke: #f43f5e; }
+    .ring-fill.medium { stroke: var(--amber-400); }
+    .ring-fill.high   { stroke: var(--emerald-400); }
+    .rc-score-num {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .rc-score-big { font-size: 1.3rem; font-weight: 900; line-height: 1; }
+    .rc-score-big.low    { color: var(--rose-400); }
+    .rc-score-big.medium { color: var(--amber-400); }
+    .rc-score-big.high   { color: var(--emerald-400); }
+    .rc-score-label { font-size: 0.55rem; color: var(--slate-400); margin-top: 1px; }
+
+    .rc-verdict-col { display: flex; flex-direction: column; gap: 6px; }
+    .rc-verdict-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.78rem; font-weight: 700; padding: 5px 12px;
+      border-radius: 8px;
+    }
+    .rc-verdict-badge.fail   { background: rgba(244,63,94,0.15); color: var(--rose-400); border: 1px solid rgba(244,63,94,0.3); }
+    .rc-verdict-badge.warn   { background: rgba(251,191,36,0.15); color: var(--amber-400); border: 1px solid rgba(251,191,36,0.3); }
+    .rc-verdict-badge.pass   { background: rgba(52,211,153,0.15); color: var(--emerald-400); border: 1px solid rgba(52,211,153,0.3); }
+    .rc-verdict-sub { font-size: 0.75rem; color: var(--slate-400); }
+
+    /* Tabs */
+    .rc-tabs {
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex; overflow-x: auto; scrollbar-width: none;
+    }
+    .rc-tabs::-webkit-scrollbar { display: none; }
+    .rc-tab {
+      flex-shrink: 0; padding: 12px 20px;
+      font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      border: none; background: none; color: var(--slate-400);
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+      transition: color .15s; white-space: nowrap; font-family: 'Inter', sans-serif;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .rc-tab:hover { color: var(--white); }
+    .rc-tab.active { color: var(--white); border-bottom-color: var(--electric-400); }
+    .rc-tab-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .rc-tab-dot.pass   { background: var(--emerald-400); }
+    .rc-tab-dot.warn   { background: var(--amber-400); }
+    .rc-tab-dot.fail   { background: var(--rose-400); }
+
+    /* Tab panels */
+    .rc-panel { display: none; }
+    .rc-panel.active { display: block; }
+
+    /* Category rows inside panels */
+    .rc-check-list { display: flex; flex-direction: column; }
+    .rc-check {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background .15s;
+    }
+    .rc-check:last-child { border-bottom: none; }
+    .rc-check:hover { background: rgba(255,255,255,0.02); }
+
+    .rc-check-icon {
+      width: 34px; height: 34px; border-radius: 9px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+      margin-top: 1px;
+    }
+    .rc-check-icon.pass   { background: rgba(52,211,153,0.12); }
+    .rc-check-icon.warn   { background: rgba(251,191,36,0.12); }
+    .rc-check-icon.fail   { background: rgba(244,63,94,0.12); }
+
+    .rc-check-body { flex: 1; min-width: 0; }
+    .rc-check-title {
+      font-size: 0.9rem; font-weight: 700; margin-bottom: 4px;
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .rc-check-badge {
+      font-size: 0.65rem; font-weight: 700; padding: 2px 7px;
+      border-radius: 4px; letter-spacing: .04em;
+    }
+    .rc-check-badge.pass { background: rgba(52,211,153,0.15); color: var(--emerald-400); }
+    .rc-check-badge.warn { background: rgba(251,191,36,0.15); color: var(--amber-400); }
+    .rc-check-badge.fail { background: rgba(244,63,94,0.15); color: var(--rose-400); }
+    .rc-check-desc { font-size: 0.83rem; color: var(--slate-400); line-height: 1.6; }
+    .rc-check-finding {
+      margin-top: 8px; padding: 9px 12px; border-radius: 8px;
+      font-size: 0.78rem; line-height: 1.6;
+    }
+    .rc-check-finding.fail { background: rgba(244,63,94,0.08); border: 1px solid rgba(244,63,94,0.15); color: #fca5a5; }
+    .rc-check-finding.warn { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.15); color: #fde68a; }
+    .rc-check-finding.pass { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.15); color: #6ee7b7; }
+
+    .rc-check-bar-wrap { margin-top: 10px; }
+    .rc-check-bar-label {
+      display: flex; justify-content: space-between;
+      font-size: 0.72rem; color: var(--slate-400); margin-bottom: 5px;
+    }
+    .rc-check-bar-bg { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+    .rc-check-bar-fill { height: 100%; border-radius: 3px; transition: width 1.3s cubic-bezier(.4,0,.2,1); }
+    .rc-check-bar-fill.fail   { background: linear-gradient(90deg, #f43f5e, #fb7185); }
+    .rc-check-bar-fill.warn   { background: linear-gradient(90deg, #d97706, var(--amber-400)); }
+    .rc-check-bar-fill.pass   { background: linear-gradient(90deg, var(--emerald-500), var(--emerald-400)); }
+
+    .rc-score-col {
+      text-align: right; flex-shrink: 0; padding-top: 2px;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+    }
+    .rc-score-val {
+      font-size: 1.3rem; font-weight: 900; line-height: 1;
+    }
+    .rc-score-val.pass   { color: var(--emerald-400); }
+    .rc-score-val.warn   { color: var(--amber-400); }
+    .rc-score-val.fail   { color: var(--rose-400); }
+    .rc-score-sub { font-size: 0.68rem; color: var(--slate-400); }
+
+    /* Card footer CTA */
+    .rc-footer {
+      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(99,102,241,0.1));
+      border-top: 1px solid rgba(59,130,246,0.2);
+      padding: 24px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .rc-footer-text h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .rc-footer-text p  { font-size: 0.82rem; color: var(--slate-400); }
+    .rc-footer-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 0.9rem;
+      padding: 12px 24px; border-radius: 10px; text-decoration: none;
+      box-shadow: 0 4px 20px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s; white-space: nowrap;
+    }
+    .rc-footer-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(59,130,246,0.4); }
+
+    /* WHAT THE TEST CHECKS */
+    .checks-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .check-card {
+      background: rgba(13,20,38,0.7);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 26px 22px;
+      transition: transform .2s, border-color .2s;
+    }
+    .check-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
+    .check-num {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--electric-400); margin-bottom: 10px;
+    }
+    .check-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .check-card p  { font-size: 0.85rem; color: var(--slate-400); line-height: 1.6; }
+
+    /* SCORE MEANING TABLE */
+    .score-zones { display: flex; flex-direction: column; gap: 12px; }
+    .score-zone {
+      border-radius: 14px; padding: 22px 24px;
+      display: grid; grid-template-columns: 100px 1fr auto;
+      align-items: start; gap: 20px; border: 1px solid transparent;
+    }
+    .score-zone.red    { background: rgba(244,63,94,0.05);  border-color: rgba(244,63,94,0.15); }
+    .score-zone.amber  { background: rgba(251,191,36,0.05); border-color: rgba(251,191,36,0.15); }
+    .score-zone.green  { background: rgba(52,211,153,0.05); border-color: rgba(52,211,153,0.15); }
+    .sz-range {
+      font-size: 1.8rem; font-weight: 900; line-height: 1;
+    }
+    .sz-range.red   { color: var(--rose-400); }
+    .sz-range.amber { color: var(--amber-400); }
+    .sz-range.green { color: var(--emerald-400); }
+    .sz-label { font-size: 0.68rem; color: var(--slate-400); margin-top: 4px; }
+    .sz-body h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .sz-body p  { font-size: 0.85rem; color: var(--slate-400); line-height: 1.6; }
+    .sz-pct {
+      font-size: 0.78rem; font-weight: 700; padding: 5px 10px;
+      border-radius: 8px; white-space: nowrap;
+    }
+    .sz-pct.red   { background: rgba(244,63,94,0.15); color: var(--rose-400); }
+    .sz-pct.amber { background: rgba(251,191,36,0.15); color: var(--amber-400); }
+    .sz-pct.green { background: rgba(52,211,153,0.15); color: var(--emerald-400); }
+    @media (max-width: 580px) {
+      .score-zone { grid-template-columns: 80px 1fr; }
+      .sz-pct { display: none; }
+    }
+
+    /* LOW SCORE ACTION STEPS */
+    .action-grid { display: flex; flex-direction: column; gap: 0; }
+    .action-row {
+      display: flex; gap: 20px; align-items: flex-start;
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .action-row:last-child { border-bottom: none; }
+    .action-num {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; font-weight: 800;
+    }
+    .action-num.rose    { background: rgba(244,63,94,0.15);  color: var(--rose-400);    border: 1px solid rgba(244,63,94,0.25); }
+    .action-num.amber   { background: rgba(251,191,36,0.15); color: var(--amber-400);   border: 1px solid rgba(251,191,36,0.25); }
+    .action-num.emerald { background: rgba(52,211,153,0.15); color: var(--emerald-400); border: 1px solid rgba(52,211,153,0.25); }
+    .action-num.blue    { background: rgba(59,130,246,0.15); color: var(--electric-400);border: 1px solid rgba(59,130,246,0.25); }
+    .action-body h4 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .action-body p  { font-size: 0.88rem; color: var(--slate-400); line-height: 1.6; }
+    .action-impact {
+      margin-top: 8px; display: inline-block;
+      font-size: 0.75rem; font-weight: 600;
+      padding: 3px 9px; border-radius: 6px;
+    }
+    .action-impact.high { background: rgba(52,211,153,0.1); color: var(--emerald-400); }
+    .action-impact.med  { background: rgba(59,130,246,0.1); color: var(--electric-400); }
+
+    /* MID-PAGE CTA BAND */
+    .cta-band {
+      position: relative; z-index: 1;
+      background: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(99,102,241,0.08));
+      border-top: 1px solid rgba(59,130,246,0.12);
+      border-bottom: 1px solid rgba(59,130,246,0.12);
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .cta-band h3 {
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px;
+    }
+    .cta-band p { font-size: 0.95rem; color: var(--slate-400); margin-bottom: 24px; }
+    .cta-band-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 1rem;
+      padding: 15px 36px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 6px 24px rgba(59,130,246,0.35);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .cta-band-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(59,130,246,0.45); }
+
+    /* STAT ROW */
+    .stat-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px; margin-top: 48px;
+    }
+    .stat-box {
+      background: rgba(13,20,38,0.7); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px 20px; text-align: center;
+    }
+    .stat-num {
+      font-size: 2.4rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, var(--electric-400), var(--violet-400));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px;
+    }
+    .stat-label { font-size: 0.85rem; color: var(--slate-400); line-height: 1.4; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: rgba(13,20,38,0.7); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: none;
+      color: var(--white); font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      padding: 20px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq-q:hover { color: var(--electric-400); }
+    .faq-arrow { font-size: 1rem; transition: transform .25s; flex-shrink: 0; }
+    .faq-q[aria-expanded="true"] .faq-arrow { transform: rotate(180deg); }
+    .faq-a {
+      display: none; padding: 0 24px 20px;
+      font-size: 0.88rem; color: var(--slate-400); line-height: 1.7;
+    }
+    .faq-a.open { display: block; }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      position: relative; z-index: 1; text-align: center;
+      padding: 80px 24px 100px;
+    }
+    .bottom-cta h2 {
+      font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 900;
+      letter-spacing: -0.03em; margin-bottom: 14px;
+      max-width: 580px; margin-left: auto; margin-right: auto;
+    }
+    .bottom-cta p {
+      font-size: 1.05rem; color: var(--slate-400); max-width: 460px;
+      margin: 0 auto 40px; line-height: 1.7;
+    }
+
+    /* REVEAL */
+    .reveal-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity .55s, transform .55s; }
+    .reveal-on-scroll.visible { opacity: 1; transform: none; }
+
+    footer {
+      position: relative; z-index: 1; text-align: center;
+      padding: 32px 24px; border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem; color: rgba(148,163,184,0.4);
+    }
+    footer a { color: rgba(148,163,184,0.5); text-decoration: none; }
+    footer a:hover { color: var(--electric-400); }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 56px 20px 48px; }
+      section { padding: 50px 20px; }
+      .primary-cta { padding: 16px 32px; font-size: 1rem; }
+      .rc-header { padding: 18px 20px; }
+      .rc-footer { padding: 18px 20px; }
+      .rc-check { padding: 16px 18px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Shortlistr ATS Resume Test",
+        "url": "https://shortlistr.us/app",
+        "applicationCategory": "BusinessApplication",
+        "description": "Free ATS resume test that checks keyword match, formatting, skills coverage, and section structure against any job description.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "operatingSystem": "Web browser"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What does the ATS test check?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Shortlistr's ATS test checks six categories: keyword match score (how well your resume vocabulary matches the job description), format parseability (whether ATS can read your resume structure), skills coverage (which required skills are present vs. missing), experience language strength, section structure compliance, and file compatibility. Each category gets an individual score and specific findings." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is the ATS test really free?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Paste any job description and your resume, and Shortlistr returns your ATS score with keyword gaps and specific findings — no account required. The test takes about 30 seconds." }
+          },
+          {
+            "@type": "Question",
+            "name": "What ATS score do I need to pass?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Most ATS systems pass resumes to human review at around 60–70% keyword match. Scores below 50% are almost always auto-rejected. A score of 75%+ puts you in the top tier for most roles. Shortlistr shows your score and tells you exactly which keywords to add to reach the threshold." }
+          },
+          {
+            "@type": "Question",
+            "name": "How accurate is the ATS test compared to real employer ATS?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Shortlistr uses the same keyword-matching logic that underlies most commercial ATS platforms — exact term matching against job description text. Employers configure their ATS with different thresholds and weightings, so no external test can replicate any specific system exactly. But the keyword gaps Shortlistr identifies are real gaps that any ATS will flag." }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does the ATS test take?",
+            "acceptedAnswer": { "@type": "Answer", "text": "About 30 seconds to run the test. Fixing the gaps typically takes 10–20 minutes for most resumes — you're adding and adjusting specific keywords, not rewriting from scratch." }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to create an account to run the test?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Paste your job description and resume text into Shortlistr and get your results immediately. No signup, no email required to see your score and keyword gaps." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://shortlistr.us" class="logo-link">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="2" width="13" height="17" rx="2" fill="white" fill-opacity="0.9"/>
+          <path d="M13 2L17 6H14C13.4 6 13 5.6 13 5V2Z" fill="white" fill-opacity="0.5"/>
+          <path d="M16 14L18.5 20L20 17.5L22.5 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">Shortlistr</span>
+    </a>
+    <a href="https://shortlistr.us/app" class="nav-cta">Run ATS Test Free →</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">✓ Free · No Account · 30 Seconds</div>
+    <h1>Free ATS Test — Run Your Resume Through the Same System Employers Use.</h1>
+    <p>Before you apply, find out if ATS will pass your resume to a human or filter it out. Takes 30 seconds. Shows you exactly what to fix.</p>
+    <div class="primary-cta-wrap">
+      <a href="https://shortlistr.us/app" class="primary-cta">
+        Run My ATS Test Free
+        <div class="primary-cta-arrow">→</div>
+      </a>
+      <div class="cta-meta">
+        <div class="cta-meta-item"><div class="cta-meta-dot"></div>No account required</div>
+        <div class="cta-meta-item"><div class="cta-meta-dot"></div>Paste any job description</div>
+        <div class="cta-meta-item"><div class="cta-meta-dot"></div>Instant score + gaps</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST ROW -->
+  <div class="trust-row">
+    <div class="trust-item"><span class="trust-icon">🔍</span> Keyword match score</div>
+    <div class="trust-divider"></div>
+    <div class="trust-item"><span class="trust-icon">📐</span> Format check</div>
+    <div class="trust-divider"></div>
+    <div class="trust-item"><span class="trust-icon">🧩</span> Skills gap analysis</div>
+    <div class="trust-divider"></div>
+    <div class="trust-item"><span class="trust-icon">⚡</span> Fix recommendations</div>
+  </div>
+
+  <!-- MOCK RESULT CARD -->
+  <section>
+    <div class="section-label">Sample Test Result</div>
+    <h2>Here's What Your ATS Test Results Look Like</h2>
+    <p class="section-intro">This is a real test result output for a marketing manager resume against a job description. Click each tab to see what each category checks and what a failing score looks like.</p>
+
+    <div class="result-card reveal-on-scroll">
+
+      <!-- Header with overall score -->
+      <div class="rc-header">
+        <div class="rc-header-left">
+          <h3>ATS Test Results</h3>
+          <p>marketing_manager_resume.pdf · Senior Marketing Manager JD · tested just now</p>
+        </div>
+        <div class="rc-overall">
+          <div class="rc-score-ring">
+            <svg viewBox="0 0 72 72" width="72" height="72">
+              <circle class="ring-bg" cx="36" cy="36" r="30"/>
+              <circle class="ring-fill medium" id="mainRing" cx="36" cy="36" r="30"/>
+            </svg>
+            <div class="rc-score-num">
+              <div class="rc-score-big medium" id="mainScore">–</div>
+              <div class="rc-score-label">ATS SCORE</div>
+            </div>
+          </div>
+          <div class="rc-verdict-col">
+            <div class="rc-verdict-badge warn">⚠ At Risk</div>
+            <div class="rc-verdict-sub">May not reach human review</div>
+            <div class="rc-verdict-sub" style="margin-top:2px">4 of 6 checks need attention</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="rc-tabs">
+        <button class="rc-tab active" id="rtab-kw"     onclick="switchRTab('kw')"><div class="rc-tab-dot fail"></div>Keywords</button>
+        <button class="rc-tab"        id="rtab-format" onclick="switchRTab('format')"><div class="rc-tab-dot warn"></div>Format</button>
+        <button class="rc-tab"        id="rtab-skills" onclick="switchRTab('skills')"><div class="rc-tab-dot fail"></div>Skills</button>
+        <button class="rc-tab"        id="rtab-exp"    onclick="switchRTab('exp')"><div class="rc-tab-dot warn"></div>Experience</button>
+        <button class="rc-tab"        id="rtab-struct" onclick="switchRTab('struct')"><div class="rc-tab-dot pass"></div>Structure</button>
+        <button class="rc-tab"        id="rtab-file"   onclick="switchRTab('file')"><div class="rc-tab-dot pass"></div>File</button>
+      </div>
+
+      <!-- KEYWORDS PANEL -->
+      <div class="rc-panel active" id="rpanel-kw">
+        <div class="rc-check-list">
+          <div class="rc-check">
+            <div class="rc-check-icon fail">🔑</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Keyword Match Score
+                <span class="rc-check-badge fail">FAILING</span>
+              </div>
+              <div class="rc-check-desc">Your resume matches 38% of the keywords in this job description. Most ATS systems require 60–70% to pass to human review.</div>
+              <div class="rc-check-bar-wrap">
+                <div class="rc-check-bar-label"><span>Match rate</span><span id="kwBar1Lbl">–</span></div>
+                <div class="rc-check-bar-bg"><div class="rc-check-bar-fill fail" id="kwBar1" style="width:0" data-w="38"></div></div>
+              </div>
+              <div class="rc-check-finding fail">Missing high-frequency terms: "marketing automation," "HubSpot," "demand generation," "pipeline," "MQL," "conversion rate optimization," "A/B testing," "paid social"</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val fail">38%</div>
+              <div class="rc-score-sub">of keywords matched</div>
+            </div>
+          </div>
+          <div class="rc-check">
+            <div class="rc-check-icon fail">📋</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Hard Skills Coverage
+                <span class="rc-check-badge fail">FAILING</span>
+              </div>
+              <div class="rc-check-desc">6 required hard skills from the job description are not present anywhere in your resume.</div>
+              <div class="rc-check-finding fail">Not found: HubSpot, Salesforce, Google Analytics, Tableau, marketing automation, SEO/SEM</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val fail">2/8</div>
+              <div class="rc-score-sub">hard skills matched</div>
+            </div>
+          </div>
+          <div class="rc-check">
+            <div class="rc-check-icon warn">💬</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Role-Specific Language
+                <span class="rc-check-badge warn">WEAK</span>
+              </div>
+              <div class="rc-check-desc">Your experience bullets use general language where the JD uses specific marketing terms. ATS scores these as misses.</div>
+              <div class="rc-check-finding warn">"Ran campaigns" → JD says "demand generation campaigns" · "Managed content" → JD says "content marketing strategy"</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val warn">44%</div>
+              <div class="rc-score-sub">language alignment</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORMAT PANEL -->
+      <div class="rc-panel" id="rpanel-format">
+        <div class="rc-check-list">
+          <div class="rc-check">
+            <div class="rc-check-icon warn">📐</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Layout Parseability
+                <span class="rc-check-badge warn">CAUTION</span>
+              </div>
+              <div class="rc-check-desc">Two-column layout detected. Some ATS platforms read multi-column resumes in the wrong order — left column content may be interleaved with right column content.</div>
+              <div class="rc-check-finding warn">Detected: 2-column section starting at line 14. Content in right column may be misread by strict ATS parsers. Recommend single-column layout.</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val warn">⚠</div>
+              <div class="rc-score-sub">layout risk</div>
+            </div>
+          </div>
+          <div class="rc-check">
+            <div class="rc-check-icon pass">✅</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Text Extraction
+                <span class="rc-check-badge pass">PASSED</span>
+              </div>
+              <div class="rc-check-desc">All body text is machine-readable. No images, graphics, or text boxes detected that would cause content loss during ATS parsing.</div>
+              <div class="rc-check-finding pass">All text content successfully extracted. No embedded images blocking keyword detection.</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val pass">✓</div>
+              <div class="rc-score-sub">text readable</div>
+            </div>
+          </div>
+          <div class="rc-check">
+            <div class="rc-check-icon warn">📍</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Contact Info Placement
+                <span class="rc-check-badge warn">CAUTION</span>
+              </div>
+              <div class="rc-check-desc">Contact information appears to be inside a styled header block. Some ATS systems skip content in document headers/footers when extracting text.</div>
+              <div class="rc-check-finding warn">Move name, email, phone, and LinkedIn into the main document body to ensure ATS can reliably extract contact details.</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val warn">⚠</div>
+              <div class="rc-score-sub">may be skipped</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKILLS PANEL -->
+      <div class="rc-panel" id="rpanel-skills">
+        <div class="rc-check-list">
+          <div class="rc-check">
+            <div class="rc-check-icon fail">🧩</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Skills Section Present
+                <span class="rc-check-badge fail">MISSING</span>
+              </div>
+              <div class="rc-check-desc">No dedicated Skills section detected. ATS scans this section specifically for hard skills and tool keywords. Without it, skills buried in bullets may score lower.</div>
+              <div class="rc-check-finding fail">Add a plain-text Skills section listing: HubSpot, Salesforce, Google Analytics, Tableau, SEO, SEM, marketing automation, A/B testing — all required by this JD.</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val fail">✗</div>
+              <div class="rc-score-sub">not found</div>
+            </div>
+          </div>
+          <div class="rc-check">
+            <div class="rc-check-icon fail">🔧</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Required Tools Coverage
+                <span class="rc-check-badge fail">FAILING</span>
+              </div>
+              <div class="rc-check-desc">The job description requires 8 specific tools. Your resume mentions 2 of them. The other 6 are required skills that ATS will score as missing.</div>
+              <div class="rc-check-bar-wrap">
+                <div class="rc-check-bar-label"><span>Tools present</span><span id="skillBar1Lbl">–</span></div>
+                <div class="rc-check-bar-bg"><div class="rc-check-bar-fill fail" id="skillBar1" style="width:0" data-w="25"></div></div>
+              </div>
+              <div class="rc-check-finding fail">Present: Excel, PowerPoint · Missing: HubSpot, Salesforce, Google Analytics, Tableau, Marketo, Looker</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val fail">2/8</div>
+              <div class="rc-score-sub">tools matched</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPERIENCE PANEL -->
+      <div class="rc-panel" id="rpanel-exp">
+        <div class="rc-check-list">
+          <div class="rc-check">
+            <div class="rc-check-icon warn">📊</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Quantified Outcomes
+                <span class="rc-check-badge warn">WEAK</span>
+              </div>
+              <div class="rc-check-desc">2 of 12 bullet points include measurable outcomes. ATS and human reviewers both weight results-oriented language — but only ATS scores specific metric keywords.</div>
+              <div class="rc-check-finding warn">JD includes: "revenue growth," "pipeline," "conversion rate," "ROI." These terms appear 0 times in your experience bullets.</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val warn">17%</div>
+              <div class="rc-score-sub">bullets quantified</div>
+            </div>
+          </div>
+          <div class="rc-check">
+            <div class="rc-check-icon pass">✅</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Experience Depth
+                <span class="rc-check-badge pass">PASSED</span>
+              </div>
+              <div class="rc-check-desc">Experience date spans indicate 6+ years of marketing experience. JD requires 5+ years — this threshold is met.</div>
+              <div class="rc-check-finding pass">Experience years: ~6.5 · JD minimum: 5 years · Status: threshold met.</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val pass">✓</div>
+              <div class="rc-score-sub">years threshold met</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STRUCTURE PANEL -->
+      <div class="rc-panel" id="rpanel-struct">
+        <div class="rc-check-list">
+          <div class="rc-check">
+            <div class="rc-check-icon pass">✅</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Standard Section Headers
+                <span class="rc-check-badge pass">PASSED</span>
+              </div>
+              <div class="rc-check-desc">All sections use standard header names that ATS recognizes. No unusual or creative section names detected.</div>
+              <div class="rc-check-finding pass">Detected: Experience ✓ · Education ✓ · Summary ✓ · Standard headers ATS can parse.</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val pass">✓</div>
+              <div class="rc-score-sub">headers standard</div>
+            </div>
+          </div>
+          <div class="rc-check">
+            <div class="rc-check-icon pass">✅</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                Summary / Objective Present
+                <span class="rc-check-badge pass">PASSED</span>
+              </div>
+              <div class="rc-check-desc">A summary section was detected at the top of the resume. This is the first content ATS scores — keywords here have high weight. Current summary scores 29% keyword match against this JD.</div>
+              <div class="rc-check-finding warn">Summary detected but under-optimized. Add: "demand generation," "marketing automation," "pipeline" to your summary to boost its keyword score.</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val warn">29%</div>
+              <div class="rc-score-sub">summary match</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILE PANEL -->
+      <div class="rc-panel" id="rpanel-file">
+        <div class="rc-check-list">
+          <div class="rc-check">
+            <div class="rc-check-icon pass">✅</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                File Format
+                <span class="rc-check-badge pass">PASSED</span>
+              </div>
+              <div class="rc-check-desc">PDF detected. Text-based (not image) PDF confirmed — ATS can extract all text content. File is compatible with all major ATS platforms.</div>
+              <div class="rc-check-finding pass">Format: .pdf · Type: text-based · ATS compatibility: ✓ All major platforms</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val pass">✓</div>
+              <div class="rc-score-sub">compatible</div>
+            </div>
+          </div>
+          <div class="rc-check">
+            <div class="rc-check-icon pass">✅</div>
+            <div class="rc-check-body">
+              <div class="rc-check-title">
+                File Size &amp; Length
+                <span class="rc-check-badge pass">PASSED</span>
+              </div>
+              <div class="rc-check-desc">Resume is 1 page. File size is within normal range. No parsing errors from file size or complexity.</div>
+              <div class="rc-check-finding pass">1 page · Standard size · No parsing errors detected.</div>
+            </div>
+            <div class="rc-score-col">
+              <div class="rc-score-val pass">✓</div>
+              <div class="rc-score-sub">1 page, clean</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card footer CTA -->
+      <div class="rc-footer">
+        <div class="rc-footer-text">
+          <h4>This is a sample result. Run yours in 30 seconds.</h4>
+          <p>Paste your resume + any job description → get your real score and gap list.</p>
+        </div>
+        <a href="https://shortlistr.us/app" class="rc-footer-btn">Run My ATS Test Free →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MID-PAGE CTA BAND -->
+  <div class="cta-band">
+    <h3>Ready to See Your Real Score?</h3>
+    <p>No account. No email. Paste your resume and a job description — results in 30 seconds.</p>
+    <a href="https://shortlistr.us/app" class="cta-band-btn">Run My ATS Test Free →</a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHAT THE TEST CHECKS -->
+  <section>
+    <div class="section-label">What the Test Covers</div>
+    <h2>Six Things the ATS Test Checks in 30 Seconds</h2>
+    <p class="section-intro">The test doesn't give you a vague score — it checks six specific categories, returns individual scores for each, and tells you what to fix in priority order.</p>
+
+    <div class="checks-grid">
+      <div class="check-card reveal-on-scroll">
+        <div class="check-num">Check 01</div>
+        <h3>Keyword Match Score</h3>
+        <p>The core ATS metric. Your resume text is compared word-by-word against the job description. Each keyword in the JD that's missing from your resume lowers your score. The test shows your overall match percentage and every missing term.</p>
+      </div>
+
+      <div class="check-card reveal-on-scroll" style="transition-delay:.1s">
+        <div class="check-num">Check 02</div>
+        <h3>Format &amp; Parseability</h3>
+        <p>ATS can fail to read multi-column layouts, tables, text boxes, and image-based PDFs — scrambling your content before it's even scored. The test detects these format risks and flags exactly which elements are causing them.</p>
+      </div>
+
+      <div class="check-card reveal-on-scroll" style="transition-delay:.2s">
+        <div class="check-num">Check 03</div>
+        <h3>Skills Section Coverage</h3>
+        <p>ATS scans for a dedicated Skills section and scores hard skills listed there against the JD. Missing the section entirely — or listing the wrong terms — can cost significant points even if skills appear in your bullets.</p>
+      </div>
+
+      <div class="check-card reveal-on-scroll" style="transition-delay:.3s">
+        <div class="check-num">Check 04</div>
+        <h3>Experience Language Strength</h3>
+        <p>How well does the language in your experience bullets align with the language in the JD? Generic verbs and vague descriptions score lower than role-specific terms. The test shows which bullets have low keyword density.</p>
+      </div>
+
+      <div class="check-card reveal-on-scroll" style="transition-delay:.4s">
+        <div class="check-num">Check 05</div>
+        <h3>Section Structure</h3>
+        <p>ATS expects standard section headers: Experience, Education, Skills, Summary. Non-standard headers ("What I've Done," "My Story") confuse parsers. The test checks that your sections are labeled in ways ATS recognizes.</p>
+      </div>
+
+      <div class="check-card reveal-on-scroll" style="transition-delay:.5s">
+        <div class="check-num">Check 06</div>
+        <h3>File Compatibility</h3>
+        <p>Text-based PDF and .docx are safe. Image PDFs, .png, and scanned documents score zero — ATS can't extract text. The test confirms your file type is readable and flags any compatibility issues before you apply.</p>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box reveal-on-scroll">
+        <div class="stat-num">75%</div>
+        <div class="stat-label">of resumes are filtered by ATS before any human reads them</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.1s">
+        <div class="stat-num">30s</div>
+        <div class="stat-label">to run the full 6-category ATS test — no account required</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.2s">
+        <div class="stat-num">~15min</div>
+        <div class="stat-label">to fix the gaps and retest — most scores improve 20–40 points</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHAT YOUR SCORE MEANS -->
+  <section>
+    <div class="section-label">Reading Your Results</div>
+    <h2>What Your ATS Score Actually Means</h2>
+    <p class="section-intro">The score isn't a judgment of your ability — it's a measure of vocabulary alignment. Here's what each range means for your chances of reaching a human reviewer.</p>
+
+    <div class="score-zones">
+      <div class="score-zone red reveal-on-scroll">
+        <div>
+          <div class="sz-range red">0–49</div>
+          <div class="sz-label">score range</div>
+        </div>
+        <div class="sz-body">
+          <h4>Auto-filtered — very unlikely to reach human review</h4>
+          <p>At this score, ATS rejects your resume before any person sees it. The keyword gap is significant — your resume is missing most of the core vocabulary from the job description. This is fixable, but requires targeted additions to your bullets, summary, and Skills section.</p>
+        </div>
+        <div class="sz-pct red">~75% of resumes in this range are auto-rejected</div>
+      </div>
+
+      <div class="score-zone amber reveal-on-scroll">
+        <div>
+          <div class="sz-range amber">50–69</div>
+          <div class="sz-label">score range</div>
+        </div>
+        <div class="sz-body">
+          <h4>At risk — depends on the role and ATS configuration</h4>
+          <p>You're in the gray zone. Some ATS systems will pass you; others won't. Competitive roles with high applicant volume typically have stricter thresholds — a score that clears ATS for a niche position may get filtered for a popular one. Getting to 70+ is worth the 15 minutes it usually takes.</p>
+        </div>
+        <div class="sz-pct amber">Results vary — aim higher before applying</div>
+      </div>
+
+      <div class="score-zone green reveal-on-scroll">
+        <div>
+          <div class="sz-range green">70–100</div>
+          <div class="sz-label">score range</div>
+        </div>
+        <div class="sz-body">
+          <h4>Passing — likely to reach a human recruiter queue</h4>
+          <p>Your resume vocabulary is well-aligned with the job description. You've cleared the threshold most ATS systems use, and your resume is in the queue to be reviewed by a human. Above 80%, you're in the top tier of keyword match for most roles — your qualification and experience take over from here.</p>
+        </div>
+        <div class="sz-pct green">Target zone — apply with confidence</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHAT TO DO WITH A LOW SCORE -->
+  <section>
+    <div class="section-label">After the Test</div>
+    <h2>What to Do When Your Score Comes Back Low</h2>
+    <p class="section-intro">A low score isn't a rejection — it's a to-do list. Here's the exact sequence to follow, in order of impact. Most resumes can move from 30% to 70%+ in under 20 minutes.</p>
+
+    <div class="action-grid">
+      <div class="action-row reveal-on-scroll">
+        <div class="action-num rose">1</div>
+        <div class="action-body">
+          <h4>Add a plain-text Skills section if you don't have one</h4>
+          <p>This is the single highest-impact change for low scorers. A Skills section gives ATS a concentrated list of hard keywords to match. List tools, technologies, and hard skills from the JD — exact phrasing, comma-separated, no tables or icons.</p>
+          <span class="action-impact high">+15–25 pts typical impact</span>
+        </div>
+      </div>
+
+      <div class="action-row reveal-on-scroll">
+        <div class="action-num rose">2</div>
+        <div class="action-body">
+          <h4>Work through the missing keyword list top-to-bottom</h4>
+          <p>Shortlistr gives you the specific keywords that are missing. For each one: check whether it belongs in your Skills section (hard skills and tools) or in an experience bullet (role-specific terms and methodologies). Add each where it's accurate.</p>
+          <span class="action-impact high">+10–20 pts typical impact</span>
+        </div>
+      </div>
+
+      <div class="action-row reveal-on-scroll">
+        <div class="action-num amber">3</div>
+        <div class="action-body">
+          <h4>Rewrite your summary with the top 4–5 missing keywords</h4>
+          <p>ATS scores the summary section first and weights it heavily. If your summary doesn't use the job title and core skill terms from the JD, you're losing easy points. A targeted 2–3 sentence summary with role-specific vocabulary can add significant score points quickly.</p>
+          <span class="action-impact high">+8–15 pts typical impact</span>
+        </div>
+      </div>
+
+      <div class="action-row reveal-on-scroll">
+        <div class="action-num amber">4</div>
+        <div class="action-body">
+          <h4>Fix any format issues flagged by the test</h4>
+          <p>If the test flagged a two-column layout, tables, or contact info in a header block — fix those before resubmitting. Format issues can cause ATS to score incorrectly regardless of how many keywords you add. A single-column layout with all content in the main body is always safest.</p>
+          <span class="action-impact med">Prevents score floor issues</span>
+        </div>
+      </div>
+
+      <div class="action-row reveal-on-scroll">
+        <div class="action-num emerald">5</div>
+        <div class="action-body">
+          <h4>Re-run the test and check your new score</h4>
+          <p>Paste your updated resume back into Shortlistr against the same JD. Your score should move meaningfully — if it doesn't, check whether you're using the exact phrasing from the JD (not synonyms), and whether the format issues have been resolved so ATS can read the new content.</p>
+          <span class="action-impact high">Target: 70%+ before applying</span>
+        </div>
+      </div>
+
+      <div class="action-row reveal-on-scroll">
+        <div class="action-num blue">6</div>
+        <div class="action-body">
+          <h4>Repeat for every application — don't reuse the same version</h4>
+          <p>Each job description is different. A resume that scores 78% on one marketing role may score 41% on a slightly different one at another company. Run the test for each posting you care about. You're editing a base document — it takes 10 minutes, not starting over.</p>
+          <span class="action-impact med">Compounds over time</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-label">Common Questions</div>
+    <h2>ATS Test FAQ</h2>
+
+    <div class="faq-list">
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          What does the ATS test check?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Shortlistr's ATS test checks six categories: keyword match score (how well your resume vocabulary matches the job description), format parseability (whether ATS can read your resume structure), skills coverage (which required skills are present vs. missing), experience language strength, section structure compliance, and file compatibility. Each category gets an individual score and specific findings.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Is the ATS test really free?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Yes. Paste any job description and your resume, and Shortlistr returns your ATS score with keyword gaps and specific findings — no account required. The test takes about 30 seconds to run.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          What ATS score do I need to pass?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Most ATS systems pass resumes to human review at around 60–70% keyword match. Scores below 50% are almost always auto-rejected. A score of 75%+ puts you in the top tier for most roles. Shortlistr shows your score and tells you exactly which keywords to add to reach the threshold for any specific job.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          How accurate is the ATS test compared to real employer ATS?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Shortlistr uses the same keyword-matching logic that underlies most commercial ATS platforms — exact term matching against job description text. Employers configure their ATS with different thresholds and weightings, so no external test can perfectly replicate any specific system. But the keyword gaps Shortlistr identifies are real gaps that any ATS will flag — the mismatches don't change between platforms.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          How long does the ATS test take?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">About 30 seconds to run the test. Fixing the gaps typically takes 10–20 minutes for most resumes — you're adding and adjusting specific keywords, not rewriting from scratch. You can re-run the test as many times as you want as you edit.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Do I need to create an account?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">No. Paste your job description and resume text into Shortlistr and get your results immediately. No signup, no email required to see your score, keyword gaps, and specific findings across all six test categories.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta">
+    <h2>Your Score Is Waiting.<br>Run the Test Now.</h2>
+    <p>Find out exactly where your resume is losing points — before you apply.</p>
+    <div class="primary-cta-wrap">
+      <a href="https://shortlistr.us/app" class="primary-cta">
+        Run My ATS Test Free
+        <div class="primary-cta-arrow">→</div>
+      </a>
+      <div class="cta-meta">
+        <div class="cta-meta-item"><div class="cta-meta-dot"></div>Free forever</div>
+        <div class="cta-meta-item"><div class="cta-meta-dot"></div>No account needed</div>
+        <div class="cta-meta-item"><div class="cta-meta-dot"></div>30 second results</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p><a href="https://shortlistr.us">← Back to Shortlistr</a> &nbsp;·&nbsp; © 2025 Shortlistr</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal-on-scroll');
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // FAQ
+    function toggleFaq(btn) {
+      const ans = btn.nextElementSibling;
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.classList.remove('open');
+      });
+      if (!open) { btn.setAttribute('aria-expanded', 'true'); ans.classList.add('open'); }
+    }
+
+    // Result card tab switching
+    const allPanels = ['kw','format','skills','exp','struct','file'];
+    function switchRTab(tab) {
+      allPanels.forEach(t => {
+        document.getElementById('rtab-' + t).classList.remove('active');
+        document.getElementById('rpanel-' + t).classList.remove('active');
+      });
+      document.getElementById('rtab-' + tab).classList.add('active');
+      document.getElementById('rpanel-' + tab).classList.add('active');
+      animatePanelBars(tab);
+    }
+
+    // Animate bars inside a given panel
+    function animatePanelBars(tab) {
+      const panel = document.getElementById('rpanel-' + tab);
+      panel.querySelectorAll('.rc-check-bar-fill').forEach(bar => {
+        const w = bar.dataset.w;
+        if (w) { bar.style.width = '0'; setTimeout(() => { bar.style.width = w + '%'; }, 60); }
+      });
+      panel.querySelectorAll('.rc-check-bar-label span:last-child').forEach(lbl => {
+        const bar = lbl.closest('.rc-check-bar-wrap').querySelector('.rc-check-bar-fill');
+        if (bar && bar.dataset.w) setTimeout(() => { lbl.textContent = bar.dataset.w + '%'; }, 400);
+      });
+    }
+
+    // Animate the main ring and score bars on scroll into view
+    const resultCard = document.querySelector('.result-card');
+    const cardObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          // Main score ring — 55% score → dashoffset = 188 - (0.55 * 188) = 84.6
+          setTimeout(() => {
+            const ring = document.getElementById('mainRing');
+            const score = document.getElementById('mainScore');
+            ring.style.strokeDashoffset = String(188 - 0.55 * 188);
+            score.textContent = '55';
+          }, 300);
+          // Animate initial tab bars
+          setTimeout(() => animatePanelBars('kw'), 500);
+          cardObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    if (resultCard) cardObs.observe(resultCard);
+  </script>
+</body>
+</html>
