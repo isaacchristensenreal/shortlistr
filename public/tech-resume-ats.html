@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech Resume ATS Optimization | Shortlistr</title>
+  <meta name="description" content="Engineers get filtered by ATS for keyword mismatches, not lack of skill. Here's how to fix your tech resume in minutes." />
+  <link rel="canonical" href="https://shortlistr.us/tech-resume-ats" />
+
+  <meta property="og:title" content="Tech Resume ATS Optimization | Shortlistr" />
+  <meta property="og:description" content="Engineers get filtered by ATS for keyword mismatches, not lack of skill. Here's how to fix your tech resume in minutes." />
+  <meta property="og:url" content="https://shortlistr.us/tech-resume-ats" />
+  <meta property="og:type" content="article" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy-900: #0a0f1e;
+      --navy-800: #0d1426;
+      --navy-700: #111b33;
+      --terminal-bg: #0d1117;
+      --terminal-border: #30363d;
+      --terminal-line: #21262d;
+      --electric-500: #3b82f6;
+      --electric-400: #60a5fa;
+      --electric-300: #93c5fd;
+      --violet-500: #6366f1;
+      --violet-400: #818cf8;
+      --violet-300: #a5b4fc;
+      --emerald-400: #34d399;
+      --emerald-500: #10b981;
+      --rose-400: #fb7185;
+      --amber-400: #fbbf24;
+      --cyan-400: #22d3ee;
+      --orange-400: #fb923c;
+      --slate-400: #94a3b8;
+      --slate-300: #cbd5e1;
+      --white: #ffffff;
+      --mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy-900);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(59,130,246,0.08) 1px, transparent 0);
+      background-size: 32px 32px;
+      pointer-events: none; z-index: 0;
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%;
+      filter: blur(80px); pointer-events: none; z-index: 0;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      animation: orb-drift 18s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(34,211,238,0.07) 0%, transparent 70%);
+      bottom: -150px; left: -150px;
+      animation: orb-drift2 22s ease-in-out infinite alternate;
+    }
+    @keyframes orb-drift  { from { transform: translate(0,0); } to { transform: translate(40px,60px); } }
+    @keyframes orb-drift2 { from { transform: translate(0,0); } to { transform: translate(-30px,-50px); } }
+
+    /* NAV */
+    nav {
+      position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(10,15,30,0.8); backdrop-filter: blur(12px);
+    }
+    .logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #6366f1 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 20px; height: 20px; }
+    .logo-text { font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 600; font-size: 0.85rem;
+      padding: 9px 20px; border-radius: 8px; text-decoration: none;
+      transition: opacity .2s, transform .2s;
+    }
+    .nav-cta:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1;
+      text-align: center; padding: 90px 24px 70px;
+      max-width: 840px; margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(251,146,60,0.1); border: 1px solid rgba(251,146,60,0.25);
+      color: var(--orange-400); font-size: 0.8rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 28px;
+      letter-spacing: .04em; text-transform: uppercase;
+      font-family: var(--mono);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900; line-height: 1.12; letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.75) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 22px;
+    }
+    .hero p {
+      font-size: 1.15rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 640px; margin: 0 auto 36px;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 1.05rem;
+      padding: 16px 36px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,130,246,0.4); }
+    .hero-sub { margin-top: 14px; font-size: 0.82rem; color: rgba(148,163,184,0.6); }
+
+    /* LAYOUT */
+    section {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 70px 24px;
+    }
+    section + section { padding-top: 0; }
+    .divider {
+      position: relative; z-index: 1;
+      height: 1px; background: rgba(255,255,255,0.06);
+      max-width: 900px; margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--electric-400); margin-bottom: 12px;
+      font-family: var(--mono);
+    }
+    h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800; line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 16px;
+    }
+    .section-intro {
+      font-size: 1.05rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 700px; margin-bottom: 44px;
+    }
+
+    /* CALLOUT */
+    .callout {
+      border-radius: 14px; padding: 22px 24px;
+      display: flex; gap: 14px; align-items: flex-start;
+      margin-bottom: 36px;
+    }
+    .callout.blue   { background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.2); }
+    .callout.amber  { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.2); }
+    .callout.orange { background: rgba(251,146,60,0.06); border: 1px solid rgba(251,146,60,0.2); }
+    .callout.rose   { background: rgba(251,113,133,0.06); border: 1px solid rgba(251,113,133,0.2); }
+    .callout-icon  { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+    .callout p { font-size: 0.9rem; color: var(--slate-300); line-height: 1.7; }
+    .callout strong { color: var(--white); }
+
+    /* ═══════════════════════════════════════
+       CODE-STYLE KEYWORD DIFF CARD
+    ═══════════════════════════════════════ */
+    .code-card {
+      background: var(--terminal-bg);
+      border: 1px solid var(--terminal-border);
+      border-radius: 14px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+
+    /* Tab bar */
+    .code-tabs {
+      background: #161b22;
+      border-bottom: 1px solid var(--terminal-border);
+      display: flex; align-items: center;
+      padding: 0 16px; gap: 0;
+    }
+    .code-tab {
+      font-family: var(--mono); font-size: 0.75rem; font-weight: 500;
+      padding: 10px 18px; cursor: pointer; border: none;
+      background: none; color: var(--slate-400);
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+      transition: color .15s;
+    }
+    .code-tab:hover { color: var(--white); }
+    .code-tab.active { color: var(--white); border-bottom-color: var(--electric-400); }
+    .code-dots {
+      display: flex; gap: 6px; margin-right: 16px;
+    }
+    .code-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+    }
+    .code-dot.red    { background: #ff5f57; }
+    .code-dot.yellow { background: #ffbd2e; }
+    .code-dot.green  { background: #28c840; }
+    .code-dots-wrap {
+      display: flex; align-items: center; padding: 10px 0; margin-right: auto;
+    }
+
+    /* Code body */
+    .code-body { display: none; }
+    .code-body.active { display: block; }
+
+    /* Score bar at top */
+    .code-score-bar {
+      background: #161b22; border-bottom: 1px solid var(--terminal-border);
+      padding: 10px 20px;
+      display: flex; align-items: center; gap: 16px;
+      flex-wrap: wrap;
+    }
+    .csb-label { font-family: var(--mono); font-size: 0.72rem; color: var(--slate-400); }
+    .csb-bar-bg { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; min-width: 80px; }
+    .csb-bar-fill { height: 100%; border-radius: 3px; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+    .csb-bar-fill.low  { background: linear-gradient(90deg, #f43f5e, #fb7185); }
+    .csb-bar-fill.high { background: linear-gradient(90deg, var(--emerald-500), var(--emerald-400)); }
+    .csb-pct { font-family: var(--mono); font-size: 0.8rem; font-weight: 700; }
+    .csb-pct.low  { color: var(--rose-400); }
+    .csb-pct.high { color: var(--emerald-400); }
+    .csb-verdict {
+      font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 5px;
+      font-family: var(--mono);
+    }
+    .csb-verdict.fail { background: rgba(251,113,133,0.15); color: var(--rose-400); }
+    .csb-verdict.pass { background: rgba(52,211,153,0.15); color: var(--emerald-400); }
+
+    /* Diff lines */
+    .diff-lines { padding: 12px 0; }
+    .diff-line {
+      display: flex; align-items: baseline;
+      padding: 2px 0; font-family: var(--mono); font-size: 0.8rem; line-height: 1.8;
+    }
+    .diff-line:hover { background: rgba(255,255,255,0.02); }
+    .diff-num {
+      width: 44px; text-align: right; padding-right: 16px;
+      color: rgba(148,163,184,0.3); font-size: 0.72rem; flex-shrink: 0;
+      user-select: none;
+    }
+    .diff-gutter {
+      width: 16px; text-align: center; flex-shrink: 0;
+      font-weight: 700; font-size: 0.8rem;
+    }
+    .diff-line.add    { background: rgba(46,160,67,0.1); }
+    .diff-line.remove { background: rgba(248,81,73,0.1); }
+    .diff-line.add    .diff-gutter { color: #3fb950; }
+    .diff-line.remove .diff-gutter { color: #f85149; }
+    .diff-line.comment .diff-gutter { color: transparent; }
+    .diff-content { padding-left: 8px; flex: 1; color: #e6edf3; }
+    .diff-line.add    .diff-content { color: #aff5b4; }
+    .diff-line.remove .diff-content { color: #ffa198; }
+    .diff-line.section .diff-content { color: #79c0ff; }
+    .diff-line.comment .diff-content { color: rgba(148,163,184,0.4); font-style: italic; }
+
+    /* Inline code tokens */
+    .tok-key  { color: #ff7b72; }
+    .tok-str  { color: #a5d6ff; }
+    .tok-fn   { color: #d2a8ff; }
+    .tok-num  { color: #ffa657; }
+    .tok-hit  { color: #3fb950; font-weight: 700; }
+    .tok-miss { color: #f85149; text-decoration: line-through; }
+    .tok-warn { color: #ffa657; }
+    .tok-cmt  { color: #8b949e; font-style: italic; }
+
+    .code-footer {
+      background: #161b22; border-top: 1px solid var(--terminal-border);
+      padding: 10px 20px;
+      display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
+    }
+    .cf-item {
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--mono); font-size: 0.7rem; color: var(--slate-400);
+    }
+    .cf-dot { width: 10px; height: 10px; border-radius: 2px; }
+    .cf-dot.green { background: rgba(46,160,67,0.6); border: 1px solid #3fb950; }
+    .cf-dot.red   { background: rgba(248,81,73,0.4); border: 1px solid #f85149; }
+    .cf-dot.amber { background: rgba(255,166,87,0.4); border: 1px solid #ffa657; }
+
+    /* STACK MATCH TABLE */
+    .match-table {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; overflow: hidden;
+      background: rgba(13,20,38,0.8);
+    }
+    .mt-row {
+      display: grid; grid-template-columns: 160px 1fr 100px 110px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      align-items: center;
+    }
+    .mt-row:last-child { border-bottom: none; }
+    .mt-row.header {
+      background: rgba(255,255,255,0.03);
+      font-size: 0.68rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--slate-400);
+      font-family: var(--mono);
+    }
+    .mt-cell {
+      padding: 14px 18px; font-size: 0.85rem;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    .mt-cell:last-child { border-right: none; }
+    .mt-jd { font-family: var(--mono); font-weight: 600; color: var(--white); }
+    .mt-resume { font-family: var(--mono); color: var(--slate-400); font-size: 0.82rem; }
+    .mt-resume.hit    { color: var(--emerald-400); }
+    .mt-resume.miss   { color: var(--rose-400); text-decoration: line-through; }
+    .mt-resume.fuzzy  { color: var(--amber-400); }
+    .match-type {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.7rem; font-weight: 700; padding: 3px 8px;
+      border-radius: 5px; font-family: var(--mono);
+    }
+    .match-type.exact { background: rgba(52,211,153,0.12); color: var(--emerald-400); }
+    .match-type.fuzzy { background: rgba(251,191,36,0.12); color: var(--amber-400); }
+    .match-type.miss  { background: rgba(251,113,133,0.12); color: var(--rose-400); }
+    .match-impact {
+      font-size: 0.75rem; font-weight: 700; font-family: var(--mono);
+    }
+    .match-impact.high { color: var(--emerald-400); }
+    .match-impact.med  { color: var(--amber-400); }
+    .match-impact.low  { color: var(--slate-400); }
+    .match-impact.neg  { color: var(--rose-400); }
+
+    @media (max-width: 640px) {
+      .mt-row { grid-template-columns: 130px 1fr 80px; }
+      .mt-cell.impact-col { display: none; }
+    }
+
+    /* GITHUB PROBLEM VISUAL */
+    .github-visual {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    @media (max-width: 600px) { .github-visual { grid-template-columns: 1fr; } }
+
+    .gh-panel {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .gh-panel-header {
+      padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.78rem; font-weight: 700; font-family: var(--mono);
+    }
+    .gh-panel.human .gh-panel-header  { background: rgba(59,130,246,0.08); color: var(--electric-400); }
+    .gh-panel.ats   .gh-panel-header  { background: rgba(251,113,133,0.06); color: var(--rose-400); }
+    .gh-panel-body { padding: 18px 16px; background: rgba(13,20,38,0.7); }
+
+    .gh-link-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+    }
+    .gh-link-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .gh-link-text { font-family: var(--mono); font-size: 0.78rem; color: var(--electric-400); text-decoration: underline; }
+    .gh-link-text.dead { color: var(--rose-400); text-decoration: line-through; opacity: .6; }
+    .gh-link-verdict {
+      margin-left: auto; font-size: 0.68rem; font-weight: 700;
+      padding: 2px 7px; border-radius: 4px; flex-shrink: 0;
+      font-family: var(--mono);
+    }
+    .gh-link-verdict.sees { background: rgba(52,211,153,0.15); color: var(--emerald-400); }
+    .gh-link-verdict.skip { background: rgba(251,113,133,0.15); color: var(--rose-400); }
+
+    .gh-extracted {
+      margin-top: 14px; padding: 12px; border-radius: 8px;
+      background: rgba(0,0,0,0.2); font-family: var(--mono); font-size: 0.72rem;
+      color: var(--slate-400); line-height: 1.6;
+    }
+    .gh-extracted .g-key { color: var(--electric-300); }
+    .gh-extracted .g-val { color: var(--emerald-400); }
+    .gh-extracted .g-null { color: var(--rose-400); }
+
+    /* HOW ATS READS TECH */
+    .tech-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .tech-card {
+      background: rgba(13,20,38,0.7);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 26px 22px;
+      transition: transform .2s, border-color .2s;
+    }
+    .tech-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
+    .tc-icon { font-size: 1.6rem; margin-bottom: 14px; }
+    .tech-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .tech-card p  { font-size: 0.85rem; color: var(--slate-400); line-height: 1.6; }
+    .tc-example {
+      margin-top: 14px; padding: 10px 12px; border-radius: 8px;
+      background: rgba(0,0,0,0.25); font-family: var(--mono); font-size: 0.75rem;
+      line-height: 1.6; color: var(--slate-300);
+    }
+    .tc-hit  { color: var(--emerald-400); }
+    .tc-miss { color: var(--rose-400); }
+    .tc-warn { color: var(--amber-400); }
+
+    /* STAT ROW */
+    .stat-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px; margin-top: 48px;
+    }
+    .stat-box {
+      background: rgba(13,20,38,0.7); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px 20px; text-align: center;
+    }
+    .stat-num {
+      font-size: 2.4rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, var(--electric-400), var(--violet-400));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px;
+    }
+    .stat-label { font-size: 0.85rem; color: var(--slate-400); line-height: 1.4; }
+
+    /* STEPS */
+    .steps { display: flex; flex-direction: column; gap: 20px; }
+    .step-row {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: rgba(13,20,38,0.6); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px; transition: border-color .2s;
+    }
+    .step-row:hover { border-color: rgba(59,130,246,0.2); }
+    .step-num {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(99,102,241,0.2));
+      border: 1px solid rgba(59,130,246,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; font-weight: 800; color: var(--electric-400);
+      font-family: var(--mono);
+    }
+    .step-body h4 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .step-body p  { font-size: 0.88rem; color: var(--slate-400); line-height: 1.6; }
+    .step-badge {
+      margin-top: 8px; display: inline-block;
+      font-size: 0.75rem; font-weight: 600; color: var(--emerald-400);
+      background: rgba(52,211,153,0.1); padding: 3px 9px; border-radius: 6px;
+      font-family: var(--mono);
+    }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: rgba(13,20,38,0.7); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: none;
+      color: var(--white); font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      padding: 20px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq-q:hover { color: var(--electric-400); }
+    .faq-arrow { font-size: 1rem; transition: transform .25s; flex-shrink: 0; }
+    .faq-q[aria-expanded="true"] .faq-arrow { transform: rotate(180deg); }
+    .faq-a {
+      display: none; padding: 0 24px 20px;
+      font-size: 0.88rem; color: var(--slate-400); line-height: 1.7;
+    }
+    .faq-a.open { display: block; }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      position: relative; z-index: 1; text-align: center;
+      padding: 80px 24px;
+      background: linear-gradient(180deg, transparent, rgba(13,20,38,0.6));
+    }
+    .bottom-cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900;
+      letter-spacing: -0.025em; margin-bottom: 16px;
+      max-width: 640px; margin-left: auto; margin-right: auto;
+    }
+    .bottom-cta p {
+      font-size: 1.05rem; color: var(--slate-400); max-width: 520px;
+      margin: 0 auto 36px; line-height: 1.7;
+    }
+    .bottom-cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 1.05rem;
+      padding: 16px 40px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .bottom-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,130,246,0.4); }
+
+    /* REVEAL */
+    .reveal-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity .55s, transform .55s; }
+    .reveal-on-scroll.visible { opacity: 1; transform: none; }
+
+    footer {
+      position: relative; z-index: 1; text-align: center;
+      padding: 32px 24px; border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem; color: rgba(148,163,184,0.4);
+    }
+    footer a { color: rgba(148,163,184,0.5); text-decoration: none; }
+    footer a:hover { color: var(--electric-400); }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 60px 20px 50px; }
+      section { padding: 50px 20px; }
+      .code-tab { padding: 10px 10px; font-size: 0.68rem; }
+      .diff-line { font-size: 0.7rem; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Tech Resume ATS: Why Engineers Get Filtered Out (And How to Stop It)",
+        "description": "Engineers get filtered by ATS for keyword mismatches, not lack of skill. Here's how to fix your tech resume in minutes.",
+        "url": "https://shortlistr.us/tech-resume-ats",
+        "author": { "@type": "Organization", "name": "Shortlistr" },
+        "publisher": { "@type": "Organization", "name": "Shortlistr", "url": "https://shortlistr.us" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why do engineers get filtered out by ATS despite being qualified?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The most common cause is keyword mismatch. ATS matches exact terms — if a JD says 'Kubernetes' and your resume says 'k8s', that's often scored as a miss. Engineers also tend to let their GitHub or portfolio do the talking, but ATS can't read links or external profiles. Everything ATS scores has to be in the resume text itself." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does ATS understand technical abbreviations like k8s or JS?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It depends on the ATS platform. Some handle common abbreviations (JS → JavaScript), others don't. The safe approach is to list both the full name and the abbreviation on your resume — 'Kubernetes (k8s)', 'JavaScript (JS)', 'Amazon Web Services (AWS)'. This guarantees a match regardless of which form the JD uses." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does ATS read my GitHub profile or portfolio links?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. ATS parses the text of your resume document — it cannot follow hyperlinks or scrape external URLs. Your GitHub repos, portfolio projects, and linked case studies are invisible to ATS. Every technology, skill, and project you want scored must be described in plain text within the resume itself." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I list every technology I've ever used?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No — and this can backfire. Listing dozens of technologies without proficiency context can raise credibility concerns for human reviewers. The better approach: list all technologies from the JD that you genuinely know, organized by category (Languages, Frameworks, Cloud, Tools). Mirror the JD's vocabulary and prioritize exact matches over exhaustive lists." }
+          },
+          {
+            "@type": "Question",
+            "name": "How should I format my tech skills section for ATS?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use a plain-text skills section organized by category, not a visual grid or table. 'Languages: Python, TypeScript, Go | Frameworks: React, FastAPI, Django | Cloud: AWS (EC2, S3, Lambda), GCP | Tools: Docker, Kubernetes, Terraform, GitHub Actions' — each term is individually scannable. Avoid icons, progress bars, or any visual formatting that breaks ATS parsing." }
+          },
+          {
+            "@type": "Question",
+            "name": "What tech resume keywords are most commonly missed?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Common misses: using 'k8s' when the JD says 'Kubernetes', writing 'Postgres' when the JD says 'PostgreSQL', saying 'built REST APIs' when the JD says 'RESTful API design', using 'ML' when the JD says 'machine learning', or listing 'AWS' without the specific services used (EC2, Lambda, S3) that appear in the JD." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://shortlistr.us" class="logo-link">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="2" width="13" height="17" rx="2" fill="white" fill-opacity="0.9"/>
+          <path d="M13 2L17 6H14C13.4 6 13 5.6 13 5V2Z" fill="white" fill-opacity="0.5"/>
+          <path d="M16 14L18.5 20L20 17.5L22.5 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">Shortlistr</span>
+    </a>
+    <a href="https://shortlistr.us/app" class="nav-cta">Optimize My Tech Resume →</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">// tech resume guide</div>
+    <h1>Tech Resume ATS: Why Engineers Get Filtered Out (And How to Stop It).</h1>
+    <p>You built the thing. You know the stack. You wrote clean code — and then an algorithm rejected your resume because you wrote "k8s" instead of "Kubernetes." Here's what's actually happening inside ATS for technical roles.</p>
+    <a href="https://shortlistr.us/app" class="hero-cta">Optimize My Tech Resume →</a>
+    <p class="hero-sub">No account · paste any engineering JD · see your keyword gaps instantly</p>
+  </div>
+
+  <!-- CODE-STYLE KEYWORD DIFF CARD -->
+  <section>
+    <div class="section-label">// ats_diff --resume resume.txt --jd job.txt</div>
+    <h2>What ATS Actually Sees in Your Tech Resume</h2>
+    <p class="section-intro">The same engineer. Two resumes. One passes ATS for a senior backend role — one doesn't. Flip between them to see exactly which keyword choices make the difference.</p>
+
+    <div class="code-card reveal-on-scroll">
+
+      <!-- Tab bar -->
+      <div class="code-tabs">
+        <div class="code-dots-wrap">
+          <div class="code-dots">
+            <div class="code-dot red"></div>
+            <div class="code-dot yellow"></div>
+            <div class="code-dot green"></div>
+          </div>
+        </div>
+        <button class="code-tab active" id="tab-bad"  onclick="switchCodeTab('bad')">resume_v1.txt  ✗</button>
+        <button class="code-tab"        id="tab-good" onclick="switchCodeTab('good')">resume_v2.txt  ✓</button>
+        <button class="code-tab"        id="tab-jd"   onclick="switchCodeTab('jd')">job_description.txt</button>
+      </div>
+
+      <!-- BAD RESUME -->
+      <div class="code-body active" id="body-bad">
+        <div class="code-score-bar">
+          <span class="csb-label">ats_score:</span>
+          <div class="csb-bar-bg"><div class="csb-bar-fill low" id="badBar" style="width:0" data-w="31"></div></div>
+          <span class="csb-pct low">31%</span>
+          <span class="csb-verdict fail">FILTERED</span>
+        </div>
+        <div class="diff-lines">
+          <div class="diff-line comment"><div class="diff-num">  </div><div class="diff-gutter"></div><div class="diff-content"># Skills — ATS scan results</div></div>
+          <div class="diff-line remove"><div class="diff-num">1</div><div class="diff-gutter">−</div><div class="diff-content"><span class="tok-key">languages:</span> <span class="tok-miss">Python, JS, bash</span> <span class="tok-cmt">  # JD says "TypeScript" — JS != TypeScript</span></div></div>
+          <div class="diff-line remove"><div class="diff-num">2</div><div class="diff-gutter">−</div><div class="diff-content"><span class="tok-key">infra:</span>     <span class="tok-miss">k8s, docker</span>        <span class="tok-cmt">  # JD says "Kubernetes" — abbreviation = miss</span></div></div>
+          <div class="diff-line remove"><div class="diff-num">3</div><div class="diff-gutter">−</div><div class="diff-content"><span class="tok-key">cloud:</span>     <span class="tok-miss">AWS</span>                <span class="tok-cmt">  # JD requires "EC2, Lambda, S3" specifically</span></div></div>
+          <div class="diff-line remove"><div class="diff-num">4</div><div class="diff-gutter">−</div><div class="diff-content"><span class="tok-key">db:</span>        <span class="tok-miss">Postgres, Redis</span>    <span class="tok-cmt">  # JD says "PostgreSQL" — short form = miss</span></div></div>
+          <div class="diff-line remove"><div class="diff-num">5</div><div class="diff-gutter">−</div><div class="diff-content"><span class="tok-key">other:</span>    <span class="tok-miss">CI/CD, REST APIs</span>   <span class="tok-cmt">  # JD: "GitHub Actions, RESTful API design"</span></div></div>
+          <div class="diff-line comment"><div class="diff-num">  </div><div class="diff-gutter"></div><div class="diff-content"># Experience bullets</div></div>
+          <div class="diff-line remove"><div class="diff-num">6</div><div class="diff-gutter">−</div><div class="diff-content"><span class="tok-miss">"Built microservices and handled deployments"</span></div></div>
+          <div class="diff-line comment"><div class="diff-num">  </div><div class="diff-gutter"></div><div class="diff-content">  <span class="tok-cmt">  # vague — no tools named, no scale, 0 keyword matches</span></div></div>
+          <div class="diff-line remove"><div class="diff-num">7</div><div class="diff-gutter">−</div><div class="diff-content"><span class="tok-miss">"Improved system performance by optimizing queries"</span></div></div>
+          <div class="diff-line comment"><div class="diff-num">  </div><div class="diff-gutter"></div><div class="diff-content">  <span class="tok-cmt">  # missing: PostgreSQL, query optimization, latency metrics</span></div></div>
+          <div class="diff-line remove"><div class="diff-num">8</div><div class="diff-gutter">−</div><div class="diff-content"><span class="tok-miss">"See github.com/alexdev for projects"</span></div></div>
+          <div class="diff-line comment"><div class="diff-num">  </div><div class="diff-gutter"></div><div class="diff-content">  <span class="tok-cmt">  # ATS cannot follow links — this line scores zero</span></div></div>
+          <div class="diff-line comment"><div class="diff-num">  </div><div class="diff-gutter"></div><div class="diff-content"># Matched keywords: 4 of 28 required</div></div>
+          <div class="diff-line comment"><div class="diff-num">  </div><div class="diff-gutter"></div><div class="diff-content"># Result: auto-rejected before human review</div></div>
+        </div>
+      </div>
+
+      <!-- GOOD RESUME -->
+      <div class="code-body" id="body-good">
+        <div class="code-score-bar">
+          <span class="csb-label">ats_score:</span>
+          <div class="csb-bar-bg"><div class="csb-bar-fill high" id="goodBar" style="width:0" data-w="84"></div></div>
+          <span class="csb-pct high">84%</span>
+          <span class="csb-verdict pass">PASSED → RECRUITER</span>
+        </div>
+        <div class="diff-lines">
+          <div class="diff-line comment"><div class="diff-num">  </div><div class="diff-gutter"></div><div class="diff-content"># Skills — ATS scan results</div></div>
+          <div class="diff-line add"><div class="diff-num">1</div><div class="diff-gutter">+</div><div class="diff-content"><span class="tok-key">languages:</span> <span class="tok-hit">Python</span>, <span class="tok-hit">TypeScript</span>, bash <span class="tok-cmt">  # exact JD match</span></div></div>
+          <div class="diff-line add"><div class="diff-num">2</div><div class="diff-gutter">+</div><div class="diff-content"><span class="tok-key">infra:</span>     <span class="tok-hit">Kubernetes</span>, <span class="tok-hit">Docker</span>, <span class="tok-hit">Terraform</span> <span class="tok-cmt">  # full names = match</span></div></div>
+          <div class="diff-line add"><div class="diff-num">3</div><div class="diff-gutter">+</div><div class="diff-content"><span class="tok-key">cloud:</span>     AWS (<span class="tok-hit">EC2</span>, <span class="tok-hit">Lambda</span>, <span class="tok-hit">S3</span>, <span class="tok-hit">RDS</span>) <span class="tok-cmt">  # specific services match</span></div></div>
+          <div class="diff-line add"><div class="diff-num">4</div><div class="diff-gutter">+</div><div class="diff-content"><span class="tok-key">db:</span>        <span class="tok-hit">PostgreSQL</span>, <span class="tok-hit">Redis</span>, <span class="tok-hit">DynamoDB</span> <span class="tok-cmt">  # full name match</span></div></div>
+          <div class="diff-line add"><div class="diff-num">5</div><div class="diff-gutter">+</div><div class="diff-content"><span class="tok-key">other:</span>    <span class="tok-hit">GitHub Actions</span>, <span class="tok-hit">RESTful API design</span>, <span class="tok-hit">gRPC</span></div></div>
+          <div class="diff-line comment"><div class="diff-num">  </div><div class="diff-gutter"></div><div class="diff-content"># Experience bullets</div></div>
+          <div class="diff-line add"><div class="diff-num">6</div><div class="diff-gutter">+</div><div class="diff-content"><span class="tok-hit">"Architected microservices</span> on <span class="tok-hit">Kubernetes</span> (<span class="tok-hit">AWS EKS</span>); reduced</div></div>
+          <div class="diff-line add"><div class="diff-num">7</div><div class="diff-gutter">+</div><div class="diff-content">  p99 latency from 420ms to 38ms across 12 <span class="tok-hit">RESTful API</span> endpoints"</div></div>
+          <div class="diff-line add"><div class="diff-num">8</div><div class="diff-gutter">+</div><div class="diff-content"><span class="tok-hit">"Optimized PostgreSQL</span> query performance using <span class="tok-hit">indexing</span> and</div></div>
+          <div class="diff-line add"><div class="diff-num">9</div><div class="diff-gutter">+</div><div class="diff-content">  <span class="tok-hit">query planning</span>; cut P95 read latency by 74%"</div></div>
+          <div class="diff-line add"><div class="diff-num">10</div><div class="diff-gutter">+</div><div class="diff-content"><span class="tok-hit">"Built CI/CD pipeline with GitHub Actions</span>; deployed to <span class="tok-hit">AWS Lambda</span></div></div>
+          <div class="diff-line add"><div class="diff-num">11</div><div class="diff-gutter">+</div><div class="diff-content">  on merge; reduced deploy cycle from 45 min to 6 min"</div></div>
+          <div class="diff-line comment"><div class="diff-num">  </div><div class="diff-gutter"></div><div class="diff-content"># Matched keywords: 24 of 28 required</div></div>
+          <div class="diff-line comment"><div class="diff-num">  </div><div class="diff-gutter"></div><div class="diff-content"># Result: passed to recruiter queue ✓</div></div>
+        </div>
+      </div>
+
+      <!-- JD VIEW -->
+      <div class="code-body" id="body-jd">
+        <div class="code-score-bar">
+          <span class="csb-label">job_description.txt</span>
+          <span style="font-family:var(--mono); font-size:0.72rem; color:var(--slate-400)">Senior Backend Engineer — keywords ATS is matching against</span>
+        </div>
+        <div class="diff-lines">
+          <div class="diff-line section"><div class="diff-num">1</div><div class="diff-gutter"> </div><div class="diff-content">[REQUIRED_SKILLS]</div></div>
+          <div class="diff-line"><div class="diff-num">2</div><div class="diff-gutter"> </div><div class="diff-content">languages        = <span class="tok-str">"Python"</span>, <span class="tok-str">"TypeScript"</span></div></div>
+          <div class="diff-line"><div class="diff-num">3</div><div class="diff-gutter"> </div><div class="diff-content">container_orch   = <span class="tok-str">"Kubernetes"</span>  <span class="tok-cmt">  # not "k8s"</span></div></div>
+          <div class="diff-line"><div class="diff-num">4</div><div class="diff-gutter"> </div><div class="diff-content">cloud_provider   = <span class="tok-str">"AWS"</span>, <span class="tok-str">"EC2"</span>, <span class="tok-str">"Lambda"</span>, <span class="tok-str">"S3"</span>, <span class="tok-str">"RDS"</span></div></div>
+          <div class="diff-line"><div class="diff-num">5</div><div class="diff-gutter"> </div><div class="diff-content">database         = <span class="tok-str">"PostgreSQL"</span>, <span class="tok-str">"Redis"</span>  <span class="tok-cmt">  # not "Postgres"</span></div></div>
+          <div class="diff-line"><div class="diff-num">6</div><div class="diff-gutter"> </div><div class="diff-content">api_design       = <span class="tok-str">"RESTful API design"</span>, <span class="tok-str">"gRPC"</span></div></div>
+          <div class="diff-line"><div class="diff-num">7</div><div class="diff-gutter"> </div><div class="diff-content">cicd             = <span class="tok-str">"GitHub Actions"</span>, <span class="tok-str">"CI/CD"</span></div></div>
+          <div class="diff-line"><div class="diff-num">8</div><div class="diff-gutter"> </div><div class="diff-content">iac              = <span class="tok-str">"Terraform"</span></div></div>
+          <div class="diff-line section"><div class="diff-num">9</div><div class="diff-gutter"> </div><div class="diff-content">[EXPERIENCE_SIGNALS]</div></div>
+          <div class="diff-line"><div class="diff-num">10</div><div class="diff-gutter"> </div><div class="diff-content">patterns = <span class="tok-str">"microservices"</span>, <span class="tok-str">"distributed systems"</span>, <span class="tok-str">"system design"</span></div></div>
+          <div class="diff-line"><div class="diff-num">11</div><div class="diff-gutter"> </div><div class="diff-content">metrics  = <span class="tok-str">"latency"</span>, <span class="tok-str">"throughput"</span>, <span class="tok-str">"SLA"</span>, <span class="tok-str">"uptime"</span></div></div>
+          <div class="diff-line"><div class="diff-num">12</div><div class="diff-gutter"> </div><div class="diff-content">collab   = <span class="tok-str">"code review"</span>, <span class="tok-str">"technical documentation"</span></div></div>
+          <div class="diff-line section"><div class="diff-num">13</div><div class="diff-gutter"> </div><div class="diff-content">[NOTES]</div></div>
+          <div class="diff-line comment"><div class="diff-num">14</div><div class="diff-gutter"> </div><div class="diff-content"># GitHub links are not parsed — must be in resume text</div></div>
+          <div class="diff-line comment"><div class="diff-num">15</div><div class="diff-gutter"> </div><div class="diff-content"># Abbreviations scored independently from full names</div></div>
+          <div class="diff-line comment"><div class="diff-num">16</div><div class="diff-gutter"> </div><div class="diff-content"># Version numbers (Python 3.11) != just "Python" in some ATS</div></div>
+        </div>
+      </div>
+
+      <div class="code-footer">
+        <div class="cf-item"><div class="cf-dot green"></div>keyword match</div>
+        <div class="cf-item"><div class="cf-dot red"></div>keyword miss / wrong form</div>
+        <div class="cf-item"><div class="cf-dot amber"></div>fuzzy / uncertain match</div>
+        <div style="margin-left:auto; font-family:var(--mono); font-size:0.68rem; color:rgba(148,163,184,0.4)">shortlistr.us/app</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW ATS READS TECH SKILLS DIFFERENTLY -->
+  <section>
+    <div class="section-label">// how_ats_parses(technical_skills)</div>
+    <h2>How ATS Reads Technical Skills Differently</h2>
+    <p class="section-intro">General ATS keyword matching is already unforgiving. For technical roles, it's worse — because the tech vocabulary has hundreds of acceptable abbreviations, version numbers, and aliases that ATS may or may not normalize.</p>
+
+    <div class="tech-grid">
+      <div class="tech-card reveal-on-scroll">
+        <div class="tc-icon">🔤</div>
+        <h3>Abbreviation vs. full name</h3>
+        <p>Many ATS platforms treat abbreviations and full names as separate tokens. A JD saying "Kubernetes" may not match "k8s" — and vice versa. The safe move is always listing both.</p>
+        <div class="tc-example">
+          JD: <span class="tc-hit">"Kubernetes"</span><br>
+          Resume: <span class="tc-miss">"k8s"</span>  → miss on many ATS<br>
+          Fix: <span class="tc-hit">"Kubernetes (k8s)"</span>  → both matched
+        </div>
+      </div>
+
+      <div class="tech-card reveal-on-scroll" style="transition-delay:.1s">
+        <div class="tc-icon">☁️</div>
+        <h3>Cloud provider vs. specific services</h3>
+        <p>"AWS" on your resume doesn't match "EC2", "Lambda", or "S3" in the JD. ATS treats the service names as separate keywords. List the specific services you've used, not just the provider.</p>
+        <div class="tc-example">
+          JD: <span class="tc-hit">"EC2"</span>, <span class="tc-hit">"Lambda"</span>, <span class="tc-hit">"S3"</span><br>
+          Resume: <span class="tc-miss">"AWS"</span>  → 0 of 3 matched<br>
+          Fix: <span class="tc-hit">"AWS (EC2, Lambda, S3)"</span>  → 4 matched
+        </div>
+      </div>
+
+      <div class="tech-card reveal-on-scroll" style="transition-delay:.2s">
+        <div class="tc-icon">🗄️</div>
+        <h3>Shortened database names</h3>
+        <p>"Postgres" is universally understood by humans. ATS isn't human. "PostgreSQL" is the official name that appears in JDs — and many ATS platforms don't normalize the short form to the full name.</p>
+        <div class="tc-example">
+          JD: <span class="tc-hit">"PostgreSQL"</span><br>
+          Resume: <span class="tc-miss">"Postgres"</span>  → miss on strict ATS<br>
+          Fix: <span class="tc-hit">"PostgreSQL"</span>  → always matched
+        </div>
+      </div>
+
+      <div class="tech-card reveal-on-scroll" style="transition-delay:.3s">
+        <div class="tc-icon">📐</div>
+        <h3>Framework vs. language confusion</h3>
+        <p>"React" is not the same keyword as "JavaScript." "FastAPI" is not the same as "Python." ATS scores each term independently — naming just the framework without the language (or vice versa) can leave easy matches on the table.</p>
+        <div class="tc-example">
+          JD: <span class="tc-hit">"JavaScript"</span>, <span class="tc-hit">"React"</span><br>
+          Resume: <span class="tc-warn">"React"</span> only → 1 of 2 matched<br>
+          Fix: <span class="tc-hit">"JavaScript (React, Next.js)"</span> → 2+ matched
+        </div>
+      </div>
+
+      <div class="tech-card reveal-on-scroll" style="transition-delay:.4s">
+        <div class="tc-icon">⚙️</div>
+        <h3>Version numbers as separate tokens</h3>
+        <p>Some ATS platforms treat "Python 3.11" as different from "Python." Others don't. The conservative approach: list the language cleanly ("Python") first, then version in parentheses if relevant — don't lead with the version.</p>
+        <div class="tc-example">
+          JD: <span class="tc-hit">"Python"</span><br>
+          Resume: <span class="tc-warn">"Python 3.11"</span>  → inconsistent match<br>
+          Fix: <span class="tc-hit">"Python"</span> (3.11)  → clean match first
+        </div>
+      </div>
+
+      <div class="tech-card reveal-on-scroll" style="transition-delay:.5s">
+        <div class="tc-icon">📝</div>
+        <h3>Methodology keywords get skipped</h3>
+        <p>Engineers often omit soft-technical keywords like "system design," "code review," "technical documentation," and "on-call." These appear in JDs and ATS checks for them — but tech resumes rarely include them.</p>
+        <div class="tc-example">
+          JD: <span class="tc-hit">"system design"</span>, <span class="tc-hit">"code review"</span><br>
+          Typical resume: <span class="tc-miss">neither present</span><br>
+          Fix: add to experience bullets naturally
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box reveal-on-scroll">
+        <div class="stat-num">~40%</div>
+        <div class="stat-label">of tech resume rejections are abbreviation or naming mismatches — not missing skills</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.1s">
+        <div class="stat-num">98%</div>
+        <div class="stat-label">of Fortune 500 tech hiring runs through ATS before any engineer sees your resume</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.2s">
+        <div class="stat-num">0pts</div>
+        <div class="stat-label">a GitHub link earns you — ATS cannot follow URLs or parse external profiles</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- GITHUB / PORTFOLIO PROBLEM -->
+  <section>
+    <div class="section-label">// error: external_links not parseable</div>
+    <h2>The GitHub and Portfolio Problem</h2>
+    <p class="section-intro">The most common piece of advice given to engineers — "put your GitHub on your resume" — is correct for human readers and completely useless for ATS. Here's what happens to every link you include.</p>
+
+    <div class="callout rose reveal-on-scroll">
+      <div class="callout-icon">⛔</div>
+      <p><strong>ATS parses text, not URLs.</strong> When it encounters <code style="font-family:var(--mono); background:rgba(0,0,0,0.3); padding:1px 5px; border-radius:3px">github.com/yourname</code>, it sees a string — not a profile, not repos, not your commit history, not your tech stack. Every technology, project, and skill demonstrated in your portfolio is invisible to ATS unless you describe it in plain text on the resume itself.</p>
+    </div>
+
+    <div class="github-visual">
+      <div class="gh-panel human reveal-on-scroll">
+        <div class="gh-panel-header">
+          👤 What a human recruiter sees
+        </div>
+        <div class="gh-panel-body">
+          <div class="gh-link-row">
+            <div class="gh-link-icon">🔗</div>
+            <div class="gh-link-text">github.com/alexdev</div>
+            <div class="gh-link-verdict sees">sees it</div>
+          </div>
+          <div style="font-size:0.8rem; color:var(--slate-400); line-height:1.6; margin-bottom:14px">
+            Clicks through → sees pinned repos → reads README → understands your stack → impressed by project scope → continues reading resume.
+          </div>
+          <div class="gh-link-row">
+            <div class="gh-link-icon">🔗</div>
+            <div class="gh-link-text">alexdev.io/projects</div>
+            <div class="gh-link-verdict sees">sees it</div>
+          </div>
+          <div style="font-size:0.8rem; color:var(--slate-400); line-height:1.6">
+            Views case studies → sees Figma designs, system diagrams, technical write-ups → builds context about your capabilities.
+          </div>
+        </div>
+      </div>
+
+      <div class="gh-panel ats reveal-on-scroll" style="transition-delay:.1s">
+        <div class="gh-panel-header">
+          🤖 What ATS sees
+        </div>
+        <div class="gh-panel-body">
+          <div class="gh-link-row">
+            <div class="gh-link-icon">🔗</div>
+            <div class="gh-link-text dead">github.com/alexdev</div>
+            <div class="gh-link-verdict skip">skipped</div>
+          </div>
+          <div class="gh-extracted">
+            <span class="g-key">parsed_text:</span> <span class="g-val">"github.com/alexdev"</span><br>
+            <span class="g-key">url_followed:</span> <span class="g-null">false</span><br>
+            <span class="g-key">repos_read:</span>   <span class="g-null">0</span><br>
+            <span class="g-key">stack_detected:</span> <span class="g-null">null</span><br>
+            <span class="g-key">keywords_added:</span> <span class="g-null">0</span>
+          </div>
+          <div class="gh-link-row" style="margin-top:14px">
+            <div class="gh-link-icon">🔗</div>
+            <div class="gh-link-text dead">alexdev.io/projects</div>
+            <div class="gh-link-verdict skip">skipped</div>
+          </div>
+          <div class="gh-extracted">
+            <span class="g-key">parsed_text:</span> <span class="g-val">"alexdev.io/projects"</span><br>
+            <span class="g-key">portfolio_read:</span> <span class="g-null">false</span><br>
+            <span class="g-key">case_studies:</span>  <span class="g-null">null</span><br>
+            <span class="g-key">keywords_added:</span> <span class="g-null">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout blue reveal-on-scroll" style="margin-top:24px; margin-bottom:0">
+      <div class="callout-icon">💡</div>
+      <p><strong>The fix is simple but requires discipline:</strong> keep the GitHub link for the human who eventually reads your resume — but don't rely on it for ATS. Every technology in your repos needs to appear in plain text in your resume bullets, your Skills section, or your project descriptions. Treat your resume as the only document ATS will ever see, because it is.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- STACK KEYWORD MATCHING TABLE -->
+  <section>
+    <div class="section-label">// exact_match vs fuzzy_match vs miss</div>
+    <h2>Stack Keyword Matching: Exact, Fuzzy, and Miss</h2>
+    <p class="section-intro">Different ATS platforms handle keyword matching differently. Some normalize common abbreviations; others don't. This table shows how common tech terms score across strict ATS systems — and what to write to guarantee a match.</p>
+
+    <div class="match-table reveal-on-scroll">
+      <div class="mt-row header">
+        <div class="mt-cell">JD keyword</div>
+        <div class="mt-cell">What engineers write</div>
+        <div class="mt-cell">Match type</div>
+        <div class="mt-cell impact-col">Score impact</div>
+      </div>
+
+      <div class="mt-row">
+        <div class="mt-cell"><div class="mt-jd">Kubernetes</div></div>
+        <div class="mt-cell"><div class="mt-resume miss">k8s</div><div class="mt-resume hit" style="margin-top:4px">Kubernetes</div></div>
+        <div class="mt-cell"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-type miss">✗ miss</span><span class="match-type exact">✓ exact</span></div></div>
+        <div class="mt-cell impact-col"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-impact neg">−pts</span><span class="match-impact high">+high</span></div></div>
+      </div>
+
+      <div class="mt-row">
+        <div class="mt-cell"><div class="mt-jd">PostgreSQL</div></div>
+        <div class="mt-cell"><div class="mt-resume miss">Postgres</div><div class="mt-resume hit" style="margin-top:4px">PostgreSQL</div></div>
+        <div class="mt-cell"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-type miss">✗ miss</span><span class="match-type exact">✓ exact</span></div></div>
+        <div class="mt-cell impact-col"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-impact neg">−pts</span><span class="match-impact high">+high</span></div></div>
+      </div>
+
+      <div class="mt-row">
+        <div class="mt-cell"><div class="mt-jd">TypeScript</div></div>
+        <div class="mt-cell"><div class="mt-resume miss">JS / JavaScript</div><div class="mt-resume hit" style="margin-top:4px">TypeScript</div></div>
+        <div class="mt-cell"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-type miss">✗ miss</span><span class="match-type exact">✓ exact</span></div></div>
+        <div class="mt-cell impact-col"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-impact neg">−pts</span><span class="match-impact high">+high</span></div></div>
+      </div>
+
+      <div class="mt-row">
+        <div class="mt-cell"><div class="mt-jd">AWS EC2 / Lambda</div></div>
+        <div class="mt-cell"><div class="mt-resume miss">AWS</div><div class="mt-resume hit" style="margin-top:4px">AWS (EC2, Lambda, S3)</div></div>
+        <div class="mt-cell"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-type fuzzy">~ partial</span><span class="match-type exact">✓ exact</span></div></div>
+        <div class="mt-cell impact-col"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-impact med">+partial</span><span class="match-impact high">+high</span></div></div>
+      </div>
+
+      <div class="mt-row">
+        <div class="mt-cell"><div class="mt-jd">RESTful API design</div></div>
+        <div class="mt-cell"><div class="mt-resume miss">REST APIs / REST</div><div class="mt-resume hit" style="margin-top:4px">RESTful API design</div></div>
+        <div class="mt-cell"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-type fuzzy">~ fuzzy</span><span class="match-type exact">✓ exact</span></div></div>
+        <div class="mt-cell impact-col"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-impact med">+low</span><span class="match-impact high">+high</span></div></div>
+      </div>
+
+      <div class="mt-row">
+        <div class="mt-cell"><div class="mt-jd">GitHub Actions</div></div>
+        <div class="mt-cell"><div class="mt-resume miss">CI/CD pipelines</div><div class="mt-resume hit" style="margin-top:4px">GitHub Actions</div></div>
+        <div class="mt-cell"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-type miss">✗ miss</span><span class="match-type exact">✓ exact</span></div></div>
+        <div class="mt-cell impact-col"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-impact neg">−pts</span><span class="match-impact high">+high</span></div></div>
+      </div>
+
+      <div class="mt-row">
+        <div class="mt-cell"><div class="mt-jd">machine learning</div></div>
+        <div class="mt-cell"><div class="mt-resume miss">ML / AI/ML</div><div class="mt-resume hit" style="margin-top:4px">machine learning</div></div>
+        <div class="mt-cell"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-type fuzzy">~ sometimes</span><span class="match-type exact">✓ exact</span></div></div>
+        <div class="mt-cell impact-col"><div style="display:flex;flex-direction:column;gap:4px"><span class="match-impact med">+maybe</span><span class="match-impact high">+high</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW SHORTLISTR HANDLES TECH RESUMES -->
+  <section>
+    <div class="section-label">// shortlistr.optimize(resume, jd)</div>
+    <h2>How Shortlistr Handles Technical Resume Optimization</h2>
+    <p class="section-intro">Generic resume tools don't understand that "k8s" and "Kubernetes" are the same thing — or that "AWS" doesn't cover "EC2." Shortlistr is built around exact keyword matching, which is what ATS actually uses.</p>
+
+    <div class="steps">
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h4>Paste the engineering JD — the full text</h4>
+          <p>Copy the entire job description, including requirements, nice-to-haves, and responsibilities. The specific tools and services named there are exactly what ATS is matching against — and it's different for every posting.</p>
+          <span class="step-badge">// ~10 seconds</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h4>Upload your current tech resume</h4>
+          <p>Shortlistr parses your resume text — the same way ATS does. It doesn't follow your GitHub link. It scores what's actually in the document. That's your real ATS baseline.</p>
+          <span class="step-badge">// ~10 seconds</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h4>See your exact keyword match score</h4>
+          <p>Shortlistr shows you which JD keywords are in your resume (hits), which are missing (misses), and which are present in a different form that may or may not match. For tech resumes, the diff is often surprising — many misses are naming problems, not missing skills.</p>
+          <span class="step-badge">// instant</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h4>Fix naming issues and add missing tech keywords</h4>
+          <p>For each miss: check whether it's a naming mismatch (fix by using the JD's exact term) or a genuine gap (add to Skills or a project bullet where accurate). For tech roles, most misses are naming problems — fast to fix.</p>
+          <span class="step-badge">// ~5–10 minutes</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h4>Watch your score update and apply when you clear the threshold</h4>
+          <p>Re-paste your updated resume and see your score change in real time. For senior engineering roles, aim for 70%+ before submitting. Your skills haven't changed — just the vocabulary ATS can read.</p>
+          <span class="step-badge">// same engineer, readable by ATS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-label">// faq</div>
+    <h2>Tech Resume ATS FAQ</h2>
+
+    <div class="faq-list">
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Why do engineers get filtered out by ATS despite being qualified?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">The most common cause is keyword mismatch. ATS matches exact terms — if a JD says "Kubernetes" and your resume says "k8s", that's often scored as a miss. Engineers also tend to let their GitHub or portfolio do the talking, but ATS can't read links or external profiles. Everything ATS scores has to be in the resume text itself.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Does ATS understand technical abbreviations like k8s or JS?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">It depends on the ATS platform. Some handle common abbreviations (JS → JavaScript), others don't. The safe approach is to list both the full name and the abbreviation on your resume — "Kubernetes (k8s)", "JavaScript (JS)", "Amazon Web Services (AWS)". This guarantees a match regardless of which form the JD uses or which ATS platform the employer runs.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Does ATS read my GitHub profile or portfolio links?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">No. ATS parses the text of your resume document — it cannot follow hyperlinks or scrape external URLs. Your GitHub repos, portfolio projects, and linked case studies are invisible to ATS. Every technology, skill, and project you want scored must be described in plain text within the resume itself. Keep the links for the human who eventually reads it.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Should I list every technology I've ever used?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">No — and this can backfire. Listing dozens of technologies without proficiency context raises credibility concerns for human reviewers even if you pass ATS. The better approach: list all technologies from the JD that you genuinely know, organized by category (Languages, Frameworks, Cloud, Tools). Mirror the JD's vocabulary. Prioritize exact matches over exhaustive lists.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          How should I format my tech skills section for ATS?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Use a plain-text Skills section organized by category, not a visual grid, table, or progress bar chart. Something like: "Languages: Python, TypeScript, Go | Frameworks: React, FastAPI | Cloud: AWS (EC2, S3, Lambda), GCP | Tools: Docker, Kubernetes, Terraform, GitHub Actions" — each term is individually scannable. Avoid any visual formatting that tables or boxes your skills, as this breaks ATS parsing.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          What tech resume keywords are most commonly missed?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Common misses: using "k8s" when the JD says "Kubernetes", writing "Postgres" when the JD says "PostgreSQL", saying "built REST APIs" when the JD says "RESTful API design", using "ML" when the JD says "machine learning", or listing "AWS" without the specific services (EC2, Lambda, S3) that appear in the JD. Run your resume through Shortlistr against the specific JD to catch every mismatch before applying.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta">
+    <h2>You Know the Stack.<br>Make Sure ATS Knows You Know It.</h2>
+    <p>Paste any engineering job description and see exactly which keywords your resume is missing — naming mismatches, missing services, and gaps ATS will filter you on before anyone reads your code.</p>
+    <a href="https://shortlistr.us/app" class="bottom-cta-btn">Optimize My Tech Resume →</a>
+    <p class="hero-sub" style="margin-top:14px">Free · no account · paste any engineering JD</p>
+  </div>
+
+  <footer>
+    <p><a href="https://shortlistr.us">← Back to Shortlistr</a> &nbsp;·&nbsp; © 2025 Shortlistr</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal-on-scroll');
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // FAQ
+    function toggleFaq(btn) {
+      const ans = btn.nextElementSibling;
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.classList.remove('open');
+      });
+      if (!open) { btn.setAttribute('aria-expanded', 'true'); ans.classList.add('open'); }
+    }
+
+    // Code tab switching
+    function switchCodeTab(tab) {
+      ['bad','good','jd'].forEach(t => {
+        document.getElementById('tab-' + t).classList.remove('active');
+        document.getElementById('body-' + t).classList.remove('active');
+      });
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.getElementById('body-' + tab).classList.add('active');
+    }
+
+    // Animate ATS bars on scroll into view
+    const codeCard = document.querySelector('.code-card');
+    const barObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          setTimeout(() => {
+            const badBar  = document.getElementById('badBar');
+            const goodBar = document.getElementById('goodBar');
+            if (badBar)  badBar.style.width  = badBar.dataset.w  + '%';
+            if (goodBar) goodBar.style.width = goodBar.dataset.w + '%';
+          }, 400);
+          barObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    if (codeCard) barObs.observe(codeCard);
+  </script>
+</body>
+</html>
