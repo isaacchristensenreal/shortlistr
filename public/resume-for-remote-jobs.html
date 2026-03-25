@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume for Remote Jobs | ATS Keywords That Work | Shortlistr</title>
+  <meta name="description" content="Remote job applications go through ATS too — and they scan for different keywords. Here's how to make yours match." />
+  <link rel="canonical" href="https://shortlistr.us/resume-for-remote-jobs" />
+
+  <meta property="og:title" content="Resume for Remote Jobs | ATS Keywords That Work | Shortlistr" />
+  <meta property="og:description" content="Remote job applications go through ATS too — and they scan for different keywords. Here's how to make yours match." />
+  <meta property="og:url" content="https://shortlistr.us/resume-for-remote-jobs" />
+  <meta property="og:type" content="article" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy-900: #0a0f1e;
+      --navy-800: #0d1426;
+      --navy-700: #111b33;
+      --electric-500: #3b82f6;
+      --electric-400: #60a5fa;
+      --electric-300: #93c5fd;
+      --violet-500: #6366f1;
+      --violet-400: #818cf8;
+      --violet-300: #a5b4fc;
+      --emerald-400: #34d399;
+      --emerald-500: #10b981;
+      --rose-400: #fb7185;
+      --amber-400: #fbbf24;
+      --cyan-400: #22d3ee;
+      --cyan-300: #67e8f9;
+      --slate-400: #94a3b8;
+      --slate-300: #cbd5e1;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy-900);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(59,130,246,0.08) 1px, transparent 0);
+      background-size: 32px 32px;
+      pointer-events: none; z-index: 0;
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%;
+      filter: blur(80px); pointer-events: none; z-index: 0;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      animation: orb-drift 18s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 70%);
+      bottom: -150px; left: -150px;
+      animation: orb-drift2 22s ease-in-out infinite alternate;
+    }
+    @keyframes orb-drift  { from { transform: translate(0,0); } to { transform: translate(40px,60px); } }
+    @keyframes orb-drift2 { from { transform: translate(0,0); } to { transform: translate(-30px,-50px); } }
+
+    /* NAV */
+    nav {
+      position: relative; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(10,15,30,0.8); backdrop-filter: blur(12px);
+    }
+    .logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #6366f1 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 20px; height: 20px; }
+    .logo-text { font-size: 1.1rem; font-weight: 700; color: var(--white); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 600; font-size: 0.85rem;
+      padding: 9px 20px; border-radius: 8px; text-decoration: none;
+      transition: opacity .2s, transform .2s;
+    }
+    .nav-cta:hover { opacity: .9; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      position: relative; z-index: 1;
+      text-align: center; padding: 90px 24px 70px;
+      max-width: 820px; margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.25);
+      color: var(--cyan-400); font-size: 0.8rem; font-weight: 600;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 28px;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2.1rem, 5vw, 3.3rem);
+      font-weight: 900; line-height: 1.12; letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.75) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 22px;
+    }
+    .hero p {
+      font-size: 1.15rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 640px; margin: 0 auto 36px;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 1.05rem;
+      padding: 16px 36px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,130,246,0.4); }
+    .hero-sub { margin-top: 14px; font-size: 0.82rem; color: rgba(148,163,184,0.6); }
+
+    /* LAYOUT */
+    section {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+      padding: 70px 24px;
+    }
+    section + section { padding-top: 0; }
+    .divider {
+      position: relative; z-index: 1;
+      height: 1px; background: rgba(255,255,255,0.06);
+      max-width: 900px; margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--electric-400); margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 800; line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 16px;
+    }
+    .section-intro {
+      font-size: 1.05rem; color: var(--slate-400); line-height: 1.7;
+      max-width: 700px; margin-bottom: 44px;
+    }
+
+    /* CALLOUT */
+    .callout {
+      border-radius: 14px; padding: 22px 24px;
+      display: flex; gap: 14px; align-items: flex-start;
+      margin-bottom: 40px;
+    }
+    .callout.cyan  { background: rgba(34,211,238,0.06); border: 1px solid rgba(34,211,238,0.2); }
+    .callout.amber { background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.2); }
+    .callout.blue  { background: rgba(59,130,246,0.06); border: 1px solid rgba(59,130,246,0.2); }
+    .callout-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+    .callout p { font-size: 0.9rem; color: var(--slate-300); line-height: 1.7; }
+    .callout strong { color: var(--white); }
+
+    /* KEYWORD PILL CLOUD */
+    .pill-cloud-card {
+      background: rgba(13,20,38,0.85);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .pill-cloud-header {
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 20px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .pill-cloud-header h3 { font-size: 1rem; font-weight: 700; }
+    .pill-cloud-header p  { font-size: 0.82rem; color: var(--slate-400); margin-top: 3px; }
+
+    .cat-filters {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .cat-btn {
+      font-size: 0.78rem; font-weight: 600; padding: 6px 14px;
+      border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      background: rgba(255,255,255,0.04); color: var(--slate-400);
+      transition: all .18s;
+    }
+    .cat-btn:hover { background: rgba(255,255,255,0.08); color: var(--white); }
+    .cat-btn.active { border-color: transparent; color: var(--white); }
+    .cat-btn[data-cat="all"].active     { background: rgba(255,255,255,0.12); }
+    .cat-btn[data-cat="comms"].active   { background: rgba(34,211,238,0.2); border-color: rgba(34,211,238,0.35); color: var(--cyan-400); }
+    .cat-btn[data-cat="collab"].active  { background: rgba(129,140,248,0.2); border-color: rgba(129,140,248,0.35); color: var(--violet-400); }
+    .cat-btn[data-cat="tools"].active   { background: rgba(59,130,246,0.2); border-color: rgba(59,130,246,0.35); color: var(--electric-400); }
+    .cat-btn[data-cat="style"].active   { background: rgba(52,211,153,0.2); border-color: rgba(52,211,153,0.35); color: var(--emerald-400); }
+    .cat-btn[data-cat="output"].active  { background: rgba(251,191,36,0.2); border-color: rgba(251,191,36,0.35); color: var(--amber-400); }
+
+    .pill-cloud-body {
+      padding: 28px;
+      display: flex; flex-wrap: wrap; gap: 10px;
+      min-height: 160px; align-content: flex-start;
+    }
+
+    .kw-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.83rem; font-weight: 600;
+      padding: 7px 14px; border-radius: 9px;
+      cursor: default; transition: all .2s;
+      border: 1px solid transparent;
+      position: relative;
+    }
+    .kw-pill.dimmed { opacity: 0.18; transform: scale(0.96); }
+
+    /* category colors */
+    .kw-pill[data-cat="comms"]  { background: rgba(34,211,238,0.1);  border-color: rgba(34,211,238,0.2);  color: var(--cyan-300); }
+    .kw-pill[data-cat="collab"] { background: rgba(129,140,248,0.1); border-color: rgba(129,140,248,0.2); color: var(--violet-300); }
+    .kw-pill[data-cat="tools"]  { background: rgba(59,130,246,0.1);  border-color: rgba(59,130,246,0.2);  color: var(--electric-300); }
+    .kw-pill[data-cat="style"]  { background: rgba(52,211,153,0.1);  border-color: rgba(52,211,153,0.2);  color: var(--emerald-400); }
+    .kw-pill[data-cat="output"] { background: rgba(251,191,36,0.1);  border-color: rgba(251,191,36,0.2);  color: var(--amber-400); }
+
+    /* size variants */
+    .kw-pill.size-lg { font-size: 0.92rem; padding: 9px 18px; }
+    .kw-pill.size-sm { font-size: 0.75rem; padding: 5px 11px; }
+
+    .pill-freq {
+      font-size: 0.65rem; font-weight: 800; opacity: 0.7;
+      background: rgba(255,255,255,0.1); border-radius: 4px;
+      padding: 1px 5px;
+    }
+
+    .pill-cloud-footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 16px 28px;
+      display: flex; flex-wrap: wrap; gap: 16px;
+      align-items: center;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.77rem; color: var(--slate-400);
+    }
+    .legend-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .legend-dot.cyan   { background: var(--cyan-400); }
+    .legend-dot.violet { background: var(--violet-400); }
+    .legend-dot.blue   { background: var(--electric-400); }
+    .legend-dot.emerald{ background: var(--emerald-400); }
+    .legend-dot.amber  { background: var(--amber-400); }
+
+    /* REMOTE LANDSCAPE BARS */
+    .landscape-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px; margin-bottom: 40px;
+    }
+    .landscape-card {
+      background: rgba(13,20,38,0.7);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 28px 24px;
+      transition: transform .2s, border-color .2s;
+    }
+    .landscape-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.14); }
+    .lc-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .landscape-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .landscape-card p  { font-size: 0.87rem; color: var(--slate-400); line-height: 1.6; }
+    .lc-stat {
+      margin-top: 16px; font-size: 2rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, var(--electric-400), var(--violet-400));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .lc-stat-label { font-size: 0.78rem; color: var(--slate-400); margin-top: 4px; }
+
+    /* APPLICANT RATIO BAR */
+    .ratio-bar-wrap {
+      background: rgba(13,20,38,0.8);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 28px;
+      margin-top: 4px;
+    }
+    .ratio-bar-wrap h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .ratio-bar-wrap p  { font-size: 0.85rem; color: var(--slate-400); line-height: 1.6; margin-bottom: 20px; }
+
+    .comp-row {
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .comp-item { display: flex; flex-direction: column; gap: 6px; }
+    .comp-label {
+      display: flex; justify-content: space-between;
+      font-size: 0.82rem; color: var(--slate-300);
+    }
+    .comp-label span:last-child { font-weight: 700; }
+    .comp-bar-bg {
+      height: 10px; background: rgba(255,255,255,0.06);
+      border-radius: 6px; overflow: hidden;
+    }
+    .comp-bar-fill {
+      height: 100%; border-radius: 6px;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .comp-bar-fill.office  { background: linear-gradient(90deg, var(--slate-400), #64748b); width: 0; }
+    .comp-bar-fill.hybrid  { background: linear-gradient(90deg, var(--amber-400), #f59e0b); width: 0; }
+    .comp-bar-fill.remote  { background: linear-gradient(90deg, var(--electric-400), var(--violet-400)); width: 0; }
+
+    /* SIGNAL TABLE */
+    .signal-table {
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; overflow: hidden;
+      background: rgba(13,20,38,0.8);
+    }
+    .sig-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 90px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .sig-row:last-child { border-bottom: none; }
+    .sig-row.header {
+      background: rgba(255,255,255,0.03);
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--slate-400);
+    }
+    .sig-cell {
+      padding: 16px 20px;
+      font-size: 0.87rem; line-height: 1.5;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    .sig-cell:last-child { border-right: none; }
+    .sig-row.good  { background: rgba(52,211,153,0.03); }
+    .sig-row.bad   { background: rgba(251,113,133,0.03); }
+    .sig-title { font-weight: 600; color: var(--white); margin-bottom: 3px; }
+    .sig-sub   { font-size: 0.78rem; color: var(--slate-400); }
+    .sig-badge {
+      display: inline-flex; align-items: center;
+      font-size: 0.72rem; font-weight: 700; padding: 4px 8px;
+      border-radius: 6px; white-space: nowrap;
+    }
+    .sig-badge.good  { background: rgba(52,211,153,0.12); color: var(--emerald-400); }
+    .sig-badge.okay  { background: rgba(251,191,36,0.12);  color: var(--amber-400); }
+    .sig-badge.avoid { background: rgba(251,113,133,0.12); color: var(--rose-400); }
+
+    /* BEFORE / AFTER */
+    .ba-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    @media (max-width: 600px) { .ba-grid { grid-template-columns: 1fr; } }
+    .ba-panel {
+      border-radius: 14px; padding: 24px; border: 1px solid transparent;
+    }
+    .ba-panel.before { background: rgba(251,113,133,0.05); border-color: rgba(251,113,133,0.15); }
+    .ba-panel.after  { background: rgba(52,211,153,0.05);  border-color: rgba(52,211,153,0.15); }
+    .ba-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .ba-label.red   { color: var(--rose-400); }
+    .ba-label.green { color: var(--emerald-400); }
+    .ba-score {
+      display: inline-block; font-size: 0.78rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 6px; margin-left: 8px;
+    }
+    .ba-score.low  { background: rgba(251,113,133,0.15); color: var(--rose-400); }
+    .ba-score.high { background: rgba(52,211,153,0.15); color: var(--emerald-400); }
+    .ba-bullet { font-size: 0.87rem; color: var(--slate-300); line-height: 1.7; margin-bottom: 10px; }
+    .ba-bullet:last-child { margin-bottom: 0; }
+    .ba-why {
+      margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.78rem; color: rgba(148,163,184,0.7); line-height: 1.5;
+    }
+    .ba-why strong { color: var(--slate-300); }
+
+    /* STEPS */
+    .steps { display: flex; flex-direction: column; gap: 20px; }
+    .step-row {
+      display: flex; gap: 20px; align-items: flex-start;
+      background: rgba(13,20,38,0.6); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px; transition: border-color .2s;
+    }
+    .step-row:hover { border-color: rgba(59,130,246,0.2); }
+    .step-num {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(99,102,241,0.2));
+      border: 1px solid rgba(59,130,246,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; font-weight: 800; color: var(--electric-400);
+    }
+    .step-body h4 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .step-body p  { font-size: 0.88rem; color: var(--slate-400); line-height: 1.6; }
+    .step-badge {
+      margin-top: 8px; display: inline-block;
+      font-size: 0.75rem; font-weight: 600; color: var(--emerald-400);
+      background: rgba(52,211,153,0.1); padding: 3px 9px; border-radius: 6px;
+    }
+
+    /* STAT ROW */
+    .stat-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px; margin-top: 48px;
+    }
+    .stat-box {
+      background: rgba(13,20,38,0.7); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px 20px; text-align: center;
+    }
+    .stat-num {
+      font-size: 2.4rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, var(--electric-400), var(--violet-400));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 8px;
+    }
+    .stat-label { font-size: 0.85rem; color: var(--slate-400); line-height: 1.4; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: rgba(13,20,38,0.7); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px; overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; text-align: left; background: none; border: none;
+      color: var(--white); font-family: 'Inter', sans-serif;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      padding: 20px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq-q:hover { color: var(--electric-400); }
+    .faq-arrow { font-size: 1rem; transition: transform .25s; flex-shrink: 0; }
+    .faq-q[aria-expanded="true"] .faq-arrow { transform: rotate(180deg); }
+    .faq-a {
+      display: none; padding: 0 24px 20px;
+      font-size: 0.88rem; color: var(--slate-400); line-height: 1.7;
+    }
+    .faq-a.open { display: block; }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      position: relative; z-index: 1; text-align: center;
+      padding: 80px 24px;
+      background: linear-gradient(180deg, transparent, rgba(13,20,38,0.6));
+    }
+    .bottom-cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 900;
+      letter-spacing: -0.025em; margin-bottom: 16px;
+      max-width: 620px; margin-left: auto; margin-right: auto;
+    }
+    .bottom-cta p {
+      font-size: 1.05rem; color: var(--slate-400); max-width: 500px;
+      margin: 0 auto 36px; line-height: 1.7;
+    }
+    .bottom-cta-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--electric-500), var(--violet-500));
+      color: var(--white); font-weight: 700; font-size: 1.05rem;
+      padding: 16px 40px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .bottom-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,130,246,0.4); }
+
+    /* SCROLL REVEAL */
+    .reveal-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity .55s, transform .55s; }
+    .reveal-on-scroll.visible { opacity: 1; transform: none; }
+
+    footer {
+      position: relative; z-index: 1; text-align: center;
+      padding: 32px 24px; border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem; color: rgba(148,163,184,0.4);
+    }
+    footer a { color: rgba(148,163,184,0.5); text-decoration: none; }
+    footer a:hover { color: var(--electric-400); }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 60px 20px 50px; }
+      section { padding: 50px 20px; }
+      .sig-row { grid-template-columns: 1fr 1fr; }
+      .sig-cell.impact-col { display: none; }
+      .pill-cloud-body { padding: 20px; }
+      .pill-cloud-header { padding: 16px 20px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Resume for Remote Jobs: The ATS Keywords That Actually Get You Hired",
+        "description": "Remote job applications go through ATS too — and they scan for different keywords. Here's how to make yours match.",
+        "url": "https://shortlistr.us/resume-for-remote-jobs",
+        "author": { "@type": "Organization", "name": "Shortlistr" },
+        "publisher": { "@type": "Organization", "name": "Shortlistr", "url": "https://shortlistr.us" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do remote job postings use different ATS keywords?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Remote job descriptions consistently include terms that rarely appear in on-site postings: asynchronous communication, distributed teams, remote-first, self-directed, time zone coordination, and specific remote collaboration tools like Slack, Notion, Loom, and Zoom. If these terms appear in the JD but not your resume, you'll score lower even if you have the core experience." }
+          },
+          {
+            "@type": "Question",
+            "name": "How competitive are remote job applications?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Extremely. Remote roles open geographically — a posting that would have attracted 50 local applicants can receive 300–500+ applications from anywhere in the country or world. This makes ATS keyword matching even more critical, because more resumes are competing for the same keyword-match threshold." }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the most important keywords for a remote resume?",
+            "acceptedAnswer": { "@type": "Answer", "text": "High-frequency remote job ATS keywords include: asynchronous communication, distributed teams, remote-first, self-directed, autonomous, time zone coordination, virtual collaboration, written communication, remote onboarding, and tools like Slack, Notion, Confluence, Loom, Zoom, Jira, and GitHub. Always check the specific JD — the exact terms used there are what ATS matches against." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I show remote experience if I haven't had a remote job?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Look at what you've actually done: Have you collaborated with colleagues in other offices or time zones? Used Slack, Zoom, or async tools? Managed your own schedule? Documented work in writing rather than verbally? All of these count as remote-relevant experience — you just need to describe them using the vocabulary remote employers are looking for." }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I include a remote work section on my resume?",
+            "acceptedAnswer": { "@type": "Answer", "text": "A dedicated remote work section is usually unnecessary and can look forced. Instead, weave remote-relevant keywords naturally into your existing bullets and your Skills or Tools section. Recruiters expect to see remote experience reflected in how you describe your work, not in a special header for it." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://shortlistr.us" class="logo-link">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="2" width="13" height="17" rx="2" fill="white" fill-opacity="0.9"/>
+          <path d="M13 2L17 6H14C13.4 6 13 5.6 13 5V2Z" fill="white" fill-opacity="0.5"/>
+          <path d="M16 14L18.5 20L20 17.5L22.5 20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">Shortlistr</span>
+    </a>
+    <a href="https://shortlistr.us/app" class="nav-cta">Optimize for Remote →</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">🌐 Remote Job Guide</div>
+    <h1>Resume for Remote Jobs: The ATS Keywords That Actually Get You Hired.</h1>
+    <p>Remote applications go through the same ATS filters as any other job — but they're scanning for an entirely different vocabulary. Here's what to say, where to say it, and why most remote-ready candidates still get filtered out.</p>
+    <a href="https://shortlistr.us/app" class="hero-cta">Optimize My Resume for Remote Work →</a>
+    <p class="hero-sub">No account required · paste any remote job description · instant keyword score</p>
+  </div>
+
+  <!-- KEYWORD PILL CLOUD -->
+  <section>
+    <div class="section-label">Remote ATS Keyword Library</div>
+    <h2>The Keywords Remote Job ATS Systems Are Scanning For</h2>
+    <p class="section-intro">These terms appear across remote job descriptions at high frequency — and many candidates never include them. Filter by category to see which ones are most relevant for your target role, then check how many are missing from your resume.</p>
+
+    <div class="pill-cloud-card reveal-on-scroll">
+      <div class="pill-cloud-header">
+        <div>
+          <h3>Remote ATS keyword cloud</h3>
+          <p>Larger pills = higher frequency across remote JDs. Click a category to filter.</p>
+        </div>
+        <div class="cat-filters">
+          <button class="cat-btn active" data-cat="all" onclick="filterPills('all', this)">All</button>
+          <button class="cat-btn" data-cat="comms"  onclick="filterPills('comms', this)">💬 Communication</button>
+          <button class="cat-btn" data-cat="collab" onclick="filterPills('collab', this)">🤝 Collaboration</button>
+          <button class="cat-btn" data-cat="tools"  onclick="filterPills('tools', this)">🛠️ Tools</button>
+          <button class="cat-btn" data-cat="style"  onclick="filterPills('style', this)">🧠 Work Style</button>
+          <button class="cat-btn" data-cat="output" onclick="filterPills('output', this)">📊 Output</button>
+        </div>
+      </div>
+
+      <div class="pill-cloud-body" id="pillCloud">
+        <!-- Communication -->
+        <span class="kw-pill size-lg" data-cat="comms">asynchronous communication <span class="pill-freq">★★★</span></span>
+        <span class="kw-pill size-lg" data-cat="comms">written communication <span class="pill-freq">★★★</span></span>
+        <span class="kw-pill"         data-cat="comms">async-first</span>
+        <span class="kw-pill size-lg" data-cat="comms">clear written documentation <span class="pill-freq">★★</span></span>
+        <span class="kw-pill"         data-cat="comms">remote communication</span>
+        <span class="kw-pill"         data-cat="comms">virtual meetings</span>
+        <span class="kw-pill size-sm" data-cat="comms">overcommunication</span>
+        <span class="kw-pill"         data-cat="comms">time zone awareness</span>
+        <span class="kw-pill size-sm" data-cat="comms">proactive updates</span>
+
+        <!-- Collaboration -->
+        <span class="kw-pill size-lg" data-cat="collab">distributed teams <span class="pill-freq">★★★</span></span>
+        <span class="kw-pill size-lg" data-cat="collab">cross-functional collaboration <span class="pill-freq">★★★</span></span>
+        <span class="kw-pill"         data-cat="collab">remote-first</span>
+        <span class="kw-pill"         data-cat="collab">global team</span>
+        <span class="kw-pill size-lg" data-cat="collab">virtual collaboration <span class="pill-freq">★★</span></span>
+        <span class="kw-pill size-sm" data-cat="collab">remote onboarding</span>
+        <span class="kw-pill"         data-cat="collab">cross-timezone</span>
+        <span class="kw-pill size-sm" data-cat="collab">distributed environment</span>
+        <span class="kw-pill"         data-cat="collab">hybrid team</span>
+        <span class="kw-pill size-sm" data-cat="collab">co-located</span>
+
+        <!-- Tools -->
+        <span class="kw-pill size-lg" data-cat="tools">Slack <span class="pill-freq">★★★</span></span>
+        <span class="kw-pill size-lg" data-cat="tools">Zoom <span class="pill-freq">★★★</span></span>
+        <span class="kw-pill size-lg" data-cat="tools">Notion <span class="pill-freq">★★</span></span>
+        <span class="kw-pill size-lg" data-cat="tools">Confluence <span class="pill-freq">★★</span></span>
+        <span class="kw-pill"         data-cat="tools">Jira</span>
+        <span class="kw-pill"         data-cat="tools">GitHub</span>
+        <span class="kw-pill size-sm" data-cat="tools">Loom</span>
+        <span class="kw-pill"         data-cat="tools">Linear</span>
+        <span class="kw-pill size-sm" data-cat="tools">Figma</span>
+        <span class="kw-pill size-sm" data-cat="tools">Asana</span>
+        <span class="kw-pill"         data-cat="tools">Miro</span>
+        <span class="kw-pill size-sm" data-cat="tools">Google Workspace</span>
+        <span class="kw-pill size-sm" data-cat="tools">Microsoft Teams</span>
+
+        <!-- Work Style -->
+        <span class="kw-pill size-lg" data-cat="style">self-directed <span class="pill-freq">★★★</span></span>
+        <span class="kw-pill size-lg" data-cat="style">autonomous <span class="pill-freq">★★★</span></span>
+        <span class="kw-pill size-lg" data-cat="style">self-motivated <span class="pill-freq">★★</span></span>
+        <span class="kw-pill"         data-cat="style">independent</span>
+        <span class="kw-pill size-lg" data-cat="style">high ownership <span class="pill-freq">★★</span></span>
+        <span class="kw-pill"         data-cat="style">bias for action</span>
+        <span class="kw-pill size-sm" data-cat="style">flexible schedule</span>
+        <span class="kw-pill"         data-cat="style">ambiguity</span>
+        <span class="kw-pill size-sm" data-cat="style">minimal oversight</span>
+        <span class="kw-pill"         data-cat="style">prioritization</span>
+
+        <!-- Output / Documentation -->
+        <span class="kw-pill size-lg" data-cat="output">documentation <span class="pill-freq">★★★</span></span>
+        <span class="kw-pill size-lg" data-cat="output">results-oriented <span class="pill-freq">★★</span></span>
+        <span class="kw-pill"         data-cat="output">measurable outcomes</span>
+        <span class="kw-pill size-lg" data-cat="output">written process documentation <span class="pill-freq">★★</span></span>
+        <span class="kw-pill"         data-cat="output">deliverables</span>
+        <span class="kw-pill size-sm" data-cat="output">knowledge base</span>
+        <span class="kw-pill"         data-cat="output">SOPs</span>
+        <span class="kw-pill size-sm" data-cat="output">wikis</span>
+        <span class="kw-pill"         data-cat="output">OKRs</span>
+      </div>
+
+      <div class="pill-cloud-footer">
+        <div class="legend-item"><div class="legend-dot cyan"></div> Communication</div>
+        <div class="legend-item"><div class="legend-dot violet"></div> Collaboration</div>
+        <div class="legend-item"><div class="legend-dot blue"></div> Tools</div>
+        <div class="legend-item"><div class="legend-dot emerald"></div> Work Style</div>
+        <div class="legend-item"><div class="legend-dot amber"></div> Output</div>
+        <div class="legend-item" style="margin-left:auto; font-size:0.73rem; color:rgba(148,163,184,0.5)">★★★ = Very high JD frequency</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- COMPETITIVE LANDSCAPE -->
+  <section>
+    <div class="section-label">The Remote Job Landscape</div>
+    <h2>Remote Applications Are 5–10× More Competitive — Here's Why That Changes Everything</h2>
+    <p class="section-intro">A remote posting removes the geographic constraint that limits most job listings. That's good for candidates with flexibility — and brutal for your ATS score, because the competition pool is enormous.</p>
+
+    <div class="landscape-grid">
+      <div class="landscape-card reveal-on-scroll">
+        <div class="lc-icon">📍</div>
+        <h3>On-site posting applicant pool</h3>
+        <p>Constrained by geography, commute radius, and local talent density. Most roles in mid-sized markets draw from a pool of tens of thousands of eligible candidates at most.</p>
+        <div class="lc-stat">~50–150</div>
+        <div class="lc-stat-label">average applicants per on-site posting</div>
+      </div>
+
+      <div class="landscape-card reveal-on-scroll" style="transition-delay:.1s">
+        <div class="lc-icon">🌐</div>
+        <h3>Remote posting applicant pool</h3>
+        <p>Open to every candidate in a country — or globally. No commute friction. Popular remote roles regularly attract candidates from every timezone, dramatically expanding the pool.</p>
+        <div class="lc-stat">300–800+</div>
+        <div class="lc-stat-label">average applicants per remote posting</div>
+      </div>
+
+      <div class="landscape-card reveal-on-scroll" style="transition-delay:.2s">
+        <div class="lc-icon">🤖</div>
+        <h3>What this does to ATS filtering</h3>
+        <p>With 500 applicants, employers tune ATS thresholds higher. A keyword match score of 55% might pass a local search; the same score gets auto-filtered in a remote pool where 200 candidates scored above 70%.</p>
+        <div class="lc-stat">70%+</div>
+        <div class="lc-stat-label">keyword score often needed to reach human review in remote roles</div>
+      </div>
+    </div>
+
+    <div class="ratio-bar-wrap reveal-on-scroll">
+      <h4>Application volume by work type — same role, different reach</h4>
+      <p>Remote opens the spigot. The same qualifications that make you competitive locally may not clear the bar when competing globally — unless your keyword match score is in the top tier.</p>
+      <div class="comp-row">
+        <div class="comp-item">
+          <div class="comp-label"><span>On-site (same metro)</span><span class="comp-count-office">–</span></div>
+          <div class="comp-bar-bg"><div class="comp-bar-fill office" data-width="22"></div></div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-label"><span>Hybrid (regional)</span><span class="comp-count-hybrid">–</span></div>
+          <div class="comp-bar-bg"><div class="comp-bar-fill hybrid" data-width="48"></div></div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-label"><span>Fully remote (national/global)</span><span class="comp-count-remote">–</span></div>
+          <div class="comp-bar-bg"><div class="comp-bar-fill remote" data-width="100"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box reveal-on-scroll">
+        <div class="stat-num">~75%</div>
+        <div class="stat-label">of remote applications are filtered by ATS before any human review</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.1s">
+        <div class="stat-num">6×</div>
+        <div class="stat-label">more applicants on average for equivalent remote vs. on-site roles</div>
+      </div>
+      <div class="stat-box reveal-on-scroll" style="transition-delay:.2s">
+        <div class="stat-num">30s</div>
+        <div class="stat-label">to see your remote keyword score with Shortlistr — before you apply</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SIGNAL WITHOUT OVERSELLING -->
+  <section>
+    <div class="section-label">Remote Readiness Signals</div>
+    <h2>How to Show Remote Readiness Without Overselling It</h2>
+    <p class="section-intro">There's a clear line between signaling remote competence and padding your resume with buzzwords that read as noise. Here's where each approach lands with ATS and with human reviewers.</p>
+
+    <div class="signal-table reveal-on-scroll">
+      <div class="sig-row header">
+        <div class="sig-cell">What you write</div>
+        <div class="sig-cell">Why it works (or doesn't)</div>
+        <div class="sig-cell impact-col">Signal</div>
+      </div>
+
+      <div class="sig-row good">
+        <div class="sig-cell">
+          <div class="sig-title">Named tools in context</div>
+          <div class="sig-sub">"Coordinated sprint planning via Jira and async standups in Slack across 3 time zones"</div>
+        </div>
+        <div class="sig-cell">
+          <div class="sig-sub">Specific tools + remote context = concrete evidence. ATS matches tool names; humans see proof of practice.</div>
+        </div>
+        <div class="sig-cell impact-col"><span class="sig-badge good">✓ Strong</span></div>
+      </div>
+
+      <div class="sig-row good">
+        <div class="sig-cell">
+          <div class="sig-title">Documented outcomes asynchronously</div>
+          <div class="sig-sub">"Maintained Confluence wiki for a distributed team of 12; reduced onboarding time by 40%"</div>
+        </div>
+        <div class="sig-cell">
+          <div class="sig-sub">Documentation keyword + tool + measurable result. Hits async communication, remote readiness, and output signals in one bullet.</div>
+        </div>
+        <div class="sig-cell impact-col"><span class="sig-badge good">✓ Strong</span></div>
+      </div>
+
+      <div class="sig-row good">
+        <div class="sig-cell">
+          <div class="sig-title">Skills section with remote tools listed</div>
+          <div class="sig-sub">Slack · Notion · Zoom · Loom · Linear · GitHub</div>
+        </div>
+        <div class="sig-cell">
+          <div class="sig-sub">ATS keyword-scans this section directly. If the JD mentions Notion and your resume doesn't, you miss that match regardless of experience.</div>
+        </div>
+        <div class="sig-cell impact-col"><span class="sig-badge good">✓ Essential</span></div>
+      </div>
+
+      <div class="sig-row">
+        <div class="sig-cell">
+          <div class="sig-title">Vague self-description</div>
+          <div class="sig-sub">"Excellent communicator with strong remote work experience"</div>
+        </div>
+        <div class="sig-cell">
+          <div class="sig-sub">Claimed without evidence. Human reviewers discount it; ATS may match "remote work" as a keyword but the signal is weak.</div>
+        </div>
+        <div class="sig-cell impact-col"><span class="sig-badge okay">~ Weak</span></div>
+      </div>
+
+      <div class="sig-row">
+        <div class="sig-cell">
+          <div class="sig-title">Dedicated "Remote Work" resume section</div>
+          <div class="sig-sub">A separate header labeled "Remote Experience" listing generic responsibilities</div>
+        </div>
+        <div class="sig-cell">
+          <div class="sig-sub">Looks forced to human reviewers. ATS doesn't care about section naming here. Better to integrate remote signals throughout existing sections.</div>
+        </div>
+        <div class="sig-cell impact-col"><span class="sig-badge okay">~ Skip it</span></div>
+      </div>
+
+      <div class="sig-row bad">
+        <div class="sig-cell">
+          <div class="sig-title">Keyword stuffing without context</div>
+          <div class="sig-sub">"Asynchronous communication, distributed teams, remote-first, self-directed, autonomous" — listed as a block without evidence</div>
+        </div>
+        <div class="sig-cell">
+          <div class="sig-sub">ATS may match keywords but human reviewers see it as filler and discount the rest of the resume. Worse than not including them at all.</div>
+        </div>
+        <div class="sig-cell impact-col"><span class="sig-badge avoid">✗ Avoid</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- BEFORE / AFTER -->
+  <section>
+    <div class="section-label">Before &amp; After</div>
+    <h2>Same Experience. Remote-Optimized Language.</h2>
+    <p class="section-intro">These bullet points describe identical work — just written for a remote-first JD versus a generic one. The difference in ATS keyword match is significant.</p>
+
+    <div class="ba-grid">
+      <div class="ba-panel before reveal-on-scroll">
+        <div class="ba-label red">Generic resume <span class="ba-score low">ATS score ~38%</span></div>
+        <div class="ba-bullet">Worked with the engineering team on product launches</div>
+        <div class="ba-bullet">Managed project timelines and kept stakeholders informed</div>
+        <div class="ba-bullet">Led weekly team meetings and tracked action items</div>
+        <div class="ba-bullet">Created and maintained internal documentation</div>
+        <div class="ba-why">No tool names. No remote context. No async or distributed language. Every keyword in the remote JD lands as a miss.</div>
+      </div>
+      <div class="ba-panel after reveal-on-scroll" style="transition-delay:.1s">
+        <div class="ba-label green">Remote-optimized <span class="ba-score high">ATS score ~81%</span></div>
+        <div class="ba-bullet">Coordinated cross-functional product launches with a distributed engineering team across 3 time zones using Slack and Jira</div>
+        <div class="ba-bullet">Managed project timelines asynchronously; maintained Notion board for stakeholder visibility without requiring synchronous check-ins</div>
+        <div class="ba-bullet">Ran async-first standups via Loom; reduced live meeting load by 60% while improving team-wide alignment</div>
+        <div class="ba-bullet">Built and maintained Confluence knowledge base for remote onboarding; cut ramp time for new hires by 35%</div>
+        <div class="ba-why"><strong>Keywords matched:</strong> distributed teams, cross-functional, async, asynchronous, Slack, Jira, Notion, Loom, Confluence, remote onboarding, documentation — all from real work, none fabricated.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW SHORTLISTR HELPS -->
+  <section>
+    <div class="section-label">How Shortlistr Matches You to Remote JDs</div>
+    <h2>Find the Exact Remote Keywords You're Missing — Before You Apply</h2>
+    <p class="section-intro">Every remote job posting uses slightly different vocabulary. Shortlistr shows you the specific keyword gaps between your resume and any JD — so you know exactly what to add and where.</p>
+
+    <div class="steps">
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Paste the remote job description you're targeting</h4>
+          <p>Copy it from LinkedIn, a company jobs page, or anywhere else. The exact language in that specific posting is what their ATS is matching against — not some generic remote keyword list.</p>
+          <span class="step-badge">10 seconds</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Upload your current resume</h4>
+          <p>Paste or upload your resume as-is. Shortlistr compares it against the JD and calculates your baseline ATS keyword match score — including which remote-specific terms are present and which aren't.</p>
+          <span class="step-badge">10 seconds</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>See which remote keywords you're missing</h4>
+          <p>Shortlistr surfaces the specific terms from the JD that aren't in your resume. For remote roles, this is often async communication, specific collaboration tools, or distributed team language — gaps you can close quickly.</p>
+          <span class="step-badge">Instant</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Add missing keywords naturally into your bullets</h4>
+          <p>You don't need new experience — just better language for what you've already done. Weave the missing terms into existing bullet points where they're accurate, then re-paste and watch your score update.</p>
+          <span class="step-badge">Iterative</span>
+        </div>
+      </div>
+
+      <div class="step-row reveal-on-scroll">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Apply with a score that clears the remote threshold</h4>
+          <p>Remote roles often need 70%+ keyword match to clear ATS and reach a human reviewer. Shortlistr shows you exactly where you stand — and keeps your score updating as you edit.</p>
+          <span class="step-badge">Apply with confidence</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <section>
+    <div class="section-label">Common Questions</div>
+    <h2>Remote Resume FAQ</h2>
+
+    <div class="faq-list">
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Do remote job postings use different ATS keywords?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Yes. Remote job descriptions consistently include terms that rarely appear in on-site postings: asynchronous communication, distributed teams, remote-first, self-directed, time zone coordination, and specific remote collaboration tools like Slack, Notion, Loom, and Zoom. If these terms appear in the JD but not your resume, you'll score lower even if you have the core experience.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          How competitive are remote job applications?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Extremely. Remote roles open geographically — a posting that would have attracted 50 local applicants can receive 300–800+ applications from anywhere in the country or world. This makes ATS keyword matching even more critical, because a larger pool means employers often tune ATS thresholds higher to manage volume.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          What are the most important keywords for a remote resume?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">High-frequency remote job ATS keywords include: asynchronous communication, distributed teams, remote-first, self-directed, autonomous, time zone coordination, virtual collaboration, written communication, remote onboarding, and tools like Slack, Notion, Confluence, Loom, Zoom, Jira, and GitHub. Always check the specific JD — the exact terms used there are what ATS matches against, not a generic list.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          How do I show remote experience if I haven't had a remote job?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Look at what you've actually done: Have you collaborated with colleagues in other offices or time zones? Used Slack, Zoom, or async tools? Managed your own schedule? Documented work in writing rather than verbally? All of these count as remote-relevant experience — you just need to describe them using the vocabulary remote employers are scanning for.</div>
+      </div>
+
+      <div class="faq-item reveal-on-scroll">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Should I include a remote work section on my resume?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">A dedicated remote work section is usually unnecessary and can look forced. Instead, weave remote-relevant keywords naturally into your existing bullets, summary, and Skills/Tools section. Recruiters expect to see remote experience reflected in how you describe your work — not in a special header created for it.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <div class="bottom-cta">
+    <h2>The Remote Job Pool Is Global.<br>Your Keywords Need to Compete.</h2>
+    <p>Shortlistr finds the remote-specific keyword gaps in your resume and shows you exactly what to add — before you apply into a pool of 500.</p>
+    <a href="https://shortlistr.us/app" class="bottom-cta-btn">Optimize My Resume for Remote Work →</a>
+    <p class="hero-sub" style="margin-top:14px">Free · no account · paste any remote job description</p>
+  </div>
+
+  <footer>
+    <p><a href="https://shortlistr.us">← Back to Shortlistr</a> &nbsp;·&nbsp; © 2025 Shortlistr</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal-on-scroll');
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // FAQ
+    function toggleFaq(btn) {
+      const ans = btn.nextElementSibling;
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.classList.remove('open');
+      });
+      if (!open) { btn.setAttribute('aria-expanded', 'true'); ans.classList.add('open'); }
+    }
+
+    // Pill cloud filter
+    function filterPills(cat, btn) {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.kw-pill').forEach(pill => {
+        if (cat === 'all' || pill.dataset.cat === cat) {
+          pill.classList.remove('dimmed');
+        } else {
+          pill.classList.add('dimmed');
+        }
+      });
+    }
+
+    // Animate competition bars on scroll
+    const barObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const fills = e.target.querySelectorAll('.comp-bar-fill');
+          fills.forEach(f => {
+            const w = f.dataset.width;
+            setTimeout(() => { f.style.width = w + '%'; }, 100);
+          });
+          // update labels
+          setTimeout(() => {
+            const el = e.target.querySelector('.comp-count-office');
+            if (el) el.textContent = '~50–150 applicants';
+            const hy = e.target.querySelector('.comp-count-hybrid');
+            if (hy) hy.textContent = '~150–300 applicants';
+            const re = e.target.querySelector('.comp-count-remote');
+            if (re) re.textContent = '300–800+ applicants';
+          }, 200);
+          barObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const barWrap = document.querySelector('.ratio-bar-wrap');
+    if (barWrap) barObs.observe(barWrap);
+  </script>
+</body>
+</html>
