@@ -75,25 +75,27 @@ ${hiringManagerName ? `Hiring Manager: ${hiringManagerName}` : ''}
 
 Generate 3 salary negotiation emails and market analysis.`
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': Deno.env.get('ANTHROPIC_API_KEY') ?? '',
-        'anthropic-version': '2023-06-01',
+        'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY') ?? ''}`,
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
+        model: 'gpt-4o-mini',
         max_tokens: 2500,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: userPrompt }],
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: userPrompt },
+        ],
       }),
     })
 
     const data = await response.json()
-    if (!response.ok) throw new Error(data?.error?.message ?? 'Anthropic API error')
+    if (!response.ok) throw new Error(data?.error?.message ?? 'OpenAI API error')
 
-    const raw = data.content?.[0]?.text ?? '{}'
+    const raw = data.choices?.[0]?.message?.content ?? '{}'
     let parsed
     try {
       parsed = JSON.parse(raw)

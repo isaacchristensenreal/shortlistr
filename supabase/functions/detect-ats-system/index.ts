@@ -44,25 +44,27 @@ Deno.serve(async (req) => {
 
     const userPrompt = `${companyName ? `Company: ${companyName}\n\n` : ''}Job Description:\n${jobDescription.slice(0, 5000)}\n\nIdentify the ATS system.`
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': Deno.env.get('ANTHROPIC_API_KEY') ?? '',
-        'anthropic-version': '2023-06-01',
+        'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY') ?? ''}`,
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
+        model: 'gpt-4o-mini',
         max_tokens: 512,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: userPrompt }],
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: userPrompt },
+        ],
       }),
     })
 
     const data = await response.json()
-    if (!response.ok) throw new Error(data?.error?.message ?? 'Anthropic API error')
+    if (!response.ok) throw new Error(data?.error?.message ?? 'OpenAI API error')
 
-    const raw = data.content?.[0]?.text ?? '{}'
+    const raw = data.choices?.[0]?.message?.content ?? '{}'
     let parsed
     try {
       parsed = JSON.parse(raw)
