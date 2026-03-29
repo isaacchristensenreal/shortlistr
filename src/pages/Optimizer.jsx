@@ -633,11 +633,27 @@ export default function Optimizer() {
   const [loadingMatches, setLoadingMatches] = useState(false)
   const [loadingInterview, setLoadingInterview] = useState(false)
 
-  // Tabs — initialise from ?tab= URL param (e.g. sidebar links)
+  // Tabs — initialise from ?tab= URL param and stay in sync when URL changes
   const [activeTab, setActiveTab] = useState(() => {
     const t = new URLSearchParams(search).get('tab')
     return ['matches', 'interview', 'rejection', 'library'].includes(t) ? t : 'resume'
   })
+
+  // Sync activeTab when sidebar links change the ?tab= param without remounting
+  useEffect(() => {
+    const t = new URLSearchParams(search).get('tab')
+    if (['matches', 'interview', 'rejection', 'library'].includes(t)) {
+      setActiveTab(t)
+    }
+  }, [search])
+
+  // Auto-load job matches when the matches tab becomes active
+  useEffect(() => {
+    if (activeTab === 'matches' && resultData && !jobMatches && !loadingMatches) {
+      handleLoadMatches()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab, resultData])
 
   // Cover letter
   const [coverText, setCoverText] = useState('')
@@ -829,105 +845,166 @@ export default function Optimizer() {
             <div className="lg:col-span-2 space-y-4">
 
               {/* Resume input */}
-              <div className="card-dark p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <label className="text-white/70 text-sm font-semibold">Your Resume</label>
-                  <div className="flex bg-white/5 rounded-lg p-0.5 gap-0.5">
+              <div className="rounded-2xl overflow-hidden" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
+                {/* Card header */}
+                <div className="px-5 pt-5 pb-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: 'rgba(245,200,66,0.12)', color: '#F5C842' }}>1</div>
+                    <span className="text-white font-semibold text-sm">Your Resume</span>
+                  </div>
+                  <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>
                     {['upload', 'paste'].map(m => (
                       <button key={m} onClick={() => setResumeMode(m)}
-                        className={`px-3 py-1 text-xs font-medium rounded-md transition-all capitalize ${resumeMode === m ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white/70'}`}>
+                        className="px-3 py-1.5 text-xs font-medium transition-all"
+                        style={resumeMode === m
+                          ? { background: 'rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.9)' }
+                          : { color: 'rgba(255,255,255,0.35)' }}>
                         {m === 'upload' ? 'Upload PDF' : 'Paste Text'}
                       </button>
                     ))}
                   </div>
                 </div>
-                {resumeMode === 'upload' ? (
-                  <div>
-                    <div
-                      onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}
-                      onClick={() => fileInputRef.current?.click()}
-                      className={`border-2 border-dashed rounded-xl px-4 py-8 text-center cursor-pointer transition-all ${
-                        dragging ? 'border-gold-500 bg-gold-500/5' : pdfName ? 'border-neon-400/40 bg-neon-400/5' : 'border-white/10 hover:border-white/25 hover:bg-white/3'
-                      }`}
-                    >
-                      <input ref={fileInputRef} type="file" accept=".pdf" className="hidden" onChange={e => handleFile(e.target.files?.[0])} />
-                      {pdfParsing ? (
-                        <div className="flex flex-col items-center gap-2">
-                          <div className="w-6 h-6 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
-                          <p className="text-white/40 text-xs">Extracting…</p>
-                        </div>
-                      ) : pdfName ? (
-                        <div className="flex flex-col items-center gap-1">
-                          <svg className="w-8 h-8 text-neon-400 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                          <p className="text-white text-sm font-medium">{pdfName}</p>
-                          <p className="text-neon-400 text-xs">{resumeText.length.toLocaleString()} chars</p>
-                          <button onClick={e => { e.stopPropagation(); setPdfName(null); setResumeText('') }} className="text-xs text-white/30 hover:text-white/60 mt-1">Remove</button>
-                        </div>
-                      ) : (
-                        <div className="flex flex-col items-center gap-2">
-                          <svg className="w-8 h-8 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>
-                          <p className="text-white/50 text-sm">Drop PDF here or click to browse</p>
-                        </div>
-                      )}
+
+                <div className="px-5 pb-5">
+                  {resumeMode === 'upload' ? (
+                    <div>
+                      <div
+                        onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}
+                        onClick={() => fileInputRef.current?.click()}
+                        className="rounded-xl cursor-pointer transition-all text-center"
+                        style={{
+                          border: dragging ? '2px dashed #F5C842' : pdfName ? '2px dashed rgba(0,255,136,0.4)' : '2px dashed rgba(255,255,255,0.08)',
+                          background: dragging ? 'rgba(245,200,66,0.04)' : pdfName ? 'rgba(0,255,136,0.04)' : 'rgba(255,255,255,0.02)',
+                          padding: '28px 20px',
+                        }}
+                      >
+                        <input ref={fileInputRef} type="file" accept=".pdf" className="hidden" onChange={e => handleFile(e.target.files?.[0])} />
+                        {pdfParsing ? (
+                          <div className="flex flex-col items-center gap-2">
+                            <div className="w-7 h-7 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'rgba(245,200,66,0.3)', borderTopColor: '#F5C842' }} />
+                            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Reading your PDF…</p>
+                          </div>
+                        ) : pdfName ? (
+                          <div className="flex flex-col items-center gap-1.5">
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-1" style={{ background: 'rgba(0,255,136,0.1)' }}>
+                              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#00FF88" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            </div>
+                            <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.9)' }}>{pdfName}</p>
+                            <p className="text-xs font-medium" style={{ color: '#00FF88' }}>{resumeText.length.toLocaleString()} characters extracted</p>
+                            <button onClick={e => { e.stopPropagation(); setPdfName(null); setResumeText('') }} className="text-xs mt-1 transition-colors" style={{ color: 'rgba(255,255,255,0.25)' }} onMouseEnter={e => e.target.style.color='rgba(255,68,68,0.7)'} onMouseLeave={e => e.target.style.color='rgba(255,255,255,0.25)'}>Remove file</button>
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center gap-3">
+                            <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.6)' }}>Drop your PDF here</p>
+                              <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.25)' }}>or click to browse files</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      {pdfError && <p className="text-xs mt-2" style={{ color: '#FF4444' }}>{pdfError}</p>}
                     </div>
-                    {pdfError && <p className="text-crimson-400 text-xs mt-1.5">{pdfError}</p>}
-                  </div>
-                ) : (
-                  <textarea rows={10} value={resumeText} onChange={e => setResumeText(e.target.value)}
-                    placeholder="Paste your full resume text here…"
-                    className="w-full bg-white/3 border border-white/8 rounded-xl px-4 py-3 text-white/80 placeholder-white/20 text-sm resize-none focus:outline-none focus:border-gold-500/40 focus:ring-1 focus:ring-gold-500/15 transition-colors" />
-                )}
+                  ) : (
+                    <textarea rows={10} value={resumeText} onChange={e => setResumeText(e.target.value)}
+                      placeholder="Paste your full resume text here — the more detail, the better your score…"
+                      className="w-full resize-none text-sm outline-none transition-all rounded-xl px-4 py-3.5"
+                      style={{
+                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid rgba(255,255,255,0.07)',
+                        color: 'rgba(255,255,255,0.8)',
+                        caretColor: '#F5C842',
+                        lineHeight: '1.65',
+                      }}
+                      onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
+                      onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
+                    />
+                  )}
+                </div>
               </div>
 
               {/* Job description */}
-              <div className="card-dark p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <label className="text-white/70 text-sm font-semibold">Job Description</label>
-                  <div className="flex bg-white/5 rounded-lg p-0.5 gap-0.5">
+              <div className="rounded-2xl overflow-hidden" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
+                <div className="px-5 pt-5 pb-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: 'rgba(245,200,66,0.12)', color: '#F5C842' }}>2</div>
+                    <span className="text-white font-semibold text-sm">Job Description</span>
+                  </div>
+                  <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>
                     {[['url','Paste Link'],['paste','Paste Text']].map(([m, l]) => (
                       <button key={m} onClick={() => setJobMode(m)}
-                        className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${jobMode === m ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white/70'}`}>
+                        className="px-3 py-1.5 text-xs font-medium transition-all"
+                        style={jobMode === m
+                          ? { background: 'rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.9)' }
+                          : { color: 'rgba(255,255,255,0.35)' }}>
                         {l}
                       </button>
                     ))}
                   </div>
                 </div>
-                {jobMode === 'url' ? (
-                  <div className="space-y-2">
-                    <div className="flex gap-2">
-                      <input type="url" value={jobUrl} onChange={e => setJobUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleFetchJob()}
-                        placeholder="https://jobs.company.com/role"
-                        className="flex-1 bg-white/3 border border-white/8 rounded-xl px-4 py-2.5 text-white/80 placeholder-white/20 text-sm focus:outline-none focus:border-gold-500/40 focus:ring-1 focus:ring-gold-500/15 transition-colors" />
-                      <button onClick={handleFetchJob} disabled={!jobUrl.trim() || fetchingJob}
-                        className="px-4 py-2.5 bg-white/8 hover:bg-white/15 disabled:opacity-30 text-white text-sm rounded-xl border border-white/10 transition-colors whitespace-nowrap">
-                        {fetchingJob ? <span className="flex items-center gap-1.5"><span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />Fetching</span> : 'Fetch'}
-                      </button>
+
+                <div className="px-5 pb-5">
+                  {jobMode === 'url' ? (
+                    <div className="space-y-2">
+                      <div className="flex gap-2">
+                        <input type="url" value={jobUrl} onChange={e => setJobUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleFetchJob()}
+                          placeholder="https://jobs.company.com/role"
+                          className="flex-1 text-sm outline-none rounded-xl px-4 py-2.5 transition-all"
+                          style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.8)', caretColor: '#F5C842' }}
+                          onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
+                          onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
+                        />
+                        <button onClick={handleFetchJob} disabled={!jobUrl.trim() || fetchingJob}
+                          className="px-4 py-2.5 text-sm rounded-xl transition-all whitespace-nowrap font-medium disabled:opacity-30"
+                          style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.8)' }}>
+                          {fetchingJob ? <span className="flex items-center gap-1.5"><span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />Fetching</span> : 'Fetch'}
+                        </button>
+                      </div>
+                      {fetchError && <p className="text-xs mt-1" style={{ color: '#FF4444' }}>{fetchError}</p>}
                     </div>
-                    {fetchError && <p className="text-crimson-400 text-xs">{fetchError}</p>}
-                  </div>
-                ) : (
-                  <textarea rows={7} value={jobText} onChange={e => setJobText(e.target.value)}
-                    placeholder="Paste the full job description here…"
-                    className="w-full bg-white/3 border border-white/8 rounded-xl px-4 py-3 text-white/80 placeholder-white/20 text-sm resize-none focus:outline-none focus:border-gold-500/40 focus:ring-1 focus:ring-gold-500/15 transition-colors" />
-                )}
+                  ) : (
+                    <textarea rows={7} value={jobText} onChange={e => setJobText(e.target.value)}
+                      placeholder="Paste the full job description here — title, requirements, responsibilities…"
+                      className="w-full resize-none text-sm outline-none transition-all rounded-xl px-4 py-3.5"
+                      style={{
+                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid rgba(255,255,255,0.07)',
+                        color: 'rgba(255,255,255,0.8)',
+                        caretColor: '#F5C842',
+                        lineHeight: '1.65',
+                      }}
+                      onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
+                      onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
+                    />
+                  )}
+                </div>
               </div>
 
               {/* Scan button */}
               <button
                 onClick={handleScan}
                 disabled={!canSubmit}
-                className="w-full py-3.5 rounded-xl font-bold text-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed gold-glow"
-                style={{ background: canSubmit ? 'linear-gradient(135deg, #F5C842, #d4a017)' : '#1a1a2e', color: canSubmit ? '#0A0A0F' : 'rgba(255,255,255,0.3)' }}
+                className="w-full rounded-2xl font-bold text-sm transition-all disabled:cursor-not-allowed"
+                style={{
+                  padding: '15px 24px',
+                  background: canSubmit ? 'linear-gradient(135deg, #F5C842 0%, #d4a017 100%)' : 'rgba(255,255,255,0.04)',
+                  color: canSubmit ? '#0A0A0F' : 'rgba(255,255,255,0.2)',
+                  border: canSubmit ? 'none' : '1px solid rgba(255,255,255,0.06)',
+                  boxShadow: canSubmit ? '0 0 32px rgba(245,200,66,0.25), 0 4px 12px rgba(0,0,0,0.4)' : 'none',
+                  opacity: !canSubmit ? 0.5 : 1,
+                }}
               >
                 {scanning ? (
                   <span className="flex items-center justify-center gap-2">
-                    <span className="w-4 h-4 border-2 border-midnight/30 border-t-midnight rounded-full animate-spin" />
-                    Analyzing…
+                    <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                    Analyzing your resume…
                   </span>
                 ) : (
-                  <span className="flex items-center justify-center gap-2">
+                  <span className="flex items-center justify-center gap-2.5">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                    See Why You're Getting Rejected
+                    Scan My Resume
                   </span>
                 )}
               </button>
@@ -984,9 +1061,10 @@ export default function Optimizer() {
                           tab.disabled
                             ? 'text-white/15 cursor-not-allowed'
                             : activeTab === tab.id
-                            ? 'bg-gold-500/12 text-gold-500 border border-gold-500/20'
+                            ? 'text-gold-500 border border-gold-500/30'
                             : 'text-white/40 hover:text-white/70 hover:bg-white/5'
                         }`}
+                        style={!tab.disabled && activeTab === tab.id ? { background: 'rgba(245,200,66,0.10)' } : undefined}
                       >
                         {tab.label}
                         {tab.proOnly && !isPro && !tab.disabled && (
