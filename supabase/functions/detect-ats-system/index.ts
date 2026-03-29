@@ -1,0 +1,82 @@
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
+const SYSTEM_PROMPT = `You are an ATS (Applicant Tracking System) expert. Analyze job descriptions and application patterns to identify which ATS platform a company is likely using.
+
+Common ATS platforms: Workday, Greenhouse, Lever, iCIMS, Taleo, BambooHR, SmartRecruiters, Ashby, Jobvite, SuccessFactors.
+
+Return EXACTLY this JSON structure:
+{
+  "confidence": "High" | "Medium" | "Low",
+  "primary": {
+    "name": "ATS Name",
+    "logo_hint": "workday|greenhouse|lever|icims|taleo|bamboohr|smartrecruiters|ashby|generic",
+    "tips": ["specific tip 1 for this ATS", "specific tip 2", "specific tip 3"]
+  },
+  "secondary": null | {
+    "name": "Second most likely ATS",
+    "logo_hint": "...",
+    "tips": ["tip 1", "tip 2"]
+  }
+}
+
+If confidence is High, secondary can be null.
+If confidence is Low or Medium, always provide secondary.
+Tips must be specific to that ATS's known parsing behavior — tables, columns, fonts, sections, file types.
+Return raw JSON only.`
+
+Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
+
+  try {
+    const { jobDescription, companyName } = await req.json()
+
+    if (!jobDescription) {
+      return new Response(JSON.stringify({ error: 'Missing jobDescription' }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
+    const userPrompt = `${companyName ? `Company: ${companyName}\n\n` : ''}Job Description:\n${jobDescription.slice(0, 5000)}\n\nIdentify the ATS system.`
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': Deno.env.get('ANTHROPIC_API_KEY') ?? '',
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 512,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: 'user', content: userPrompt }],
+      }),
+    })
+
+    const data = await response.json()
+    if (!response.ok) throw new Error(data?.error?.message ?? 'Anthropic API error')
+
+    const raw = data.content?.[0]?.text ?? '{}'
+    let parsed
+    try {
+      parsed = JSON.parse(raw)
+    } catch {
+      throw new Error('AI returned invalid JSON')
+    }
+
+    return new Response(JSON.stringify({ result: parsed }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  } catch (err) {
+    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : 'Unknown error' }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+})

@@ -1,0 +1,2 @@
+[functions.predict-interview-questions]
+verify_jwt = false

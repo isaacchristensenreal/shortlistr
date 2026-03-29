@@ -1,0 +1,2 @@
+[functions.detect-ats-system]
+verify_jwt = false

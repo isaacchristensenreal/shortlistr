@@ -1,0 +1,2 @@
+[functions.generate-job-matches]
+verify_jwt = false
