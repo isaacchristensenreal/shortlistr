@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback, lazy, Suspense } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import AppShell from '../components/layout/AppShell'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
@@ -413,6 +413,80 @@ function InterviewPrepTab({ questions, loading, isPro }) {
   )
 }
 
+function LibraryTab({ user }) {
+  const [resumes, setResumes] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!user) return
+    supabase
+      .from('saved_resumes')
+      .select('id, title, ats_score, created_at')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(20)
+      .then(({ data, error }) => {
+        if (!error) setResumes(data ?? [])
+        setLoading(false)
+      })
+  }, [user])
+
+  const formatDate = (ts) => new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  const scoreColor = (s) => s >= 70 ? '#00FF88' : s >= 50 ? '#F59E0B' : '#FF4444'
+
+  if (loading) {
+    return (
+      <div className="space-y-2">
+        {[1, 2, 3, 4].map(i => (
+          <div key={i} className="flex items-center gap-3 p-3 rounded-xl">
+            <div className="skeleton w-10 h-10 rounded-xl shrink-0" />
+            <div className="flex-1 space-y-1.5">
+              <div className="skeleton h-3 w-1/2 rounded" />
+              <div className="skeleton h-2.5 w-1/4 rounded" />
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  if (!resumes.length) {
+    return (
+      <div className="flex flex-col items-center justify-center py-14 text-center">
+        <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-3">
+          <svg className="w-6 h-6 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+          </svg>
+        </div>
+        <p className="text-white/40 text-sm">No saved resumes yet — run a scan to save one</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="divide-y divide-white/5">
+      {resumes.map(r => (
+        <div key={r.id} className="flex items-center gap-3 py-3 px-1">
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 font-black text-xs border"
+            style={r.ats_score !== null ? {
+              background: `${scoreColor(r.ats_score)}10`,
+              borderColor: `${scoreColor(r.ats_score)}25`,
+              color: scoreColor(r.ats_score),
+            } : { background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.3)' }}
+          >
+            {r.ats_score !== null ? r.ats_score : '?'}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-white/80 text-sm font-medium truncate">{r.title || 'Optimized Resume'}</p>
+            <p className="text-white/30 text-xs mt-0.5">{formatDate(r.created_at)}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function JobMatchesTab({ matches, loading, resumeText, onPreFill }) {
   if (loading) {
     return (
@@ -524,6 +598,7 @@ function TransformationCard({ beforeScore, afterScore, resumeName, cardRef }) {
 export default function Optimizer() {
   const { user, profile, canOptimize, optimizationsRemaining } = useAuth()
   const { success, error: toastError, warn } = useToast()
+  const { search } = useLocation()
   const isPro = profile?.tier === 'pro'
 
   // Inputs
@@ -558,8 +633,11 @@ export default function Optimizer() {
   const [loadingMatches, setLoadingMatches] = useState(false)
   const [loadingInterview, setLoadingInterview] = useState(false)
 
-  // Tabs
-  const [activeTab, setActiveTab] = useState('resume')
+  // Tabs — initialise from ?tab= URL param (e.g. sidebar links)
+  const [activeTab, setActiveTab] = useState(() => {
+    const t = new URLSearchParams(search).get('tab')
+    return ['matches', 'interview', 'rejection', 'library'].includes(t) ? t : 'resume'
+  })
 
   // Cover letter
   const [coverText, setCoverText] = useState('')
@@ -714,11 +792,13 @@ export default function Optimizer() {
   const hasJobContent = jobText.trim().length > 0
   const canSubmit = canOptimize && resumeText.trim() && hasJobContent && !scanning
 
+  const hasScan = !!resultData
   const TABS = [
-    { id: 'resume',    label: 'Optimized Resume' },
-    { id: 'rejection', label: 'Rejection Reasons', proOnly: true },
-    { id: 'interview', label: 'Interview Prep',    proOnly: true },
-    { id: 'matches',   label: 'Job Matches' },
+    { id: 'resume',    label: 'Optimized Resume', disabled: false },
+    { id: 'rejection', label: 'Rejection Reasons', proOnly: true, disabled: !hasScan },
+    { id: 'interview', label: 'Interview Prep',    proOnly: true, disabled: !hasScan },
+    { id: 'matches',   label: 'Job Matches',       disabled: !hasScan },
+    { id: 'library',   label: 'Library',           disabled: false },
   ]
 
   return (
@@ -891,22 +971,25 @@ export default function Optimizer() {
                 <div className="card-dark min-h-[520px]">
                   <MultiStepLoader currentStep={scanStep} />
                 </div>
-              ) : resultData ? (
+              ) : (
                 <div className="space-y-4">
-                  {/* Tabs */}
+                  {/* Tabs — always visible */}
                   <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-none">
                     {TABS.map(tab => (
                       <button
                         key={tab.id}
-                        onClick={() => handleTabClick(tab.id)}
+                        onClick={() => !tab.disabled && handleTabClick(tab.id)}
+                        disabled={tab.disabled}
                         className={`px-3 py-2 rounded-xl text-sm font-semibold whitespace-nowrap flex items-center gap-1.5 transition-all ${
-                          activeTab === tab.id
+                          tab.disabled
+                            ? 'text-white/15 cursor-not-allowed'
+                            : activeTab === tab.id
                             ? 'bg-gold-500/12 text-gold-500 border border-gold-500/20'
                             : 'text-white/40 hover:text-white/70 hover:bg-white/5'
                         }`}
                       >
                         {tab.label}
-                        {tab.proOnly && !isPro && (
+                        {tab.proOnly && !isPro && !tab.disabled && (
                           <svg className="w-3 h-3 text-white/25" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                           </svg>
@@ -917,72 +1000,78 @@ export default function Optimizer() {
 
                   {/* Tab panels */}
                   <div className="card-dark p-4 min-h-[500px]">
-                    {activeTab === 'resume' && (
-                      <div className="space-y-4">
-                        <ResumePreview data={resultData} atsScore={atsScore} />
-                        {isPro && (
-                          <div className="border-t border-white/8 pt-4">
-                            <div className="flex items-center justify-between mb-3">
-                              <h3 className="text-white font-semibold text-sm">Cover Letter</h3>
-                              <div className="flex gap-2">
+                    {activeTab === 'library' ? (
+                      <LibraryTab user={user} />
+                    ) : !resultData ? (
+                      <div className="min-h-[460px] flex flex-col items-center justify-center text-center px-8 py-12">
+                        <div className="w-16 h-16 rounded-2xl border border-white/8 bg-white/3 flex items-center justify-center mb-4">
+                          <svg className="w-8 h-8 text-white/15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.25">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                          </svg>
+                        </div>
+                        <p className="text-white/50 font-medium mb-2">Your results will appear here</p>
+                        <p className="text-white/25 text-sm max-w-xs leading-relaxed">
+                          Upload your resume, add a job description, and hit scan to get your Hiring Probability Score with AI-powered insights.
+                        </p>
+                      </div>
+                    ) : (
+                      <>
+                        {activeTab === 'resume' && (
+                          <div className="space-y-4">
+                            <ResumePreview data={resultData} atsScore={atsScore} />
+                            {isPro && (
+                              <div className="border-t border-white/8 pt-4">
+                                <div className="flex items-center justify-between mb-3">
+                                  <h3 className="text-white font-semibold text-sm">Cover Letter</h3>
+                                  <div className="flex gap-2">
+                                    {coverText && (
+                                      <button
+                                        onClick={() => { navigator.clipboard.writeText(coverText); setCoverCopied(true); setTimeout(() => setCoverCopied(false), 2000) }}
+                                        className="px-3 py-1.5 text-xs text-white/60 border border-white/10 rounded-lg hover:border-white/20 hover:text-white transition-all"
+                                      >
+                                        {coverCopied ? 'Copied!' : 'Copy'}
+                                      </button>
+                                    )}
+                                    <button onClick={handleGenerateCover} disabled={generatingCover}
+                                      className="px-3 py-1.5 text-xs bg-electric-500/15 text-electric-400 border border-electric-500/20 rounded-lg hover:bg-electric-500/25 transition-all disabled:opacity-40">
+                                      {generatingCover ? 'Writing…' : coverText ? 'Regenerate' : 'Generate Cover Letter'}
+                                    </button>
+                                  </div>
+                                </div>
                                 {coverText && (
-                                  <button
-                                    onClick={() => { navigator.clipboard.writeText(coverText); setCoverCopied(true); setTimeout(() => setCoverCopied(false), 2000) }}
-                                    className="px-3 py-1.5 text-xs text-white/60 border border-white/10 rounded-lg hover:border-white/20 hover:text-white transition-all"
-                                  >
-                                    {coverCopied ? 'Copied!' : 'Copy'}
-                                  </button>
+                                  <textarea value={coverText} onChange={e => setCoverText(e.target.value)} rows={8}
+                                    className="w-full bg-white/3 border border-white/8 rounded-xl px-4 py-3 text-white/70 text-sm resize-none focus:outline-none focus:border-electric-500/30 transition-colors" />
                                 )}
-                                <button onClick={handleGenerateCover} disabled={generatingCover}
-                                  className="px-3 py-1.5 text-xs bg-electric-500/15 text-electric-400 border border-electric-500/20 rounded-lg hover:bg-electric-500/25 transition-all disabled:opacity-40">
-                                  {generatingCover ? 'Writing…' : coverText ? 'Regenerate' : 'Generate Cover Letter'}
-                                </button>
                               </div>
-                            </div>
-                            {coverText && (
-                              <textarea value={coverText} onChange={e => setCoverText(e.target.value)} rows={8}
-                                className="w-full bg-white/3 border border-white/8 rounded-xl px-4 py-3 text-white/70 text-sm resize-none focus:outline-none focus:border-electric-500/30 transition-colors" />
                             )}
                           </div>
                         )}
-                      </div>
-                    )}
-                    {activeTab === 'rejection' && (
-                      <RejectionReasonsTab
-                        reasons={rejectionData?.reasons}
-                        stage={rejectionData?.stage}
-                        isPro={isPro}
-                        loading={loadingRejection}
-                      />
-                    )}
-                    {activeTab === 'interview' && (
-                      <InterviewPrepTab
-                        questions={interviewQuestions}
-                        loading={loadingInterview}
-                        isPro={isPro}
-                      />
-                    )}
-                    {activeTab === 'matches' && (
-                      <JobMatchesTab
-                        matches={jobMatches}
-                        loading={loadingMatches}
-                        resumeText={resumeText}
-                        onPreFill={handlePreFillRole}
-                      />
+                        {activeTab === 'rejection' && (
+                          <RejectionReasonsTab
+                            reasons={rejectionData?.reasons}
+                            stage={rejectionData?.stage}
+                            isPro={isPro}
+                            loading={loadingRejection}
+                          />
+                        )}
+                        {activeTab === 'interview' && (
+                          <InterviewPrepTab
+                            questions={interviewQuestions}
+                            loading={loadingInterview}
+                            isPro={isPro}
+                          />
+                        )}
+                        {activeTab === 'matches' && (
+                          <JobMatchesTab
+                            matches={jobMatches}
+                            loading={loadingMatches}
+                            resumeText={resumeText}
+                            onPreFill={handlePreFillRole}
+                          />
+                        )}
+                      </>
                     )}
                   </div>
-                </div>
-              ) : (
-                <div className="card-dark min-h-[520px] flex flex-col items-center justify-center text-center px-8 py-12">
-                  <div className="w-16 h-16 rounded-2xl border border-white/8 bg-white/3 flex items-center justify-center mb-4">
-                    <svg className="w-8 h-8 text-white/15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.25">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-                    </svg>
-                  </div>
-                  <p className="text-white/50 font-medium mb-2">Your results will appear here</p>
-                  <p className="text-white/25 text-sm max-w-xs leading-relaxed">
-                    Upload your resume, add a job description, and hit scan to get your Hiring Probability Score with AI-powered insights.
-                  </p>
                 </div>
               )}
             </div>

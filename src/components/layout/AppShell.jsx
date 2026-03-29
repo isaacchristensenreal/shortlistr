@@ -140,8 +140,14 @@ export default function AppShell({ children }) {
   }, [pathname])
 
   const isActive = (item) => {
-    if (item.matchPath) return pathname === item.matchPath
-    return pathname === item.to.split('?')[0]
+    const itemPath = item.to.split('?')[0]
+    const itemTab = new URLSearchParams(item.to.split('?')[1] ?? '').get('tab')
+    if (itemTab) {
+      // Only light up tab-specific items when the tab param actually matches
+      return pathname === itemPath && currentTab === itemTab
+    }
+    if (item.matchPath) return pathname === item.matchPath && !currentTab
+    return pathname === itemPath
   }
 
   const handleSignOut = async () => {
@@ -240,7 +246,12 @@ export default function AppShell({ children }) {
       {/* ── Bottom Tab Bar (mobile) ───────────────────────────────── */}
       <nav className="app-bottom-bar items-center justify-around px-2">
         {BOTTOM_TABS.map(tab => {
-          const active = tab.matchPath ? pathname === tab.matchPath : pathname === tab.to.split('?')[0]
+          const tabParam = new URLSearchParams(tab.to.split('?')[1] ?? '').get('tab')
+          const active = tabParam
+            ? pathname === tab.to.split('?')[0] && currentTab === tabParam
+            : tab.matchPath
+            ? pathname === tab.matchPath && !currentTab
+            : pathname === tab.to.split('?')[0]
           return (
             <Link
               key={tab.to}
