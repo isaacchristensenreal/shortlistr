@@ -39,7 +39,7 @@ export default function Layout({ children }) {
   }, [pathname])
 
   return (
-    <div className="min-h-screen bg-white dark:bg-navy-900 flex flex-col overflow-x-hidden">
+    <div className="min-h-screen flex flex-col overflow-x-hidden" style={{ background: '#0A0A0F' }}>
       <Navbar />
       <main key={pathname} className="flex-1 page-enter">
         {children}

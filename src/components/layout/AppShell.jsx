@@ -23,26 +23,6 @@ const NAV_ITEMS = [
     ),
   },
   {
-    to: '/optimize?tab=matches',
-    label: 'Job Matches',
-    matchPath: '/optimize',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 9m0 8V9m0 0L9 7" />
-      </svg>
-    ),
-  },
-  {
-    to: '/optimize?tab=interview',
-    label: 'Interview Prep',
-    matchPath: '/optimize',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-      </svg>
-    ),
-  },
-  {
     to: '/library',
     label: 'My Library',
     icon: (
@@ -76,8 +56,8 @@ const NAV_ITEMS = [
 const BOTTOM_TABS = [
   { to: '/dashboard', label: 'Home', icon: NAV_ITEMS[0].icon },
   { to: '/optimize', label: 'Scan', icon: NAV_ITEMS[1].icon },
-  { to: '/optimize?tab=matches', label: 'Matches', matchPath: '/optimize', icon: NAV_ITEMS[2].icon },
-  { to: '/optimize?tab=interview', label: 'Interview', matchPath: '/optimize', icon: NAV_ITEMS[3].icon },
+  { to: '/library', label: 'Library', icon: NAV_ITEMS[2].icon },
+  { to: '/salary-negotiator', label: 'Salary', icon: NAV_ITEMS[3].icon },
   { to: '/settings', label: 'Account', icon: (
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
       <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

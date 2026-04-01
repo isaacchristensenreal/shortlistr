@@ -31,26 +31,28 @@ const legalLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-50 dark:bg-navy-900 border-t border-slate-200 dark:border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+    <footer style={{ background: '#0D0D14', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
 
-        {/* Top section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
 
           {/* Brand */}
           <div className="sm:col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-2.5 mb-4">
-              <Logo size={32} />
-              <span className="text-slate-900 dark:text-white font-bold text-lg">ShortListr</span>
+              <Logo size={30} />
+              <span className="font-bold text-lg" style={{ color: 'rgba(255,255,255,0.9)' }}>ShortListr</span>
             </Link>
-            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-xs mb-4">
+            <p className="text-sm leading-relaxed max-w-xs mb-5" style={{ color: 'rgba(255,255,255,0.35)' }}>
               AI-powered resume optimization that beats ATS filters and gets you in front of the humans who matter.
             </p>
             <a
               href="https://www.linkedin.com/in/isaac-christensen-18ba0a3b7"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
+              className="inline-flex items-center gap-2 text-sm transition-colors"
+              style={{ color: 'rgba(255,255,255,0.3)' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#F5C842'}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.3)'}
             >
               <LinkedInIcon />
               Connect on LinkedIn
@@ -59,13 +61,14 @@ export default function Footer() {
 
           {/* Product */}
           <div>
-            <p className="text-slate-900 dark:text-white font-semibold text-sm mb-4">Product</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>Product</p>
             <ul className="space-y-2.5">
               {productLinks.map(l => (
                 <li key={l.to}>
-                  <Link to={l.to} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors text-sm">
-                    {l.label}
-                  </Link>
+                  <Link to={l.to} className="text-sm transition-colors" style={{ color: 'rgba(255,255,255,0.4)' }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
+                  >{l.label}</Link>
                 </li>
               ))}
             </ul>
@@ -73,13 +76,14 @@ export default function Footer() {
 
           {/* Account */}
           <div>
-            <p className="text-slate-900 dark:text-white font-semibold text-sm mb-4">Account</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>Account</p>
             <ul className="space-y-2.5">
               {accountLinks.map(l => (
                 <li key={l.to}>
-                  <Link to={l.to} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors text-sm">
-                    {l.label}
-                  </Link>
+                  <Link to={l.to} className="text-sm transition-colors" style={{ color: 'rgba(255,255,255,0.4)' }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
+                  >{l.label}</Link>
                 </li>
               ))}
             </ul>
@@ -87,13 +91,14 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <p className="text-slate-900 dark:text-white font-semibold text-sm mb-4">Legal</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>Legal</p>
             <ul className="space-y-2.5">
               {legalLinks.map(l => (
                 <li key={l.to}>
-                  <Link to={l.to} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors text-sm">
-                    {l.label}
-                  </Link>
+                  <Link to={l.to} className="text-sm transition-colors" style={{ color: 'rgba(255,255,255,0.4)' }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
+                  >{l.label}</Link>
                 </li>
               ))}
             </ul>
@@ -102,18 +107,20 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-slate-200 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-slate-400 text-sm">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.2)' }}>
             &copy; {new Date().getFullYear()} ShortListr. All rights reserved.
           </p>
-          <div className="flex items-center gap-1.5 text-slate-400 text-xs">
+          <div className="flex items-center gap-1.5 text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
             <span>Built by Isaac Christensen</span>
             <span>·</span>
             <a
               href="https://www.linkedin.com/in/isaac-christensen-18ba0a3b7"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 hover:text-blue-500 transition-colors"
+              className="flex items-center gap-1 transition-colors"
+              onMouseEnter={e => e.currentTarget.style.color = '#F5C842'}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.2)'}
             >
               <LinkedInIcon />
               LinkedIn
