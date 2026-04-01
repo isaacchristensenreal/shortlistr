@@ -31,11 +31,11 @@ const PRO_FEATURES = [
 ]
 
 const SALARY_FEATURES = [
-  { label: '3 email styles (Aggressive, Balanced, Soft)', yes: true },
-  { label: 'Market rate analysis', yes: true },
-  { label: 'Personalized to your situation', yes: true },
-  { label: 'Unlimited regenerations', yes: true },
-  { label: 'Permanently unlocked on your account', yes: true },
+  { label: '3 ready-to-send negotiation emails', yes: true },
+  { label: 'Aggressive, Balanced & Soft styles', yes: true },
+  { label: 'Market rate analysis for your role', yes: true },
+  { label: 'Uses your name, company & competing offer', yes: true },
+  { label: 'Unlimited regenerations, forever', yes: true },
 ]
 
 const FAQS = [
@@ -167,16 +167,38 @@ export default function Pricing() {
               </button>
             </div>
 
-            {/* Salary Add-on */}
-            <div className="rounded-2xl p-6 flex flex-col border" style={{ background: '#13131A', borderColor: '#1E1E2E' }}>
-              <div className="mb-5">
-                <p className="text-electric-400 text-xs font-bold uppercase tracking-wider mb-2">Salary Add-On</p>
+            {/* Salary Negotiation Add-on */}
+            <div className="rounded-2xl p-6 flex flex-col relative overflow-hidden" style={{ background: '#13131A', border: '1px solid rgba(0,255,136,0.15)' }}>
+              <div className="absolute top-4 right-4">
+                <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full" style={{ background: 'rgba(0,255,136,0.12)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.2)' }}>One-Time</span>
+              </div>
+              <div className="mb-2">
+                <p className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: '#00FF88' }}>Salary Negotiation</p>
                 <div className="flex items-baseline gap-1 mb-1">
                   <span className="text-white font-black text-4xl">$4.99</span>
-                  <span className="text-white/30 text-sm">one-time</span>
+                  <span className="text-white/30 text-sm">forever</span>
                 </div>
-                <p className="text-white/40 text-sm">Permanently unlocked</p>
+                <p className="text-white/40 text-sm leading-snug">
+                  Get the exact salary you deserve — stop guessing and start negotiating with confidence.
+                </p>
               </div>
+
+              {/* Mini preview of what you get */}
+              <div className="my-4 rounded-xl p-3 space-y-1.5" style={{ background: 'rgba(0,255,136,0.04)', border: '1px solid rgba(0,255,136,0.1)' }}>
+                <p className="text-xs font-semibold mb-2" style={{ color: 'rgba(255,255,255,0.35)' }}>You get 3 personalized emails:</p>
+                {[
+                  { label: 'Aggressive', desc: 'Anchor high, use leverage' },
+                  { label: 'Balanced', desc: 'Professional & firm' },
+                  { label: 'Soft Ask', desc: 'Easy to say yes to' },
+                ].map(e => (
+                  <div key={e.label} className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: '#00FF88' }} />
+                    <span className="text-xs font-semibold text-white/70">{e.label}</span>
+                    <span className="text-xs text-white/30">— {e.desc}</span>
+                  </div>
+                ))}
+              </div>
+
               <ul className="space-y-2.5 mb-8 flex-1">
                 {SALARY_FEATURES.map(f => (
                   <li key={f.label} className="flex items-center gap-2.5">
@@ -187,13 +209,18 @@ export default function Pricing() {
               </ul>
               {user ? (
                 <Link to="/salary-negotiator"
-                  className="w-full py-3 rounded-xl border border-electric-500/30 bg-electric-500/8 text-electric-400 font-semibold text-sm text-center hover:bg-electric-500/15 transition-all block">
-                  Get Salary Tool →
+                  className="w-full py-3 rounded-xl font-bold text-sm text-center transition-all block"
+                  style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.25)' }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(0,255,136,0.17)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(0,255,136,0.1)'}
+                >
+                  Unlock Salary Negotiation →
                 </Link>
               ) : (
                 <button onClick={() => navigate('/auth?mode=signup')}
-                  className="w-full py-3 rounded-xl border border-electric-500/30 bg-electric-500/8 text-electric-400 font-semibold text-sm hover:bg-electric-500/15 transition-all">
-                  Get Started Free First
+                  className="w-full py-3 rounded-xl font-bold text-sm transition-all"
+                  style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.25)' }}>
+                  Create Free Account First
                 </button>
               )}
             </div>
