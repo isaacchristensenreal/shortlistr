@@ -41,6 +41,7 @@ const SALARY_FEATURES = [
 const FAQS = [
   { q: 'Can I cancel Pro anytime?', a: 'Yes. Cancel from Settings at any time. You keep Pro access through the end of your billing period.' },
   { q: 'What counts as one scan?', a: 'Each time you submit a resume + job description pair for AI analysis, that counts as one scan.' },
+  { q: 'What\'s the difference between Monthly and Lifetime?', a: 'Monthly is $29/mo and you can cancel anytime. Lifetime is a one-time $149 payment — same features, no recurring charges, forever.' },
   { q: 'Is the salary negotiator a separate purchase?', a: 'Yes — it\'s a one-time $4.99 add-on that permanently unlocks on your account, separate from the Pro subscription.' },
   { q: 'Is my resume data private?', a: 'Your resumes are stored securely and are never shared with third parties or used to train AI models.' },
   { q: 'Do I need Pro to use the salary negotiator?', a: 'No — the salary negotiator is a standalone add-on available to any user regardless of plan.' },
@@ -68,6 +69,7 @@ export default function Pricing() {
   const isPro = profile?.tier === 'pro'
   const [loading, setLoading] = useState(false)
   const [checkoutError, setCheckoutError] = useState(null)
+  const [billing, setBilling] = useState('monthly') // 'monthly' | 'lifetime'
 
   useEffect(() => {
     if (isPro) navigate('/dashboard', { replace: true })
@@ -96,16 +98,39 @@ export default function Pricing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
 
           {/* Hero */}
-          <div className="text-center mb-14">
+          <div className="text-center mb-10">
             <h1 className="text-3xl sm:text-5xl font-black text-white mb-4 tracking-tight leading-tight">
               Stop Getting Rejected.<br />
               <span style={{ background: 'linear-gradient(135deg, #F5C842, #fde68a)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
                 Start Getting Interviews.
               </span>
             </h1>
-            <p className="text-white/50 text-lg max-w-xl mx-auto">
+            <p className="text-white/50 text-lg max-w-xl mx-auto mb-8">
               Start free. Upgrade when you're ready for the full job search intelligence platform.
             </p>
+
+            {/* Billing toggle */}
+            <div className="inline-flex items-center rounded-xl p-1 gap-1" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <button
+                onClick={() => setBilling('monthly')}
+                className="px-5 py-2 rounded-lg text-sm font-semibold transition-all"
+                style={billing === 'monthly'
+                  ? { background: '#13131A', color: 'rgba(255,255,255,0.9)', boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }
+                  : { color: 'rgba(255,255,255,0.35)' }}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setBilling('lifetime')}
+                className="px-5 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2"
+                style={billing === 'lifetime'
+                  ? { background: '#13131A', color: 'rgba(255,255,255,0.9)', boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }
+                  : { color: 'rgba(255,255,255,0.35)' }}
+              >
+                Lifetime
+                <span className="text-[10px] font-black px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(0,255,136,0.15)', color: '#00FF88' }}>SAVE 57%</span>
+              </button>
+            </div>
           </div>
 
           {/* Pricing cards */}
@@ -143,11 +168,23 @@ export default function Pricing() {
               </div>
               <div className="mb-5">
                 <p className="text-gold-500 text-xs font-bold uppercase tracking-wider mb-2">Pro</p>
-                <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-white font-black text-4xl">$10</span>
-                  <span className="text-white/30 text-sm">/month</span>
-                </div>
-                <p className="text-white/40 text-sm">For active job seekers</p>
+                {billing === 'monthly' ? (
+                  <div>
+                    <div className="flex items-baseline gap-1 mb-1">
+                      <span className="text-white font-black text-4xl">$29</span>
+                      <span className="text-white/30 text-sm">/month</span>
+                    </div>
+                    <p className="text-white/40 text-sm">Cancel anytime</p>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex items-baseline gap-1 mb-0.5">
+                      <span className="text-white font-black text-4xl">$149</span>
+                      <span className="text-white/30 text-sm">once</span>
+                    </div>
+                    <p className="text-sm" style={{ color: '#00FF88' }}>Pay once, use forever</p>
+                  </div>
+                )}
               </div>
               <ul className="space-y-2.5 mb-8 flex-1">
                 {PRO_FEATURES.map(f => (
@@ -163,7 +200,9 @@ export default function Pricing() {
                 style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F' }}>
                 {loading ? (
                   <span className="flex items-center justify-center gap-2"><span className="w-4 h-4 border-2 border-midnight/30 border-t-midnight rounded-full animate-spin" />Redirecting…</span>
-                ) : isPro ? 'You\'re on Pro ✓' : !user ? 'Start Pro — $10/mo' : 'Upgrade to Pro — $10/mo'}
+                ) : isPro ? 'You\'re on Pro ✓' : !user
+                  ? (billing === 'monthly' ? 'Start Pro — $29/mo' : 'Get Lifetime Access — $149')
+                  : (billing === 'monthly' ? 'Upgrade to Pro — $29/mo' : 'Get Lifetime Access — $149')}
               </button>
             </div>
 

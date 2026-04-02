@@ -68,7 +68,7 @@ export default function Paywall({ onDismiss }) {
               <p className="text-slate-500 dark:text-slate-400 text-sm">Everything, unlimited.</p>
             </div>
             <div className="text-right">
-              <span className="text-3xl font-bold text-slate-900 dark:text-white">$10</span>
+              <span className="text-3xl font-bold text-slate-900 dark:text-white">$29</span>
               <span className="text-slate-400 text-sm"> /month</span>
             </div>
           </div>
@@ -99,7 +99,7 @@ export default function Paywall({ onDismiss }) {
                 Redirecting to checkout…
               </span>
             ) : (
-              'Upgrade to Pro — $10/mo'
+              'Upgrade to Pro — $29/mo'
             )}
           </Button>
 

@@ -268,7 +268,7 @@ export default function Settings() {
               <Section title="Subscription" description="Manage your Pro subscription.">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-slate-700 dark:text-slate-300 font-medium">Pro Plan — $10/month</p>
+                    <p className="text-sm text-slate-700 dark:text-slate-300 font-medium">Pro Plan — $29/month</p>
                     <p className="text-xs text-slate-400 mt-0.5">Unlimited optimizations, cover letter generation, full library access.</p>
                   </div>
                   <div className="flex flex-col items-end gap-1.5">

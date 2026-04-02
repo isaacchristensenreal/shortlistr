@@ -212,7 +212,7 @@ const tiers = [
   },
   {
     name: 'Pro',
-    price: '$10',
+    price: '$29',
     period: 'per month',
     description: 'For serious job seekers.',
     features: ['Unlimited optimizations', 'Full ATS keyword matching', 'AI bullet rewriting', 'Cover letter generation', 'Unlimited version history', 'Priority support'],

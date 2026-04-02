@@ -96,7 +96,7 @@ export default function Dashboard() {
               label="Plan"
               icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
               value={isPro ? 'Pro' : 'Free'}
-              sub={isPro ? '$10/month · All features' : '3 scans per month'}
+              sub={isPro ? 'Pro · All features' : '3 scans per month'}
               accent={isPro ? '#00FF88' : '#94a3b8'}
             />
             <StatCard
@@ -166,7 +166,7 @@ export default function Dashboard() {
                 <div className="shrink-0 flex flex-col items-start sm:items-end gap-2">
                   {upgradeError && <p className="text-crimson-400 text-xs">{upgradeError}</p>}
                   <div className="flex items-baseline gap-1">
-                    <span className="text-white font-black text-3xl">$10</span>
+                    <span className="text-white font-black text-3xl">$29</span>
                     <span className="text-white/30 text-sm">/mo</span>
                   </div>
                   <button
