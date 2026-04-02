@@ -27,7 +27,6 @@ serve(async (req) => {
 
     const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' })
 
-    // Read raw body for signature verification
     const body = await req.text()
     const sig = req.headers.get('stripe-signature') ?? ''
 
@@ -42,7 +41,8 @@ serve(async (req) => {
       })
     }
 
-    const setTier = async (userId: string, tier: string) => {
+    // Helper: patch a user's profile
+    const patchProfile = async (userId: string, fields: Record<string, unknown>) => {
       const res = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}`, {
         method: 'PATCH',
         headers: {
@@ -51,39 +51,72 @@ serve(async (req) => {
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal',
         },
-        body: JSON.stringify({ tier }),
+        body: JSON.stringify(fields),
       })
       if (!res.ok) {
         const text = await res.text()
-        console.error(`Failed to set tier=${tier} for user ${userId}: ${text}`)
+        console.error(`Failed to patch profile for user ${userId}: ${text}`)
       }
     }
 
     switch (event.type) {
+
       case 'checkout.session.completed': {
-        // User completed Stripe checkout — upgrade their profile to Pro
         const session = event.data.object as Stripe.Checkout.Session
-        if (session.payment_status === 'paid' && session.client_reference_id) {
-          await setTier(session.client_reference_id, 'pro')
-          console.log(`Upgraded user ${session.client_reference_id} to pro`)
+        if (session.payment_status !== 'paid') break
+
+        const userId = session.client_reference_id
+        const purchaseType = session.metadata?.purchase_type
+
+        if (!userId) {
+          console.error('checkout.session.completed: missing client_reference_id')
+          break
+        }
+
+        if (purchaseType === 'salary_addon') {
+          // One-time salary negotiation add-on
+          await patchProfile(userId, { salary_negotiator_unlocked: true })
+          console.log(`Unlocked salary negotiator for user ${userId}`)
+        } else if (purchaseType === 'pro_lifetime') {
+          // One-time lifetime Pro purchase — set tier AND mark as lifetime so
+          // a future subscription cancellation doesn't downgrade them
+          await patchProfile(userId, { tier: 'pro', is_lifetime_pro: true })
+          console.log(`Granted lifetime Pro to user ${userId}`)
+        } else {
+          // pro_monthly or legacy sessions without metadata
+          await patchProfile(userId, { tier: 'pro' })
+          console.log(`Upgraded user ${userId} to Pro (monthly)`)
         }
         break
       }
 
       case 'customer.subscription.deleted': {
-        // Subscription has fully ended (fires when cancel_at_period_end period is over)
-        // Downgrade the user back to free
+        // Subscription cancelled and period ended — downgrade to free,
+        // but only if the user is NOT a lifetime Pro member
         const subscription = event.data.object as Stripe.Subscription
         const userId = subscription.metadata?.supabase_uid
-        if (userId) {
-          await setTier(userId, 'free')
+        if (!userId) break
+
+        // Fetch current profile to check lifetime status
+        const profileRes = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}&select=is_lifetime_pro`, {
+          headers: {
+            'Authorization': `Bearer ${serviceRoleKey}`,
+            'apikey': serviceRoleKey,
+          },
+        })
+        const profiles = await profileRes.json()
+        const isLifetime = profiles?.[0]?.is_lifetime_pro === true
+
+        if (!isLifetime) {
+          await patchProfile(userId, { tier: 'free' })
           console.log(`Downgraded user ${userId} to free (subscription ended)`)
+        } else {
+          console.log(`Skipped downgrade for lifetime user ${userId}`)
         }
         break
       }
 
       default:
-        // Other events (payment_intent.succeeded, etc.) — no action needed
         break
     }
 

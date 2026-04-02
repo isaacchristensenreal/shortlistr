@@ -81,7 +81,7 @@ export default function Pricing() {
     setLoading(true)
     setCheckoutError(null)
     try {
-      await startCheckout(user.id, user.email)
+      await startCheckout(user.id, user.email, billing)
     } catch {
       setCheckoutError('Could not start checkout. Please try again.')
       setLoading(false)

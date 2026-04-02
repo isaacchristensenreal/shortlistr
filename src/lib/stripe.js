@@ -1,16 +1,12 @@
 import { supabase } from './supabase'
 
 /**
- * Initiates a Stripe Checkout session for the Pro plan.
- * Calls the Supabase Edge Function which creates the session server-side,
- * then redirects the browser to Stripe's hosted checkout page.
- *
- * On success: Stripe redirects to /upgrade/success
- * On cancel:  Stripe redirects to /pricing
+ * Initiates a Stripe Checkout session.
+ * billing: 'monthly' (subscription $29/mo) | 'lifetime' (one-time $149)
  */
-export async function startCheckout(userId, userEmail) {
+export async function startCheckout(userId, userEmail, billing = 'monthly') {
   const { data, error } = await supabase.functions.invoke('stripe-checkout', {
-    body: { userId, userEmail },
+    body: { userId, userEmail, billing },
   })
 
   if (error) throw new Error(error.message)
@@ -20,6 +16,5 @@ export async function startCheckout(userId, userEmail) {
   if (data?.error) throw new Error(data.error)
   if (!data?.url) throw new Error('No checkout URL returned')
 
-  // Redirect to Stripe's hosted checkout page (external URL — must use location, not router)
   window.location.href = data.url
 }
