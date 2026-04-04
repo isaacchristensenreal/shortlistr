@@ -1,12 +1,6 @@
 {
   "cleanUrls": true,
   "redirects": [
-    {
-      "source": "/(.*)",
-      "has": [{ "type": "host", "value": "www.shortlistr.us" }],
-      "destination": "https://shortlistr.us/$1",
-      "statusCode": 301
-    },
     { "source": "/no-experience-resume", "destination": "/features", "statusCode": 301 },
     { "source": "/overqualified-resume", "destination": "/features", "statusCode": 301 },
     { "source": "/resume-ats-test", "destination": "/features", "statusCode": 301 },
