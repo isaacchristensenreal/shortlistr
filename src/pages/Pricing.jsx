@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import Layout from '../components/layout/Layout'
 import { useAuth } from '../context/AuthContext'
 import { startCheckout } from '../lib/stripe'
@@ -131,6 +132,14 @@ export default function Pricing() {
 
   return (
     <Layout>
+      <Helmet>
+        <title>ShortListr Pricing — $10/month for Unlimited AI Resume Optimization</title>
+        <meta name="description" content="ShortListr Pro is $10/month or $149 once for lifetime access. Unlimited ATS resume optimization, AI bullet rewrites, cover letter generation, and more. Less than a Spotify subscription." />
+        <link rel="canonical" href="https://shortlistr.us/pricing" />
+        <meta property="og:url" content="https://shortlistr.us/pricing" />
+        <meta property="og:title" content="ShortListr Pricing — $10/month for Unlimited AI Resume Optimization" />
+        <meta property="og:description" content="Unlimited ATS optimization, AI bullet rewrites, and cover letter generation for $10/month. Or pay once with lifetime access for $149." />
+      </Helmet>
       <div style={{ background: '#0A0A0F' }}>
 
         {/* ── HERO ── */}

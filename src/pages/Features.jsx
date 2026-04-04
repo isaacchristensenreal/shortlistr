@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import Layout from '../components/layout/Layout'
 import { useAuth } from '../context/AuthContext'
 
@@ -438,6 +439,14 @@ export default function Features() {
 
   return (
     <Layout>
+      <Helmet>
+        <title>ShortListr Features — ATS Optimizer, AI Bullet Rewriter & Cover Letter Generator</title>
+        <meta name="description" content="See every tool ShortListr offers: ATS keyword scoring, AI bullet point rewriting, cover letter generation, rejection reason reports, and before/after scorecards. Beat ATS filters and get more interviews." />
+        <link rel="canonical" href="https://shortlistr.us/features" />
+        <meta property="og:url" content="https://shortlistr.us/features" />
+        <meta property="og:title" content="ShortListr Features — ATS Optimizer, AI Bullet Rewriter & Cover Letter Generator" />
+        <meta property="og:description" content="Every tool you need to stop getting rejected and start getting interviews. ATS scoring, AI rewrites, cover letters, and more." />
+      </Helmet>
 
       {/* ── HERO ── */}
       <section style={{ background: '#0A0A0F', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>

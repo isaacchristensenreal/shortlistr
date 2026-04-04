@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
@@ -27,6 +28,7 @@ import SalaryNegotiator from './pages/SalaryNegotiator'
 
 export default function App() {
   return (
+    <HelmetProvider>
     <ThemeProvider>
       <BrowserRouter>
         <AuthProvider>
@@ -63,5 +65,6 @@ export default function App() {
         </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>
+    </HelmetProvider>
   )
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
 import Layout from '../components/layout/Layout'
 import { useAuth } from '../context/AuthContext'
 
@@ -216,6 +217,14 @@ export default function Home() {
 
   return (
     <Layout>
+      <Helmet>
+        <title>ShortListr — AI Resume Optimizer | Beat ATS & Get More Interviews</title>
+        <meta name="description" content="Your resume is getting deleted before a human ever sees it. ShortListr uses AI to optimize your resume for ATS in 90 seconds. Free to start — no credit card required." />
+        <link rel="canonical" href="https://shortlistr.us/" />
+        <meta property="og:url" content="https://shortlistr.us/" />
+        <meta property="og:title" content="ShortListr — AI Resume Optimizer | Beat ATS & Get More Interviews" />
+        <meta property="og:description" content="Your resume is getting deleted before a human ever sees it. Fix it in 90 seconds with ShortListr's AI-powered ATS optimizer." />
+      </Helmet>
       {/* ── Sticky mobile CTA ── */}
       <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden px-4 pb-4 pt-3"
         style={{ background: 'linear-gradient(to top, #0A0A0F 60%, transparent)', pointerEvents: 'none' }}>
