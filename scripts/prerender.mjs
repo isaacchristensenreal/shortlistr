@@ -1,6 +1,6 @@
 /**
  * Post-build prerender script
- * Copies dist/index.html to dist/<route>/index.html for each public route,
+ * Copies dist/index.html to dist/<route>.html for each public route,
  * injecting the correct page title, meta description, and canonical URL.
  * This lets Google index each page without JavaScript execution.
  */
@@ -115,9 +115,10 @@ for (const page of pages) {
     `<meta property="og:description" content="${page.description}"`
   )
 
-  const dir = path.join(distDir, page.route)
-  fs.mkdirSync(dir, { recursive: true })
-  fs.writeFileSync(path.join(dir, 'index.html'), html)
+  // Write as a flat .html file (cleanUrls:true serves /features.html at /features)
+  // This avoids the trailingSlash redirect loop that directories cause
+  const filePath = path.join(distDir, `${page.route}.html`)
+  fs.writeFileSync(filePath, html)
   console.log(`✓ Pre-rendered ${page.route}`)
 }
 
