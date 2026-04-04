@@ -164,21 +164,24 @@ export default function Auth() {
   const [focusedField, setFocusedField] = useState(null)
   const [showPassword, setShowPassword] = useState(false)
 
-  const { signIn, signUp, signInWithProvider, user } = useAuth()
+  const { signIn, signUp, signInWithProvider, user, profile } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
     if (!user) return
+    const isPro = profile?.tier === 'pro'
     const ageMs = Date.now() - new Date(user.created_at).getTime()
     const isNewAccount = ageMs < 5 * 60 * 1000
     const hasOnboarded = localStorage.getItem(`sl_onboarded_${user.id}`)
-    if (isNewAccount && !hasOnboarded) {
+    if (!isPro) {
+      navigate('/pricing', { replace: true })
+    } else if (isNewAccount && !hasOnboarded) {
       navigate('/welcome', { replace: true })
     } else {
       if (!hasOnboarded) localStorage.setItem(`sl_onboarded_${user.id}`, '1')
       navigate('/dashboard', { replace: true })
     }
-  }, [user, navigate])
+  }, [user, profile, navigate])
 
   const switchMode = () => {
     if (phase !== 'idle') return
@@ -318,7 +321,7 @@ export default function Auth() {
                 style={{ opacity: isSignup ? 1 : 0, transform: isSignup ? 'translateY(0)' : 'translateY(10px)', position: isSignup ? 'relative' : 'absolute', pointerEvents: isSignup ? 'auto' : 'none', top: 0 }}>
                 <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-400 bg-violet-500/10 border border-violet-500/20 px-3 py-1 rounded-full mb-4">
                   <span className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-pulse" />
-                  Free to start
+                  Join ShortListr
                 </span>
                 <h2 className="text-2xl sm:text-4xl font-bold text-white leading-tight mt-4 mb-4">
                   Your resume,<br />
@@ -421,7 +424,7 @@ export default function Auth() {
                       </h1>
                       <p className="text-slate-400 dark:text-slate-500 text-sm">
                         {isSignup
-                          ? 'Start optimizing your resume for free — no credit card needed.'
+                          ? 'Create your account to get started.'
                           : 'Sign in to continue to your dashboard.'}
                       </p>
                     </div>
@@ -547,7 +550,7 @@ export default function Auth() {
                             <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                             Please wait…
                           </span>
-                        ) : isSignup ? 'Create Free Account' : 'Sign In'}
+                        ) : isSignup ? 'Create Account' : 'Sign In'}
                       </button>
                     </FadeItem>
                   </form>

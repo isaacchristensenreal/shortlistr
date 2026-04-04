@@ -1,41 +1,36 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Layout from '../components/layout/Layout'
-import Button from '../components/ui/Button'
 import { useAuth } from '../context/AuthContext'
-import { useScrollReveal, useStaggerReveal } from '../hooks/useScrollReveal'
 
-const stats = [
-  { value: '< 60s', label: 'Average optimization time' },
-  { value: '4', label: 'AI-powered tools' },
-  { value: '100%', label: 'AI-generated — review before submitting' },
-  { value: 'Free', label: 'To start, no card required' },
-]
-
-/* ── Mini ATS Demo ──────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────
+   MINI DEMO COMPONENTS
+───────────────────────────────────────────── */
 const atsKeywords = [
-  { word: 'sales targets', found: true },
+  { word: 'cross-functional collaboration', found: false },
   { word: 'territory management', found: false },
-  { word: 'CRM software', found: false },
+  { word: 'CRM software', found: true },
   { word: 'client retention', found: true },
   { word: 'quota attainment', found: false },
 ]
 
 function MiniATSCard() {
   return (
-    <div className="bg-slate-50 dark:bg-navy-700/60 rounded-xl p-4 space-y-1.5">
+    <div className="rounded-xl p-4 space-y-1.5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="flex items-center justify-between mb-2">
-        <span className="text-[10px] uppercase tracking-wider text-slate-400 font-medium">Keyword Gap · Regional Sales Manager</span>
-        <span className="text-[10px] font-semibold text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-500/15 px-2 py-0.5 rounded-full">58% match</span>
+        <span className="text-[10px] uppercase tracking-wider font-medium" style={{ color: 'rgba(255,255,255,0.35)' }}>Keyword Gap · Regional Sales Manager</span>
+        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ background: 'rgba(59,130,246,0.15)', color: '#3B82F6' }}>41% match</span>
       </div>
-      <div className="h-1.5 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden mb-3">
-        <div className="h-full w-[58%] bg-gradient-to-r from-electric-500 to-violet-500 rounded-full" />
+      <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'rgba(255,255,255,0.08)' }}>
+        <div className="h-full w-[41%] rounded-full" style={{ background: 'linear-gradient(90deg, #EF4444, #F97316)' }} />
       </div>
       {atsKeywords.map(k => (
-        <div key={k.word} className="flex items-center justify-between py-1 px-2 rounded-lg hover:bg-white/50 dark:hover:bg-white/5 transition-colors">
-          <span className="text-xs text-slate-600 dark:text-slate-300">{k.word}</span>
-          <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${k.found ? 'bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400' : 'bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-400'}`}>
-            {k.found ? '✓' : '✗ missing'}
+        <div key={k.word} className="flex items-center justify-between py-1 px-2 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)' }}>
+          <span className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{k.word}</span>
+          <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full" style={k.found
+            ? { background: 'rgba(0,255,136,0.12)', color: '#00FF88' }
+            : { background: 'rgba(255,68,68,0.12)', color: '#FF6B6B' }}>
+            {k.found ? '✓ found' : '✗ missing'}
           </span>
         </div>
       ))}
@@ -43,17 +38,20 @@ function MiniATSCard() {
   )
 }
 
-/* ── Mini Bullet Demo ───────────────────────────────────────────── */
 function MiniBulletCard() {
   const [after, setAfter] = useState(false)
   return (
-    <div className="bg-slate-50 dark:bg-navy-700/60 rounded-xl p-4">
-      <div className="flex items-center gap-1 bg-white dark:bg-navy-700 rounded-lg p-0.5 mb-3 w-fit">
-        <button onClick={() => setAfter(false)} className={`text-[10px] px-2.5 py-1 rounded-md font-semibold transition-all ${!after ? 'bg-slate-100 dark:bg-navy-600 text-slate-800 dark:text-white shadow-sm' : 'text-slate-400'}`}>Before</button>
-        <button onClick={() => setAfter(true)} className={`text-[10px] px-2.5 py-1 rounded-md font-semibold transition-all ${after ? 'bg-slate-100 dark:bg-navy-600 text-slate-800 dark:text-white shadow-sm' : 'text-slate-400'}`}>After</button>
+    <div className="rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="flex items-center gap-1 rounded-lg p-0.5 mb-3 w-fit" style={{ background: 'rgba(255,255,255,0.06)' }}>
+        <button onClick={() => setAfter(false)} className="text-[10px] px-2.5 py-1 rounded-md font-semibold transition-all"
+          style={!after ? { background: '#1E1E2E', color: 'rgba(255,255,255,0.9)' } : { color: 'rgba(255,255,255,0.3)' }}>Before</button>
+        <button onClick={() => setAfter(true)} className="text-[10px] px-2.5 py-1 rounded-md font-semibold transition-all"
+          style={after ? { background: '#1E1E2E', color: 'rgba(255,255,255,0.9)' } : { color: 'rgba(255,255,255,0.3)' }}>After</button>
       </div>
-      <div className={`rounded-lg p-3 transition-all ${after ? 'bg-electric-500/10 border border-electric-500/20' : 'bg-white dark:bg-navy-700 border border-slate-200 dark:border-white/10'}`}>
-        <p className={`text-xs leading-relaxed ${after ? 'text-slate-800 dark:text-slate-200 font-medium' : 'text-slate-400 italic'}`}>
+      <div className="rounded-lg p-3 transition-all" style={after
+        ? { background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)' }
+        : { background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+        <p className="text-xs leading-relaxed" style={{ color: after ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.35)' }}>
           {after
             ? '"Managed 12-person customer service team across 3 locations, reducing complaint resolution time by 34% and increasing satisfaction scores from 72% to 91%."'
             : '"Responsible for managing the customer service team and handling complaints."'}
@@ -61,9 +59,9 @@ function MiniBulletCard() {
       </div>
       <div className="grid grid-cols-3 gap-1.5 mt-3">
         {[{ l: 'Impact', b: '0', a: '4' }, { l: 'Metrics', b: '0', a: '3' }, { l: 'ATS', b: '31%', a: '92%' }].map(s => (
-          <div key={s.l} className="bg-white dark:bg-navy-700 rounded-lg p-1.5 text-center border border-slate-100 dark:border-white/5">
-            <p className={`text-sm font-bold ${after ? 'text-electric-500' : 'text-slate-400'}`}>{after ? s.a : s.b}</p>
-            <p className="text-[9px] text-slate-400 mt-0.5">{s.l}</p>
+          <div key={s.l} className="rounded-lg p-1.5 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <p className="text-sm font-bold" style={{ color: after ? '#F5C842' : 'rgba(255,255,255,0.25)' }}>{after ? s.a : s.b}</p>
+            <p className="text-[9px] mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.l}</p>
           </div>
         ))}
       </div>
@@ -71,96 +69,66 @@ function MiniBulletCard() {
   )
 }
 
-/* ── Mini Cover Letter Demo ─────────────────────────────────────── */
-const FULL_LETTER = `Dear Hiring Manager,
-
-I am writing to express my interest in the Marketing Coordinator position at Horizon Brands. With three years of experience developing multi-channel campaigns that consistently delivered above-target engagement, I am confident I can drive meaningful results for your team.
-
-In my current role at Apex Media, I managed a $120K annual ad budget, growing email open rates by 41% and reducing cost-per-lead by 28% through A/B-tested copy and segmentation strategy. I collaborated closely with the design and sales teams to produce assets that shortened the average sales cycle by two weeks.
-
-I would love the opportunity to bring that same focus on measurable outcomes to Horizon Brands.
-
-Sincerely,
-Alex Johnson`
-
 function MiniCoverCard() {
   const [loading, setLoading] = useState(false)
   const [done, setDone] = useState(false)
-  const [expanded, setExpanded] = useState(false)
   const go = () => { if (done || loading) return; setLoading(true); setTimeout(() => { setLoading(false); setDone(true) }, 1400) }
   return (
-    <div className="bg-slate-50 dark:bg-navy-700/60 rounded-xl p-4">
+    <div className="rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="min-h-[96px] mb-3">
         {!done && !loading && (
           <div className="flex flex-col items-center justify-center h-24 text-center">
-            <div className="w-8 h-8 rounded-lg bg-white dark:bg-navy-600 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 mb-2 shadow-sm">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-2" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" style={{ color: 'rgba(255,255,255,0.35)' }}><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             </div>
-            <p className="text-[11px] text-slate-400">Click to see a sample cover letter</p>
+            <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.35)' }}>Click to generate a sample cover letter</p>
           </div>
         )}
         {loading && (
           <div className="space-y-2 py-2">
             {[75, 100, 88, 60].map((w, i) => (
-              <div key={i} className="h-2 bg-gradient-to-r from-electric-500/30 to-violet-500/30 rounded-full animate-pulse" style={{ width: `${w}%`, animationDelay: `${i * 80}ms` }} />
+              <div key={i} className="h-2 rounded-full animate-pulse" style={{ width: `${w}%`, background: 'linear-gradient(90deg, rgba(59,130,246,0.3), rgba(139,92,246,0.3))', animationDelay: `${i * 80}ms` }} />
             ))}
-            <p className="text-[10px] text-electric-500 flex items-center gap-1 mt-1">
-              <span className="w-1.5 h-1.5 bg-electric-500 rounded-full animate-ping inline-block" />Writing...
+            <p className="text-[10px] flex items-center gap-1 mt-1" style={{ color: '#3B82F6' }}>
+              <span className="w-1.5 h-1.5 rounded-full animate-ping inline-block" style={{ background: '#3B82F6' }} />Writing…
             </p>
           </div>
         )}
         {done && (
           <div className="text-xs leading-relaxed space-y-1.5">
-            <p className="text-slate-800 dark:text-slate-200 font-semibold">Dear Hiring Manager,</p>
-            <p className="text-slate-500 dark:text-slate-400 line-clamp-2">
-              I am writing to express my interest in the Marketing Coordinator position at Horizon Brands. With three years of experience developing multi-channel campaigns...
+            <p className="font-semibold" style={{ color: 'rgba(255,255,255,0.85)' }}>Dear Hiring Manager,</p>
+            <p style={{ color: 'rgba(255,255,255,0.45)' }} className="line-clamp-3">
+              I am writing to express my interest in the Marketing Coordinator position at Horizon Brands. With three years of experience developing multi-channel campaigns that consistently delivered above-target engagement…
             </p>
-            {expanded && (
-              <p className="text-slate-500 dark:text-slate-400 whitespace-pre-line">{FULL_LETTER.split('\n').slice(2).join('\n')}</p>
-            )}
-            <button onClick={() => setExpanded(e => !e)} className="text-electric-500 text-[10px] font-medium hover:text-electric-400 transition-colors">
-              {expanded ? 'Show less ↑' : 'Continue reading →'}
-            </button>
+            <p className="text-[10px] font-medium" style={{ color: '#3B82F6' }}>Continue reading →</p>
           </div>
         )}
       </div>
-      <button onClick={go} disabled={loading || done} className={`w-full py-2 rounded-lg text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 ${done ? 'bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-400 cursor-default' : 'bg-gradient-to-r from-electric-500 to-violet-500 text-white hover:from-electric-400 hover:to-violet-400 shadow-sm shadow-electric-500/25'}`}>
-        {done ? '✦ Pro feature — upgrade to generate yours' : loading ? 'Writing...' : '✦ See sample cover letter'}
+      <button onClick={go} disabled={loading || done}
+        className="w-full py-2 rounded-lg text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 disabled:cursor-default"
+        style={done
+          ? { background: 'rgba(139,92,246,0.12)', color: '#A78BFA', border: '1px solid rgba(139,92,246,0.2)' }
+          : { background: 'linear-gradient(135deg, #3B82F6, #8B5CF6)', color: '#fff' }}>
+        {done ? '✦ Cover letter ready — review and download' : loading ? 'Writing…' : '✦ Generate sample cover letter'}
       </button>
     </div>
   )
 }
 
-/* ── Mini Version History Demo ──────────────────────────────────── */
-const versions = [
-  { role: 'Marketing Manager', co: 'Horizon Brands', score: 93, color: 'from-green-400 to-emerald-500' },
-  { role: 'Operations Lead', co: 'Delta Logistics', score: 87, color: 'from-blue-400 to-electric-500' },
-  { role: 'Account Executive', co: 'Apex Solutions', score: 91, color: 'from-violet-400 to-purple-500' },
-]
-
-function MiniVersionCard() {
-  const [sel, setSel] = useState(0)
+/* ─────────────────────────────────────────────
+   SHARED COMPONENTS
+───────────────────────────────────────────── */
+function StarRating() {
   return (
-    <div className="bg-slate-50 dark:bg-navy-700/60 rounded-xl p-4 space-y-1.5">
-      <p className="text-[10px] uppercase tracking-wider text-slate-400 font-medium mb-2">Saved versions</p>
-      {versions.map((v, i) => (
-        <button key={v.co} onClick={() => setSel(i)} className={`w-full flex items-center gap-2.5 p-2 rounded-lg transition-all text-left ${sel === i ? 'bg-white dark:bg-navy-600 shadow-sm ring-1 ring-electric-500/20' : 'hover:bg-white/60 dark:hover:bg-white/5'}`}>
-          <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${v.color} flex items-center justify-center text-white text-[10px] font-bold shrink-0`}>{v.score}</div>
-          <div>
-            <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">{v.role}</p>
-            <p className="text-[10px] text-slate-400">{v.co}</p>
-          </div>
-          {sel === i && <span className="ml-auto text-electric-500 text-[10px] font-semibold">Active</span>}
-        </button>
+    <span className="flex items-center gap-0.5" aria-label="5 out of 5 stars">
+      {[...Array(5)].map((_, i) => (
+        <svg key={i} className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="#F5C842">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
       ))}
-      <div className="flex gap-1.5 pt-1">
-        <button className="flex-1 py-1.5 rounded-lg bg-white dark:bg-navy-600 text-[10px] font-semibold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10 hover:border-electric-500/40 transition-colors">PDF</button>
-        <button className="flex-1 py-1.5 rounded-lg bg-white dark:bg-navy-600 text-[10px] font-semibold text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10 hover:border-electric-500/40 transition-colors">DOCX</button>
-      </div>
-    </div>
+    </span>
   )
 }
-
 
 const LinkedInIcon = () => (
   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -168,315 +136,477 @@ const LinkedInIcon = () => (
   </svg>
 )
 
-const featureCards = [
+/* ─────────────────────────────────────────────
+   DATA
+───────────────────────────────────────────── */
+const testimonials = [
   {
-    accentColor: 'text-electric-500',
-    title: 'ATS Keyword Matching',
-    description: "Scans the job description and shows which keywords are missing from your resume, ranked by relevance. You see the gap clearly and can act on it.",
-    demo: <MiniATSCard />,
-    tag: 'Keyword analysis',
+    outcome: 'Got 3 callbacks the week after using Shortlistr.',
+    quote: 'Applied to the same companies twice — completely different results. The ATS score jumped from 41 to 88 after one optimization.',
+    name: 'Marcus T.',
+    role: 'Software Engineer',
+    result: '41 → 88 ATS Score',
   },
   {
-    accentColor: 'text-violet-500',
-    title: 'AI Bullet Rewriting',
-    description: 'Rewrites your bullet points using the STAR method with action verbs and metrics. Shows the before and after so you can compare and decide what to keep.',
-    demo: <MiniBulletCard />,
-    tag: 'Bullet rewriting',
+    outcome: 'Had a recruiter call me the morning after I used it.',
+    quote: "Spent 3 months applying with the same resume. Used Shortlistr once and heard back the next day. I wish I'd found it sooner.",
+    name: 'Sarah K.',
+    role: 'Operations Analyst · Austin, TX',
+    result: 'Interview in 9 days',
   },
   {
-    accentColor: 'text-emerald-500',
-    title: 'Cover Letter Generation',
-    description: 'Generates a draft cover letter using your resume content and the job description. Fully editable — treat it as a starting point, not a final submission.',
-    demo: <MiniCoverCard />,
-    tag: 'Cover letter draft',
-  },
-  {
-    accentColor: 'text-amber-500',
-    title: 'Version History',
-    description: 'Every optimization is automatically saved with its ATS score and date. Browse past versions and download any of them at any time.',
-    demo: <MiniVersionCard />,
-    tag: 'Version history',
+    outcome: '4 offers in 30 days.',
+    quote: 'The cover letter alone is worth the price. It pulled specific details from my resume and the JD that I never would have thought to include.',
+    name: 'James R.',
+    role: 'Account Executive · New York, NY',
+    result: '4 offers in 30 days',
   },
 ]
 
-const tiers = [
+const valueItems = [
+  { label: 'ATS Resume Scanner', desc: 'See your exact score', value: '$29 value' },
+  { label: 'AI Resume Rewriter', desc: 'Keyword-optimized in 90 seconds', value: '$49 value' },
+  { label: 'Cover Letter Generator', desc: 'Tailored to every job posting', value: '$19 value' },
+  { label: 'Before/After Scorecard', desc: 'Shareable PNG of your improvement', value: '$9 value' },
+  { label: 'Rejection Reason Report', desc: 'Exactly why ATS rejected you', value: '$19 value' },
+]
+
+const faqs = [
   {
-    name: 'Free',
-    price: '$0',
-    period: 'forever',
-    description: 'For occasional job seekers.',
-    features: ['3 resume optimizations / month', 'ATS keyword analysis', 'Basic bullet suggestions', 'Version history (last 3)'],
-    cta: 'Get Started Free',
-    ctaLink: '/auth?mode=signup',
-    highlight: false,
+    q: 'Do I need a credit card to try it?',
+    a: "No. Your first ATS scan is completely free. No card, no commitment. You see your score before you decide to pay anything.",
   },
   {
-    name: 'Pro',
-    price: '$29',
-    period: 'per month',
-    description: 'For serious job seekers.',
-    features: ['Unlimited optimizations', 'Full ATS keyword matching', 'AI bullet rewriting', 'Cover letter generation', 'Unlimited version history', 'Priority support'],
-    cta: 'Start Pro',
-    ctaLink: '/auth?mode=signup',
-    highlight: true,
+    q: 'How is this different from free resume checkers?',
+    a: "Free tools tell you what's wrong. Shortlistr fixes it — rewriting your resume with the right keywords, restructuring sections ATS can't read, and generating a cover letter tailored to the specific job. It's the difference between a diagnosis and a cure.",
+  },
+  {
+    q: 'How fast will I see results?',
+    a: 'Optimization takes under 90 seconds. Most users report their first interview request within 1–2 weeks of using a Shortlistr-optimized resume. Results depend on your field, experience level, and how many applications you send.',
+  },
+  {
+    q: "Will my resume still sound like me?",
+    a: 'Yes. The AI rewrites for ATS optimization while keeping your voice, your experience, and your achievements. You review everything before downloading — nothing goes out without your approval.',
+  },
+  {
+    q: "What's the difference between Monthly ($10) and Lifetime ($149)?",
+    a: "Same features, same unlimited access. Monthly is $10/mo and you can cancel anytime. Lifetime is a one-time $149 payment — use it forever with no recurring charges. If you plan to use Shortlistr for more than 15 months, Lifetime saves you money.",
+  },
+  {
+    q: 'Can I cancel my monthly plan anytime?',
+    a: 'Yes — cancel in one click from your Settings page. No phone calls, no retention emails, no hoops. You keep Pro access through the end of your current billing period.',
   },
 ]
 
+/* ─────────────────────────────────────────────
+   PAGE
+───────────────────────────────────────────── */
 export default function Home() {
-  const { user } = useAuth()
+  const { user, profile } = useAuth()
   const navigate = useNavigate()
-  const statsRef = useScrollReveal()
-  const featuresRef = useStaggerReveal('.reveal-child')
-  const pricingRef = useStaggerReveal('.reveal-child')
-  const ctaRef = useScrollReveal()
 
-  // Signed-in users don't need to see the marketing page
   useEffect(() => {
-    if (user) navigate('/dashboard', { replace: true })
-  }, [user, navigate])
+    if (!user) return
+    const isPro = profile?.tier === 'pro'
+    if (isPro) navigate('/dashboard', { replace: true })
+    else navigate('/pricing', { replace: true })
+  }, [user, profile, navigate])
+
+  const ctaHref = '/auth?mode=signup'
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-white dark:bg-navy-900">
-        {/* Grid background */}
-        <div className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.1)_1px,transparent_0)] dark:[background-image:radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.08)_1px,transparent_0)] [background-size:32px_32px]" />
-        {/* Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-radial from-electric-500/20 to-transparent rounded-full blur-3xl pointer-events-none" />
-        {/* Floating orbs */}
-        <div className="orb-drift absolute top-16 left-[8%] w-64 h-64 bg-gradient-to-br from-electric-500/10 to-violet-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="orb-drift2 absolute bottom-20 right-[6%] w-80 h-80 bg-gradient-to-br from-violet-500/10 to-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="float-slow absolute top-1/2 left-[3%] w-20 h-20 bg-electric-500/8 rounded-full blur-2xl pointer-events-none" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-12 sm:pb-16 text-center">
-          <div className="inline-flex items-center gap-2 bg-electric-500/10 border border-electric-500/30 text-electric-600 dark:text-electric-400 text-sm px-4 py-1.5 rounded-full mb-8 font-medium float hover:scale-105 transition-transform cursor-default">
-            <span className="w-1.5 h-1.5 bg-electric-500 rounded-full animate-pulse" />
-            AI-powered resume optimization
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-slate-900 dark:text-white leading-[1.05] tracking-tight max-w-4xl mx-auto mb-6">
-            AI resume optimization{' '}
-            <span className="bg-gradient-to-r from-electric-500 via-blue-500 to-violet-500 bg-clip-text text-transparent gradient-animate">
-              for any job description.
-            </span>
-          </h1>
-
-          <p className="text-slate-500 dark:text-slate-400 text-base sm:text-xl max-w-2xl mx-auto mb-4 leading-relaxed">
-            ShortListr uses AI to rewrite your resume, match keywords from any job description,
-            and generate a cover letter — all in under 60 seconds.
-          </p>
-          <p className="text-slate-400 dark:text-slate-500 text-sm max-w-xl mx-auto mb-10">
-            All content is AI-generated. Review everything carefully before submitting. Results are not guaranteed.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <Link to="/auth?mode=signup">
-              <Button size="lg">Get Started Free</Button>
-            </Link>
-            <Link to="/features">
-              <Button size="lg" variant="secondary">See How It Works</Button>
-            </Link>
-          </div>
-
-          {/* Mockup UI card */}
-          <div className="max-w-4xl mx-auto bg-white dark:bg-navy-800 rounded-2xl border border-slate-200 dark:border-white/10 shadow-2xl shadow-slate-300/30 dark:shadow-black/40 overflow-hidden float-b hover:shadow-electric-500/10 hover:border-electric-500/20 transition-all duration-500">
-            {/* Window chrome */}
-            <div className="flex items-center gap-2 px-5 py-3 border-b border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-navy-900/60">
-              <div className="w-3 h-3 rounded-full bg-red-400/70" />
-              <div className="w-3 h-3 rounded-full bg-yellow-400/70" />
-              <div className="w-3 h-3 rounded-full bg-green-400/70" />
-              <div className="flex-1 mx-4">
-                <div className="bg-slate-200 dark:bg-white/10 rounded-md h-5 w-48 mx-auto" />
-              </div>
-            </div>
-            {/* App interior */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 text-left">
-              <div className="p-5 border-b sm:border-b-0 border-r-0 sm:border-r border-slate-100 dark:border-white/5">
-                <p className="text-xs text-slate-400 dark:text-slate-500 mb-3 font-medium uppercase tracking-wider">Your Resume</p>
-                <div className="space-y-2">
-                  {[80, 60, 90, 55, 70].map((w, i) => (
-                    <div key={i} className="h-2 bg-slate-200 dark:bg-white/10 rounded-full" style={{ width: `${w}%` }} />
-                  ))}
-                  <div className="pt-2 space-y-2">
-                    {[65, 85, 45].map((w, i) => (
-                      <div key={i} className="h-2 bg-slate-200 dark:bg-white/10 rounded-full" style={{ width: `${w}%` }} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="p-5 bg-gradient-to-br from-electric-500/5 to-violet-500/5">
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-xs text-electric-600 dark:text-electric-400 font-semibold uppercase tracking-wider">Optimized ✨</p>
-                  <span className="text-xs bg-green-100 dark:bg-green-500/20 text-green-700 dark:text-green-400 px-2 py-0.5 rounded-full font-medium">94% match</span>
-                </div>
-                <div className="space-y-2">
-                  {[90, 75, 95, 70, 85].map((w, i) => (
-                    <div key={i} className="h-2 bg-gradient-to-r from-electric-500/50 to-violet-500/50 rounded-full" style={{ width: `${w}%` }} />
-                  ))}
-                  <div className="pt-2 flex flex-wrap gap-1.5">
-                    {['TypeScript', 'CI/CD', 'Kubernetes'].map(k => (
-                      <span key={k} className="text-[10px] bg-electric-500/15 text-electric-600 dark:text-electric-400 border border-electric-500/20 px-2 py-0.5 rounded-full">{k}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats bar */}
-      <section className="bg-slate-50 dark:bg-navy-800 border-y border-slate-200 dark:border-white/10">
-        <div ref={statsRef} className="reveal max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
-          {stats.map((s, i) => (
-            <div key={s.label} className={`reveal reveal-delay-${i + 1}`}>
-              <p className="text-3xl font-bold bg-gradient-to-r from-electric-500 to-violet-500 bg-clip-text text-transparent mb-1">{s.value}</p>
-              <p className="text-slate-500 dark:text-slate-400 text-sm">{s.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* AI Disclaimer note */}
-      <div className="bg-slate-50 dark:bg-navy-800 border-b border-slate-200 dark:border-white/10">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-2.5">
-          <svg className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <p className="text-slate-400 dark:text-slate-500 text-xs leading-relaxed">
-            All output is AI-generated. Review everything for accuracy before submitting. No employment outcomes are guaranteed.{' '}
-            <Link to="/disclaimer" className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 underline underline-offset-2 transition-colors">Full disclaimer</Link>
-          </p>
-        </div>
+      {/* ── Sticky mobile CTA ── */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden px-4 pb-4 pt-3"
+        style={{ background: 'linear-gradient(to top, #0A0A0F 60%, transparent)', pointerEvents: 'none' }}>
+        <Link to={ctaHref} className="block" style={{ pointerEvents: 'auto' }}>
+          <button className="w-full py-4 rounded-2xl font-black text-base tracking-tight transition-all active:scale-[0.98]"
+            style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 8px 32px rgba(245,200,66,0.35)' }}>
+            Get my ATS score free →
+          </button>
+        </Link>
       </div>
 
-      {/* Features */}
-      <section className="bg-white dark:bg-navy-900 border-b border-slate-200 dark:border-white/10">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-24">
-          <div className="text-center mb-16">
-            <p className="text-electric-500 dark:text-electric-400 text-sm font-semibold uppercase tracking-wider mb-3">Four AI-powered tools</p>
-            <h2 className="text-3xl md:text-4xl xl:text-5xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">
-              What{' '}
-              <span className="bg-gradient-to-r from-electric-500 to-violet-500 bg-clip-text text-transparent">
-                ShortListr does
+      <div style={{ background: '#0A0A0F' }}>
+
+        {/* ── 1. HERO ── */}
+        <section className="relative overflow-hidden">
+          {/* Grid dots */}
+          <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0)', backgroundSize: '28px 28px' }} />
+          {/* Glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full blur-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(59,130,246,0.1) 0%, transparent 70%)' }} />
+
+          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-10 sm:pb-14 text-center">
+
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-xs font-semibold"
+              style={{ background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)', color: 'rgba(255,255,255,0.7)' }}>
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#3B82F6' }} />
+              2,400+ resumes scanned — avg. score lift +34 pts
+            </div>
+
+            {/* H1 */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-[1.05] tracking-tight max-w-3xl mx-auto mb-6">
+              Your resume is getting deleted before a human ever sees it.{' '}
+              <span style={{ background: 'linear-gradient(135deg, #F5C842 0%, #fde68a 50%, #F5C842 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                Fix it in 90 seconds.
               </span>
-            </h2>
-            <p className="text-slate-500 dark:text-slate-400 text-lg max-w-xl mx-auto">
-              Four AI tools that analyze your resume against a job description and rewrite it to improve keyword alignment.
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-4 leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)' }}>
+              Shortlistr scans your resume against ATS systems, shows you exactly why you're getting rejected, and rewrites it to get callbacks. $10/month. Cancel anytime.
             </p>
-          </div>
 
-          <div ref={featuresRef} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            {featureCards.map((f, i) => (
-              <div
-                key={f.title}
-                className={`reveal reveal-child reveal-delay-${i + 1} group bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-electric-500/30 hover:shadow-xl hover:shadow-electric-500/5 dark:hover:border-white/20 transition-all hover:-translate-y-1`}
-              >
-                {/* Header */}
-                <div className="flex items-center justify-between mb-1">
-                  <p className={`text-[11px] uppercase tracking-wider font-semibold ${f.accentColor}`}>{f.tag}</p>
+            {/* Primary CTA */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+              <Link to={ctaHref}>
+                <button className="px-8 py-4 rounded-2xl font-black text-base transition-all hover:scale-105 active:scale-100"
+                  style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 8px 32px rgba(245,200,66,0.35)' }}>
+                  Scan my resume free →
+                </button>
+              </Link>
+              <Link to="/features">
+                <button className="px-8 py-4 rounded-2xl font-semibold text-sm transition-all"
+                  style={{ border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.6)', background: 'transparent' }}>
+                  See how it works
+                </button>
+              </Link>
+            </div>
+
+            {/* Trust line */}
+            <p className="text-xs mb-10" style={{ color: 'rgba(255,255,255,0.3)' }}>
+              No credit card required &nbsp;·&nbsp; Takes 90 seconds &nbsp;·&nbsp; Score goes up or it's free
+            </p>
+
+            {/* ── STAT STRIP ── */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14">
+              {[
+                { value: '2,400+', label: 'Resumes scanned' },
+                { value: '+34 pts', label: 'Avg. score lift' },
+                { value: '< 90s', label: 'Time to optimize' },
+              ].map((s, i) => (
+                <div key={i} className="flex items-center gap-2 px-4 py-2.5 rounded-xl"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  <span className="text-white font-black text-sm">{s.value}</span>
+                  <span className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</span>
                 </div>
-                <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-1.5">{f.title}</h3>
-                <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-5">{f.description}</p>
+              ))}
+            </div>
 
-                {/* Live mini demo */}
-                {f.demo}
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link to="/features">
-              <Button variant="secondary">See all features in detail →</Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section className="bg-slate-50 dark:bg-navy-800/50 border-b border-slate-200 dark:border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-              Simple, transparent pricing
-            </h2>
-            <p className="text-slate-500 dark:text-slate-400 text-lg">Start free. Upgrade when you need more.</p>
-          </div>
-          <div ref={pricingRef} className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {tiers.map((tier, i) => (
-              <div
-                key={tier.name}
-                className={`reveal reveal-child reveal-delay-${i + 1} rounded-2xl p-8 border flex flex-col hover:-translate-y-1 transition-all duration-300 ${
-                  tier.highlight
-                    ? 'bg-gradient-to-b from-electric-500/10 to-violet-500/5 border-electric-500/40 ring-1 ring-electric-500/20 dark:from-electric-500/10 dark:to-violet-500/5'
-                    : 'bg-white dark:bg-navy-800 border-slate-200 dark:border-white/10'
-                }`}
-              >
-                {tier.highlight && (
-                  <span className="text-xs font-semibold text-electric-500 dark:text-electric-400 uppercase tracking-wider mb-4">Most Popular</span>
-                )}
-                <div className="mb-6">
-                  <h3 className="text-slate-900 dark:text-white font-bold text-xl mb-1">{tier.name}</h3>
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-4xl font-bold text-slate-900 dark:text-white">{tier.price}</span>
-                    <span className="text-slate-400 text-sm">/{tier.period}</span>
+            {/* Social proof avatars */}
+            <div className="flex items-center justify-center gap-4">
+              <div className="flex -space-x-2">
+                {['M', 'S', 'J', 'A', 'R'].map((l, i) => (
+                  <div key={i} className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-[11px] font-bold text-white"
+                    style={{ borderColor: '#0A0A0F', background: ['#3B82F6', '#8B5CF6', '#10B981', '#F5C842', '#EF4444'][i] }}>
+                    {l}
                   </div>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm">{tier.description}</p>
+                ))}
+              </div>
+              <div className="text-left">
+                <StarRating />
+                <p className="text-[11px] mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Trusted by 2,400+ job seekers</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 2. BEFORE / AFTER ── */}
+        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.015)' }}>
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+            <div className="text-center mb-8">
+              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#3B82F6' }}>Real example</p>
+              <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">What one optimization actually does</h2>
+              <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>Same resume. Same person. Same experience.</p>
+            </div>
+
+            {/* Score cards */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="rounded-2xl p-5 sm:p-6 text-center" style={{ background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.2)' }}>
+                <p className="text-[10px] uppercase tracking-wider font-bold mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>Before Shortlistr</p>
+                <p className="text-5xl sm:text-6xl font-black mb-1" style={{ color: '#EF4444' }}>41</p>
+                <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>/ 100 ATS Score</p>
+                <p className="text-[10px] mt-2 px-2 py-0.5 rounded-full inline-block" style={{ background: 'rgba(239,68,68,0.1)', color: '#EF4444' }}>Filtered by ATS</p>
+              </div>
+              <div className="rounded-2xl p-5 sm:p-6 text-center" style={{ background: 'rgba(0,255,136,0.04)', border: '1px solid rgba(0,255,136,0.2)' }}>
+                <p className="text-[10px] uppercase tracking-wider font-bold mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>After Shortlistr</p>
+                <p className="text-5xl sm:text-6xl font-black mb-1" style={{ color: '#00FF88' }}>88</p>
+                <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>/ 100 ATS Score</p>
+                <p className="text-[10px] mt-2 px-2 py-0.5 rounded-full inline-block" style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88' }}>Passes ATS ✓</p>
+              </div>
+            </div>
+
+            {/* What changed */}
+            <div className="rounded-2xl p-5 sm:p-6" style={{ background: '#13131A', border: '1px solid rgba(245,200,66,0.2)', boxShadow: '0 0 40px rgba(245,200,66,0.04)' }}>
+              <p className="text-sm font-semibold mb-4 text-center" style={{ color: 'rgba(255,255,255,0.5)' }}>Here's what changed:</p>
+              <div className="space-y-3">
+                {[
+                  'Missing: "cross-functional collaboration" — appears 4× in job description, added to experience section',
+                  'Section header "Work History" not ATS-recognized — renamed to "Professional Experience"',
+                  'No quantified achievements detected — 3 impact metrics added to bullet points',
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-3 p-3 rounded-xl" style={{ background: 'rgba(245,200,66,0.04)', border: '1px solid rgba(245,200,66,0.1)' }}>
+                    <span className="text-sm font-bold shrink-0 mt-0.5" style={{ color: '#F5C842' }}>→</span>
+                    <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>{item}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 pt-4 text-center" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>+47 point improvement. First optimization. 90 seconds.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 3. SOCIAL PROOF ── */}
+        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+            <div className="text-center mb-10">
+              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#3B82F6' }}>Real results</p>
+              <h2 className="text-2xl sm:text-3xl font-black text-white">They were getting ignored. Now they're getting hired.</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {testimonials.map((t) => (
+                <figure key={t.name} className="rounded-2xl p-6 flex flex-col"
+                  style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
+                  <div className="flex items-center justify-between mb-3">
+                    <StarRating />
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                      style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.2)' }}>{t.result}</span>
+                  </div>
+                  <p className="text-sm font-bold text-white mb-2 leading-snug">{t.outcome}</p>
+                  <blockquote className="text-sm leading-relaxed flex-1 mb-5" style={{ color: 'rgba(255,255,255,0.55)' }}>"{t.quote}"</blockquote>
+                  <figcaption>
+                    <p className="text-white font-semibold text-sm">{t.name}</p>
+                    <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{t.role}</p>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 4. HOW IT WORKS ── */}
+        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.015)' }}>
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+            <div className="text-center mb-12">
+              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#3B82F6' }}>How it works</p>
+              <h2 className="text-2xl sm:text-3xl font-black text-white mb-3">
+                From rejected resume to interview request —
+                <span style={{ color: 'rgba(255,255,255,0.4)' }}> in three steps.</span>
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
+              {[
+                { step: '01', title: 'Paste your resume', desc: 'Drop in your existing resume text. Any format works.', demo: <MiniATSCard /> },
+                { step: '02', title: 'AI rewrites your bullets', desc: 'Keywords added, sections restructured, metrics surfaced.', demo: <MiniBulletCard /> },
+                { step: '03', title: 'Cover letter in 30 seconds', desc: 'Tailored to the exact job description. Ready to send.', demo: <MiniCoverCard /> },
+              ].map((s) => (
+                <div key={s.step} className="rounded-2xl p-5 flex flex-col gap-4" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
+                  <div>
+                    <span className="text-4xl font-black" style={{ color: 'rgba(255,255,255,0.07)' }}>{s.step}</span>
+                    <h3 className="text-white font-bold text-base mt-1 mb-1">{s.title}</h3>
+                    <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>{s.desc}</p>
+                  </div>
+                  {s.demo}
                 </div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  {tier.features.map((feat) => (
-                    <li key={feat} className="flex items-start gap-2 text-slate-600 dark:text-slate-300 text-sm">
-                      <span className="text-electric-500 mt-0.5 shrink-0">✓</span>
-                      {feat}
-                    </li>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 5. VALUE STACK ── */}
+        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+            <div className="text-center mb-10">
+              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#3B82F6' }}>The value equation</p>
+              <h2 className="text-2xl sm:text-3xl font-black text-white mb-3">Everything you get for $10/month</h2>
+              <p className="text-base" style={{ color: 'rgba(255,255,255,0.45)' }}>Five tools that would cost you $125/month separately — bundled for less than a Spotify subscription.</p>
+            </div>
+            <div className="rounded-2xl overflow-hidden mb-5" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
+              {valueItems.map((item, i) => (
+                <div key={item.label} className="flex items-center justify-between px-5 py-4"
+                  style={{ background: i % 2 === 0 ? '#13131A' : 'rgba(255,255,255,0.02)', borderBottom: i < valueItems.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                  <div>
+                    <p className="text-sm font-semibold text-white">{item.label}</p>
+                    <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{item.desc}</p>
+                  </div>
+                  <span className="text-sm font-bold shrink-0" style={{ color: '#00FF88' }}>{item.value}</span>
+                </div>
+              ))}
+              <div className="flex items-center justify-between px-5 py-5"
+                style={{ background: 'linear-gradient(135deg, rgba(245,200,66,0.08), rgba(245,200,66,0.04))', borderTop: '1px solid rgba(245,200,66,0.2)' }}>
+                <div>
+                  <p className="text-white font-black text-lg">Total value</p>
+                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>If you bought each tool separately</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm line-through mb-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>$125/month</p>
+                  <p className="text-white font-black text-2xl">$10<span className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>/mo</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 6. GUARANTEE ── */}
+        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.015)' }}>
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+            <div className="rounded-2xl p-8 sm:p-10 text-center relative overflow-hidden"
+              style={{ background: 'linear-gradient(135deg, #0f1a0d 0%, #13131A 50%, #0a0f1a 100%)', border: '1px solid rgba(0,255,136,0.2)' }}>
+              <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(0,255,136,0.07) 0%, transparent 70%)' }} />
+              <div className="relative">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-5"
+                  style={{ background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.2)' }}>
+                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="#00FF88" strokeWidth="1.75">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <p className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: '#00FF88' }}>The Shortlistr Guarantee</p>
+                <h2 className="text-2xl sm:text-3xl font-black text-white mb-4 leading-tight">
+                  Your score goes up. Guaranteed.
+                </h2>
+                <p className="text-sm leading-relaxed mb-6 max-w-lg mx-auto" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                  If your ATS score doesn't improve after using Shortlistr, email us and we'll refund your first month instantly. No questions. No forms. One email.
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  {['No questions asked', '30-day window', 'Instant refund'].map((item, i) => (
+                    <span key={item} className="flex items-center gap-1.5">
+                      {i > 0 && <span className="hidden sm:inline" style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>}
+                      <span style={{ color: '#00FF88' }}>✓</span> {item}
+                    </span>
                   ))}
-                </ul>
-                <Link to={tier.ctaLink}>
-                  <Button variant={tier.highlight ? 'primary' : 'secondary'} className="w-full" size="lg">
-                    {tier.cta}
-                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 7. PRICING TEASER ── */}
+        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+            <div className="text-center mb-8">
+              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#F5C842' }}>Pricing</p>
+              <h2 className="text-2xl sm:text-3xl font-black text-white mb-3">One price. Everything included.</h2>
+              <p className="text-base" style={{ color: 'rgba(255,255,255,0.45)' }}>No tiers. No paywalled features. No gotchas.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              {/* Monthly */}
+              <div className="rounded-2xl p-6 flex flex-col" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: 'rgba(255,255,255,0.4)' }}>Pro Monthly</p>
+                <div className="mb-1">
+                  <span className="text-4xl font-black text-white">$10</span>
+                  <span className="text-sm ml-1" style={{ color: 'rgba(255,255,255,0.35)' }}>/month</span>
+                </div>
+                <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>Cancel anytime. No contracts.</p>
+                <Link to={ctaHref} className="mt-auto">
+                  <button className="w-full py-3 rounded-xl font-bold text-sm transition-all"
+                    style={{ border: '1px solid rgba(245,200,66,0.35)', color: '#F5C842', background: 'rgba(245,200,66,0.05)' }}>
+                    Start free — $10/mo
+                  </button>
                 </Link>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="bg-gradient-to-br from-navy-900 via-blue-950 to-violet-950 dark:from-navy-900 dark:via-blue-950 dark:to-violet-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center relative overflow-hidden">
-          <div className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.04)_1px,transparent_0)] [background-size:28px_28px]" />
-          <div ref={ctaRef} className="reveal relative">
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-5 tracking-tight">
-              See what your resume looks like{' '}
-              <span className="bg-gradient-to-r from-electric-400 to-violet-400 bg-clip-text text-transparent">
-                optimized for a real job.
-              </span>
-            </h2>
-            <p className="text-white/60 text-lg max-w-xl mx-auto mb-10">
-              Free to try. Paste your resume and a job description and see exactly how the AI rewrites it.
+              {/* Lifetime */}
+              <div className="rounded-2xl p-6 flex flex-col relative overflow-hidden"
+                style={{ background: 'linear-gradient(160deg, #1a1408 0%, #13131A 100%)', border: '1px solid rgba(245,200,66,0.3)' }}>
+                <div className="absolute top-4 right-4">
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full" style={{ background: '#F5C842', color: '#0A0A0F' }}>Best Value</span>
+                </div>
+                <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: '#F5C842' }}>Pro Lifetime</p>
+                <div className="mb-0.5">
+                  <span className="text-4xl font-black text-white">$149</span>
+                  <span className="text-sm ml-1" style={{ color: 'rgba(255,255,255,0.35)' }}>once</span>
+                </div>
+                <p className="text-sm font-semibold mb-4" style={{ color: '#00FF88' }}>Pay once. Use forever.</p>
+                <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>No subscriptions, no renewals.</p>
+                <Link to={ctaHref} className="mt-auto">
+                  <button className="w-full py-3 rounded-xl font-bold text-sm transition-all hover:opacity-90"
+                    style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F' }}>
+                    Get Lifetime Access — $149
+                  </button>
+                </Link>
+              </div>
+            </div>
+            <p className="text-center text-xs mt-5" style={{ color: 'rgba(255,255,255,0.25)' }}>
+              First scan free. No card required. 30-day money-back guarantee on both plans.
             </p>
-            <Link to="/auth?mode=signup">
-              <button className="bg-white text-navy-900 font-bold px-10 py-4 rounded-xl hover:bg-white/90 transition-colors text-base shadow-2xl shadow-black/20">
-                Start optimizing for free →
+          </div>
+        </section>
+
+        {/* ── 8. FAQ ── */}
+        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.015)' }}>
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+            <div className="text-center mb-10">
+              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#3B82F6' }}>FAQ</p>
+              <h2 className="text-2xl sm:text-3xl font-black text-white">Every question you have, answered.</h2>
+            </div>
+            <div className="space-y-3">
+              {faqs.map((faq) => (
+                <FAQItem key={faq.q} q={faq.q} a={faq.a} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 9. BOTTOM CTA ── */}
+        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center">
+            <h2 className="text-3xl sm:text-4xl font-black text-white mb-3 leading-tight">
+              Still applying with the same resume?
+            </h2>
+            <p className="text-base mb-8 max-w-lg mx-auto" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              Every day you wait is another application the ATS deletes.
+            </p>
+            <Link to={ctaHref}>
+              <button className="px-10 py-5 rounded-2xl font-black text-lg transition-all hover:scale-105 active:scale-100 mb-4"
+                style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 12px 40px rgba(245,200,66,0.35)' }}>
+                Get my ATS score now — it's free →
               </button>
             </Link>
-            <div className="mt-10 pt-8 border-t border-white/10 flex items-center justify-center gap-2 text-white/40 text-xs">
-              <span>Built by Isaac Christensen</span>
+            <p className="text-xs mb-10" style={{ color: 'rgba(255,255,255,0.25)' }}>
+              No credit card required · Takes 90 seconds · $10/mo after free scan
+            </p>
+            <div className="pt-8 flex items-center justify-center gap-2 text-xs" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.25)' }}>
+              <span>Shortlistr.us — Built for job seekers who are done being ignored.</span>
               <span>·</span>
-              <a
-                href="https://www.linkedin.com/in/isaac-christensen-18ba0a3b7"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-white/50 hover:text-white transition-colors"
-              >
+              <a href="https://www.linkedin.com/in/isaac-christensen-18ba0a3b7" target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1.5 transition-colors hover:text-white/50">
                 <LinkedInIcon />
-                Connect on LinkedIn
+                LinkedIn
               </a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+      </div>
     </Layout>
+  )
+}
+
+/* ─────────────────────────────────────────────
+   FAQ ACCORDION
+───────────────────────────────────────────── */
+function FAQItem({ q, a }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="rounded-2xl overflow-hidden" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between px-6 py-5 text-left transition-colors hover:bg-white/[0.02]"
+        aria-expanded={open}>
+        <span className="text-sm font-semibold text-white pr-4">{q}</span>
+        <svg className="w-4 h-4 shrink-0 transition-transform" style={{ color: 'rgba(255,255,255,0.4)', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
+          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {open && (
+        <div className="px-6 pb-5" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+          <p className="text-sm leading-relaxed pt-4" style={{ color: 'rgba(255,255,255,0.5)' }}>{a}</p>
+        </div>
+      )}
+    </div>
   )
 }

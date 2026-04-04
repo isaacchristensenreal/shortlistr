@@ -247,7 +247,7 @@ export default function Settings() {
                             : 'bg-electric-500/10 text-electric-600 dark:text-electric-400'
                           : 'bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-slate-400'
                       }`}>
-                        {isPro ? (cancelDone ? 'Cancelling' : 'Active') : 'Free tier'}
+                        {isPro ? (cancelDone ? 'Cancelling' : 'Active') : 'Inactive'}
                       </span>
                     </div>
                   </div>

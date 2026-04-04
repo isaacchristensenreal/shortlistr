@@ -85,7 +85,7 @@ export default function Welcome() {
   const [challenge, setChallenge] = useState(null)
   const [targetRole, setTargetRole] = useState('')
   const [timeline, setTimeline] = useState(null)
-  const [upgrading, setUpgrading] = useState(false)
+  const [upgrading, setUpgrading] = useState(null) // 'monthly' | 'lifetime' | null
   const [upgradeError, setUpgradeError] = useState(null)
 
   const firstName = user?.email?.split('@')[0] ?? 'there'
@@ -95,14 +95,14 @@ export default function Welcome() {
     navigate('/dashboard', { replace: true })
   }
 
-  const handleUpgrade = async () => {
-    setUpgrading(true)
+  const handleUpgrade = async (billing) => {
+    setUpgrading(billing)
     setUpgradeError(null)
     try {
-      await startCheckout(user?.id, user?.email)
+      await startCheckout(user?.id, user?.email, billing)
     } catch {
       setUpgradeError('Could not start checkout. Please try again.')
-      setUpgrading(false)
+      setUpgrading(null)
     }
   }
 
@@ -219,11 +219,7 @@ export default function Welcome() {
             <StepWrapper visible>
               <div className="text-center">
                 <div className="relative inline-block mb-8">
-                  <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-electric-500 to-violet-500 flex items-center justify-center mx-auto shadow-2xl shadow-electric-500/30">
-                    <svg className="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-                    </svg>
-                  </div>
+                  <Logo size={96} />
                   <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-400 rounded-full border-2 border-white dark:border-navy-900 flex items-center justify-center">
                     <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                   </div>
@@ -501,46 +497,60 @@ export default function Welcome() {
                 <p className="text-xs font-semibold text-electric-500 uppercase tracking-wider mb-2">One last thing</p>
                 <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight">Unlock your full toolkit</h2>
                 <p className="text-slate-400 text-sm max-w-sm mx-auto">
-                  Start free — or go Pro now and never hit a wall when you need it most.
+                  Choose monthly flexibility or own it forever. Both plans include everything.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
 
-                {/* Free */}
+                {/* Monthly */}
                 <div className="bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-6 flex flex-col">
-                  <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-1">Free</h3>
-                  <div className="flex items-baseline gap-1 mb-4">
-                    <span className="text-3xl font-bold text-slate-900 dark:text-white">$0</span>
-                    <span className="text-slate-400 text-sm">/forever</span>
-                  </div>
-                  <ul className="space-y-2 mb-6 flex-1">
-                    {['3 optimizations / month', 'ATS keyword analysis', 'PDF download', 'Resume library'].map(f => (
-                      <li key={f} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm">
-                        <span className="text-green-500 shrink-0">✓</span>{f}
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    onClick={finish}
-                    className="w-full py-3 rounded-xl border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
-                  >
-                    Start with Free
-                  </button>
-                </div>
-
-                {/* Pro */}
-                <div className="bg-gradient-to-b from-electric-500/10 to-violet-500/5 border-2 border-electric-500/50 rounded-2xl p-6 flex flex-col relative overflow-hidden">
-                  <div className="absolute top-0 right-0 bg-gradient-to-bl from-electric-500 to-violet-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-bl-xl">
-                    Best value
-                  </div>
-                  <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-1">Pro</h3>
+                  <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-1">Monthly</h3>
                   <div className="flex items-baseline gap-1 mb-4">
                     <span className="text-3xl font-bold text-slate-900 dark:text-white">$29</span>
                     <span className="text-slate-400 text-sm">/month</span>
                   </div>
                   <ul className="space-y-2 mb-6 flex-1">
-                    {['Unlimited optimizations', 'Full ATS keyword matching', 'AI bullet rewriting', 'Cover letter generation', 'Unlimited library', 'Priority support'].map(f => (
+                    {['Unlimited optimizations', 'Full ATS keyword matching', 'AI bullet rewriting', 'Cover letter generation', 'Unlimited library', 'Cancel anytime'].map(f => (
+                      <li key={f} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 text-sm">
+                        <span className="text-electric-500 shrink-0">✓</span>{f}
+                      </li>
+                    ))}
+                  </ul>
+                  {upgradeError && <p className="text-red-500 text-xs text-center mb-2">{upgradeError}</p>}
+                  {isPro ? (
+                    <button onClick={finish} className="w-full py-3 rounded-xl border border-electric-500 text-electric-600 dark:text-electric-400 text-sm font-semibold transition-colors">
+                      You're on Pro — Go to Dashboard
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleUpgrade('monthly')}
+                      disabled={!!upgrading}
+                      className="w-full py-3 rounded-xl border border-electric-500 text-electric-600 dark:text-electric-400 text-sm font-semibold hover:bg-electric-500/5 transition-colors disabled:opacity-50"
+                    >
+                      {upgrading === 'monthly' ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <span className="w-4 h-4 border-2 border-electric-500/40 border-t-electric-500 rounded-full animate-spin" />
+                          Redirecting…
+                        </span>
+                      ) : 'Start Monthly — $29/mo'}
+                    </button>
+                  )}
+                </div>
+
+                {/* Lifetime */}
+                <div className="bg-gradient-to-b from-electric-500/10 to-violet-500/5 border-2 border-electric-500/50 rounded-2xl p-6 flex flex-col relative overflow-hidden">
+                  <div className="absolute top-0 right-0 bg-gradient-to-bl from-electric-500 to-violet-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-bl-xl">
+                    Best value
+                  </div>
+                  <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-1">Lifetime</h3>
+                  <div className="flex items-baseline gap-1 mb-0.5">
+                    <span className="text-3xl font-bold text-slate-900 dark:text-white">$149</span>
+                    <span className="text-slate-400 text-sm">once</span>
+                  </div>
+                  <p className="text-xs font-semibold text-green-600 dark:text-green-400 mb-4">Pay once, own forever — save 57%</p>
+                  <ul className="space-y-2 mb-6 flex-1">
+                    {['Everything in Monthly', 'Pay once — no renewals', 'All future updates included', 'Unlimited library', 'Priority support', 'Lifetime access'].map(f => (
                       <li key={f} className="flex items-center gap-2 text-slate-700 dark:text-slate-300 text-sm">
                         <span className="text-electric-500 shrink-0 font-bold">✓</span>{f}
                       </li>
@@ -548,31 +558,28 @@ export default function Welcome() {
                   </ul>
                   {upgradeError && <p className="text-red-500 text-xs text-center mb-2">{upgradeError}</p>}
                   {isPro ? (
-                    <button
-                      onClick={finish}
-                      className="w-full py-3 rounded-xl bg-gradient-to-r from-electric-500 to-violet-500 text-white text-sm font-semibold shadow-lg shadow-electric-500/25 transition-all"
-                    >
+                    <button onClick={finish} className="w-full py-3 rounded-xl bg-gradient-to-r from-electric-500 to-violet-500 text-white text-sm font-semibold shadow-lg shadow-electric-500/25 transition-all">
                       You're on Pro — Go to Dashboard
                     </button>
                   ) : (
                     <button
-                      onClick={handleUpgrade}
-                      disabled={upgrading}
+                      onClick={() => handleUpgrade('lifetime')}
+                      disabled={!!upgrading}
                       className="w-full py-3 rounded-xl bg-gradient-to-r from-electric-500 to-violet-500 hover:from-electric-400 hover:to-violet-400 disabled:opacity-50 text-white text-sm font-semibold shadow-lg shadow-electric-500/25 transition-all"
                     >
-                      {upgrading ? (
+                      {upgrading === 'lifetime' ? (
                         <span className="flex items-center justify-center gap-2">
                           <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                           Redirecting…
                         </span>
-                      ) : 'Upgrade to Pro — $29/mo'}
+                      ) : 'Get Lifetime — $149 once'}
                     </button>
                   )}
                 </div>
               </div>
 
               <p className="text-center text-xs text-slate-400">
-                Cancel anytime · No hidden fees · Secure checkout via Stripe
+                30-day money-back guarantee · No hidden fees · Secure checkout via Stripe
               </p>
             </StepWrapper>
           )}

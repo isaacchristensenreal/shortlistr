@@ -14,19 +14,17 @@ const features = [
 
 export default function Paywall({ onDismiss }) {
   const { user } = useAuth()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(null) // 'monthly' | 'lifetime' | null
   const [error, setError] = useState(null)
 
-  const handleUpgrade = async () => {
-    // Start Stripe Checkout session → redirects to Stripe's hosted page
-    setLoading(true)
+  const handleUpgrade = async (billing) => {
+    setLoading(billing)
     setError(null)
     try {
-      await startCheckout(user?.id, user?.email)
-      // startCheckout redirects the browser — nothing runs after this on success
+      await startCheckout(user?.id, user?.email, billing)
     } catch (err) {
       setError('Could not start checkout. Please try again.')
-      setLoading(false)
+      setLoading(null)
     }
   }
 
@@ -58,22 +56,11 @@ export default function Paywall({ onDismiss }) {
               Get the most out of ShortListr
             </h2>
             <p className="text-slate-500 dark:text-slate-400 text-sm">
-              You're on the Free plan — 3 optimizations per month. Upgrade to Pro for unlimited access to every feature.
+              Upgrade to Pro for unlimited access to every feature — ATS analysis, cover letters, rejection reasons, and more.
             </p>
           </div>
 
-          <div className="bg-gradient-to-r from-electric-500/10 to-violet-500/10 border border-electric-500/30 rounded-xl p-5 mb-6 flex items-center justify-between">
-            <div>
-              <p className="text-slate-900 dark:text-white font-bold text-lg">Pro Plan</p>
-              <p className="text-slate-500 dark:text-slate-400 text-sm">Everything, unlimited.</p>
-            </div>
-            <div className="text-right">
-              <span className="text-3xl font-bold text-slate-900 dark:text-white">$29</span>
-              <span className="text-slate-400 text-sm"> /month</span>
-            </div>
-          </div>
-
-          <ul className="grid grid-cols-2 gap-2 mb-8">
+          <ul className="grid grid-cols-2 gap-2 mb-6">
             {features.map((f) => (
               <li key={f} className="flex items-start gap-2 text-slate-600 dark:text-slate-300 text-sm">
                 <span className="text-electric-500 mt-0.5 shrink-0">✓</span>
@@ -86,31 +73,44 @@ export default function Paywall({ onDismiss }) {
             <p className="text-red-500 dark:text-red-400 text-xs text-center mb-3">{error}</p>
           )}
 
-          {/* Upgrade button — initiates Stripe Checkout, not a router link */}
-          <Button
-            size="lg"
-            className="w-full mb-3"
-            onClick={handleUpgrade}
-            disabled={loading}
-          >
-            {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                Redirecting to checkout…
-              </span>
-            ) : (
-              'Upgrade to Pro — $29/mo'
-            )}
-          </Button>
+          {/* Two pricing options */}
+          <div className="grid grid-cols-2 gap-3 mb-3">
+            {/* Monthly */}
+            <button
+              onClick={() => handleUpgrade('monthly')}
+              disabled={!!loading}
+              className="flex flex-col items-center py-3.5 px-3 rounded-xl border border-electric-500/50 hover:bg-electric-500/5 transition-colors disabled:opacity-50"
+            >
+              {loading === 'monthly' ? (
+                <span className="w-4 h-4 border-2 border-electric-500/40 border-t-electric-500 rounded-full animate-spin" />
+              ) : (
+                <>
+                  <span className="text-lg font-black text-slate-900 dark:text-white">$29<span className="text-sm font-semibold text-slate-400">/mo</span></span>
+                  <span className="text-xs text-electric-600 dark:text-electric-400 font-semibold mt-0.5">Monthly</span>
+                  <span className="text-[10px] text-slate-400 mt-0.5">Cancel anytime</span>
+                </>
+              )}
+            </button>
 
-          {/* Continue with free — dismisses modal and stays on dashboard */}
-          <button
-            onClick={onDismiss}
-            disabled={loading}
-            className="w-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 text-sm transition-colors py-2 disabled:opacity-50"
-          >
-            Continue with Free plan
-          </button>
+            {/* Lifetime */}
+            <button
+              onClick={() => handleUpgrade('lifetime')}
+              disabled={!!loading}
+              className="flex flex-col items-center py-3.5 px-3 rounded-xl bg-gradient-to-b from-electric-500/15 to-violet-500/10 border-2 border-electric-500/50 transition-colors disabled:opacity-50 relative overflow-hidden"
+            >
+              <span className="absolute top-0 right-0 text-[9px] font-black uppercase px-1.5 py-0.5 bg-gradient-to-r from-electric-500 to-violet-500 text-white rounded-bl-lg">Best</span>
+              {loading === 'lifetime' ? (
+                <span className="w-4 h-4 border-2 border-electric-500/40 border-t-electric-500 rounded-full animate-spin" />
+              ) : (
+                <>
+                  <span className="text-lg font-black text-slate-900 dark:text-white">$149<span className="text-sm font-semibold text-slate-400"> once</span></span>
+                  <span className="text-xs text-electric-600 dark:text-electric-400 font-semibold mt-0.5">Lifetime</span>
+                  <span className="text-[10px] text-green-600 dark:text-green-400 mt-0.5 font-semibold">Save 57%</span>
+                </>
+              )}
+            </button>
+          </div>
+
         </div>
       </div>
     </div>

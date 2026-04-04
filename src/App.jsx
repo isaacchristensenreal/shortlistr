@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
@@ -55,6 +55,9 @@ export default function App() {
               <Route path="/welcome"   element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
               <Route path="/linkedin-optimizer" element={<ProtectedRoute><LinkedInOptimizer /></ProtectedRoute>} />
               <Route path="/salary-negotiator"  element={<ProtectedRoute><SalaryNegotiator /></ProtectedRoute>} />
+
+              {/* Catch-all — redirect unknown paths to home */}
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </ToastProvider>
         </AuthProvider>

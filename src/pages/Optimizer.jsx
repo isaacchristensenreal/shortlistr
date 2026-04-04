@@ -12,6 +12,7 @@ import {
   predictInterviewQuestions,
 } from '../lib/ai'
 import ResumePreview from '../components/ui/ResumePreview'
+import { ScoreCardModal } from '../components/ui/ScoreCard'
 import { supabase } from '../lib/supabase'
 import html2canvas from 'html2canvas'
 
@@ -660,6 +661,11 @@ export default function Optimizer() {
   const [generatingCover, setGeneratingCover] = useState(false)
   const [coverCopied, setCoverCopied] = useState(false)
 
+  // Score card
+  const [showScoreCard, setShowScoreCard] = useState(false)
+  const [keywordsAdded, setKeywordsAdded] = useState(0)
+  const [bulletsRewritten, setBulletsRewritten] = useState(0)
+
   // Transformation card share
   const transformCardRef = useRef(null)
 
@@ -713,6 +719,10 @@ export default function Optimizer() {
         const { result, atsScore: score } = optimizeRes.value
         setResultData(result)
         setAtsScore(score)
+        // compute stats for the score card
+        const bullets = result?.experience?.reduce((acc, e) => acc + (e.bullets?.length ?? 0), 0) ?? 0
+        setBulletsRewritten(bullets)
+        setKeywordsAdded(result?.skills?.length ?? 0)
         // auto-save
         const title = result?.experience?.[0]
           ? `${result.experience[0].title} — ${result.experience[0].company}`
@@ -1032,11 +1042,11 @@ export default function Optimizer() {
                 <div className="space-y-2">
                   <TransformationCard beforeScore={beforeScore} afterScore={atsScore} cardRef={transformCardRef} />
                   <button
-                    onClick={handleShareCard}
+                    onClick={() => setShowScoreCard(true)}
                     className="w-full py-2.5 rounded-xl border border-gold-500/20 bg-gold-500/5 text-gold-500 text-sm font-semibold hover:bg-gold-500/15 transition-all flex items-center justify-center gap-2"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                    Share Your Results
+                    Download Score Card
                   </button>
                 </div>
               )}
@@ -1156,6 +1166,15 @@ export default function Optimizer() {
           </div>
         </div>
       </div>
+      {showScoreCard && beforeScore !== null && atsScore !== null && (
+        <ScoreCardModal
+          beforeScore={beforeScore}
+          afterScore={atsScore}
+          keywordsAdded={keywordsAdded}
+          bulletsRewritten={bulletsRewritten}
+          onClose={() => setShowScoreCard(false)}
+        />
+      )}
     </AppShell>
   )
 }

@@ -40,6 +40,12 @@ export default function Dashboard() {
   const firstName = profile?.username || user?.email?.split('@')[0] || ''
 
   useEffect(() => {
+    if (profile && !isPro) {
+      navigate('/pricing', { replace: true })
+    }
+  }, [profile, isPro, navigate])
+
+  useEffect(() => {
     if (!user) return
     supabase
       .from('saved_resumes')

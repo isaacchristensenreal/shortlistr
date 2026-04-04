@@ -69,7 +69,7 @@ function UserMenu({ user, profile, onSignOut }) {
               </div>
             </div>
             <span className="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full" style={isPro ? { background: 'rgba(245,200,66,0.12)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.2)' } : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.35)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              {isPro ? '⚡ Pro Plan' : 'Free Plan'}
+              {isPro ? '⚡ Pro Plan' : 'Upgrade'}
             </span>
           </div>
 
@@ -173,6 +173,7 @@ export default function Navbar() {
             <>
               <NavLink to="/features" active={pathname === '/features'}>Features</NavLink>
               <NavLink to="/pricing" active={pathname === '/pricing'}>Pricing</NavLink>
+              <NavLink to="/auth" active={pathname === '/auth'}>Login</NavLink>
             </>
           )}
         </div>
@@ -182,21 +183,13 @@ export default function Navbar() {
           {user ? (
             <UserMenu user={user} profile={profile} onSignOut={handleSignOut} />
           ) : (
-            <>
-              <Link to="/auth" className="hidden sm:block text-sm font-medium px-3 py-2 rounded-lg transition-colors" style={{ color: 'rgba(255,255,255,0.45)' }}
-                onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}
-                onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.45)'}
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/auth?mode=signup"
-                className="text-sm font-bold px-4 py-2 rounded-xl transition-all"
-                style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 4px 16px rgba(245,200,66,0.25)' }}
-              >
-                Get Started
-              </Link>
-            </>
+            <Link
+              to="/auth?mode=signup"
+              className="text-sm font-bold px-4 py-2 rounded-xl transition-all"
+              style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 4px 16px rgba(245,200,66,0.25)' }}
+            >
+              Start Free →
+            </Link>
           )}
 
           {/* Mobile hamburger */}
@@ -230,7 +223,12 @@ export default function Navbar() {
             <>
               <NavLink to="/features" active={pathname === '/features'} onClick={() => setMobileOpen(false)}>Features</NavLink>
               <NavLink to="/pricing" active={pathname === '/pricing'} onClick={() => setMobileOpen(false)}>Pricing</NavLink>
-              <NavLink to="/auth" active={pathname === '/auth'} onClick={() => setMobileOpen(false)}>Sign In</NavLink>
+              <NavLink to="/auth" active={pathname === '/auth'} onClick={() => setMobileOpen(false)}>Login</NavLink>
+              <Link to="/auth?mode=signup" onClick={() => setMobileOpen(false)}
+                className="block text-sm font-bold px-3 py-2 rounded-xl mt-1 text-center transition-all"
+                style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F' }}>
+                Start Free →
+              </Link>
             </>
           )}
         </div>

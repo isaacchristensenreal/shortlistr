@@ -4,6 +4,9 @@ Disallow: /dashboard
 Disallow: /library
 Disallow: /settings
 Disallow: /welcome
-Disallow: /upgrade-success
+Disallow: /upgrade/success
+Disallow: /optimize
+Disallow: /linkedin-optimizer
+Disallow: /salary-negotiator
 
 Sitemap: https://shortlistr.us/sitemap.xml
