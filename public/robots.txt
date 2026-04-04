@@ -9,4 +9,4 @@ Disallow: /optimize
 Disallow: /linkedin-optimizer
 Disallow: /salary-negotiator
 
-Sitemap: https://shortlistr.us/sitemap.xml
+Sitemap: https://www.shortlistr.us/sitemap.xml
