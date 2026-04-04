@@ -85,7 +85,7 @@ export default function Paywall({ onDismiss }) {
                 <span className="w-4 h-4 border-2 border-electric-500/40 border-t-electric-500 rounded-full animate-spin" />
               ) : (
                 <>
-                  <span className="text-lg font-black text-slate-900 dark:text-white">$29<span className="text-sm font-semibold text-slate-400">/mo</span></span>
+                  <span className="text-lg font-black text-slate-900 dark:text-white">$10<span className="text-sm font-semibold text-slate-400">/mo</span></span>
                   <span className="text-xs text-electric-600 dark:text-electric-400 font-semibold mt-0.5">Monthly</span>
                   <span className="text-[10px] text-slate-400 mt-0.5">Cancel anytime</span>
                 </>

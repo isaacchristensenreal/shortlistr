@@ -28,7 +28,7 @@ function CheckIcon() {
 
 /* ─── Data ───────────────────────────────────────────────────────────────── */
 const valueStack = [
-  { label: 'ATS Resume Scanner', desc: 'See your exact score vs. any job description', value: '$29/mo' },
+  { label: 'ATS Resume Scanner', desc: 'See your exact score vs. any job description', value: '$10/mo' },
   { label: 'AI Resume Rewriter', desc: 'Keyword-optimized in 90 seconds', value: '$49/mo' },
   { label: 'Cover Letter Generator', desc: 'Tailored to every job posting', value: '$19/mo' },
   { label: 'Before/After Scorecard', desc: 'Shareable PNG of your improvement', value: '$9/mo' },

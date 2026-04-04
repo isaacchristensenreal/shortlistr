@@ -2,7 +2,7 @@ import { supabase } from './supabase'
 
 /**
  * Initiates a Stripe Checkout session.
- * billing: 'monthly' (subscription $29/mo) | 'lifetime' (one-time $149)
+ * billing: 'monthly' (subscription $10/mo) | 'lifetime' (one-time $149)
  */
 export async function startCheckout(userId, userEmail, billing = 'monthly') {
   const cancelUrl = window.location.href

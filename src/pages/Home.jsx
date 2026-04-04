@@ -165,7 +165,7 @@ const testimonials = [
 ]
 
 const valueItems = [
-  { label: 'ATS Resume Scanner', desc: 'See your exact score', value: '$29 value' },
+  { label: 'ATS Resume Scanner', desc: 'See your exact score', value: '$10 value' },
   { label: 'AI Resume Rewriter', desc: 'Keyword-optimized in 90 seconds', value: '$49 value' },
   { label: 'Cover Letter Generator', desc: 'Tailored to every job posting', value: '$19 value' },
   { label: 'Before/After Scorecard', desc: 'Shareable PNG of your improvement', value: '$9 value' },

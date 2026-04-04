@@ -507,7 +507,7 @@ export default function Welcome() {
                 <div className="bg-white dark:bg-navy-800 border border-slate-200 dark:border-white/10 rounded-2xl p-6 flex flex-col">
                   <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-1">Monthly</h3>
                   <div className="flex items-baseline gap-1 mb-4">
-                    <span className="text-3xl font-bold text-slate-900 dark:text-white">$29</span>
+                    <span className="text-3xl font-bold text-slate-900 dark:text-white">$10</span>
                     <span className="text-slate-400 text-sm">/month</span>
                   </div>
                   <ul className="space-y-2 mb-6 flex-1">
@@ -533,7 +533,7 @@ export default function Welcome() {
                           <span className="w-4 h-4 border-2 border-electric-500/40 border-t-electric-500 rounded-full animate-spin" />
                           Redirecting…
                         </span>
-                      ) : 'Start Monthly — $29/mo'}
+                      ) : 'Start Monthly — $10/mo'}
                     </button>
                   )}
                 </div>

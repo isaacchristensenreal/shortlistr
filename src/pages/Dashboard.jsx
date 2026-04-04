@@ -172,7 +172,7 @@ export default function Dashboard() {
                 <div className="shrink-0 flex flex-col items-start sm:items-end gap-2">
                   {upgradeError && <p className="text-crimson-400 text-xs">{upgradeError}</p>}
                   <div className="flex items-baseline gap-1">
-                    <span className="text-white font-black text-3xl">$29</span>
+                    <span className="text-white font-black text-3xl">$10</span>
                     <span className="text-white/30 text-sm">/mo</span>
                   </div>
                   <button

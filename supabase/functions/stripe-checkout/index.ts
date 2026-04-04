@@ -83,7 +83,7 @@ serve(async (req) => {
       })
     }
 
-    // ── Pro Monthly (subscription $29/mo) ───────────────────────────────────
+    // ── Pro Monthly (subscription $10/mo) ───────────────────────────────────
     const priceId = Deno.env.get('STRIPE_PRO_PRICE_ID') ?? ''
     if (!priceId) {
       return new Response(JSON.stringify({ stripe_not_configured: true }), {

@@ -66,7 +66,7 @@ export default function TermsPage() {
               ShortListr is an AI-powered resume optimization platform. We help job seekers tailor their resumes to specific job descriptions — analyzing keyword gaps, rewriting bullet points, generating cover letters, and maintaining version history.
             </p>
             <p>
-              We offer a paid Pro tier (unlimited optimizations, $29/month or $149 lifetime one-time payment) and an optional Salary Negotiation add-on ($4.99 one-time). Features and pricing are subject to change at our discretion. We reserve the right to modify, suspend, or discontinue any part of the Service at any time without liability.
+              We offer a paid Pro tier (unlimited optimizations, $10/month or $149 lifetime one-time payment) and an optional Salary Negotiation add-on ($4.99 one-time). Features and pricing are subject to change at our discretion. We reserve the right to modify, suspend, or discontinue any part of the Service at any time without liability.
             </p>
           </Section>
 
@@ -148,7 +148,7 @@ export default function TermsPage() {
               TO THE FULLEST EXTENT PERMITTED BY LAW, RESUMEFORGE AND ITS OWNERS, EMPLOYEES, AND AFFILIATES SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES — INCLUDING LOSS OF EMPLOYMENT OPPORTUNITY, LOSS OF INCOME, OR LOSS OF DATA — ARISING FROM YOUR USE OF THE SERVICE, EVEN IF RESUMEFORGE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
             </p>
             <p>
-              OUR TOTAL LIABILITY FOR ANY CLAIM SHALL NOT EXCEED THE AMOUNT YOU PAID US IN THE TWELVE (12) MONTHS BEFORE THE CLAIM, OR $29 USD IF YOU HAVE NOT MADE ANY PAYMENTS.
+              OUR TOTAL LIABILITY FOR ANY CLAIM SHALL NOT EXCEED THE AMOUNT YOU PAID US IN THE TWELVE (12) MONTHS BEFORE THE CLAIM, OR $10 USD IF YOU HAVE NOT MADE ANY PAYMENTS.
             </p>
             <p>
               Some jurisdictions do not allow certain liability exclusions. In those jurisdictions, our liability is limited to the greatest extent permitted by law.
