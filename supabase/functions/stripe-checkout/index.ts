@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { userId, userEmail, billing, mode } = await req.json()
+    const { userId, userEmail, billing, mode, cancelUrl } = await req.json()
     if (!userId || !userEmail) throw new Error('userId and userEmail are required')
 
     const stripeKey = Deno.env.get('STRIPE_SECRET_KEY') ?? ''
@@ -73,7 +73,7 @@ serve(async (req) => {
         mode: 'payment',
         line_items: [{ price: priceId, quantity: 1 }],
         success_url: `${baseUrl}/upgrade/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${baseUrl}/pricing`,
+        cancel_url: cancelUrl || `${baseUrl}/pricing`,
         client_reference_id: userId,
         metadata: { purchase_type: 'pro_lifetime', supabase_uid: userId },
       })
@@ -97,7 +97,7 @@ serve(async (req) => {
       mode: 'subscription',
       line_items: [{ price: priceId, quantity: 1 }],
       success_url: `${baseUrl}/upgrade/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/pricing`,
+      cancel_url: cancelUrl || `${baseUrl}/pricing`,
       client_reference_id: userId,
       metadata: { purchase_type: 'pro_monthly', supabase_uid: userId },
       subscription_data: {

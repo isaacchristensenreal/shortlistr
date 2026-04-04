@@ -5,8 +5,9 @@ import { supabase } from './supabase'
  * billing: 'monthly' (subscription $29/mo) | 'lifetime' (one-time $149)
  */
 export async function startCheckout(userId, userEmail, billing = 'monthly') {
+  const cancelUrl = window.location.href
   const { data, error } = await supabase.functions.invoke('stripe-checkout', {
-    body: { userId, userEmail, billing },
+    body: { userId, userEmail, billing, cancelUrl },
   })
 
   if (error) throw new Error(error.message)
