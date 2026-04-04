@@ -5,7 +5,14 @@
       "has": [{ "type": "host", "value": "www.shortlistr.us" }],
       "destination": "https://shortlistr.us/$1",
       "statusCode": 301
-    }
+    },
+    { "source": "/no-experience-resume", "destination": "/features", "statusCode": 301 },
+    { "source": "/overqualified-resume", "destination": "/features", "statusCode": 301 },
+    { "source": "/resume-ats-test", "destination": "/features", "statusCode": 301 },
+    { "source": "/resume-for-first-job", "destination": "/features", "statusCode": 301 },
+    { "source": "/resume-for-remote-jobs", "destination": "/features", "statusCode": 301 },
+    { "source": "/resume-help", "destination": "/features", "statusCode": 301 },
+    { "source": "/tech-resume-ats", "destination": "/features", "statusCode": 301 }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
