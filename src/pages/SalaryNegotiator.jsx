@@ -122,6 +122,7 @@ export default function SalaryNegotiator() {
           userEmail: user?.email,
           mode: 'salary_addon',
           priceId: import.meta.env.VITE_STRIPE_SALARY_PRICE_ID,
+          cancelUrl: window.location.href,
           successUrl: `${window.location.origin}/salary-negotiator?unlocked=1`,
         },
       })

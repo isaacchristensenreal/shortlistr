@@ -52,7 +52,7 @@ serve(async (req) => {
         mode: 'payment',
         line_items: [{ price: priceId, quantity: 1 }],
         success_url: `${baseUrl}/salary-negotiator?unlocked=1`,
-        cancel_url: `${baseUrl}/salary-negotiator`,
+        cancel_url: cancelUrl || `${baseUrl}/salary-negotiator`,
         client_reference_id: userId,
         metadata: { purchase_type: 'salary_addon', supabase_uid: userId },
       })
