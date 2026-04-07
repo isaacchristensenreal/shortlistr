@@ -557,54 +557,7 @@ function JobMatchesTab({ matches, loading, resumeText, onPreFill }) {
   )
 }
 
-function LiveJobsTab({ resumeText, isPro }) {
-  const [jobs, setJobs] = useState(null)
-  const [profile, setProfile] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [loadedOnce, setLoadedOnce] = useState(false)
-
-  const fetchJobs = async ({ force = false } = {}) => {
-    if (!resumeText?.trim()) return
-    setLoading(true)
-    setError(null)
-    try {
-      const result = await getRealJobRecommendations(resumeText, { forceRefresh: force })
-      setJobs(result.jobs)
-      setProfile(result.profile)
-      setLoadedOnce(true)
-    } catch (err) {
-      setError(err.message ?? 'Job search failed. Please try again.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    if (!loadedOnce && resumeText?.trim()) {
-      fetchJobs()
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resumeText])
-
-  const handleRefresh = () => {
-    clearJobRecsCache()
-    fetchJobs({ force: true })
-  }
-
-  if (!resumeText?.trim()) {
-    return (
-      <div className="flex flex-col items-center justify-center py-14 text-center">
-        <div className="w-12 h-12 rounded-2xl bg-neon-400/10 flex items-center justify-center mb-3">
-          <svg className="w-6 h-6 text-neon-400/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
-        </div>
-        <p className="text-white/50 text-sm">Upload your resume to find live job listings matched to your profile</p>
-      </div>
-    )
-  }
-
+function LiveJobsTab({ jobs, profile, loading, error, onRefresh }) {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-14 gap-4 text-center">
@@ -612,7 +565,7 @@ function LiveJobsTab({ resumeText, isPro }) {
           style={{ borderColor: 'rgba(0,255,136,0.3)', borderTopColor: '#00FF88' }} />
         <div>
           <p className="text-white font-semibold mb-1">Searching for live job listings…</p>
-          <p className="text-white/40 text-sm">This may take 5–10 seconds while we search the web</p>
+          <p className="text-white/40 text-sm">Scanning the web for real openings matched to your resume</p>
         </div>
       </div>
     )
@@ -630,17 +583,26 @@ function LiveJobsTab({ resumeText, isPro }) {
           <p className="text-white font-semibold mb-1">Search failed</p>
           <p className="text-white/45 text-sm max-w-xs">{error}</p>
         </div>
-        <button
-          onClick={() => fetchJobs({ force: true })}
-          className="px-5 py-2.5 rounded-xl border border-white/10 text-white/60 text-sm hover:border-white/20 hover:text-white transition-all"
-        >
+        <button onClick={onRefresh}
+          className="px-5 py-2.5 rounded-xl border border-white/10 text-white/60 text-sm hover:border-white/20 hover:text-white transition-all">
           Try again
         </button>
       </div>
     )
   }
 
-  if (!jobs?.length) return null
+  if (!jobs?.length) {
+    return (
+      <div className="flex flex-col items-center justify-center py-14 text-center">
+        <div className="w-12 h-12 rounded-2xl bg-neon-400/10 flex items-center justify-center mb-3">
+          <svg className="w-6 h-6 text-neon-400/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <p className="text-white/50 text-sm">Scan your resume to find live job listings matched to your profile</p>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-4">
@@ -660,11 +622,8 @@ function LiveJobsTab({ resumeText, isPro }) {
             </span>
           </div>
         )}
-        <button
-          onClick={handleRefresh}
-          disabled={loading}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border border-white/10 text-white/50 hover:border-white/20 hover:text-white disabled:opacity-30"
-        >
+        <button onClick={onRefresh}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border border-white/10 text-white/50 hover:border-white/20 hover:text-white">
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
@@ -685,34 +644,20 @@ function LiveJobsTab({ resumeText, isPro }) {
                 </span>
               )}
             </div>
-
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-white/60 text-xs font-medium">{job.company}</span>
               <span className="text-white/20 text-xs">·</span>
               <span className="text-white/40 text-xs">{job.location}</span>
             </div>
-
-            {!job.salary && (
-              <span className="text-[10px] text-white/25">Salary not listed</span>
-            )}
-
+            {!job.salary && <span className="text-[10px] text-white/25">Salary not listed</span>}
             {job.description && (
               <p className="text-white/55 text-xs leading-relaxed line-clamp-3 flex-1">{job.description}</p>
             )}
-
-            <a
-              href={job.applyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <a href={job.applyUrl} target="_blank" rel="noopener noreferrer"
               className="mt-1 w-full py-2 rounded-lg text-xs font-bold text-center transition-all flex items-center justify-center gap-1.5"
-              style={{
-                background: 'rgba(0,255,136,0.08)',
-                border: '1px solid rgba(0,255,136,0.2)',
-                color: '#00FF88',
-              }}
+              style={{ background: 'rgba(0,255,136,0.08)', border: '1px solid rgba(0,255,136,0.2)', color: '#00FF88' }}
               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,255,136,0.15)' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,255,136,0.08)' }}
-            >
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,255,136,0.08)' }}>
               Apply Now
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -723,7 +668,7 @@ function LiveJobsTab({ resumeText, isPro }) {
       </div>
 
       <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
-        Live job data · Results cached for 24 hours · Click "Refresh Jobs" for fresh listings
+        Live job data · Click "Refresh Jobs" for fresh listings
       </p>
     </div>
   )
@@ -976,6 +921,12 @@ export default function Optimizer() {
   const [loadingMatches, setLoadingMatches] = useState(false)
   const [loadingInterview, setLoadingInterview] = useState(false)
 
+  // Live jobs (web search — fired at scan time)
+  const [liveJobs, setLiveJobs] = useState(null)
+  const [liveJobsProfile, setLiveJobsProfile] = useState(null)
+  const [loadingLiveJobs, setLoadingLiveJobs] = useState(false)
+  const [liveJobsError, setLiveJobsError] = useState(null)
+
   // Tabs — initialise from ?tab= URL param and stay in sync when URL changes
   const [activeTab, setActiveTab] = useState(() => {
     const t = new URLSearchParams(search).get('tab')
@@ -1044,6 +995,7 @@ export default function Optimizer() {
 
     setScanError(null); setScanning(true); setScanStep(0)
     setRejectionData(null); setAtsDetection(null); setInterviewQuestions(null)
+    setJobMatches(null); setLiveJobs(null); setLiveJobsProfile(null); setLiveJobsError(null)
     setBeforeScore(atsScore) // store previous for transformation card
 
     try {
@@ -1081,16 +1033,32 @@ export default function Optimizer() {
       setActiveTab('resume')
       success('Your resume has been optimized!')
 
-      // Run post-scan analysis in background (non-blocking)
+      // Run all post-scan analysis in background (non-blocking)
+
+      // Job matches (AI — fast)
+      setLoadingMatches(true)
+      generateJobMatches(resumeText)
+        .then(r => setJobMatches(r?.matches ?? []))
+        .catch(() => {})
+        .finally(() => setLoadingMatches(false))
+
+      // Live jobs (web search — slower, ~5-10s)
+      setLoadingLiveJobs(true)
+      clearJobRecsCache()
+      getRealJobRecommendations(resumeText, { forceRefresh: true })
+        .then(r => { setLiveJobs(r.jobs); setLiveJobsProfile(r.profile) })
+        .catch(e => setLiveJobsError(e?.message ?? 'Job search failed'))
+        .finally(() => setLoadingLiveJobs(false))
+
       if (isPro) {
         setLoadingRejection(true)
-        analyzeRejectionReasons(resumeText, jobText, atsScore).then(r => setRejectionData(r)).catch(e => {
+        analyzeRejectionReasons(resumeText, jobText, atsScore).then(r => setRejectionData(r)).catch(() => {
           toastError('Rejection analysis temporarily unavailable')
         }).finally(() => setLoadingRejection(false))
 
         setScanStep(4) // interview questions
         setLoadingInterview(true)
-        predictInterviewQuestions(resumeText, jobText).then(r => setInterviewQuestions(r?.questions ?? [])).catch(e => {
+        predictInterviewQuestions(resumeText, jobText).then(r => setInterviewQuestions(r?.questions ?? [])).catch(() => {
           toastError('Interview prep temporarily unavailable')
         }).finally(() => setLoadingInterview(false))
       }
@@ -1120,7 +1088,7 @@ export default function Optimizer() {
     }
   }
 
-  // ── Job matches (loaded on tab click) ───────────────────────────────────────
+  // ── Job matches ──────────────────────────────────────────────────────────────
   const handleLoadMatches = useCallback(async () => {
     if (!resumeText.trim() || jobMatches || loadingMatches) return
     setLoadingMatches(true)
@@ -1133,6 +1101,23 @@ export default function Optimizer() {
       setLoadingMatches(false)
     }
   }, [resumeText, jobMatches, loadingMatches, toastError])
+
+  // ── Live jobs refresh ────────────────────────────────────────────────────────
+  const handleRefreshLiveJobs = useCallback(async () => {
+    if (!resumeText.trim() || loadingLiveJobs) return
+    setLoadingLiveJobs(true)
+    setLiveJobsError(null)
+    clearJobRecsCache()
+    try {
+      const r = await getRealJobRecommendations(resumeText, { forceRefresh: true })
+      setLiveJobs(r.jobs)
+      setLiveJobsProfile(r.profile)
+    } catch (e) {
+      setLiveJobsError(e?.message ?? 'Job search failed')
+    } finally {
+      setLoadingLiveJobs(false)
+    }
+  }, [resumeText, loadingLiveJobs])
 
   const handleTabClick = (tab) => {
     setActiveTab(tab)
@@ -1535,7 +1520,13 @@ export default function Optimizer() {
                     {activeTab === 'library' ? (
                       <LibraryTab user={user} />
                     ) : activeTab === 'livejobs' ? (
-                      <LiveJobsTab resumeText={resumeText} isPro={isPro} />
+                      <LiveJobsTab
+                        jobs={liveJobs}
+                        profile={liveJobsProfile}
+                        loading={loadingLiveJobs}
+                        error={liveJobsError}
+                        onRefresh={handleRefreshLiveJobs}
+                      />
                     ) : !resultData ? (
                       <div className="min-h-[460px] flex flex-col items-center justify-center text-center px-8 py-12">
                         <div className="w-16 h-16 rounded-2xl border border-white/8 bg-white/3 flex items-center justify-center mb-4">
