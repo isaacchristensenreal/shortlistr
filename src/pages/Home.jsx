@@ -175,7 +175,7 @@ function FreeATSScorer() {
     } catch (err) {
       setError(
         err?.message?.includes('Too many requests')
-          ? 'You've reached the limit (5 checks/hour). Try again later.'
+          ? "You've reached the limit (5 checks/hour). Try again later."
           : 'Analysis failed. Please try again in a moment.'
       )
     } finally {
