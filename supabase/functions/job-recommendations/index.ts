@@ -101,6 +101,12 @@ Deno.serve(async (req) => {
       throw new Error('Profile extraction failed')
     }
 
+    const u1 = extractData.usage
+    if (u1) {
+      const cost = ((u1.prompt_tokens * 0.15 + u1.completion_tokens * 0.60) / 1_000_000).toFixed(6)
+      console.log(`[job-recommendations] extract tokens: ${u1.prompt_tokens}p + ${u1.completion_tokens}c (~$${cost})`)
+    }
+
     let profile: {
       jobTitles: string[]
       skills: string[]

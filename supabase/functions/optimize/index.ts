@@ -37,7 +37,7 @@ Deno.serve(async (req) => {
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
-        max_tokens: 4096,
+        max_tokens: 3000,
         response_format: { type: 'json_object' },
         messages: [
           { role: 'system', content: RESUME_SYSTEM_PROMPT },
@@ -50,6 +50,12 @@ Deno.serve(async (req) => {
 
     if (!response.ok) {
       throw new Error(data?.error?.message ?? 'OpenAI API error')
+    }
+
+    const u = data.usage
+    if (u) {
+      const cost = ((u.prompt_tokens * 0.15 + u.completion_tokens * 0.60) / 1_000_000).toFixed(6)
+      console.log(`[optimize] tokens: ${u.prompt_tokens}p + ${u.completion_tokens}c = ${u.total_tokens}t (~$${cost})`)
     }
 
     const raw = data.choices?.[0]?.message?.content ?? '{}'

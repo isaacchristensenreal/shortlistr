@@ -53,6 +53,12 @@ Format: Plain text only. Include greeting and sign-off. No placeholders like [Yo
       throw new Error(data?.error?.message ?? 'OpenAI API error')
     }
 
+    const u = data.usage
+    if (u) {
+      const cost = ((u.prompt_tokens * 0.15 + u.completion_tokens * 0.60) / 1_000_000).toFixed(6)
+      console.log(`[cover-letter] tokens: ${u.prompt_tokens}p + ${u.completion_tokens}c = ${u.total_tokens}t (~$${cost})`)
+    }
+
     const result = data.choices?.[0]?.message?.content ?? 'Could not generate cover letter.'
 
     return new Response(JSON.stringify({ result }), {

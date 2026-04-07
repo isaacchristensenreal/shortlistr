@@ -85,7 +85,7 @@ Deno.serve(async (req) => {
       )
     }
 
-    const truncatedResume = resumeText.slice(0, 12000)
+    const truncatedResume = resumeText.slice(0, 6000)
     console.log(`[score-preview] Calling OpenAI with ${truncatedResume.length} chars`)
 
     const openaiRes = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -96,7 +96,7 @@ Deno.serve(async (req) => {
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
-        max_tokens: 1024,
+        max_tokens: 600,
         response_format: { type: 'json_object' },
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
@@ -116,6 +116,11 @@ Deno.serve(async (req) => {
     }
 
     const rawText = openaiData.choices?.[0]?.message?.content ?? '{}'
+    const u = openaiData.usage
+    if (u) {
+      const cost = ((u.prompt_tokens * 0.15 + u.completion_tokens * 0.60) / 1_000_000).toFixed(6)
+      console.log(`[score-preview] tokens: ${u.prompt_tokens}p + ${u.completion_tokens}c = ${u.total_tokens}t (~$${cost})`)
+    }
     console.log('[score-preview] OpenAI raw response:', rawText.slice(0, 200))
 
     let parsed: { realScore?: number; issues?: string[] }
