@@ -1,0 +1,2 @@
+[functions.judge-resume]
+verify_jwt = false

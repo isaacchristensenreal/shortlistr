@@ -10,6 +10,9 @@ import {
   detectAtsSystem,
   generateJobMatches,
   predictInterviewQuestions,
+  judgeResume,
+  getRealJobRecommendations,
+  clearJobRecsCache,
 } from '../lib/ai'
 import ResumePreview from '../components/ui/ResumePreview'
 import { ScoreCardModal } from '../components/ui/ScoreCard'
@@ -554,6 +557,178 @@ function JobMatchesTab({ matches, loading, resumeText, onPreFill }) {
   )
 }
 
+function LiveJobsTab({ resumeText, isPro }) {
+  const [jobs, setJobs] = useState(null)
+  const [profile, setProfile] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [loadedOnce, setLoadedOnce] = useState(false)
+
+  const fetchJobs = async ({ force = false } = {}) => {
+    if (!resumeText?.trim()) return
+    setLoading(true)
+    setError(null)
+    try {
+      const result = await getRealJobRecommendations(resumeText, { forceRefresh: force })
+      setJobs(result.jobs)
+      setProfile(result.profile)
+      setLoadedOnce(true)
+    } catch (err) {
+      setError(err.message ?? 'Job search failed. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (!loadedOnce && resumeText?.trim()) {
+      fetchJobs()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumeText])
+
+  const handleRefresh = () => {
+    clearJobRecsCache()
+    fetchJobs({ force: true })
+  }
+
+  if (!resumeText?.trim()) {
+    return (
+      <div className="flex flex-col items-center justify-center py-14 text-center">
+        <div className="w-12 h-12 rounded-2xl bg-neon-400/10 flex items-center justify-center mb-3">
+          <svg className="w-6 h-6 text-neon-400/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <p className="text-white/50 text-sm">Upload your resume to find live job listings matched to your profile</p>
+      </div>
+    )
+  }
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-14 gap-4 text-center">
+        <div className="w-10 h-10 border-2 border-t-transparent rounded-full animate-spin"
+          style={{ borderColor: 'rgba(0,255,136,0.3)', borderTopColor: '#00FF88' }} />
+        <div>
+          <p className="text-white font-semibold mb-1">Searching for live job listings…</p>
+          <p className="text-white/40 text-sm">This may take 5–10 seconds while we search the web</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center py-14 text-center gap-4">
+        <div className="w-12 h-12 rounded-2xl bg-crimson-400/10 flex items-center justify-center">
+          <svg className="w-6 h-6 text-crimson-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+          </svg>
+        </div>
+        <div>
+          <p className="text-white font-semibold mb-1">Search failed</p>
+          <p className="text-white/45 text-sm max-w-xs">{error}</p>
+        </div>
+        <button
+          onClick={() => fetchJobs({ force: true })}
+          className="px-5 py-2.5 rounded-xl border border-white/10 text-white/60 text-sm hover:border-white/20 hover:text-white transition-all"
+        >
+          Try again
+        </button>
+      </div>
+    )
+  }
+
+  if (!jobs?.length) return null
+
+  return (
+    <div className="space-y-4">
+      {/* Header row */}
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        {profile && (
+          <div className="flex flex-wrap gap-1.5">
+            {profile.jobTitles?.slice(0, 2).map(t => (
+              <span key={t} className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
+                style={{ background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.2)', color: '#00FF88' }}>
+                {t}
+              </span>
+            ))}
+            <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full capitalize"
+              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)' }}>
+              {profile.experienceLevel} level
+            </span>
+          </div>
+        )}
+        <button
+          onClick={handleRefresh}
+          disabled={loading}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border border-white/10 text-white/50 hover:border-white/20 hover:text-white disabled:opacity-30"
+        >
+          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Refresh Jobs
+        </button>
+      </div>
+
+      {/* Job cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {jobs.map((job, i) => (
+          <div key={i} className="card-dark p-4 flex flex-col gap-2 hover:border-neon-400/20 transition-colors">
+            <div className="flex items-start justify-between gap-2">
+              <p className="text-white font-semibold text-sm leading-snug">{job.title}</p>
+              {job.salary && (
+                <span className="text-[10px] font-bold shrink-0 px-2 py-0.5 rounded-full whitespace-nowrap"
+                  style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.2)' }}>
+                  {job.salary}
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-white/60 text-xs font-medium">{job.company}</span>
+              <span className="text-white/20 text-xs">·</span>
+              <span className="text-white/40 text-xs">{job.location}</span>
+            </div>
+
+            {!job.salary && (
+              <span className="text-[10px] text-white/25">Salary not listed</span>
+            )}
+
+            {job.description && (
+              <p className="text-white/55 text-xs leading-relaxed line-clamp-3 flex-1">{job.description}</p>
+            )}
+
+            <a
+              href={job.applyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 w-full py-2 rounded-lg text-xs font-bold text-center transition-all flex items-center justify-center gap-1.5"
+              style={{
+                background: 'rgba(0,255,136,0.08)',
+                border: '1px solid rgba(0,255,136,0.2)',
+                color: '#00FF88',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,255,136,0.15)' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,255,136,0.08)' }}
+            >
+              Apply Now
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+        ))}
+      </div>
+
+      <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
+        Live job data · Results cached for 24 hours · Click "Refresh Jobs" for fresh listings
+      </p>
+    </div>
+  )
+}
+
 function TransformationCard({ beforeScore, afterScore, resumeName, cardRef }) {
   if (beforeScore === null || afterScore === null) return null
   const diff = afterScore - beforeScore
@@ -594,6 +769,167 @@ function TransformationCard({ beforeScore, afterScore, resumeName, cardRef }) {
   )
 }
 
+function ResumeJudgeResults({ data }) {
+  if (!data) return null
+
+  const gradeColor = (grade) => {
+    if (grade?.startsWith('A')) return '#00FF88'
+    if (grade?.startsWith('B')) return '#3B82F6'
+    if (grade?.startsWith('C')) return '#F5C842'
+    return '#FF4444'
+  }
+
+  const atsColor = (readiness) => {
+    if (readiness === 'High') return { text: '#00FF88', bg: 'rgba(0,255,136,0.12)', border: 'rgba(0,255,136,0.25)' }
+    if (readiness === 'Medium') return { text: '#F5C842', bg: 'rgba(245,200,66,0.12)', border: 'rgba(245,200,66,0.25)' }
+    return { text: '#FF4444', bg: 'rgba(255,68,68,0.12)', border: 'rgba(255,68,68,0.25)' }
+  }
+
+  const atsStyle = atsColor(data.ats_readiness)
+  const gc = gradeColor(data.overall_grade)
+
+  const SECTION_LABELS = {
+    contact: 'Contact',
+    summary: 'Summary',
+    experience: 'Experience',
+    skills: 'Skills',
+    education: 'Education',
+  }
+
+  return (
+    <div className="space-y-5">
+      {/* Score + Grade header */}
+      <div className="card-dark p-6">
+        <div className="flex flex-col sm:flex-row items-center gap-6">
+          <div className="flex items-center gap-4 shrink-0">
+            <ScoreRing score={data.overall_score} size={120} />
+            <div className="flex flex-col items-center justify-center">
+              <span
+                className="font-black leading-none"
+                style={{ fontSize: 52, color: gc }}
+              >
+                {data.overall_grade}
+              </span>
+              <span className="text-white/30 text-xs font-semibold uppercase tracking-wider mt-1">Grade</span>
+            </div>
+          </div>
+          <div className="flex-1 min-w-0 text-center sm:text-left">
+            <div className="flex items-center justify-center sm:justify-start gap-2 mb-3 flex-wrap">
+              <span
+                className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full border"
+                style={{ color: atsStyle.text, background: atsStyle.bg, borderColor: atsStyle.border }}
+              >
+                ATS Readiness: {data.ats_readiness}
+              </span>
+            </div>
+            <p className="text-white/70 text-sm leading-relaxed">{data.summary}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Strengths + Weaknesses */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Strengths */}
+        <div className="space-y-3">
+          <h3 className="text-white/50 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-neon-400 inline-block" />
+            Strengths
+          </h3>
+          {data.strengths?.map((s, i) => (
+            <div
+              key={i}
+              className="rounded-xl p-4 border-l-4"
+              style={{
+                background: '#13131A',
+                border: '1px solid rgba(0,255,136,0.12)',
+                borderLeft: '4px solid #00FF88',
+              }}
+            >
+              <p className="text-white font-semibold text-sm mb-1">{s.title}</p>
+              <p className="text-white/55 text-xs leading-relaxed">{s.detail}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Weaknesses */}
+        <div className="space-y-3">
+          <h3 className="text-white/50 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-crimson-400 inline-block" />
+            Weaknesses
+          </h3>
+          {data.weaknesses?.map((w, i) => (
+            <div
+              key={i}
+              className="rounded-xl p-4"
+              style={{
+                background: '#13131A',
+                border: '1px solid rgba(255,68,68,0.12)',
+                borderLeft: '4px solid #FF4444',
+              }}
+            >
+              <p className="text-white font-semibold text-sm mb-1">{w.title}</p>
+              <p className="text-white/55 text-xs leading-relaxed mb-2">{w.detail}</p>
+              <div className="flex items-start gap-1.5">
+                <svg className="w-3.5 h-3.5 text-gold-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <p className="text-gold-500 text-xs">{w.fix}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Section scores */}
+      <div className="card-dark p-5">
+        <h3 className="text-white font-semibold text-sm mb-4">Section Scores</h3>
+        <div className="space-y-3">
+          {Object.entries(data.sections ?? {}).map(([key, val]) => {
+            const barColor = val.score >= 70 ? '#00FF88' : val.score >= 50 ? '#F5C842' : '#FF4444'
+            return (
+              <div key={key}>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-white/70 text-xs font-semibold">{SECTION_LABELS[key] ?? key}</span>
+                  <span className="text-xs font-bold" style={{ color: barColor }}>{val.score}</span>
+                </div>
+                <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                  <div
+                    className="h-full rounded-full transition-all duration-700"
+                    style={{ width: `${val.score}%`, background: barColor }}
+                  />
+                </div>
+                <p className="text-white/35 text-xs mt-1 leading-relaxed">{val.feedback}</p>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Quick wins */}
+      <div className="card-dark p-5">
+        <h3 className="text-white font-semibold text-sm mb-4 flex items-center gap-2">
+          <svg className="w-4 h-4 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Quick Wins
+        </h3>
+        <div className="space-y-2">
+          {data.quick_wins?.map((win, i) => (
+            <div
+              key={i}
+              className="flex items-start gap-3 rounded-xl px-4 py-3"
+              style={{ background: 'rgba(245,200,66,0.06)', border: '1px solid rgba(245,200,66,0.18)' }}
+            >
+              <span className="text-gold-500 font-black text-sm shrink-0 mt-0.5">{i + 1}</span>
+              <p className="text-white/75 text-sm leading-relaxed">{win}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ─── Main Component ─────────────────────────────────────────────────────────────
 
 export default function Optimizer() {
@@ -621,6 +957,12 @@ export default function Optimizer() {
   const [scanStep, setScanStep] = useState(0)
   const [scanError, setScanError] = useState(null)
 
+  // Judge mode
+  const [judgeMode, setJudgeMode] = useState(false)
+  const [judgeData, setJudgeData] = useState(null)
+  const [judging, setJudging] = useState(false)
+  const [judgeError, setJudgeError] = useState(null)
+
   // Results
   const [resultData, setResultData] = useState(null)
   const [atsScore, setAtsScore] = useState(null)
@@ -637,13 +979,13 @@ export default function Optimizer() {
   // Tabs — initialise from ?tab= URL param and stay in sync when URL changes
   const [activeTab, setActiveTab] = useState(() => {
     const t = new URLSearchParams(search).get('tab')
-    return ['matches', 'interview', 'rejection', 'library'].includes(t) ? t : 'resume'
+    return ['matches', 'interview', 'rejection', 'library', 'livejobs'].includes(t) ? t : 'resume'
   })
 
   // Sync activeTab when sidebar links change the ?tab= param without remounting
   useEffect(() => {
     const t = new URLSearchParams(search).get('tab')
-    if (['matches', 'interview', 'rejection', 'library'].includes(t)) {
+    if (['matches', 'interview', 'rejection', 'library', 'livejobs'].includes(t)) {
       setActiveTab(t)
     }
   }, [search])
@@ -762,6 +1104,22 @@ export default function Optimizer() {
     }
   }
 
+  // ── Judge resume ─────────────────────────────────────────────────────────────
+  const handleJudge = async () => {
+    if (!resumeText.trim()) return
+    setJudgeError(null)
+    setJudging(true)
+    setJudgeData(null)
+    try {
+      const result = await judgeResume(resumeText)
+      setJudgeData(result)
+    } catch (err) {
+      setJudgeError(err.message ?? 'Something went wrong')
+    } finally {
+      setJudging(false)
+    }
+  }
+
   // ── Job matches (loaded on tab click) ───────────────────────────────────────
   const handleLoadMatches = useCallback(async () => {
     if (!resumeText.trim() || jobMatches || loadingMatches) return
@@ -817,13 +1175,16 @@ export default function Optimizer() {
 
   const hasJobContent = jobText.trim().length > 0
   const canSubmit = canOptimize && resumeText.trim() && hasJobContent && !scanning
+  const canJudge = canOptimize && resumeText.trim() && !judging
 
   const hasScan = !!resultData
+  const hasResume = !!resumeText?.trim()
   const TABS = [
     { id: 'resume',    label: 'Optimized Resume', disabled: false },
     { id: 'rejection', label: 'Rejection Reasons', proOnly: true, disabled: !hasScan },
     { id: 'interview', label: 'Interview Prep',    proOnly: true, disabled: !hasScan },
     { id: 'matches',   label: 'Job Matches',       disabled: !hasScan },
+    { id: 'livejobs',  label: 'Live Jobs',         disabled: !hasResume },
     { id: 'library',   label: 'Library',           disabled: false },
   ]
 
@@ -935,90 +1296,147 @@ export default function Optimizer() {
                 </div>
               </div>
 
-              {/* Job description */}
-              <div className="rounded-2xl overflow-hidden" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
-                <div className="px-5 pt-5 pb-3 flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: 'rgba(245,200,66,0.12)', color: '#F5C842' }}>2</div>
-                    <span className="text-white font-semibold text-sm">Job Description</span>
-                  </div>
-                  <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>
-                    {[['url','Paste Link'],['paste','Paste Text']].map(([m, l]) => (
-                      <button key={m} onClick={() => setJobMode(m)}
-                        className="px-3 py-1.5 text-xs font-medium transition-all"
-                        style={jobMode === m
-                          ? { background: 'rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.9)' }
-                          : { color: 'rgba(255,255,255,0.35)' }}>
-                        {l}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="px-5 pb-5">
-                  {jobMode === 'url' ? (
-                    <div className="space-y-2">
-                      <div className="flex gap-2">
-                        <input type="url" value={jobUrl} onChange={e => setJobUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleFetchJob()}
-                          placeholder="https://jobs.company.com/role"
-                          className="flex-1 text-sm outline-none rounded-xl px-4 py-2.5 transition-all"
-                          style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.8)', caretColor: '#F5C842' }}
-                          onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
-                          onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
-                        />
-                        <button onClick={handleFetchJob} disabled={!jobUrl.trim() || fetchingJob}
-                          className="px-4 py-2.5 text-sm rounded-xl transition-all whitespace-nowrap font-medium disabled:opacity-30"
-                          style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.8)' }}>
-                          {fetchingJob ? <span className="flex items-center gap-1.5"><span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />Fetching</span> : 'Fetch'}
-                        </button>
-                      </div>
-                      {fetchError && <p className="text-xs mt-1" style={{ color: '#FF4444' }}>{fetchError}</p>}
-                    </div>
-                  ) : (
-                    <textarea rows={7} value={jobText} onChange={e => setJobText(e.target.value)}
-                      placeholder="Paste the full job description here — title, requirements, responsibilities…"
-                      className="w-full resize-none text-sm outline-none transition-all rounded-xl px-4 py-3.5"
-                      style={{
-                        background: 'rgba(255,255,255,0.03)',
-                        border: '1px solid rgba(255,255,255,0.07)',
-                        color: 'rgba(255,255,255,0.8)',
-                        caretColor: '#F5C842',
-                        lineHeight: '1.65',
-                      }}
-                      onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
-                      onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
-                    />
-                  )}
-                </div>
+              {/* Mode toggle */}
+              <div className="flex rounded-2xl overflow-hidden" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)', padding: '4px' }}>
+                <button
+                  onClick={() => setJudgeMode(false)}
+                  className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all"
+                  style={!judgeMode
+                    ? { background: 'rgba(245,200,66,0.15)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.25)' }
+                    : { color: 'rgba(255,255,255,0.35)', border: '1px solid transparent' }}
+                >
+                  Optimize for Job
+                </button>
+                <button
+                  onClick={() => setJudgeMode(true)}
+                  className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all"
+                  style={judgeMode
+                    ? { background: 'rgba(245,200,66,0.15)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.25)' }
+                    : { color: 'rgba(255,255,255,0.35)', border: '1px solid transparent' }}
+                >
+                  Grade My Resume
+                </button>
               </div>
 
-              {/* Scan button */}
-              <button
-                onClick={handleScan}
-                disabled={!canSubmit}
-                className="w-full rounded-2xl font-bold text-sm transition-all disabled:cursor-not-allowed"
-                style={{
-                  padding: '15px 24px',
-                  background: canSubmit ? 'linear-gradient(135deg, #F5C842 0%, #d4a017 100%)' : 'rgba(255,255,255,0.04)',
-                  color: canSubmit ? '#0A0A0F' : 'rgba(255,255,255,0.2)',
-                  border: canSubmit ? 'none' : '1px solid rgba(255,255,255,0.06)',
-                  boxShadow: canSubmit ? '0 0 32px rgba(245,200,66,0.25), 0 4px 12px rgba(0,0,0,0.4)' : 'none',
-                  opacity: !canSubmit ? 0.5 : 1,
-                }}
-              >
-                {scanning ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                    Analyzing your resume…
-                  </span>
-                ) : (
-                  <span className="flex items-center justify-center gap-2.5">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                    Scan My Resume
-                  </span>
-                )}
-              </button>
-              {scanError && <p className="text-crimson-400 text-xs text-center mt-1">{scanError}</p>}
+              {/* Job description (hidden in judge mode) */}
+              {!judgeMode && (
+                <div className="rounded-2xl overflow-hidden" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
+                  <div className="px-5 pt-5 pb-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: 'rgba(245,200,66,0.12)', color: '#F5C842' }}>2</div>
+                      <span className="text-white font-semibold text-sm">Job Description</span>
+                    </div>
+                    <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>
+                      {[['url','Paste Link'],['paste','Paste Text']].map(([m, l]) => (
+                        <button key={m} onClick={() => setJobMode(m)}
+                          className="px-3 py-1.5 text-xs font-medium transition-all"
+                          style={jobMode === m
+                            ? { background: 'rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.9)' }
+                            : { color: 'rgba(255,255,255,0.35)' }}>
+                          {l}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="px-5 pb-5">
+                    {jobMode === 'url' ? (
+                      <div className="space-y-2">
+                        <div className="flex gap-2">
+                          <input type="url" value={jobUrl} onChange={e => setJobUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleFetchJob()}
+                            placeholder="https://jobs.company.com/role"
+                            className="flex-1 text-sm outline-none rounded-xl px-4 py-2.5 transition-all"
+                            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.8)', caretColor: '#F5C842' }}
+                            onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
+                            onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
+                          />
+                          <button onClick={handleFetchJob} disabled={!jobUrl.trim() || fetchingJob}
+                            className="px-4 py-2.5 text-sm rounded-xl transition-all whitespace-nowrap font-medium disabled:opacity-30"
+                            style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.8)' }}>
+                            {fetchingJob ? <span className="flex items-center gap-1.5"><span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />Fetching</span> : 'Fetch'}
+                          </button>
+                        </div>
+                        {fetchError && <p className="text-xs mt-1" style={{ color: '#FF4444' }}>{fetchError}</p>}
+                      </div>
+                    ) : (
+                      <textarea rows={7} value={jobText} onChange={e => setJobText(e.target.value)}
+                        placeholder="Paste the full job description here — title, requirements, responsibilities…"
+                        className="w-full resize-none text-sm outline-none transition-all rounded-xl px-4 py-3.5"
+                        style={{
+                          background: 'rgba(255,255,255,0.03)',
+                          border: '1px solid rgba(255,255,255,0.07)',
+                          color: 'rgba(255,255,255,0.8)',
+                          caretColor: '#F5C842',
+                          lineHeight: '1.65',
+                        }}
+                        onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
+                        onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Action button — Scan or Judge */}
+              {judgeMode ? (
+                <>
+                  <button
+                    onClick={handleJudge}
+                    disabled={!canJudge}
+                    className="w-full rounded-2xl font-bold text-sm transition-all disabled:cursor-not-allowed"
+                    style={{
+                      padding: '15px 24px',
+                      background: canJudge ? 'linear-gradient(135deg, #F5C842 0%, #d4a017 100%)' : 'rgba(255,255,255,0.04)',
+                      color: canJudge ? '#0A0A0F' : 'rgba(255,255,255,0.2)',
+                      border: canJudge ? 'none' : '1px solid rgba(255,255,255,0.06)',
+                      boxShadow: canJudge ? '0 0 32px rgba(245,200,66,0.25), 0 4px 12px rgba(0,0,0,0.4)' : 'none',
+                      opacity: !canJudge ? 0.5 : 1,
+                    }}
+                  >
+                    {judging ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                        Grading your resume…
+                      </span>
+                    ) : (
+                      <span className="flex items-center justify-center gap-2.5">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+                        Grade My Resume →
+                      </span>
+                    )}
+                  </button>
+                  {judgeError && <p className="text-crimson-400 text-xs text-center mt-1">{judgeError}</p>}
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={handleScan}
+                    disabled={!canSubmit}
+                    className="w-full rounded-2xl font-bold text-sm transition-all disabled:cursor-not-allowed"
+                    style={{
+                      padding: '15px 24px',
+                      background: canSubmit ? 'linear-gradient(135deg, #F5C842 0%, #d4a017 100%)' : 'rgba(255,255,255,0.04)',
+                      color: canSubmit ? '#0A0A0F' : 'rgba(255,255,255,0.2)',
+                      border: canSubmit ? 'none' : '1px solid rgba(255,255,255,0.06)',
+                      boxShadow: canSubmit ? '0 0 32px rgba(245,200,66,0.25), 0 4px 12px rgba(0,0,0,0.4)' : 'none',
+                      opacity: !canSubmit ? 0.5 : 1,
+                    }}
+                  >
+                    {scanning ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                        Analyzing your resume…
+                      </span>
+                    ) : (
+                      <span className="flex items-center justify-center gap-2.5">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        Scan My Resume
+                      </span>
+                    )}
+                  </button>
+                  {scanError && <p className="text-crimson-400 text-xs text-center mt-1">{scanError}</p>}
+                </>
+              )}
 
               {/* Score ring + ATS detector (shows after scan) */}
               {atsScore !== null && !scanning && (
@@ -1054,7 +1472,33 @@ export default function Optimizer() {
 
             {/* ── RIGHT: Results (3 cols) ───────────────────────────────── */}
             <div className="lg:col-span-3">
-              {scanning ? (
+              {judgeMode ? (
+                <div>
+                  {judging ? (
+                    <div className="card-dark min-h-[520px] flex flex-col items-center justify-center gap-4 p-8">
+                      <div className="w-12 h-12 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'rgba(245,200,66,0.3)', borderTopColor: '#F5C842' }} />
+                      <div className="text-center">
+                        <p className="text-white font-semibold mb-1">Grading your resume…</p>
+                        <p className="text-white/40 text-sm">Brutally honest feedback incoming</p>
+                      </div>
+                    </div>
+                  ) : judgeData ? (
+                    <ResumeJudgeResults data={judgeData} />
+                  ) : (
+                    <div className="card-dark min-h-[520px] flex flex-col items-center justify-center text-center px-8 py-12">
+                      <div className="w-16 h-16 rounded-2xl border border-white/8 bg-white/3 flex items-center justify-center mb-4">
+                        <svg className="w-8 h-8 text-white/15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.25">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                        </svg>
+                      </div>
+                      <p className="text-white/50 font-medium mb-2">Your grade report will appear here</p>
+                      <p className="text-white/25 text-sm max-w-xs leading-relaxed">
+                        Upload your resume above and hit "Grade My Resume" to get a brutally honest score with section-by-section feedback.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ) : scanning ? (
                 <div className="card-dark min-h-[520px]">
                   <MultiStepLoader currentStep={scanStep} />
                 </div>
@@ -1090,6 +1534,8 @@ export default function Optimizer() {
                   <div className="card-dark p-4 min-h-[500px]">
                     {activeTab === 'library' ? (
                       <LibraryTab user={user} />
+                    ) : activeTab === 'livejobs' ? (
+                      <LiveJobsTab resumeText={resumeText} isPro={isPro} />
                     ) : !resultData ? (
                       <div className="min-h-[460px] flex flex-col items-center justify-center text-center px-8 py-12">
                         <div className="w-16 h-16 rounded-2xl border border-white/8 bg-white/3 flex items-center justify-center mb-4">

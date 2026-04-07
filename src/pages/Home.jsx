@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import Layout from '../components/layout/Layout'
 import { useAuth } from '../context/AuthContext'
+import { scoreResumePreview } from '../lib/ai'
 
 /* ─────────────────────────────────────────────
    MINI DEMO COMPONENTS
@@ -113,6 +114,235 @@ function MiniCoverCard() {
         {done ? '✦ Cover letter ready — review and download' : loading ? 'Writing…' : '✦ Generate sample cover letter'}
       </button>
     </div>
+  )
+}
+
+/* ─────────────────────────────────────────────
+   FREE ATS SCORER WIDGET
+───────────────────────────────────────────── */
+function MiniScoreRing({ score }) {
+  const r = 38
+  const circ = 2 * Math.PI * r
+  const offset = circ - (score / 100) * circ
+  return (
+    <div className="relative flex items-center justify-center" style={{ width: 100, height: 100 }}>
+      <svg width={100} height={100} viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="7" />
+        <circle
+          cx="50" cy="50" r={r}
+          fill="none"
+          stroke="#EF4444"
+          strokeWidth="7"
+          strokeLinecap="round"
+          strokeDasharray={circ}
+          strokeDashoffset={circ}
+          transform="rotate(-90 50 50)"
+          style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(0.22,1,0.36,1)', strokeDashoffset: offset }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="font-black text-white" style={{ fontSize: 26, lineHeight: 1 }}>{score}</span>
+        <span className="text-white/35 font-medium" style={{ fontSize: 9 }}>/ 100</span>
+      </div>
+    </div>
+  )
+}
+
+function FreeATSScorer() {
+  const [resumeText, setResumeText] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [result, setResult] = useState(null) // { displayScore, issues }
+  const [error, setError] = useState(null)
+  const [animateScore, setAnimateScore] = useState(false)
+  const resultRef = useRef(null)
+
+  const handleCheck = async () => {
+    if (!resumeText.trim() || resumeText.trim().length < 50) {
+      setError('Please paste at least a few lines of your resume.')
+      return
+    }
+    setError(null)
+    setLoading(true)
+    setResult(null)
+    setAnimateScore(false)
+    try {
+      const data = await scoreResumePreview(resumeText)
+      setResult(data)
+      setTimeout(() => setAnimateScore(true), 100)
+      setTimeout(() => {
+        resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 200)
+    } catch (err) {
+      setError(
+        err?.message?.includes('Too many requests')
+          ? 'You've reached the limit (5 checks/hour). Try again later.'
+          : 'Analysis failed. Please try again in a moment.'
+      )
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.012)' }}>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 text-xs font-bold uppercase tracking-wider"
+            style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', color: '#EF4444' }}>
+            Free ATS Check — No Sign-up Required
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-white mb-3">
+            See your ATS score in 15 seconds
+          </h2>
+          <p className="text-sm max-w-lg mx-auto" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            Paste any section of your resume below. We'll analyze it instantly and show you the exact issues holding you back.
+          </p>
+        </div>
+
+        {/* Input card */}
+        <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <div className="px-5 pt-5 pb-3 flex items-center justify-between">
+            <span className="text-white font-semibold text-sm">Your Resume</span>
+            {resumeText.length > 0 && (
+              <span className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                {resumeText.length.toLocaleString()} chars
+              </span>
+            )}
+          </div>
+          <div className="px-5 pb-5">
+            <textarea
+              rows={7}
+              value={resumeText}
+              onChange={e => { setResumeText(e.target.value); setError(null) }}
+              placeholder="Paste your resume here — any section works. The more text, the more accurate your score…"
+              className="w-full resize-none text-sm outline-none rounded-xl px-4 py-3.5 transition-all"
+              style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.07)',
+                color: 'rgba(255,255,255,0.8)',
+                caretColor: '#F5C842',
+                lineHeight: '1.65',
+              }}
+              onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
+              onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
+            />
+          </div>
+        </div>
+
+        {error && (
+          <p className="text-center text-sm mb-4" style={{ color: '#EF4444' }}>{error}</p>
+        )}
+
+        <button
+          onClick={handleCheck}
+          disabled={loading || !resumeText.trim()}
+          className="w-full rounded-2xl font-black text-base transition-all disabled:cursor-not-allowed"
+          style={{
+            padding: '16px 24px',
+            background: loading || !resumeText.trim()
+              ? 'rgba(255,255,255,0.04)'
+              : 'linear-gradient(135deg, #F5C842 0%, #d4a017 100%)',
+            color: loading || !resumeText.trim() ? 'rgba(255,255,255,0.2)' : '#0A0A0F',
+            border: loading || !resumeText.trim() ? '1px solid rgba(255,255,255,0.06)' : 'none',
+            boxShadow: loading || !resumeText.trim() ? 'none' : '0 0 32px rgba(245,200,66,0.3)',
+            opacity: !resumeText.trim() ? 0.5 : 1,
+          }}
+        >
+          {loading ? (
+            <span className="flex items-center justify-center gap-2.5">
+              <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+              Analyzing your resume…
+            </span>
+          ) : (
+            'Check My ATS Score →'
+          )}
+        </button>
+
+        {/* Results */}
+        {result && (
+          <div ref={resultRef} className="mt-8 space-y-5">
+
+            {/* Score header */}
+            <div className="rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-5"
+              style={{ background: '#13131A', border: '1px solid rgba(239,68,68,0.25)', boxShadow: '0 0 40px rgba(239,68,68,0.06)' }}>
+              <div className="shrink-0">
+                {animateScore && <MiniScoreRing score={result.displayScore} />}
+              </div>
+              <div className="text-center sm:text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3 text-xs font-bold uppercase tracking-wider"
+                  style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#EF4444' }}>
+                  ATS Compatibility Score
+                </div>
+                <p className="text-white font-bold text-lg mb-1">
+                  Your resume is getting rejected before a human sees it.
+                </p>
+                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                  A score below 70 means ATS systems are filtering you out automatically. Here's why:
+                </p>
+              </div>
+            </div>
+
+            {/* Issues list */}
+            <div className="rounded-2xl overflow-hidden"
+              style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
+              <div className="px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <p className="text-white font-semibold text-sm">Critical issues found in your resume:</p>
+              </div>
+              <div className="divide-y" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
+                {result.issues.map((issue, i) => (
+                  <div key={i} className="flex items-start gap-3 px-5 py-4">
+                    <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+                      style={{ background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.25)' }}>
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="#EF4444" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </div>
+                    <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>{issue}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="rounded-2xl p-6 text-center relative overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, rgba(245,200,66,0.1) 0%, rgba(212,160,23,0.06) 100%)',
+                border: '1px solid rgba(245,200,66,0.3)',
+              }}>
+              <div className="absolute inset-0 rounded-2xl pointer-events-none"
+                style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(245,200,66,0.08) 0%, transparent 60%)' }} />
+              <div className="relative">
+                <p className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: '#F5C842' }}>
+                  Fix all {result.issues.length} issues automatically
+                </p>
+                <p className="text-white font-black text-xl mb-2">
+                  Shortlistr rewrites your resume to score 80+
+                </p>
+                <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                  Full ATS optimization · Cover letter generator · Interview prep · All for $10/month
+                </p>
+                <Link to="/auth?mode=signup">
+                  <button className="px-8 py-4 rounded-2xl font-black text-base transition-all hover:scale-105 active:scale-100"
+                    style={{
+                      background: 'linear-gradient(135deg, #F5C842, #d4a017)',
+                      color: '#0A0A0F',
+                      boxShadow: '0 8px 32px rgba(245,200,66,0.35)',
+                    }}>
+                    Fix my score with Shortlistr — $10/month →
+                  </button>
+                </Link>
+                <p className="text-xs mt-3" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                  No credit card required for first scan · Cancel anytime
+                </p>
+              </div>
+            </div>
+
+          </div>
+        )}
+      </div>
+    </section>
   )
 }
 
@@ -320,6 +550,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* ── 1.5. FREE ATS SCORER ── */}
+        <FreeATSScorer />
 
         {/* ── 2. BEFORE / AFTER ── */}
         <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.015)' }}>
