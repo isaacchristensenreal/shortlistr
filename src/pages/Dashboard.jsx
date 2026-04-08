@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import AppShell from '../components/layout/AppShell'
 import { useAuth } from '../context/AuthContext'
 import { startCheckout } from '../lib/stripe'
 import { supabase } from '../lib/supabase'
-
-const FREE_LIMIT = 3
 
 function StatCard({ icon, label, value, sub, accent = '#F5C842', delay = 0 }) {
   return (
@@ -28,7 +26,6 @@ function StatCard({ icon, label, value, sub, accent = '#F5C842', delay = 0 }) {
 
 export default function Dashboard() {
   const { user, profile, loading: authLoading } = useAuth()
-  const navigate = useNavigate()
   const isPro = profile?.tier === 'pro'
   const [upgrading, setUpgrading] = useState(false)
   const [upgradeError, setUpgradeError] = useState(null)
