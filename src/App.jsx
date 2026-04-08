@@ -25,6 +25,7 @@ import Library from './pages/Library'
 import Welcome from './pages/Welcome'
 import LinkedInOptimizer from './pages/LinkedInOptimizer'
 import SalaryNegotiator from './pages/SalaryNegotiator'
+import RoastResume from './pages/RoastResume'
 import AtsResumeChecker from './pages/AtsResumeChecker'
 import AtsScore from './pages/AtsScore'
 import HowToGetMoreInterviews from './pages/HowToGetMoreInterviews'
@@ -89,6 +90,7 @@ export default function App() {
               <Route path="/welcome"   element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
               <Route path="/linkedin-optimizer" element={<ProtectedRoute><LinkedInOptimizer /></ProtectedRoute>} />
               <Route path="/salary-negotiator"  element={<ProtectedRoute><SalaryNegotiator /></ProtectedRoute>} />
+              <Route path="/roast"              element={<ProtectedRoute><RoastResume /></ProtectedRoute>} />
 
               {/* Catch-all — redirect unknown paths to home */}
               <Route path="*" element={<Navigate to="/" replace />} />

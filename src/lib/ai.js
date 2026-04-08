@@ -85,6 +85,15 @@ export async function judgeResume(resumeText) {
   return data.result
 }
 
+export async function roastResume(resumeText) {
+  const { data, error } = await supabase.functions.invoke('roast-resume', {
+    body: { resumeText },
+  })
+  if (error) throw new Error(error.message)
+  if (data?.error) throw new Error(data.error)
+  return data // { ats_score, verdict, roast: string[] }
+}
+
 // ── Public (no auth required) — landing page lead magnet ─────────────────────
 export async function scoreResumePreview(resumeText) {
   const { data, error } = await supabase.functions.invoke('score-preview', {

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 
-const FREE_MONTHLY_LIMIT = 3
+const FREE_MONTHLY_LIMIT = 0
 
 const AuthContext = createContext(null)
 

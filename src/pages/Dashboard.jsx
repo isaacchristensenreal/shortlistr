@@ -35,15 +35,10 @@ export default function Dashboard() {
   const [recentResumes, setRecentResumes] = useState([])
   const [loadingResumes, setLoadingResumes] = useState(true)
 
-  const usedThisMonth = profile ? Math.min(FREE_LIMIT, FREE_LIMIT - optimizationsRemaining) : 0
-  const canOptimize = isPro || optimizationsRemaining > 0
+  const canOptimize = isPro
   const firstName = profile?.username || user?.email?.split('@')[0] || ''
 
-  useEffect(() => {
-    if (profile && !isPro) {
-      navigate('/pricing', { replace: true })
-    }
-  }, [profile, isPro, navigate])
+  // no redirect — free users stay on dashboard and see paywall
 
   useEffect(() => {
     if (!user) return
@@ -87,111 +82,142 @@ export default function Dashboard() {
             <p className="text-white/35 text-sm">{user?.email}</p>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-            <StatCard
-              delay={0}
-              label="Scans"
-              icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>}
-              value={isPro ? '∞' : `${usedThisMonth}/${FREE_LIMIT}`}
-              sub={isPro ? 'Unlimited · Pro plan' : `${optimizationsRemaining} remaining this month`}
-              accent="#F5C842"
-            />
-            <StatCard
-              delay={60}
-              label="Plan"
-              icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
-              value={isPro ? 'Pro' : 'Free'}
-              sub={isPro ? 'Pro · All features' : '3 scans per month'}
-              accent={isPro ? '#00FF88' : '#94a3b8'}
-            />
-            <StatCard
-              delay={120}
-              label="Library"
-              icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>}
-              value={loadingResumes ? '…' : recentResumes.length === 5 ? '5+' : recentResumes.length}
-              sub="Saved resume versions"
-              accent="#6366f1"
-            />
-          </div>
-
-          {/* Quick actions */}
-          <div data-reveal className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-            <Link
-              to="/optimize"
-              className="group flex items-center gap-4 rounded-2xl p-5 border transition-all hover:border-gold-500/30"
-              style={{ background: '#13131A', borderColor: '#1E1E2E' }}
-            >
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(245,200,66,0.1)', border: '1px solid rgba(245,200,66,0.2)' }}>
-                <svg className="w-6 h-6 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-white font-semibold text-sm">See Why You're Getting Rejected</p>
-                <p className="text-white/35 text-xs mt-0.5">Upload resume + job description → get your score</p>
-              </div>
-              <svg className="w-4 h-4 text-white/20 group-hover:text-gold-500 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
-            </Link>
-
-            <Link
-              to="/optimize?tab=matches"
-              className="group flex items-center gap-4 rounded-2xl p-5 border transition-all hover:border-electric-500/30"
-              style={{ background: '#13131A', borderColor: '#1E1E2E' }}
-            >
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)' }}>
-                <svg className="w-6 h-6 text-electric-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 9m0 8V9m0 0L9 7" /></svg>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-white font-semibold text-sm">Find Out Your Real Score</p>
-                <p className="text-white/35 text-xs mt-0.5">See which companies would hire you right now</p>
-              </div>
-              <svg className="w-4 h-4 text-white/20 group-hover:text-electric-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
-            </Link>
-          </div>
-
-          {/* Upgrade banner (free users) */}
-          {!isPro && profile && (
-            <div
-              data-reveal="scale"
-              className="mb-8 rounded-2xl p-6 border border-gold-500/15 relative overflow-hidden"
-              style={{ background: 'linear-gradient(160deg, #1a1408 0%, #13131A 100%)' }}
-            >
-              <div className="absolute top-0 right-0 w-48 h-48 bg-gold-500/5 rounded-full blur-3xl pointer-events-none" />
-              <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <svg className="w-4 h-4 text-gold-500" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    <p className="text-gold-500 font-bold text-sm">Upgrade to Pro</p>
-                  </div>
-                  <p className="text-white/50 text-sm mb-3">Unlock rejection reasons, interview prep, LinkedIn optimizer, and unlimited scans.</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {['Unlimited Scans', 'Rejection Analysis', 'Interview Prep', 'LinkedIn Optimizer', 'ATS Detector'].map(f => (
-                      <span key={f} className="text-[11px] font-semibold px-2.5 py-1 rounded-full text-white/50 border border-white/10">✓ {f}</span>
-                    ))}
-                  </div>
-                </div>
-                <div className="shrink-0 flex flex-col items-start sm:items-end gap-2">
-                  {upgradeError && <p className="text-crimson-400 text-xs">{upgradeError}</p>}
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-white font-black text-3xl">$10</span>
-                    <span className="text-white/30 text-sm">/mo</span>
-                  </div>
-                  <button
-                    onClick={handleUpgrade}
-                    disabled={upgrading}
-                    className="px-5 py-2.5 rounded-xl font-bold text-sm transition-all disabled:opacity-50"
-                    style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F' }}
-                  >
-                    {upgrading ? (
-                      <span className="flex items-center gap-2"><span className="w-4 h-4 border-2 border-midnight/30 border-t-midnight rounded-full animate-spin" />Redirecting…</span>
-                    ) : 'Upgrade to Pro'}
-                  </button>
-                </div>
-              </div>
+          {/* Stats — Pro only */}
+          {isPro && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+              <StatCard
+                delay={0}
+                label="Scans"
+                icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>}
+                value="∞"
+                sub="Unlimited · Pro plan"
+                accent="#F5C842"
+              />
+              <StatCard
+                delay={60}
+                label="Plan"
+                icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+                value="Pro"
+                sub="Pro · All features"
+                accent="#00FF88"
+              />
+              <StatCard
+                delay={120}
+                label="Library"
+                icon={<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>}
+                value={loadingResumes ? '…' : recentResumes.length === 5 ? '5+' : recentResumes.length}
+                sub="Saved resume versions"
+                accent="#6366f1"
+              />
             </div>
           )}
 
-          {/* Recent Resumes */}
-          <div
+          {/* Quick actions — Pro only */}
+          {isPro && (
+            <div data-reveal className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+              <Link
+                to="/optimize"
+                className="group flex items-center gap-4 rounded-2xl p-5 border transition-all hover:border-gold-500/30"
+                style={{ background: '#13131A', borderColor: '#1E1E2E' }}
+              >
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(245,200,66,0.1)', border: '1px solid rgba(245,200,66,0.2)' }}>
+                  <svg className="w-6 h-6 text-gold-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-white font-semibold text-sm">See Why You're Getting Rejected</p>
+                  <p className="text-white/35 text-xs mt-0.5">Upload resume + job description → get your score</p>
+                </div>
+                <svg className="w-4 h-4 text-white/20 group-hover:text-gold-500 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </Link>
+
+              <Link
+                to="/optimize?tab=matches"
+                className="group flex items-center gap-4 rounded-2xl p-5 border transition-all hover:border-electric-500/30"
+                style={{ background: '#13131A', borderColor: '#1E1E2E' }}
+              >
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)' }}>
+                  <svg className="w-6 h-6 text-electric-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 9m0 8V9m0 0L9 7" /></svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-white font-semibold text-sm">Find Out Your Real Score</p>
+                  <p className="text-white/35 text-xs mt-0.5">See which companies would hire you right now</p>
+                </div>
+                <svg className="w-4 h-4 text-white/20 group-hover:text-electric-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </Link>
+            </div>
+          )}
+
+          {/* Free user — Roast CTA + Paywall */}
+          {!isPro && profile && (
+            <>
+              {/* Roast CTA */}
+              <div data-reveal className="mb-4">
+                <Link
+                  to="/roast"
+                  className="group flex items-center gap-4 rounded-2xl p-5 border transition-all hover:border-red-500/30"
+                  style={{ background: '#13131A', borderColor: '#1E1E2E' }}
+                >
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 text-xl"
+                    style={{ background: 'rgba(255,68,68,0.1)', border: '1px solid rgba(255,68,68,0.2)' }}>
+                    🔥
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <p className="text-white font-semibold text-sm">Get Your Resume Roasted</p>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                        style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.2)' }}>FREE</span>
+                    </div>
+                    <p className="text-white/35 text-xs">Find out your real ATS score and why your resume isn't working</p>
+                  </div>
+                  <svg className="w-4 h-4 text-white/20 group-hover:text-red-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                </Link>
+              </div>
+
+              {/* Paywall upgrade banner */}
+              <div
+                data-reveal="scale"
+                className="mb-8 rounded-2xl p-6 border border-gold-500/15 relative overflow-hidden"
+                style={{ background: 'linear-gradient(160deg, #1a1408 0%, #13131A 100%)' }}
+              >
+                <div className="absolute top-0 right-0 w-48 h-48 bg-gold-500/5 rounded-full blur-3xl pointer-events-none" />
+                <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <svg className="w-4 h-4 text-gold-500" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                      <p className="text-gold-500 font-bold text-sm">Unlock Everything with Pro</p>
+                    </div>
+                    <p className="text-white/50 text-sm mb-3">Optimize your resume, get rejection analysis, interview prep, LinkedIn optimizer, and unlimited scans.</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {['Unlimited Scans', 'Resume Optimization', 'Rejection Analysis', 'Interview Prep', 'LinkedIn Optimizer', 'Cover Letters'].map(f => (
+                        <span key={f} className="text-[11px] font-semibold px-2.5 py-1 rounded-full text-white/50 border border-white/10">✓ {f}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="shrink-0 flex flex-col items-start sm:items-end gap-2">
+                    {upgradeError && <p className="text-red-400 text-xs">{upgradeError}</p>}
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-white font-black text-3xl">$10</span>
+                      <span className="text-white/30 text-sm">/mo</span>
+                    </div>
+                    <button
+                      onClick={handleUpgrade}
+                      disabled={upgrading}
+                      className="px-5 py-2.5 rounded-xl font-bold text-sm transition-all disabled:opacity-50"
+                      style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F' }}
+                    >
+                      {upgrading ? (
+                        <span className="flex items-center gap-2"><span className="w-4 h-4 border-2 border-midnight/30 border-t-midnight rounded-full animate-spin" />Redirecting…</span>
+                      ) : 'Upgrade to Pro'}
+                    </button>
+                    <span className="text-white/20 text-xs">Cancel anytime · No contracts</span>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Recent Resumes — Pro only */}
+          {isPro && <div
             data-reveal
             className="rounded-2xl overflow-hidden border"
             style={{ background: '#13131A', borderColor: '#1E1E2E' }}
@@ -273,7 +299,7 @@ export default function Dashboard() {
                 </div>
               </>
             )}
-          </div>
+          </div>}
 
         </div>
       </div>
