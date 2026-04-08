@@ -10,6 +10,6 @@
     { "source": "/tech-resume-ats", "destination": "/features", "statusCode": 301 }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/:path*", "destination": "/index.html" }
   ]
 }
