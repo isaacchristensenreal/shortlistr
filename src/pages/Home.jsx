@@ -438,10 +438,8 @@ export default function Home() {
 
   useEffect(() => {
     if (!user) return
-    const isPro = profile?.tier === 'pro'
-    if (isPro) navigate('/dashboard', { replace: true })
-    else navigate('/pricing', { replace: true })
-  }, [user, profile, navigate])
+    navigate('/dashboard', { replace: true })
+  }, [user, navigate])
 
   const ctaHref = '/auth?mode=signup'
 
