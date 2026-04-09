@@ -79,7 +79,7 @@ export default function RoastResume() {
   const handleUpgrade = async () => {
     setUpgrading(true)
     try {
-      await startCheckout(user?.id, user?.email, 'monthly', window.location.href)
+      await startCheckout(user?.id, user?.email)
     } catch {
       setUpgrading(false)
     }

@@ -61,8 +61,9 @@ export function AuthProvider({ children }) {
   const signOut = () => supabase.auth.signOut()
 
   const isNewMonth = (profile) => {
-    if (!profile) return false
+    if (!profile || !profile.month_reset_at) return false
     const resetAt = new Date(profile.month_reset_at)
+    if (isNaN(resetAt.getTime())) return false
     const now = new Date()
     return (now.getFullYear() * 12 + now.getMonth()) > (resetAt.getFullYear() * 12 + resetAt.getMonth())
   }
