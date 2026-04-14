@@ -5,6 +5,7 @@ import Layout from '../components/layout/Layout'
 import { useAuth } from '../context/AuthContext'
 import { scoreResumePreview } from '../lib/ai'
 import { extractTextFromPDF } from '../lib/pdfUtils'
+import { extractTextFromImage } from '../lib/ai'
 
 /* ─────────────────────────────────────────────
    MINI DEMO COMPONENTS
@@ -160,25 +161,36 @@ function FreeATSScorer() {
   const resultRef = useRef(null)
   const fileInputRef = useRef(null)
 
-  const handlePdfUpload = async (e) => {
+  const handleFileAttach = async (e) => {
     const file = e.target.files?.[0]
     if (!file) return
-    if (file.type !== 'application/pdf') {
-      setError('Please upload a PDF file.')
+
+    const isPdf = file.type === 'application/pdf'
+    const isImage = file.type.startsWith('image/')
+
+    if (!isPdf && !isImage) {
+      setError('Please attach a PDF or a screenshot (PNG, JPG, etc.).')
+      e.target.value = ''
       return
     }
+
     setPdfLoading(true)
     setError(null)
     try {
-      const text = await extractTextFromPDF(file)
-      if (!text || text.trim().length < 50) {
-        setError('Could not extract text from this PDF. Try copying and pasting instead.')
-        return
+      let text
+      if (isPdf) {
+        text = await extractTextFromPDF(file)
+        if (!text || text.trim().length < 50) {
+          setError('Could not extract text from this PDF. Try copying and pasting instead.')
+          return
+        }
+      } else {
+        text = await extractTextFromImage(file)
       }
       setResumeText(text)
       setPdfFileName(file.name)
     } catch {
-      setError('Failed to read the PDF. Try copying and pasting your resume instead.')
+      setError('Failed to read the file. Try copying and pasting your resume instead.')
     } finally {
       setPdfLoading(false)
       e.target.value = ''
@@ -226,7 +238,7 @@ function FreeATSScorer() {
             See your ATS score in 15 seconds
           </h2>
           <p className="text-sm max-w-lg mx-auto" style={{ color: 'rgba(255,255,255,0.45)' }}>
-            Upload your resume as a PDF or paste it below. We'll analyze it instantly and show you the exact issues holding you back.
+            Attach your resume as a PDF or screenshot, or paste it below. We'll analyze it instantly and show you the exact issues holding you back.
           </p>
         </div>
 
@@ -244,9 +256,9 @@ function FreeATSScorer() {
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="application/pdf"
+                accept="application/pdf,image/*"
                 className="hidden"
-                onChange={handlePdfUpload}
+                onChange={handleFileAttach}
               />
               <button
                 onClick={() => fileInputRef.current?.click()}
@@ -262,14 +274,14 @@ function FreeATSScorer() {
                 {pdfLoading ? (
                   <>
                     <span className="w-3 h-3 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(245,200,66,0.3)', borderTopColor: '#F5C842' }} />
-                    Reading PDF…
+                    Reading file…
                   </>
                 ) : (
                   <>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
                     </svg>
-                    Upload PDF
+                    Attach File
                   </>
                 )}
               </button>
@@ -295,7 +307,7 @@ function FreeATSScorer() {
               rows={7}
               value={resumeText}
               onChange={e => { setResumeText(e.target.value); setError(null); setPdfFileName(null) }}
-              placeholder="Paste your resume here, or upload a PDF above — any section works. The more text, the more accurate your score…"
+              placeholder="Paste your resume here, or attach a PDF or screenshot above — any section works. The more text, the more accurate your score…"
               className="w-full resize-none text-sm outline-none rounded-xl px-4 py-3.5 transition-all"
               style={{
                 background: 'rgba(255,255,255,0.03)',

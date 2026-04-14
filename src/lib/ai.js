@@ -94,6 +94,22 @@ export async function roastResume(resumeText) {
   return data // { ats_score, verdict, roast: string[] }
 }
 
+// ── Public (no auth required) — image OCR for landing page ──────────────────
+export async function extractTextFromImage(file) {
+  const arrayBuffer = await file.arrayBuffer()
+  const bytes = new Uint8Array(arrayBuffer)
+  let binary = ''
+  for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i])
+  const imageBase64 = btoa(binary)
+
+  const { data, error } = await supabase.functions.invoke('extract-image-text', {
+    body: { imageBase64, mimeType: file.type },
+  })
+  if (error) throw new Error(error.message)
+  if (data?.error) throw new Error(data.error)
+  return data.text // plain text extracted from the image
+}
+
 // ── Public (no auth required) — landing page lead magnet ─────────────────────
 export async function scoreResumePreview(resumeText) {
   const { data, error } = await supabase.functions.invoke('score-preview', {
