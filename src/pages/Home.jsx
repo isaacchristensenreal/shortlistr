@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import Layout from '../components/layout/Layout'
 import { useAuth } from '../context/AuthContext'
 import { scoreResumePreview } from '../lib/ai'
+import { extractTextFromPDF } from '../lib/pdfUtils'
 
 /* ─────────────────────────────────────────────
    MINI DEMO COMPONENTS
@@ -151,14 +152,42 @@ function MiniScoreRing({ score }) {
 function FreeATSScorer() {
   const [resumeText, setResumeText] = useState('')
   const [loading, setLoading] = useState(false)
+  const [pdfLoading, setPdfLoading] = useState(false)
+  const [pdfFileName, setPdfFileName] = useState(null)
   const [result, setResult] = useState(null) // { displayScore, issues }
   const [error, setError] = useState(null)
   const [animateScore, setAnimateScore] = useState(false)
   const resultRef = useRef(null)
+  const fileInputRef = useRef(null)
+
+  const handlePdfUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (file.type !== 'application/pdf') {
+      setError('Please upload a PDF file.')
+      return
+    }
+    setPdfLoading(true)
+    setError(null)
+    try {
+      const text = await extractTextFromPDF(file)
+      if (!text || text.trim().length < 50) {
+        setError('Could not extract text from this PDF. Try copying and pasting instead.')
+        return
+      }
+      setResumeText(text)
+      setPdfFileName(file.name)
+    } catch {
+      setError('Failed to read the PDF. Try copying and pasting your resume instead.')
+    } finally {
+      setPdfLoading(false)
+      e.target.value = ''
+    }
+  }
 
   const handleCheck = async () => {
     if (!resumeText.trim() || resumeText.trim().length < 50) {
-      setError('Please paste at least a few lines of your resume.')
+      setError('Please paste at least a few lines of your resume or upload a PDF.')
       return
     }
     setError(null)
@@ -197,7 +226,7 @@ function FreeATSScorer() {
             See your ATS score in 15 seconds
           </h2>
           <p className="text-sm max-w-lg mx-auto" style={{ color: 'rgba(255,255,255,0.45)' }}>
-            Paste any section of your resume below. We'll analyze it instantly and show you the exact issues holding you back.
+            Upload your resume as a PDF or paste it below. We'll analyze it instantly and show you the exact issues holding you back.
           </p>
         </div>
 
@@ -205,18 +234,68 @@ function FreeATSScorer() {
         <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.08)' }}>
           <div className="px-5 pt-5 pb-3 flex items-center justify-between">
             <span className="text-white font-semibold text-sm">Your Resume</span>
-            {resumeText.length > 0 && (
-              <span className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                {resumeText.length.toLocaleString()} chars
-              </span>
-            )}
+            <div className="flex items-center gap-3">
+              {resumeText.length > 0 && (
+                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                  {resumeText.length.toLocaleString()} chars
+                </span>
+              )}
+              {/* PDF Upload button — always visible */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="application/pdf"
+                className="hidden"
+                onChange={handlePdfUpload}
+              />
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                disabled={pdfLoading}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                style={{
+                  background: 'rgba(245,200,66,0.1)',
+                  border: '1px solid rgba(245,200,66,0.25)',
+                  color: '#F5C842',
+                  cursor: pdfLoading ? 'wait' : 'pointer',
+                }}
+              >
+                {pdfLoading ? (
+                  <>
+                    <span className="w-3 h-3 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(245,200,66,0.3)', borderTopColor: '#F5C842' }} />
+                    Reading PDF…
+                  </>
+                ) : (
+                  <>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    Upload PDF
+                  </>
+                )}
+              </button>
+            </div>
           </div>
+          {pdfFileName && (
+            <div className="px-5 pb-2 flex items-center gap-2">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span className="text-xs font-medium" style={{ color: '#22c55e' }}>{pdfFileName} loaded</span>
+              <button
+                onClick={() => { setResumeText(''); setPdfFileName(null); setError(null) }}
+                className="text-xs ml-auto"
+                style={{ color: 'rgba(255,255,255,0.3)' }}
+              >
+                Clear
+              </button>
+            </div>
+          )}
           <div className="px-5 pb-5">
             <textarea
               rows={7}
               value={resumeText}
-              onChange={e => { setResumeText(e.target.value); setError(null) }}
-              placeholder="Paste your resume here — any section works. The more text, the more accurate your score…"
+              onChange={e => { setResumeText(e.target.value); setError(null); setPdfFileName(null) }}
+              placeholder="Paste your resume here, or upload a PDF above — any section works. The more text, the more accurate your score…"
               className="w-full resize-none text-sm outline-none rounded-xl px-4 py-3.5 transition-all"
               style={{
                 background: 'rgba(255,255,255,0.03)',
