@@ -39,23 +39,30 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "ShortListr",
+      "alternateName": ["ATS Resume Optimizer", "AI Resume Builder", "Resume ATS Checker"],
       "url": "https://www.shortlistr.us",
-      "description": "AI-powered resume optimizer that tailors your resume to any job in 60 seconds. Beat ATS filters, get AI bullet rewrites, and generate cover letters.",
+      "description": "ShortListr is an AI-powered ATS resume optimizer that tailors your resume to any job description in under 60 seconds. Beat ATS filters, close keyword gaps, rewrite bullet points with AI, and generate cover letters. Free to start.",
       "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "ResumeBuilder",
       "operatingSystem": "Web",
+      "browserRequirements": "Requires JavaScript",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
       "offers": [
         {
           "@type": "Offer",
           "name": "Free Plan",
           "price": "0",
           "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
           "description": "3 resume optimizations per month, ATS scoring, PDF export"
         },
         {
           "@type": "Offer",
-          "name": "Pro Plan",
+          "name": "Pro Monthly",
           "price": "10",
           "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
           "priceSpecification": {
             "@type": "UnitPriceSpecification",
             "price": "10",
@@ -63,17 +70,26 @@
             "unitText": "MONTH"
           },
           "description": "Unlimited optimizations, AI bullet rewriting, cover letter generation, full version history"
+        },
+        {
+          "@type": "Offer",
+          "name": "Pro Lifetime",
+          "price": "97",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "description": "One-time payment for lifetime Pro access — unlimited optimizations, all AI features, all future updates"
         }
       ],
       "featureList": [
-        "AI-powered resume optimization",
-        "ATS compatibility scoring",
-        "Keyword gap analysis",
-        "AI bullet point rewriting",
+        "AI-powered resume optimization in 60 seconds",
+        "ATS compatibility scoring 0–100",
+        "Keyword gap analysis against any job description",
+        "AI bullet point rewriting with measurable impact",
         "Cover letter generation",
         "PDF export",
-        "Resume version history",
-        "Job description parsing"
+        "Unlimited resume version history",
+        "LinkedIn profile optimization",
+        "Salary negotiation scripts"
       ],
       "screenshot": "https://www.shortlistr.us/og-image.png",
       "aggregateRating": {
@@ -92,12 +108,49 @@
       "@type": "Organization",
       "name": "ShortListr",
       "url": "https://www.shortlistr.us",
-      "logo": "https://www.shortlistr.us/favicon.svg",
-      "sameAs": [],
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.shortlistr.us/favicon.svg",
+        "width": 512,
+        "height": 512
+      },
+      "description": "ShortListr builds AI tools that help job seekers beat ATS systems, optimize resumes, and land more interviews.",
+      "foundingDate": "2025",
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "Customer Support",
-        "url": "https://www.shortlistr.us/contact"
+        "url": "https://www.shortlistr.us/contact",
+        "availableLanguage": "English"
+      },
+      "sameAs": []
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "ShortListr Pro",
+      "description": "AI-powered resume optimizer that tailors resumes to job descriptions, scores ATS compatibility, rewrites bullet points, and generates cover letters.",
+      "url": "https://www.shortlistr.us/pricing",
+      "image": "https://www.shortlistr.us/og-image.png",
+      "brand": {
+        "@type": "Brand",
+        "name": "ShortListr"
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "lowPrice": "0",
+        "highPrice": "97",
+        "priceCurrency": "USD",
+        "offerCount": "3"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "127",
+        "bestRating": "5",
+        "worstRating": "1"
       }
     }
     </script>
@@ -112,7 +165,7 @@
           "name": "What is an ATS resume optimizer?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "An ATS (Applicant Tracking System) resume optimizer analyzes your resume against a job description and rewrites it to include the right keywords and formatting so it passes automated screening filters used by employers."
+            "text": "An ATS (Applicant Tracking System) resume optimizer analyzes your resume against a specific job description and rewrites it to include the exact keywords and formatting employers' ATS software scans for. Without optimization, up to 75% of resumes are rejected before a human ever reads them."
           }
         },
         {
@@ -120,7 +173,7 @@
           "name": "How does ShortListr optimize my resume?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "ShortListr uses AI to compare your resume against the job description, identify keyword gaps, rewrite bullet points with measurable impact, and produce an ATS-ready resume in under 60 seconds."
+            "text": "ShortListr uses AI to compare your resume against a job description, identify keyword gaps, rewrite bullet points with measurable impact statements, and produce a fully tailored, ATS-ready resume in under 60 seconds. No manual editing required."
           }
         },
         {
@@ -128,7 +181,7 @@
           "name": "Is ShortListr free to use?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. ShortListr offers a free plan with 3 resume optimizations per month. The Pro plan at $10/month unlocks unlimited optimizations, AI bullet rewrites, and cover letter generation."
+            "text": "Yes. ShortListr offers a free plan with 3 resume optimizations per month, ATS scoring, and PDF export. The Pro plan at $10/month unlocks unlimited optimizations, AI bullet rewrites, cover letter generation, and full version history."
           }
         },
         {
@@ -136,7 +189,7 @@
           "name": "How long does resume optimization take?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "ShortListr optimizes your resume in under 60 seconds. Simply upload your resume PDF and paste the job description, and the AI generates a fully tailored, ATS-ready resume instantly."
+            "text": "ShortListr optimizes your resume in under 60 seconds. Upload your PDF, paste the job description, and the AI instantly generates a fully tailored, ATS-ready resume."
           }
         },
         {
@@ -144,7 +197,31 @@
           "name": "Can ShortListr generate a cover letter?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Pro plan members can generate a fully tailored cover letter based on their resume and the job description in under 30 seconds."
+            "text": "Yes. Pro plan members can generate a tailored cover letter based on their resume and the job description in under 30 seconds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good ATS score for a resume?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A score of 80 or above is considered strong. Scores below 60 mean your resume is likely missing critical keywords from the job description and will be filtered out by most ATS systems before reaching a recruiter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does ShortListr work for any industry?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. ShortListr works for any job description across any industry — tech, finance, healthcare, marketing, operations, and more. The AI tailors the optimization to the specific role and company."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is ShortListr different from ChatGPT for resumes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ShortListr is purpose-built for resume optimization, not a general-purpose chatbot. It automatically parses your PDF, scores ATS compatibility, identifies exact keyword gaps, rewrites bullets with quantified impact, and exports a formatted PDF — tasks that require many manual prompts in ChatGPT with inconsistent results."
           }
         }
       ]
