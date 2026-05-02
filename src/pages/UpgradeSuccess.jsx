@@ -8,6 +8,9 @@ export default function UpgradeSuccess() {
   const { refreshProfile } = useAuth()
 
   useEffect(() => {
+    // Fire Meta Pixel Purchase event once on landing
+    if (typeof fbq === 'function') fbq('track', 'Purchase')
+
     // Poll profile until tier becomes 'pro' — Stripe webhook may take a few seconds
     let attempts = 0
     const poll = async () => {
