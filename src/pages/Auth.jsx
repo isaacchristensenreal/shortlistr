@@ -173,10 +173,11 @@ export default function Auth() {
     const ageMs = Date.now() - new Date(user.created_at).getTime()
     const isNewAccount = ageMs < 5 * 60 * 1000
     const hasOnboarded = localStorage.getItem(`sl_onboarded_${user.id}`)
-    if (!isPro) {
-      navigate('/pricing', { replace: true })
-    } else if (isNewAccount && !hasOnboarded) {
+    if (isNewAccount && !hasOnboarded) {
+      // Always show welcome sequence to new accounts before pricing
       navigate('/welcome', { replace: true })
+    } else if (!isPro) {
+      navigate('/pricing', { replace: true })
     } else {
       if (!hasOnboarded) localStorage.setItem(`sl_onboarded_${user.id}`, '1')
       navigate('/dashboard', { replace: true })

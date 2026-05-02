@@ -7,8 +7,8 @@ export default function ProtectedRoute({ children }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-navy-900 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-electric-500 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0A0A0F' }}>
+        <div className="w-8 h-8 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(245,200,66,0.3)', borderTopColor: '#F5C842' }} />
       </div>
     )
   }
