@@ -164,25 +164,24 @@ export default function Auth() {
   const [focusedField, setFocusedField] = useState(null)
   const [showPassword, setShowPassword] = useState(false)
 
-  const { signIn, signUp, signInWithProvider, user, profile } = useAuth()
+  const { signIn, signUp, signInWithProvider, user, profile, loading } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (!user) return
-    const isPro = profile?.tier === 'pro'
+    if (loading) return   // wait for auth + profile to finish loading
+    if (!user) return     // not signed in — show the form
+
     const ageMs = Date.now() - new Date(user.created_at).getTime()
     const isNewAccount = ageMs < 5 * 60 * 1000
     const hasOnboarded = localStorage.getItem(`sl_onboarded_${user.id}`)
+
     if (isNewAccount && !hasOnboarded) {
-      // Always show welcome sequence to new accounts before pricing
       navigate('/welcome', { replace: true })
-    } else if (!isPro) {
-      navigate('/pricing', { replace: true })
     } else {
-      if (!hasOnboarded) localStorage.setItem(`sl_onboarded_${user.id}`, '1')
+      // All returning users land on dashboard — free or pro
       navigate('/dashboard', { replace: true })
     }
-  }, [user, profile, navigate])
+  }, [user, profile, loading, navigate])
 
   const switchMode = () => {
     if (phase !== 'idle') return
