@@ -27,6 +27,7 @@ function NavLink({ to, children, active, onClick }) {
 function UserMenu({ user, profile, onSignOut }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
+  const navigate = useNavigate()
   const isPro = profile?.tier === 'pro'
 
   useEffect(() => {
@@ -89,14 +90,16 @@ function UserMenu({ user, profile, onSignOut }) {
               </Link>
             ))}
             {!isPro && (
-              <Link to="/pricing" onClick={() => setOpen(false)} className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold transition-colors"
+              <button
+                onClick={() => { setOpen(false); navigate('/pricing') }}
+                className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-semibold transition-colors text-left"
                 style={{ color: '#F5C842' }}
                 onMouseEnter={e => { e.currentTarget.style.background = 'rgba(245,200,66,0.07)' }}
                 onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                 Upgrade to Pro
-              </Link>
+              </button>
             )}
           </div>
 

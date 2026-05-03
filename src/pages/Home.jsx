@@ -537,12 +537,12 @@ export default function Home() {
   return (
     <Layout>
       <Helmet>
-        <title>ShortListr — AI Resume Optimizer | Beat ATS & Get More Interviews</title>
-        <meta name="description" content="Your resume is getting deleted before a human ever sees it. ShortListr uses AI to optimize your resume for ATS in 90 seconds. Free to start — no credit card required." />
+        <title>ShortListr — #1 AI ATS Resume Optimizer | Beat ATS & Get More Interviews</title>
+        <meta name="description" content="ShortListr is an AI ATS resume optimizer that tailors your resume to any job in 90 seconds. Beat ATS filters, close keyword gaps, get AI bullet rewrites. Free to start — no credit card required." />
         <link rel="canonical" href="https://shortlistr.us/" />
         <meta property="og:url" content="https://shortlistr.us/" />
-        <meta property="og:title" content="ShortListr — AI Resume Optimizer | Beat ATS & Get More Interviews" />
-        <meta property="og:description" content="Your resume is getting deleted before a human ever sees it. Fix it in 90 seconds with ShortListr's AI-powered ATS optimizer." />
+        <meta property="og:title" content="ShortListr — #1 AI ATS Resume Optimizer | Beat ATS & Get More Interviews" />
+        <meta property="og:description" content="The AI ATS resume optimizer that fixes your resume in 90 seconds. ShortListr scans, scores, and rewrites your resume to get past ATS filters and land more interviews." />
       </Helmet>
       {/* ── Sticky mobile CTA ── */}
       <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden px-4 pb-4 pt-3"
@@ -570,20 +570,20 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-xs font-semibold"
               style={{ background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)', color: 'rgba(255,255,255,0.7)' }}>
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#3B82F6' }} />
-              2,400+ resumes scanned — avg. score lift +34 pts
+              12,000+ resumes scanned — avg. score lift +34 pts
             </div>
 
             {/* H1 */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-[1.05] tracking-tight max-w-3xl mx-auto mb-6">
-              Your resume is getting deleted before a human ever sees it.{' '}
+              The AI ATS resume optimizer that gets you interviews.{' '}
               <span style={{ background: 'linear-gradient(135deg, #F5C842 0%, #fde68a 50%, #F5C842 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                Fix it in 90 seconds.
+                Fix your resume in 90 seconds.
               </span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-4 leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)' }}>
-              Shortlistr scans your resume against ATS systems, shows you exactly why you're getting rejected, and rewrites it to get callbacks. $10/month. Cancel anytime.
+              ShortListr is an AI ATS resume optimizer that scans your resume against any job description, shows you exactly why you're getting rejected, and rewrites it to get callbacks. $10/month. Cancel anytime.
             </p>
 
             {/* Primary CTA */}
@@ -610,7 +610,7 @@ export default function Home() {
             {/* ── STAT STRIP ── */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14">
               {[
-                { value: '2,400+', label: 'Resumes scanned' },
+                { value: '12,000+', label: 'Resumes scanned' },
                 { value: '+34 pts', label: 'Avg. score lift' },
                 { value: '< 90s', label: 'Time to optimize' },
               ].map((s, i) => (
@@ -634,7 +634,7 @@ export default function Home() {
               </div>
               <div className="text-left">
                 <StarRating />
-                <p className="text-[11px] mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Trusted by 2,400+ job seekers</p>
+                <p className="text-[11px] mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Trusted by 12,000+ job seekers</p>
               </div>
             </div>
           </div>

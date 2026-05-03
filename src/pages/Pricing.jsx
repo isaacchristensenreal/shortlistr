@@ -343,11 +343,9 @@ export default function Pricing() {
             <p className="text-base mb-8 max-w-md mx-auto" style={{ color: 'rgba(255,255,255,0.5)' }}>
               Your first scan is free. See your score before you pay a cent.
             </p>
-            <Link to={ctaHref}>
-              <button className="px-10 py-5 rounded-2xl font-black text-lg transition-all hover:scale-105 active:scale-100 mb-3"
-                style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 12px 40px rgba(245,200,66,0.35)' }}>
-                Get started free →
-              </button>
+            <Link to={ctaHref} className="inline-block px-10 py-5 rounded-2xl font-black text-lg transition-all hover:scale-105 active:scale-100 mb-3"
+              style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 12px 40px rgba(245,200,66,0.35)' }}>
+              Get started free →
             </Link>
             <p className="text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>
               No credit card required · 30-day money-back guarantee

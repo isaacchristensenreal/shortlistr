@@ -581,6 +581,18 @@ export default function Welcome() {
               <p className="text-center text-xs text-slate-400">
                 30-day money-back guarantee · No hidden fees · Secure checkout via Stripe
               </p>
+
+              {!isPro && (
+                <button
+                  onClick={finish}
+                  className="block w-full text-center text-xs mt-4 transition-colors"
+                  style={{ color: 'rgba(255,255,255,0.25)' }}
+                  onMouseEnter={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.25)' }}
+                >
+                  Maybe later — go to dashboard
+                </button>
+              )}
             </StepWrapper>
           )}
 

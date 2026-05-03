@@ -136,7 +136,7 @@ export default function Dashboard() {
               </Link>
 
               <Link
-                to="/optimize?tab=matches"
+                to="/optimize"
                 className="group flex items-center gap-4 rounded-2xl p-5 border transition-all hover:border-electric-500/30"
                 style={{ background: '#13131A', borderColor: '#1E1E2E' }}
               >
@@ -145,7 +145,7 @@ export default function Dashboard() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-white font-semibold text-sm">Find Out Your Real Score</p>
-                  <p className="text-white/35 text-xs mt-0.5">See which companies would hire you right now</p>
+                  <p className="text-white/35 text-xs mt-0.5">Run a scan to see which companies would hire you</p>
                 </div>
                 <svg className="w-4 h-4 text-white/20 group-hover:text-electric-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
               </Link>
