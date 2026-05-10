@@ -30,13 +30,14 @@ const newEntries = []
 
 for (const page of pages) {
   const url = `https://www.shortlistr.us/ats-resume/${page.slug}`
-  if (sitemap.includes(url)) {
+  const safeUrl = url.replace(/&/g, '&amp;')
+  if (sitemap.includes(safeUrl)) {
     skipped++
     continue
   }
   newEntries.push(`
   <url>
-    <loc>${url}</loc>
+    <loc>${safeUrl}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
