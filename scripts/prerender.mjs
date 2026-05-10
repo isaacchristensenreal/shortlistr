@@ -13,6 +13,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const distDir = path.join(__dirname, '..', 'dist')
 const base = fs.readFileSync(path.join(distDir, 'index.html'), 'utf-8')
 
+// Load pSEO pages if the data file exists
+const seoPagesDataPath = path.join(__dirname, '..', 'src', 'data', 'seoPages.json')
+const seoPagesData = fs.existsSync(seoPagesDataPath)
+  ? JSON.parse(fs.readFileSync(seoPagesDataPath, 'utf-8'))
+  : []
+
 const pages = [
   {
     route: '/features',
@@ -164,6 +170,20 @@ const pages = [
     description: 'If you\'re not getting interviews, there\'s a specific reason. This diagnostic guide walks through the most common causes — ATS filtering, tailoring, formatting, targeting — and how to fix each one.',
     canonical: 'https://www.shortlistr.us/why-am-i-not-getting-interviews',
   },
+  // pSEO index page
+  {
+    route: '/ats-resume',
+    title: 'ATS Resume Guides by Job Title — ShortListr',
+    description: 'Free ATS resume guides for 50+ job titles, 50 top companies, and every major ATS platform. Learn which keywords pass the filter and what formatting mistakes get you auto-rejected.',
+    canonical: 'https://www.shortlistr.us/ats-resume',
+  },
+  // pSEO detail pages — generated from seoPages.json
+  ...seoPagesData.map(p => ({
+    route: `/ats-resume/${p.slug}`,
+    title: p.page_title,
+    description: p.meta_description,
+    canonical: `https://www.shortlistr.us/ats-resume/${p.slug}`,
+  })),
 ]
 
 for (const page of pages) {
@@ -205,9 +225,10 @@ for (const page of pages) {
     `<meta property="og:description" content="${page.description}"`
   )
 
-  // Write as a flat .html file (cleanUrls:true serves /features.html at /features)
-  // This avoids the trailingSlash redirect loop that directories cause
+  // Write as a flat or nested .html file.
+  // cleanUrls:true serves /foo.html at /foo and /ats-resume/slug.html at /ats-resume/slug.
   const filePath = path.join(distDir, `${page.route}.html`)
+  fs.mkdirSync(path.dirname(filePath), { recursive: true })
   fs.writeFileSync(filePath, html)
   console.log(`✓ Pre-rendered ${page.route}`)
 }

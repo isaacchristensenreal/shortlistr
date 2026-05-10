@@ -159,7 +159,7 @@ export default function Auth() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const [formLoading, setFormLoading] = useState(false)
   const [socialLoading, setSocialLoading] = useState(null)
   const [focusedField, setFocusedField] = useState(null)
   const [showPassword, setShowPassword] = useState(false)
@@ -198,7 +198,7 @@ export default function Auth() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setMessage(null)
-    setLoading(true)
+    setFormLoading(true)
     try {
       if (displayMode === 'signin') {
         const { error } = await signIn(email, password)
@@ -217,7 +217,7 @@ export default function Auth() {
     } catch (err) {
       setMessage({ type: 'error', text: err.message })
     } finally {
-      setLoading(false)
+      setFormLoading(false)
     }
   }
 
@@ -538,14 +538,14 @@ export default function Auth() {
                     <FadeItem index={5} entering={phase === 'in'}>
                       <button
                         type="submit"
-                        disabled={loading}
+                        disabled={formLoading}
                         className={`w-full relative overflow-hidden text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed text-sm mt-1 ${
                           isSignup
                             ? 'bg-gradient-to-r from-violet-500 to-pink-500 hover:from-violet-400 hover:to-pink-400 shadow-violet-500/25 hover:shadow-violet-500/40'
                             : 'bg-gradient-to-r from-electric-500 to-blue-600 hover:from-electric-400 hover:to-blue-500 shadow-electric-500/25 hover:shadow-electric-500/40'
                         }`}
                       >
-                        {loading ? (
+                        {formLoading ? (
                           <span className="flex items-center justify-center gap-2">
                             <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                             Please wait…

@@ -41,6 +41,8 @@ import ResumeNotGettingCallbacks from './pages/ResumeNotGettingCallbacks'
 import ResumeTipsCareerChangers from './pages/ResumeTipsCareerChangers'
 import TechResumeAts from './pages/TechResumeAts'
 import WhyNotGettingInterviews from './pages/WhyNotGettingInterviews'
+import SeoIndex from './pages/SeoIndex'
+import SeoPage from './pages/SeoPage'
 
 export default function App() {
   return (
@@ -81,6 +83,8 @@ export default function App() {
               <Route path="/resume-tips-for-career-changers" element={<ResumeTipsCareerChangers />} />
               <Route path="/tech-resume-ats" element={<TechResumeAts />} />
               <Route path="/why-am-i-not-getting-interviews" element={<WhyNotGettingInterviews />} />
+              <Route path="/ats-resume" element={<SeoIndex />} />
+              <Route path="/ats-resume/:slug" element={<SeoPage />} />
 
               {/* Protected */}
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
