@@ -25,7 +25,7 @@ function StatCard({ icon, label, value, sub, accent = '#F5C842', delay = 0 }) {
 }
 
 export default function Dashboard() {
-  const { user, profile, loading: authLoading } = useAuth()
+  const { user, profile } = useAuth()
   const isPro = profile?.tier === 'pro'
   const [upgrading, setUpgrading] = useState(false)
   const [upgradeError, setUpgradeError] = useState(null)
@@ -64,11 +64,11 @@ export default function Dashboard() {
 
   const scoreColor = (s) => s >= 70 ? '#00FF88' : s >= 50 ? '#F59E0B' : '#FF4444'
 
-  if (authLoading || !profile) {
+  if (!profile) {
     return (
       <AppShell>
         <div className="min-h-screen flex items-center justify-center" style={{ background: '#0A0A0F' }}>
-          <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#F5C842', borderTopColor: 'transparent' }} />
+          <div className="w-8 h-8 rounded-full animate-spin" style={{ border: '2px solid rgba(245,200,66,0.2)', borderTopColor: '#F5C842' }} />
         </div>
       </AppShell>
     )

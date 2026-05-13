@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import * as Tooltip from '@radix-ui/react-tooltip'
 import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
@@ -48,6 +49,7 @@ export default function App() {
   return (
     <HelmetProvider>
     <ThemeProvider>
+    <Tooltip.Provider delayDuration={300}>
       <BrowserRouter>
         <AuthProvider>
           <ToastProvider>
@@ -102,6 +104,7 @@ export default function App() {
           </ToastProvider>
         </AuthProvider>
       </BrowserRouter>
+    </Tooltip.Provider>
     </ThemeProvider>
     </HelmetProvider>
   )

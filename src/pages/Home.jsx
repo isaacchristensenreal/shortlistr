@@ -1,943 +1,1124 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
+import { motion, useInView, useMotionValue, useTransform, animate, AnimatePresence } from 'framer-motion'
+import * as Tooltip from '@radix-ui/react-tooltip'
+import {
+  CheckCircle, ArrowRight, Upload, Zap, Shield, Star,
+  Sparkles, FileText, Target, MessageSquare, DollarSign,
+  Brain, TrendingUp, ChevronDown,
+} from 'lucide-react'
 import Layout from '../components/layout/Layout'
 import { useAuth } from '../context/AuthContext'
-import { scoreResumePreview } from '../lib/ai'
+import { scoreResumePreview, extractTextFromImage } from '../lib/ai'
 import { extractTextFromPDF } from '../lib/pdfUtils'
-import { extractTextFromImage } from '../lib/ai'
 
-/* ─────────────────────────────────────────────
-   MINI DEMO COMPONENTS
-───────────────────────────────────────────── */
-const atsKeywords = [
-  { word: 'cross-functional collaboration', found: false },
-  { word: 'territory management', found: false },
-  { word: 'CRM software', found: true },
-  { word: 'client retention', found: true },
-  { word: 'quota attainment', found: false },
-]
+// ─── Animation variants ──────────────────────────────────────────────────────
 
-function MiniATSCard() {
-  return (
-    <div className="rounded-xl p-4 space-y-1.5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-[10px] uppercase tracking-wider font-medium" style={{ color: 'rgba(255,255,255,0.35)' }}>Keyword Gap · Regional Sales Manager</span>
-        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full" style={{ background: 'rgba(59,130,246,0.15)', color: '#3B82F6' }}>41% match</span>
-      </div>
-      <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'rgba(255,255,255,0.08)' }}>
-        <div className="h-full w-[41%] rounded-full" style={{ background: 'linear-gradient(90deg, #EF4444, #F97316)' }} />
-      </div>
-      {atsKeywords.map(k => (
-        <div key={k.word} className="flex items-center justify-between py-1 px-2 rounded-lg" style={{ background: 'rgba(255,255,255,0.02)' }}>
-          <span className="text-xs" style={{ color: 'rgba(255,255,255,0.6)' }}>{k.word}</span>
-          <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full" style={k.found
-            ? { background: 'rgba(0,255,136,0.12)', color: '#00FF88' }
-            : { background: 'rgba(255,68,68,0.12)', color: '#FF6B6B' }}>
-            {k.found ? '✓ found' : '✗ missing'}
-          </span>
-        </div>
-      ))}
-    </div>
-  )
+const EASE_OUT = [0.23, 1, 0.32, 1]
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_OUT } },
 }
 
-function MiniBulletCard() {
-  const [after, setAfter] = useState(false)
-  return (
-    <div className="rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-      <div className="flex items-center gap-1 rounded-lg p-0.5 mb-3 w-fit" style={{ background: 'rgba(255,255,255,0.06)' }}>
-        <button onClick={() => setAfter(false)} className="text-[10px] px-2.5 py-1 rounded-md font-semibold transition-all"
-          style={!after ? { background: '#1E1E2E', color: 'rgba(255,255,255,0.9)' } : { color: 'rgba(255,255,255,0.3)' }}>Before</button>
-        <button onClick={() => setAfter(true)} className="text-[10px] px-2.5 py-1 rounded-md font-semibold transition-all"
-          style={after ? { background: '#1E1E2E', color: 'rgba(255,255,255,0.9)' } : { color: 'rgba(255,255,255,0.3)' }}>After</button>
-      </div>
-      <div className="rounded-lg p-3 transition-all" style={after
-        ? { background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)' }
-        : { background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-        <p className="text-xs leading-relaxed" style={{ color: after ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.35)' }}>
-          {after
-            ? '"Managed 12-person customer service team across 3 locations, reducing complaint resolution time by 34% and increasing satisfaction scores from 72% to 91%."'
-            : '"Responsible for managing the customer service team and handling complaints."'}
-        </p>
-      </div>
-      <div className="grid grid-cols-3 gap-1.5 mt-3">
-        {[{ l: 'Impact', b: '0', a: '4' }, { l: 'Metrics', b: '0', a: '3' }, { l: 'ATS', b: '31%', a: '92%' }].map(s => (
-          <div key={s.l} className="rounded-lg p-1.5 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-            <p className="text-sm font-bold" style={{ color: after ? '#F5C842' : 'rgba(255,255,255,0.25)' }}>{after ? s.a : s.b}</p>
-            <p className="text-[9px] mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.l}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
+const staggerContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
 }
 
-function MiniCoverCard() {
-  const [loading, setLoading] = useState(false)
-  const [done, setDone] = useState(false)
-  const go = () => { if (done || loading) return; setLoading(true); setTimeout(() => { setLoading(false); setDone(true) }, 1400) }
-  return (
-    <div className="rounded-xl p-4" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-      <div className="min-h-[96px] mb-3">
-        {!done && !loading && (
-          <div className="flex flex-col items-center justify-center h-24 text-center">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-2" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" style={{ color: 'rgba(255,255,255,0.35)' }}><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            </div>
-            <p className="text-[11px]" style={{ color: 'rgba(255,255,255,0.35)' }}>Click to generate a sample cover letter</p>
-          </div>
-        )}
-        {loading && (
-          <div className="space-y-2 py-2">
-            {[75, 100, 88, 60].map((w, i) => (
-              <div key={i} className="h-2 rounded-full animate-pulse" style={{ width: `${w}%`, background: 'linear-gradient(90deg, rgba(59,130,246,0.3), rgba(139,92,246,0.3))', animationDelay: `${i * 80}ms` }} />
-            ))}
-            <p className="text-[10px] flex items-center gap-1 mt-1" style={{ color: '#3B82F6' }}>
-              <span className="w-1.5 h-1.5 rounded-full animate-ping inline-block" style={{ background: '#3B82F6' }} />Writing…
-            </p>
-          </div>
-        )}
-        {done && (
-          <div className="text-xs leading-relaxed space-y-1.5">
-            <p className="font-semibold" style={{ color: 'rgba(255,255,255,0.85)' }}>Dear Hiring Manager,</p>
-            <p style={{ color: 'rgba(255,255,255,0.45)' }} className="line-clamp-3">
-              I am writing to express my interest in the Marketing Coordinator position at Horizon Brands. With three years of experience developing multi-channel campaigns that consistently delivered above-target engagement…
-            </p>
-            <p className="text-[10px] font-medium" style={{ color: '#3B82F6' }}>Continue reading →</p>
-          </div>
-        )}
-      </div>
-      <button onClick={go} disabled={loading || done}
-        className="w-full py-2 rounded-lg text-[11px] font-semibold transition-all flex items-center justify-center gap-1.5 disabled:cursor-default"
-        style={done
-          ? { background: 'rgba(139,92,246,0.12)', color: '#A78BFA', border: '1px solid rgba(139,92,246,0.2)' }
-          : { background: 'linear-gradient(135deg, #3B82F6, #8B5CF6)', color: '#fff' }}>
-        {done ? '✦ Cover letter ready — review and download' : loading ? 'Writing…' : '✦ Generate sample cover letter'}
-      </button>
-    </div>
-  )
+const staggerItem = {
+  hidden: { opacity: 0, y: 20 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.38, ease: EASE_OUT } },
 }
 
-/* ─────────────────────────────────────────────
-   FREE ATS SCORER WIDGET
-───────────────────────────────────────────── */
-function MiniScoreRing({ score }) {
-  const r = 38
-  const circ = 2 * Math.PI * r
-  const offset = circ - (score / 100) * circ
+// ─── Score counter ────────────────────────────────────────────────────────────
+
+function AnimatedScore({ value, color = '#F5C842', size = 120, trigger = true }) {
+  const count     = useMotionValue(0)
+  const rounded   = useTransform(count, Math.round)
+  const r         = 42
+  const circ      = 2 * Math.PI * r
+  const dashOffset = useTransform(count, v => circ - (v / 100) * circ)
+
+  useEffect(() => {
+    if (!trigger) return
+    const ctrl = animate(count, value, { duration: 1.8, ease: 'easeOut', delay: 0.3 })
+    return () => ctrl.stop()
+  }, [trigger, count, value])
+
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 100, height: 100 }}>
-      <svg width={100} height={100} viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="7" />
-        <circle
+    <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)' }}>
+        <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="8" />
+        <motion.circle
           cx="50" cy="50" r={r}
           fill="none"
-          stroke="#EF4444"
-          strokeWidth="7"
+          stroke={color}
+          strokeWidth="8"
           strokeLinecap="round"
           strokeDasharray={circ}
-          strokeDashoffset={circ}
-          transform="rotate(-90 50 50)"
-          style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(0.22,1,0.36,1)', strokeDashoffset: offset }}
+          style={{ strokeDashoffset: dashOffset }}
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-black text-white" style={{ fontSize: 26, lineHeight: 1 }}>{score}</span>
-        <span className="text-white/35 font-medium" style={{ fontSize: 9 }}>/ 100</span>
+        <motion.span className="font-black" style={{ fontSize: size * 0.26, color, lineHeight: 1 }}>
+          {rounded}
+        </motion.span>
+        <span style={{ fontSize: size * 0.095, color: 'rgba(255,255,255,0.35)', fontWeight: 600, letterSpacing: '0.05em' }}>
+          SCORE
+        </span>
       </div>
     </div>
   )
 }
 
-function FreeATSScorer() {
-  const [resumeText, setResumeText] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [pdfLoading, setPdfLoading] = useState(false)
-  const [pdfFileName, setPdfFileName] = useState(null)
-  const [result, setResult] = useState(null) // { displayScore, issues }
-  const [error, setError] = useState(null)
-  const [animateScore, setAnimateScore] = useState(false)
-  const resultRef = useRef(null)
-  const fileInputRef = useRef(null)
+// ─── Hero demo card ───────────────────────────────────────────────────────────
 
-  const handleFileAttach = async (e) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+const DEMO_KEYWORDS = [
+  { word: 'React',          found: true  },
+  { word: 'TypeScript',     found: true  },
+  { word: 'Node.js',        found: true  },
+  { word: 'Docker',         found: false },
+  { word: 'AWS',            found: false },
+  { word: 'CI/CD',          found: true  },
+]
 
-    const isPdf = file.type === 'application/pdf'
-    const isImage = file.type.startsWith('image/')
+function HeroDemoCard() {
+  const ref     = useRef(null)
+  const inView  = useInView(ref, { once: true, margin: '-60px' })
+  const [phase, setPhase] = useState('before') // 'before' | 'after'
 
-    if (!isPdf && !isImage) {
-      setError('Please attach a PDF or a screenshot (PNG, JPG, etc.).')
-      e.target.value = ''
-      return
-    }
+  useEffect(() => {
+    if (!inView) return
+    const t = setTimeout(() => setPhase('after'), 2400)
+    return () => clearTimeout(t)
+  }, [inView])
 
-    setPdfLoading(true)
+  const score      = phase === 'after' ? 89 : 34
+  const scoreColor = phase === 'after' ? '#00FF88' : '#FF4444'
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 32, scale: 0.96 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.55, ease: EASE_OUT, delay: 0.2 }}
+      className="relative"
+    >
+      {/* Glow */}
+      <div
+        className="absolute inset-0 rounded-2xl pointer-events-none"
+        style={{
+          background: phase === 'after'
+            ? 'radial-gradient(ellipse at 50% 0%, rgba(0,255,136,0.12) 0%, transparent 65%)'
+            : 'radial-gradient(ellipse at 50% 0%, rgba(245,200,66,0.10) 0%, transparent 65%)',
+          transition: 'background 0.8s ease',
+          filter: 'blur(20px)',
+          transform: 'translateY(-8px)',
+        }}
+      />
+
+      <div
+        className="relative rounded-2xl p-5 sm:p-6"
+        style={{
+          background: '#13131A',
+          border: '1px solid rgba(255,255,255,0.09)',
+          boxShadow: '0 32px 64px rgba(0,0,0,0.5)',
+        }}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'rgba(245,200,66,0.12)', border: '1px solid rgba(245,200,66,0.2)' }}>
+              <Zap size={14} style={{ color: '#F5C842' }} />
+            </div>
+            <span className="text-sm font-bold" style={{ color: 'rgba(255,255,255,0.8)' }}>ATS Analysis</span>
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={phase}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.2 }}
+              className="text-[10px] font-bold px-2.5 py-1 rounded-full"
+              style={phase === 'after'
+                ? { background: 'rgba(0,255,136,0.12)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.2)' }
+                : { background: 'rgba(255,68,68,0.12)', color: '#FF6B6B', border: '1px solid rgba(255,68,68,0.2)' }}
+            >
+              {phase === 'after' ? '✓ Optimized' : 'Needs Work'}
+            </motion.span>
+          </AnimatePresence>
+        </div>
+
+        {/* Score ring + breakdown */}
+        <div className="flex items-center gap-6 mb-5">
+          <AnimatedScore value={score} color={scoreColor} size={110} trigger={inView} key={phase} />
+          <div className="flex-1 space-y-2.5">
+            {[
+              { label: 'Keywords',  pct: phase === 'after' ? 91 : 28, color: phase === 'after' ? '#00FF88' : '#FF4444' },
+              { label: 'Format',    pct: phase === 'after' ? 95 : 72, color: phase === 'after' ? '#00FF88' : '#F59E0B' },
+              { label: 'Relevance', pct: phase === 'after' ? 82 : 18, color: phase === 'after' ? '#00FF88' : '#FF4444' },
+            ].map(({ label, pct, color }) => (
+              <div key={label}>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] font-medium" style={{ color: 'rgba(255,255,255,0.45)' }}>{label}</span>
+                  <span className="text-[11px] font-bold" style={{ color }}>{pct}%</span>
+                </div>
+                <div className="h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.07)' }}>
+                  <motion.div
+                    className="h-full rounded-full"
+                    style={{ background: color }}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${pct}%` }}
+                    transition={{ duration: 1.0, ease: EASE_OUT, delay: 0.5 }}
+                    key={`${label}-${phase}`}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Keywords */}
+        <div className="space-y-1.5">
+          <p className="text-[10px] font-bold uppercase tracking-wider mb-2" style={{ color: 'rgba(255,255,255,0.25)' }}>
+            Job Keywords
+          </p>
+          <motion.div
+            className="flex flex-wrap gap-1.5"
+            variants={staggerContainer}
+            initial="hidden"
+            animate={inView ? 'show' : 'hidden'}
+          >
+            {DEMO_KEYWORDS.map(k => (
+              <motion.span
+                key={k.word}
+                variants={staggerItem}
+                className="flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                style={k.found
+                  ? { background: 'rgba(0,255,136,0.1)', color: '#00FF88',  border: '1px solid rgba(0,255,136,0.2)' }
+                  : { background: 'rgba(255,68,68,0.1)',  color: '#FF6B6B', border: '1px solid rgba(255,68,68,0.2)' }}
+              >
+                {k.found
+                  ? <CheckCircle size={9} />
+                  : <span style={{ display: 'inline-block', width: 9, height: 9, borderRadius: '50%', border: '1.5px solid #FF6B6B' }} />}
+                {k.word}
+              </motion.span>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Phase label */}
+        <div className="mt-4 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={phase}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="text-[11px] text-center font-medium"
+              style={{ color: 'rgba(255,255,255,0.3)' }}
+            >
+              {phase === 'before'
+                ? 'Typical resume before ShortListr…'
+                : '✓ After ShortListr optimization'}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+// ─── Free score preview (lead magnet) ─────────────────────────────────────────
+
+function FreeScoreSection() {
+  const { user }         = useAuth()
+  const navigate         = useNavigate()
+  const ref              = useRef(null)
+  const inView           = useInView(ref, { once: true, margin: '-80px' })
+  const fileInputRef     = useRef(null)
+
+  const [resumeText, setResumeText]   = useState('')
+  const [fileName,   setFileName]     = useState('')
+  const [loading,    setLoading]      = useState(false)
+  const [result,     setResult]       = useState(null)
+  const [error,      setError]        = useState(null)
+  const [dragOver,   setDragOver]     = useState(false)
+
+  const processFile = useCallback(async (file) => {
     setError(null)
+    setResult(null)
+    setFileName(file.name)
     try {
-      let text
-      if (isPdf) {
+      let text = ''
+      if (file.type === 'application/pdf') {
         text = await extractTextFromPDF(file)
-        if (!text || text.trim().length < 50) {
-          setError('Could not extract text from this PDF. Try copying and pasting instead.')
-          return
-        }
-      } else {
+      } else if (file.type.startsWith('image/')) {
         text = await extractTextFromImage(file)
+      } else {
+        text = await file.text()
       }
       setResumeText(text)
-      setPdfFileName(file.name)
     } catch {
-      setError('Failed to read the file. Try copying and pasting your resume instead.')
-    } finally {
-      setPdfLoading(false)
-      e.target.value = ''
+      setError('Could not read that file. Try a PDF or paste your resume text below.')
     }
-  }
+  }, [])
 
-  const handleCheck = async () => {
-    if (!resumeText.trim() || resumeText.trim().length < 50) {
-      setError('Please paste at least a few lines of your resume or upload a PDF.')
-      return
-    }
-    setError(null)
+  const handleFile = useCallback((e) => {
+    const file = e.target.files?.[0]
+    if (file) processFile(file)
+  }, [processFile])
+
+  const handleDrop = useCallback((e) => {
+    e.preventDefault()
+    setDragOver(false)
+    const file = e.dataTransfer.files?.[0]
+    if (file) processFile(file)
+  }, [processFile])
+
+  const handleScore = async () => {
+    if (!resumeText.trim()) { setError('Please upload or paste your resume first.'); return }
     setLoading(true)
-    setResult(null)
-    setAnimateScore(false)
+    setError(null)
     try {
       const data = await scoreResumePreview(resumeText)
       setResult(data)
-      setTimeout(() => setAnimateScore(true), 100)
-      setTimeout(() => {
-        resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }, 200)
-    } catch (err) {
-      setError(
-        err?.message?.includes('Too many requests')
-          ? "You've reached the limit (5 checks/hour). Try again later."
-          : 'Analysis failed. Please try again in a moment.'
-      )
+    } catch {
+      setError('Something went wrong. Please try again.')
     } finally {
       setLoading(false)
     }
   }
 
+  const scoreColor = result
+    ? result.displayScore >= 70 ? '#00FF88' : result.displayScore >= 50 ? '#F59E0B' : '#FF4444'
+    : '#F5C842'
+
   return (
-    <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.012)' }}>
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+    <section
+      ref={ref}
+      className="py-24 px-4"
+      style={{ background: 'linear-gradient(180deg, #0A0A0F 0%, #0D0D1A 100%)' }}
+    >
+      <div className="max-w-2xl mx-auto">
+        <motion.div
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+          variants={staggerContainer}
+          className="text-center mb-10"
+        >
+          <motion.div variants={staggerItem} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5 text-xs font-bold uppercase tracking-wider" style={{ background: 'rgba(0,255,136,0.08)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.18)' }}>
+            <Sparkles size={12} />
+            Free ATS Score — No signup required
+          </motion.div>
+          <motion.h2 variants={staggerItem} className="text-3xl sm:text-4xl font-black text-white mb-3">
+            See Your Score in 30 Seconds
+          </motion.h2>
+          <motion.p variants={staggerItem} className="text-base" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            Upload your resume and get an instant ATS score. No account needed.
+          </motion.p>
+        </motion.div>
 
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 text-xs font-bold uppercase tracking-wider"
-            style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', color: '#EF4444' }}>
-            Free ATS Check — No Sign-up Required
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-white mb-3">
-            See your ATS score in 15 seconds
-          </h2>
-          <p className="text-sm max-w-lg mx-auto" style={{ color: 'rgba(255,255,255,0.45)' }}>
-            Attach your resume as a PDF or screenshot, or paste it below. We'll analyze it instantly and show you the exact issues holding you back.
-          </p>
-        </div>
-
-        {/* Input card */}
-        <div className="rounded-2xl overflow-hidden mb-4" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.08)' }}>
-          <div className="px-5 pt-5 pb-3 flex items-center justify-between">
-            <span className="text-white font-semibold text-sm">Your Resume</span>
-            <div className="flex items-center gap-3">
-              {resumeText.length > 0 && (
-                <span className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                  {resumeText.length.toLocaleString()} chars
-                </span>
-              )}
-              {/* PDF Upload button — always visible */}
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="application/pdf,image/*"
-                className="hidden"
-                onChange={handleFileAttach}
-              />
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={pdfLoading}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.45, ease: EASE_OUT, delay: 0.2 }}
+          className="rounded-2xl p-6 sm:p-8"
+          style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 48px rgba(0,0,0,0.4)' }}
+        >
+          {!result ? (
+            <>
+              {/* Drop zone */}
+              <label
+                onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={handleDrop}
+                className="flex flex-col items-center justify-center gap-3 rounded-xl p-8 cursor-pointer transition-all"
                 style={{
-                  background: 'rgba(245,200,66,0.1)',
-                  border: '1px solid rgba(245,200,66,0.25)',
-                  color: '#F5C842',
-                  cursor: pdfLoading ? 'wait' : 'pointer',
+                  border: `2px dashed ${dragOver ? 'rgba(245,200,66,0.5)' : 'rgba(255,255,255,0.12)'}`,
+                  background: dragOver ? 'rgba(245,200,66,0.04)' : 'rgba(255,255,255,0.02)',
                 }}
               >
-                {pdfLoading ? (
+                <input ref={fileInputRef} type="file" accept=".pdf,.doc,.docx,.txt,image/*" className="sr-only" onChange={handleFile} />
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'rgba(245,200,66,0.1)', border: '1px solid rgba(245,200,66,0.2)' }}>
+                  <Upload size={22} style={{ color: '#F5C842' }} />
+                </div>
+                <div className="text-center">
+                  <p className="text-sm font-semibold" style={{ color: fileName ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.5)' }}>
+                    {fileName || 'Drop your resume here'}
+                  </p>
+                  <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                    PDF, Word, or image — or paste below
+                  </p>
+                </div>
+              </label>
+
+              {/* Paste fallback */}
+              <div className="mt-3">
+                <textarea
+                  value={resumeText}
+                  onChange={e => { setResumeText(e.target.value); setFileName('') }}
+                  placeholder="…or paste your resume text here"
+                  rows={4}
+                  className="w-full resize-none rounded-xl px-4 py-3 text-sm outline-none transition-colors"
+                  style={{
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    color: 'rgba(255,255,255,0.75)',
+                    caretColor: '#F5C842',
+                  }}
+                  onFocus={e => e.currentTarget.style.borderColor = 'rgba(245,200,66,0.35)'}
+                  onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'}
+                />
+              </div>
+
+              {error && (
+                <p className="mt-2 text-xs text-center" style={{ color: '#FF6B6B' }}>{error}</p>
+              )}
+
+              <motion.button
+                onClick={handleScore}
+                disabled={loading || !resumeText.trim()}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}
+                className="mt-4 w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-opacity disabled:opacity-40 btn-shimmer"
+                style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F' }}
+              >
+                {loading ? (
                   <>
-                    <span className="w-3 h-3 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(245,200,66,0.3)', borderTopColor: '#F5C842' }} />
-                    Reading file…
+                    <motion.span
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+                      className="w-4 h-4 rounded-full"
+                      style={{ border: '2px solid rgba(10,10,15,0.3)', borderTopColor: '#0A0A0F' }}
+                    />
+                    Analyzing your resume…
                   </>
                 ) : (
                   <>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
-                    </svg>
-                    Attach File
+                    <Zap size={15} />
+                    Get My Free Score
+                    <ArrowRight size={15} />
                   </>
                 )}
-              </button>
-            </div>
-          </div>
-          {pdfFileName && (
-            <div className="px-5 pb-2 flex items-center gap-2">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-              <span className="text-xs font-medium" style={{ color: '#22c55e' }}>{pdfFileName} loaded</span>
-              <button
-                onClick={() => { setResumeText(''); setPdfFileName(null); setError(null) }}
-                className="text-xs ml-auto"
-                style={{ color: 'rgba(255,255,255,0.3)' }}
-              >
-                Clear
-              </button>
-            </div>
-          )}
-          <div className="px-5 pb-5">
-            <textarea
-              rows={7}
-              value={resumeText}
-              onChange={e => { setResumeText(e.target.value); setError(null); setPdfFileName(null) }}
-              placeholder="Paste your resume here, or attach a PDF or screenshot above — any section works. The more text, the more accurate your score…"
-              className="w-full resize-none text-sm outline-none rounded-xl px-4 py-3.5 transition-all"
-              style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.07)',
-                color: 'rgba(255,255,255,0.8)',
-                caretColor: '#F5C842',
-                lineHeight: '1.65',
-              }}
-              onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
-              onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
-            />
-          </div>
-        </div>
-
-        {error && (
-          <p className="text-center text-sm mb-4" style={{ color: '#EF4444' }}>{error}</p>
-        )}
-
-        <button
-          onClick={handleCheck}
-          disabled={loading || !resumeText.trim()}
-          className="w-full rounded-2xl font-black text-base transition-all disabled:cursor-not-allowed"
-          style={{
-            padding: '16px 24px',
-            background: loading || !resumeText.trim()
-              ? 'rgba(255,255,255,0.04)'
-              : 'linear-gradient(135deg, #F5C842 0%, #d4a017 100%)',
-            color: loading || !resumeText.trim() ? 'rgba(255,255,255,0.2)' : '#0A0A0F',
-            border: loading || !resumeText.trim() ? '1px solid rgba(255,255,255,0.06)' : 'none',
-            boxShadow: loading || !resumeText.trim() ? 'none' : '0 0 32px rgba(245,200,66,0.3)',
-            opacity: !resumeText.trim() ? 0.5 : 1,
-          }}
-        >
-          {loading ? (
-            <span className="flex items-center justify-center gap-2.5">
-              <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-              Analyzing your resume…
-            </span>
+              </motion.button>
+              <p className="text-center text-xs mt-2" style={{ color: 'rgba(255,255,255,0.2)' }}>
+                No account required · Results in under 30 seconds
+              </p>
+            </>
           ) : (
-            'Check My ATS Score →'
-          )}
-        </button>
-
-        {/* Results */}
-        {result && (
-          <div ref={resultRef} className="mt-8 space-y-5">
-
-            {/* Score header */}
-            <div className="rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-5"
-              style={{ background: '#13131A', border: '1px solid rgba(239,68,68,0.25)', boxShadow: '0 0 40px rgba(239,68,68,0.06)' }}>
-              <div className="shrink-0">
-                {animateScore && <MiniScoreRing score={result.displayScore} />}
+            /* Result state */
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, ease: EASE_OUT }}
+              className="text-center"
+            >
+              <div className="flex justify-center mb-4">
+                <AnimatedScore value={result.displayScore} color={scoreColor} size={130} trigger />
               </div>
-              <div className="text-center sm:text-left">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3 text-xs font-bold uppercase tracking-wider"
-                  style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#EF4444' }}>
-                  ATS Compatibility Score
-                </div>
-                <p className="text-white font-bold text-lg mb-1">
-                  Your resume is getting rejected before a human sees it.
-                </p>
-                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                  A score below 70 means ATS systems are filtering you out automatically. Here's why:
-                </p>
-              </div>
-            </div>
 
-            {/* Issues list */}
-            <div className="rounded-2xl overflow-hidden"
-              style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="px-5 py-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-                <p className="text-white font-semibold text-sm">Critical issues found in your resume:</p>
-              </div>
-              <div className="divide-y" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
-                {result.issues.map((issue, i) => (
-                  <div key={i} className="flex items-start gap-3 px-5 py-4">
-                    <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5"
-                      style={{ background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.25)' }}>
-                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="#EF4444" strokeWidth="2.5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <h3 className="text-lg font-bold text-white mb-1 cursor-help inline-flex items-center gap-1.5">
+                    Your ATS Score
+                    <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: 12 }}>?</span>
+                  </h3>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    className="rounded-lg px-3 py-2 text-xs max-w-xs"
+                    style={{ background: '#1E1E2E', color: 'rgba(255,255,255,0.8)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', zIndex: 9999 }}
+                    sideOffset={6}
+                  >
+                    ATS (Applicant Tracking System) is software used by 99% of Fortune 500 companies to filter resumes before a human ever sees them. A score below 70 often means automatic rejection.
+                    <Tooltip.Arrow style={{ fill: '#1E1E2E' }} />
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+
+              <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                {result.displayScore >= 70
+                  ? 'Strong score. Pro optimization could push you past 90.'
+                  : result.displayScore >= 50
+                  ? 'Average score. Recruiters are likely passing on your resume.'
+                  : 'Low score. Most ATS systems are filtering you out automatically.'}
+              </p>
+
+              {result.issues?.length > 0 && (
+                <div className="text-left mb-6 space-y-2">
+                  <p className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: 'rgba(255,255,255,0.3)' }}>Issues Found</p>
+                  {result.issues.slice(0, 3).map((issue, i) => (
+                    <div key={i} className="flex items-start gap-2.5 text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                      <span className="mt-0.5 shrink-0" style={{ color: '#FF6B6B' }}>✕</span>
+                      {issue}
                     </div>
-                    <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>{issue}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+                  ))}
+                  {result.issues.length > 3 && (
+                    <p className="text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                      +{result.issues.length - 3} more issues — unlock with Pro
+                    </p>
+                  )}
+                </div>
+              )}
 
-            {/* CTA */}
-            <div className="rounded-2xl p-6 text-center relative overflow-hidden"
-              style={{
-                background: 'linear-gradient(135deg, rgba(245,200,66,0.1) 0%, rgba(212,160,23,0.06) 100%)',
-                border: '1px solid rgba(245,200,66,0.3)',
-              }}>
-              <div className="absolute inset-0 rounded-2xl pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(245,200,66,0.08) 0%, transparent 60%)' }} />
-              <div className="relative">
-                <p className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: '#F5C842' }}>
-                  Fix all {result.issues.length} issues automatically
-                </p>
-                <p className="text-white font-black text-xl mb-2">
-                  Shortlistr rewrites your resume to score 80+
-                </p>
-                <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                  Full ATS optimization · Cover letter generator · Interview prep · All for $10/month
-                </p>
-                <Link to="/auth?mode=signup">
-                  <button className="px-8 py-4 rounded-2xl font-black text-base transition-all hover:scale-105 active:scale-100"
-                    style={{
-                      background: 'linear-gradient(135deg, #F5C842, #d4a017)',
-                      color: '#0A0A0F',
-                      boxShadow: '0 8px 32px rgba(245,200,66,0.35)',
-                    }}>
-                    Fix my score with Shortlistr — $10/month →
-                  </button>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15 }}>
+                <Link
+                  to={user ? '/optimize' : '/auth?mode=signup'}
+                  className="w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 btn-shimmer"
+                  style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', display: 'flex' }}
+                >
+                  Fix These Issues with Pro
+                  <ArrowRight size={15} />
                 </Link>
-                <p className="text-xs mt-3" style={{ color: 'rgba(255,255,255,0.25)' }}>
-                  No credit card required for first scan · Cancel anytime
-                </p>
-              </div>
-            </div>
+              </motion.div>
 
-          </div>
-        )}
+              <button
+                onClick={() => { setResult(null); setResumeText(''); setFileName('') }}
+                className="mt-3 text-xs transition-colors"
+                style={{ color: 'rgba(255,255,255,0.25)' }}
+                onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.5)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.25)'}
+              >
+                Try another resume
+              </button>
+            </motion.div>
+          )}
+        </motion.div>
       </div>
     </section>
   )
 }
 
-/* ─────────────────────────────────────────────
-   SHARED COMPONENTS
-───────────────────────────────────────────── */
-function StarRating() {
+// ─── Features ────────────────────────────────────────────────────────────────
+
+const FEATURES = [
+  {
+    icon: Zap,
+    color: '#F5C842',
+    title: 'ATS Score Analyzer',
+    desc: 'See your exact keyword match percentage before you click Apply. Know exactly where you stand.',
+  },
+  {
+    icon: FileText,
+    color: '#3B82F6',
+    title: 'AI Resume Optimizer',
+    desc: 'Rewrites your bullets with the exact keywords ATS systems look for. Tailored to every job description.',
+  },
+  {
+    icon: Brain,
+    color: '#8B5CF6',
+    title: 'Rejection Analysis',
+    desc: 'Find out exactly why your resume isn\'t getting callbacks. Not vague feedback — specific, actionable fixes.',
+  },
+  {
+    icon: MessageSquare,
+    color: '#00FF88',
+    title: 'Cover Letter Generator',
+    desc: 'Tailored cover letters in 30 seconds. Sounds like you, hits every keyword, impresses every recruiter.',
+  },
+  {
+    icon: TrendingUp,
+    color: '#06B6D4',
+    title: 'LinkedIn Optimizer',
+    desc: 'Recruiter searches rank you higher when your LinkedIn matches your target role. We write that profile.',
+  },
+  {
+    icon: DollarSign,
+    color: '#F97316',
+    title: 'Salary Negotiator',
+    desc: 'Know your market value and get the exact scripts to negotiate a higher offer — proven email templates included.',
+  },
+]
+
+function FeaturesSection() {
+  const ref    = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+
   return (
-    <span className="flex items-center gap-0.5" aria-label="5 out of 5 stars">
-      {[...Array(5)].map((_, i) => (
-        <svg key={i} className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="#F5C842">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-      ))}
-    </span>
+    <section ref={ref} className="py-24 px-4">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          className="text-center mb-14"
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+          variants={staggerContainer}
+        >
+          <motion.div variants={staggerItem} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5 text-xs font-bold uppercase tracking-wider" style={{ background: 'rgba(245,200,66,0.08)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.18)' }}>
+            <Sparkles size={12} />
+            Full Feature Suite
+          </motion.div>
+          <motion.h2 variants={staggerItem} className="text-4xl sm:text-5xl font-black text-white mb-4">
+            Everything you need to<br className="hidden sm:block" /> land the job
+          </motion.h2>
+          <motion.p variants={staggerItem} className="text-lg max-w-xl mx-auto" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            One subscription. Every tool. From ATS optimization to salary negotiation — ShortListr covers the entire job search.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          variants={staggerContainer}
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+        >
+          {FEATURES.map((f) => (
+            <motion.div
+              key={f.title}
+              variants={staggerItem}
+              whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.35)' }}
+              transition={{ duration: 0.2 }}
+              className="rounded-2xl p-6"
+              style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}
+            >
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `${f.color}14`, border: `1px solid ${f.color}28` }}
+              >
+                <f.icon size={20} style={{ color: f.color }} />
+              </div>
+              <h3 className="text-base font-bold text-white mb-2">{f.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.4)' }}>{f.desc}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
   )
 }
 
-const LinkedInIcon = () => (
-  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-  </svg>
-)
+// ─── How it works ─────────────────────────────────────────────────────────────
 
-/* ─────────────────────────────────────────────
-   DATA
-───────────────────────────────────────────── */
-const testimonials = [
+const STEPS = [
   {
-    outcome: 'Got 3 callbacks the week after using Shortlistr.',
-    quote: 'Applied to the same companies twice — completely different results. The ATS score jumped from 41 to 88 after one optimization.',
-    name: 'Marcus T.',
-    role: 'Software Engineer',
-    result: '41 → 88 ATS Score',
+    n: '01',
+    icon: Upload,
+    title: 'Upload Your Resume',
+    desc: 'Drop in your PDF or paste your text. We extract everything automatically.',
   },
   {
-    outcome: 'Had a recruiter call me the morning after I used it.',
-    quote: "Spent 3 months applying with the same resume. Used Shortlistr once and heard back the next day. I wish I'd found it sooner.",
-    name: 'Sarah K.',
-    role: 'Operations Analyst · Austin, TX',
-    result: 'Interview in 9 days',
+    n: '02',
+    icon: Target,
+    title: 'Paste the Job Description',
+    desc: 'Add any job posting URL or paste the full description — we do the keyword analysis.',
   },
   {
-    outcome: '4 offers in 30 days.',
-    quote: 'The cover letter alone is worth the price. It pulled specific details from my resume and the JD that I never would have thought to include.',
-    name: 'James R.',
-    role: 'Account Executive · New York, NY',
-    result: '4 offers in 30 days',
+    n: '03',
+    icon: Zap,
+    title: 'Get Your Optimized Resume',
+    desc: 'In 90 seconds you get a fully rewritten resume, ATS score, and rejection analysis.',
   },
 ]
 
-const valueItems = [
-  { label: 'ATS Resume Scanner', desc: 'See your exact score', value: '$10 value' },
-  { label: 'AI Resume Rewriter', desc: 'Keyword-optimized in 90 seconds', value: '$49 value' },
-  { label: 'Cover Letter Generator', desc: 'Tailored to every job posting', value: '$19 value' },
-  { label: 'Before/After Scorecard', desc: 'Shareable PNG of your improvement', value: '$9 value' },
-  { label: 'Rejection Reason Report', desc: 'Exactly why ATS rejected you', value: '$19 value' },
+function HowItWorksSection() {
+  const ref    = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+
+  return (
+    <section ref={ref} className="py-24 px-4" style={{ background: '#0D0D14' }}>
+      <div className="max-w-5xl mx-auto">
+        <motion.div
+          className="text-center mb-14"
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+          variants={staggerContainer}
+        >
+          <motion.h2 variants={staggerItem} className="text-4xl sm:text-5xl font-black text-white mb-4">
+            From rejected to shortlisted<br className="hidden sm:block" /> in 90 seconds
+          </motion.h2>
+          <motion.p variants={staggerItem} className="text-lg" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            Three steps. No fluff.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          variants={staggerContainer}
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+        >
+          {STEPS.map((s, i) => (
+            <motion.div
+              key={s.n}
+              variants={staggerItem}
+              className="relative rounded-2xl p-7"
+              style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}
+            >
+              <div className="flex items-start gap-4">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: 'rgba(245,200,66,0.1)', border: '1px solid rgba(245,200,66,0.2)' }}
+                >
+                  <s.icon size={22} style={{ color: '#F5C842' }} />
+                </div>
+                <div>
+                  <span className="text-[10px] font-black tracking-widest" style={{ color: 'rgba(245,200,66,0.5)' }}>STEP {s.n}</span>
+                  <h3 className="text-base font-bold text-white mt-0.5 mb-2">{s.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.desc}</p>
+                </div>
+              </div>
+              {i < STEPS.length - 1 && (
+                <div
+                  className="hidden md:block absolute top-1/2 -right-3 z-10 w-6 h-6 rounded-full flex items-center justify-center"
+                  style={{ background: '#0D0D14', border: '1px solid rgba(255,255,255,0.1)', transform: 'translateY(-50%)' }}
+                >
+                  <ArrowRight size={12} style={{ color: 'rgba(255,255,255,0.3)' }} />
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Pricing ─────────────────────────────────────────────────────────────────
+
+const PRO_FEATURES = [
+  'Unlimited ATS resume scans',
+  'AI resume rewriting & optimization',
+  'Cover letter generation',
+  'Rejection reason analysis',
+  'Before / after scorecard',
+  'LinkedIn profile optimizer',
+  'Salary negotiation email scripts',
+  'Interview question predictor',
+  'Priority support',
 ]
 
-const faqs = [
-  {
-    q: 'Do I need a credit card to try it?',
-    a: "No. Your first ATS scan is completely free. No card, no commitment. You see your score before you decide to pay anything.",
-  },
-  {
-    q: 'How is this different from free resume checkers?',
-    a: "Free tools tell you what's wrong. Shortlistr fixes it — rewriting your resume with the right keywords, restructuring sections ATS can't read, and generating a cover letter tailored to the specific job. It's the difference between a diagnosis and a cure.",
-  },
-  {
-    q: 'How fast will I see results?',
-    a: 'Optimization takes under 90 seconds. Most users report their first interview request within 1–2 weeks of using a Shortlistr-optimized resume. Results depend on your field, experience level, and how many applications you send.',
-  },
-  {
-    q: "Will my resume still sound like me?",
-    a: 'Yes. The AI rewrites for ATS optimization while keeping your voice, your experience, and your achievements. You review everything before downloading — nothing goes out without your approval.',
-  },
-  {
-    q: "What's the difference between Monthly ($10) and Lifetime ($149)?",
-    a: "Same features, same unlimited access. Monthly is $10/mo and you can cancel anytime. Lifetime is a one-time $149 payment — use it forever with no recurring charges. If you plan to use Shortlistr for more than 15 months, Lifetime saves you money.",
-  },
-  {
-    q: 'Can I cancel my monthly plan anytime?',
-    a: 'Yes — cancel in one click from your Settings page. No phone calls, no retention emails, no hoops. You keep Pro access through the end of your current billing period.',
-  },
-]
-
-/* ─────────────────────────────────────────────
-   PAGE
-───────────────────────────────────────────── */
-export default function Home() {
-  const { user, profile } = useAuth()
+function PricingSection() {
+  const ref    = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { user } = useAuth()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (!user) return
-    navigate('/dashboard', { replace: true })
-  }, [user, navigate])
+  return (
+    <section ref={ref} className="py-24 px-4" id="pricing">
+      <div className="max-w-lg mx-auto">
+        <motion.div
+          className="text-center mb-12"
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+          variants={staggerContainer}
+        >
+          <motion.div variants={staggerItem} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5 text-xs font-bold uppercase tracking-wider" style={{ background: 'rgba(245,200,66,0.08)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.18)' }}>
+            <Zap size={12} />
+            Simple Pricing
+          </motion.div>
+          <motion.h2 variants={staggerItem} className="text-4xl sm:text-5xl font-black text-white mb-4">
+            One price.<br />Everything included.
+          </motion.h2>
+          <motion.p variants={staggerItem} className="text-base" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            No tiers, no surprises, no annual lock-in.
+          </motion.p>
+        </motion.div>
 
-  const ctaHref = '/auth?mode=signup'
+        <motion.div
+          initial={{ opacity: 0, y: 32, scale: 0.97 }}
+          animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.15 }}
+          className="relative rounded-2xl overflow-hidden"
+          style={{
+            background: 'linear-gradient(160deg, #1a1408 0%, #13131A 60%)',
+            border: '1px solid rgba(245,200,66,0.2)',
+            boxShadow: '0 0 80px rgba(245,200,66,0.07), 0 32px 64px rgba(0,0,0,0.5)',
+          }}
+        >
+          {/* Top gradient bar */}
+          <div className="h-0.5" style={{ background: 'linear-gradient(90deg, transparent, #F5C842, transparent)' }} />
+
+          <div className="p-8">
+            {/* Price */}
+            <div className="flex items-baseline gap-1 mb-1">
+              <span className="text-5xl font-black text-white">$10</span>
+              <span className="text-lg font-medium" style={{ color: 'rgba(255,255,255,0.3)' }}>/month</span>
+            </div>
+            <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.35)' }}>
+              Or <span style={{ color: '#F5C842', fontWeight: 700 }}>$149 once</span> for lifetime access — save 57%
+            </p>
+
+            {/* Features list */}
+            <ul className="space-y-3 mb-8">
+              {PRO_FEATURES.map(f => (
+                <li key={f} className="flex items-start gap-3 text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                  <CheckCircle size={16} className="shrink-0 mt-0.5" style={{ color: '#F5C842' }} />
+                  {f}
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.15 }}
+              onClick={() => navigate(user ? '/pricing' : '/auth?mode=signup')}
+              className="w-full py-4 rounded-xl font-bold text-base flex items-center justify-center gap-2 btn-shimmer"
+              style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 4px 24px rgba(245,200,66,0.3)' }}
+            >
+              {user ? 'Upgrade to Pro' : 'Start Free Trial'}
+              <ArrowRight size={16} />
+            </motion.button>
+
+            <p className="text-center text-xs mt-3" style={{ color: 'rgba(255,255,255,0.2)' }}>
+              Cancel anytime · No contracts · 7-day money-back guarantee
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Testimonials ────────────────────────────────────────────────────────────
+
+const TESTIMONIALS = [
+  {
+    quote: 'I went from a 31 ATS score to 89 in five minutes. Had four interview requests the following week. This thing is insane.',
+    name: 'Sarah K.',
+    role: 'Software Engineer',
+    score: { before: 31, after: 89 },
+  },
+  {
+    quote: 'Applied for 4 months with zero responses. Used ShortListr once, rewrote my resume, and got 3 callbacks in 5 days.',
+    name: 'Marcus T.',
+    role: 'Product Manager',
+    score: { before: 22, after: 84 },
+  },
+  {
+    quote: 'The rejection analysis showed me exactly what was wrong. Nobody else tells you this. It\'s like having a recruiter friend.',
+    name: 'Priya M.',
+    role: 'UX Designer',
+    score: { before: 41, after: 91 },
+  },
+]
+
+function TestimonialsSection() {
+  const ref    = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+
+  return (
+    <section ref={ref} className="py-24 px-4" style={{ background: '#0D0D14' }}>
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          className="text-center mb-14"
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+          variants={staggerContainer}
+        >
+          <motion.h2 variants={staggerItem} className="text-4xl sm:text-5xl font-black text-white mb-4">
+            Real results, real people
+          </motion.h2>
+          <motion.p variants={staggerItem} className="text-lg" style={{ color: 'rgba(255,255,255,0.4)' }}>
+            Join thousands of job seekers who got past the ATS and into the room.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-5"
+          variants={staggerContainer}
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+        >
+          {TESTIMONIALS.map((t) => (
+            <motion.div
+              key={t.name}
+              variants={staggerItem}
+              whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.35)' }}
+              transition={{ duration: 0.2 }}
+              className="rounded-2xl p-6 flex flex-col"
+              style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}
+            >
+              {/* Stars */}
+              <div className="flex items-center gap-0.5 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={13} fill="#F5C842" style={{ color: '#F5C842' }} />
+                ))}
+              </div>
+
+              {/* Quote */}
+              <p className="text-sm leading-relaxed flex-1 mb-5" style={{ color: 'rgba(255,255,255,0.65)' }}>
+                "{t.quote}"
+              </p>
+
+              {/* Author + score badge */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-bold text-white">{t.name}</p>
+                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{t.role}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: 'rgba(255,255,255,0.25)' }}>Score</p>
+                  <p className="text-xs font-bold">
+                    <span style={{ color: '#FF6B6B' }}>{t.score.before}</span>
+                    <span style={{ color: 'rgba(255,255,255,0.2)' }}> → </span>
+                    <span style={{ color: '#00FF88' }}>{t.score.after}</span>
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Final CTA ────────────────────────────────────────────────────────────────
+
+function FinalCTA() {
+  const ref    = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { user } = useAuth()
+
+  return (
+    <section ref={ref} className="py-24 px-4">
+      <div className="max-w-3xl mx-auto text-center">
+        <motion.div
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+          variants={staggerContainer}
+        >
+          <motion.div variants={staggerItem} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs font-bold uppercase tracking-wider" style={{ background: 'rgba(245,200,66,0.08)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.18)' }}>
+            <Sparkles size={12} />
+            Start today for free
+          </motion.div>
+          <motion.h2 variants={staggerItem} className="text-4xl sm:text-6xl font-black text-white mb-5 leading-tight">
+            Stop getting filtered out.<br />
+            <span style={{ color: '#F5C842' }}>Start getting interviews.</span>
+          </motion.h2>
+          <motion.p variants={staggerItem} className="text-lg mb-8 max-w-xl mx-auto" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            Your first ATS score is free. No credit card. No commitment.
+            See exactly what's stopping you before you pay a cent.
+          </motion.p>
+          <motion.div variants={staggerItem}>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15 }} className="inline-block">
+              <Link
+                to={user ? '/optimize' : '/auth?mode=signup'}
+                className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl font-bold text-base btn-shimmer"
+                style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 8px 32px rgba(245,200,66,0.35)' }}
+              >
+                {user ? 'Go to Dashboard' : 'Analyze My Resume Free'}
+                <ArrowRight size={18} />
+              </Link>
+            </motion.div>
+            <p className="mt-4 text-sm" style={{ color: 'rgba(255,255,255,0.2)' }}>
+              Trusted by 12,000+ job seekers · 4.9/5 rating
+            </p>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Main ─────────────────────────────────────────────────────────────────────
+
+export default function Home() {
+  const { user }   = useAuth()
+  const navigate   = useNavigate()
+  const heroRef    = useRef(null)
+  const heroInView = useInView(heroRef, { once: true })
 
   return (
     <Layout>
       <Helmet>
-        <title>ShortListr — #1 AI ATS Resume Optimizer | Beat ATS & Get More Interviews</title>
-        <meta name="description" content="ShortListr is an AI ATS resume optimizer that tailors your resume to any job in 90 seconds. Beat ATS filters, close keyword gaps, get AI bullet rewrites. Free to start — no credit card required." />
-        <link rel="canonical" href="https://shortlistr.us/" />
-        <meta property="og:url" content="https://shortlistr.us/" />
-        <meta property="og:title" content="ShortListr — #1 AI ATS Resume Optimizer | Beat ATS & Get More Interviews" />
-        <meta property="og:description" content="The AI ATS resume optimizer that fixes your resume in 90 seconds. ShortListr scans, scores, and rewrites your resume to get past ATS filters and land more interviews." />
+        <title>ShortListr — AI Resume Optimizer That Beats ATS Filters</title>
+        <meta name="description" content="73% of resumes never reach a human. ShortListr scores, rewrites, and optimizes your resume to beat ATS filters in 90 seconds. Try free — no account required." />
+        <link rel="canonical" href="https://www.shortlistr.us/" />
       </Helmet>
-      {/* ── Sticky mobile CTA ── */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden px-4 pb-4 pt-3"
-        style={{ background: 'linear-gradient(to top, #0A0A0F 60%, transparent)', pointerEvents: 'none' }}>
-        <Link to={ctaHref} className="block" style={{ pointerEvents: 'auto' }}>
-          <button className="w-full py-4 rounded-2xl font-black text-base tracking-tight transition-all active:scale-[0.98]"
-            style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 8px 32px rgba(245,200,66,0.35)' }}>
-            Get my ATS score free →
-          </button>
-        </Link>
-      </div>
 
-      <div style={{ background: '#0A0A0F' }}>
+      {/* ── Hero ──────────────────────────────────────────────────────────── */}
+      <section
+        ref={heroRef}
+        className="relative overflow-hidden"
+        style={{ minHeight: 'calc(100vh - 64px)', display: 'flex', alignItems: 'center' }}
+      >
+        {/* Background orbs */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="orb-drift absolute rounded-full" style={{ width: 600, height: 600, top: '-20%', left: '-10%', background: 'radial-gradient(circle, rgba(245,200,66,0.06) 0%, transparent 65%)' }} />
+          <div className="orb-drift2 absolute rounded-full" style={{ width: 500, height: 500, bottom: '-15%', right: '-5%', background: 'radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 65%)' }} />
+        </div>
 
-        {/* ── 1. HERO ── */}
-        <section className="relative overflow-hidden">
-          {/* Grid dots */}
-          <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0)', backgroundSize: '28px 28px' }} />
-          {/* Glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full blur-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgba(59,130,246,0.1) 0%, transparent 70%)' }} />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-10 sm:pb-14 text-center">
+            {/* Left — copy */}
+            <motion.div
+              initial="hidden"
+              animate={heroInView ? 'show' : 'hidden'}
+              variants={staggerContainer}
+            >
+              {/* Badge */}
+              <motion.div variants={staggerItem} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs font-bold uppercase tracking-wider" style={{ background: 'rgba(245,200,66,0.08)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.18)' }}>
+                <Sparkles size={12} />
+                AI-Powered Resume Intelligence
+              </motion.div>
 
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-xs font-semibold"
-              style={{ background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.2)', color: 'rgba(255,255,255,0.7)' }}>
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#3B82F6' }} />
-              12,000+ resumes scanned — avg. score lift +34 pts
-            </div>
+              {/* Headline */}
+              <motion.h1 variants={staggerItem} className="text-5xl sm:text-6xl lg:text-6xl xl:text-7xl font-black text-white leading-tight mb-5">
+                Stop Getting<br />
+                <span style={{ color: '#F5C842' }}>Rejected.</span><br />
+                Start Getting<br />
+                Interviews.
+              </motion.h1>
 
-            {/* H1 */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-[1.05] tracking-tight max-w-3xl mx-auto mb-6">
-              The AI ATS resume optimizer that gets you interviews.{' '}
-              <span style={{ background: 'linear-gradient(135deg, #F5C842 0%, #fde68a 50%, #F5C842 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                Fix your resume in 90 seconds.
-              </span>
-            </h1>
+              {/* Subheadline */}
+              <motion.p variants={staggerItem} className="text-lg sm:text-xl mb-8 max-w-lg" style={{ color: 'rgba(255,255,255,0.5)', lineHeight: 1.6 }}>
+                73% of resumes are filtered out before a human ever sees them. ShortListr beats every ATS filter and rewrites your resume in 90 seconds.
+              </motion.p>
 
-            {/* Subheadline */}
-            <p className="text-lg sm:text-xl max-w-2xl mx-auto mb-4 leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)' }}>
-              ShortListr is an AI ATS resume optimizer that scans your resume against any job description, shows you exactly why you're getting rejected, and rewrites it to get callbacks. $10/month. Cancel anytime.
-            </p>
+              {/* CTA row */}
+              <motion.div variants={staggerItem} className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15 }}>
+                  <Link
+                    to={user ? '/optimize' : '/auth?mode=signup'}
+                    className="inline-flex items-center gap-2.5 px-7 py-4 rounded-2xl font-bold text-base btn-shimmer"
+                    style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 8px 32px rgba(245,200,66,0.3)' }}
+                  >
+                    {user ? 'Go to Dashboard' : 'Analyze My Resume Free'}
+                    <ArrowRight size={18} />
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15 }}>
+                  <Link
+                    to="/features"
+                    className="inline-flex items-center gap-2 px-5 py-4 rounded-2xl font-semibold text-sm transition-colors"
+                    style={{ color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.1)' }}
+                    onMouseEnter={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.85)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)' }}
+                    onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)' }}
+                  >
+                    See all features
+                    <ChevronDown size={14} />
+                  </Link>
+                </motion.div>
+              </motion.div>
 
-            {/* Primary CTA */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
-              <Link to={ctaHref}>
-                <button className="px-8 py-4 rounded-2xl font-black text-base transition-all hover:scale-105 active:scale-100"
-                  style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 8px 32px rgba(245,200,66,0.35)' }}>
-                  Scan my resume free →
-                </button>
-              </Link>
-              <Link to="/features">
-                <button className="px-8 py-4 rounded-2xl font-semibold text-sm transition-all"
-                  style={{ border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.6)', background: 'transparent' }}>
-                  See how it works
-                </button>
-              </Link>
-            </div>
+              {/* Trust signals */}
+              <motion.p variants={staggerItem} className="mt-4 text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>
+                No credit card required · 60-second setup · Cancel anytime
+              </motion.p>
+            </motion.div>
 
-            {/* Trust line */}
-            <p className="text-xs mb-10" style={{ color: 'rgba(255,255,255,0.3)' }}>
-              No credit card required &nbsp;·&nbsp; Takes 90 seconds &nbsp;·&nbsp; Score goes up or it's free
-            </p>
-
-            {/* ── STAT STRIP ── */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14">
-              {[
-                { value: '12,000+', label: 'Resumes scanned' },
-                { value: '+34 pts', label: 'Avg. score lift' },
-                { value: '< 90s', label: 'Time to optimize' },
-              ].map((s, i) => (
-                <div key={i} className="flex items-center gap-2 px-4 py-2.5 rounded-xl"
-                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  <span className="text-white font-black text-sm">{s.value}</span>
-                  <span className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>{s.label}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Social proof avatars */}
-            <div className="flex items-center justify-center gap-4">
-              <div className="flex -space-x-2">
-                {['M', 'S', 'J', 'A', 'R'].map((l, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-[11px] font-bold text-white"
-                    style={{ borderColor: '#0A0A0F', background: ['#3B82F6', '#8B5CF6', '#10B981', '#F5C842', '#EF4444'][i] }}>
-                    {l}
-                  </div>
-                ))}
-              </div>
-              <div className="text-left">
-                <StarRating />
-                <p className="text-[11px] mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>Trusted by 12,000+ job seekers</p>
+            {/* Right — demo card */}
+            <div className="relative flex justify-center lg:justify-end">
+              <div className="w-full max-w-sm">
+                <HeroDemoCard />
               </div>
             </div>
           </div>
-        </section>
+        </div>
 
-        {/* ── 1.5. FREE ATS SCORER ── */}
-        <FreeATSScorer />
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2"
+          style={{ x: '-50%' }}
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ChevronDown size={20} style={{ color: 'rgba(255,255,255,0.2)' }} />
+        </motion.div>
+      </section>
 
-        {/* ── 2. BEFORE / AFTER ── */}
-        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.015)' }}>
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
-            <div className="text-center mb-8">
-              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#3B82F6' }}>Real example</p>
-              <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">What one optimization actually does</h2>
-              <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>Same resume. Same person. Same experience.</p>
-            </div>
+      {/* ── Social proof strip ─────────────────────────────────────────────── */}
+      <SocialProofStrip />
 
-            {/* Score cards */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="rounded-2xl p-5 sm:p-6 text-center" style={{ background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.2)' }}>
-                <p className="text-[10px] uppercase tracking-wider font-bold mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>Before Shortlistr</p>
-                <p className="text-5xl sm:text-6xl font-black mb-1" style={{ color: '#EF4444' }}>41</p>
-                <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>/ 100 ATS Score</p>
-                <p className="text-[10px] mt-2 px-2 py-0.5 rounded-full inline-block" style={{ background: 'rgba(239,68,68,0.1)', color: '#EF4444' }}>Filtered by ATS</p>
-              </div>
-              <div className="rounded-2xl p-5 sm:p-6 text-center" style={{ background: 'rgba(0,255,136,0.04)', border: '1px solid rgba(0,255,136,0.2)' }}>
-                <p className="text-[10px] uppercase tracking-wider font-bold mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>After Shortlistr</p>
-                <p className="text-5xl sm:text-6xl font-black mb-1" style={{ color: '#00FF88' }}>88</p>
-                <p className="text-xs" style={{ color: 'rgba(255,255,255,0.3)' }}>/ 100 ATS Score</p>
-                <p className="text-[10px] mt-2 px-2 py-0.5 rounded-full inline-block" style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88' }}>Passes ATS ✓</p>
-              </div>
-            </div>
+      {/* ── Free score section ─────────────────────────────────────────────── */}
+      <FreeScoreSection />
 
-            {/* What changed */}
-            <div className="rounded-2xl p-5 sm:p-6" style={{ background: '#13131A', border: '1px solid rgba(245,200,66,0.2)', boxShadow: '0 0 40px rgba(245,200,66,0.04)' }}>
-              <p className="text-sm font-semibold mb-4 text-center" style={{ color: 'rgba(255,255,255,0.5)' }}>Here's what changed:</p>
-              <div className="space-y-3">
-                {[
-                  'Missing: "cross-functional collaboration" — appears 4× in job description, added to experience section',
-                  'Section header "Work History" not ATS-recognized — renamed to "Professional Experience"',
-                  'No quantified achievements detected — 3 impact metrics added to bullet points',
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3 p-3 rounded-xl" style={{ background: 'rgba(245,200,66,0.04)', border: '1px solid rgba(245,200,66,0.1)' }}>
-                    <span className="text-sm font-bold shrink-0 mt-0.5" style={{ color: '#F5C842' }}>→</span>
-                    <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>{item}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 pt-4 text-center" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-                <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>+47 point improvement. First optimization. 90 seconds.</p>
-              </div>
-            </div>
-          </div>
-        </section>
+      {/* ── Features ─────────────────────────────────────────────────────── */}
+      <FeaturesSection />
 
-        {/* ── 3. SOCIAL PROOF ── */}
-        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
-            <div className="text-center mb-10">
-              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#3B82F6' }}>Real results</p>
-              <h2 className="text-2xl sm:text-3xl font-black text-white">They were getting ignored. Now they're getting hired.</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {testimonials.map((t) => (
-                <figure key={t.name} className="rounded-2xl p-6 flex flex-col"
-                  style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
-                  <div className="flex items-center justify-between mb-3">
-                    <StarRating />
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                      style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.2)' }}>{t.result}</span>
-                  </div>
-                  <p className="text-sm font-bold text-white mb-2 leading-snug">{t.outcome}</p>
-                  <blockquote className="text-sm leading-relaxed flex-1 mb-5" style={{ color: 'rgba(255,255,255,0.55)' }}>"{t.quote}"</blockquote>
-                  <figcaption>
-                    <p className="text-white font-semibold text-sm">{t.name}</p>
-                    <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{t.role}</p>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        </section>
+      {/* ── How it works ──────────────────────────────────────────────────── */}
+      <HowItWorksSection />
 
-        {/* ── 4. HOW IT WORKS ── */}
-        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.015)' }}>
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
-            <div className="text-center mb-12">
-              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#3B82F6' }}>How it works</p>
-              <h2 className="text-2xl sm:text-3xl font-black text-white mb-3">
-                From rejected resume to interview request —
-                <span style={{ color: 'rgba(255,255,255,0.4)' }}> in three steps.</span>
-              </h2>
-            </div>
+      {/* ── Pricing ───────────────────────────────────────────────────────── */}
+      <PricingSection />
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
-              {[
-                { step: '01', title: 'Paste your resume', desc: 'Drop in your existing resume text. Any format works.', demo: <MiniATSCard /> },
-                { step: '02', title: 'AI rewrites your bullets', desc: 'Keywords added, sections restructured, metrics surfaced.', demo: <MiniBulletCard /> },
-                { step: '03', title: 'Cover letter in 30 seconds', desc: 'Tailored to the exact job description. Ready to send.', demo: <MiniCoverCard /> },
-              ].map((s) => (
-                <div key={s.step} className="rounded-2xl p-5 flex flex-col gap-4" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
-                  <div>
-                    <span className="text-4xl font-black" style={{ color: 'rgba(255,255,255,0.07)' }}>{s.step}</span>
-                    <h3 className="text-white font-bold text-base mt-1 mb-1">{s.title}</h3>
-                    <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>{s.desc}</p>
-                  </div>
-                  {s.demo}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+      {/* ── Testimonials ──────────────────────────────────────────────────── */}
+      <TestimonialsSection />
 
-        {/* ── 5. VALUE STACK ── */}
-        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
-            <div className="text-center mb-10">
-              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#3B82F6' }}>The value equation</p>
-              <h2 className="text-2xl sm:text-3xl font-black text-white mb-3">Everything you get for $10/month</h2>
-              <p className="text-base" style={{ color: 'rgba(255,255,255,0.45)' }}>Five tools that would cost you $125/month separately — bundled for less than a Spotify subscription.</p>
-            </div>
-            <div className="rounded-2xl overflow-hidden mb-5" style={{ border: '1px solid rgba(255,255,255,0.08)' }}>
-              {valueItems.map((item, i) => (
-                <div key={item.label} className="flex items-center justify-between px-5 py-4"
-                  style={{ background: i % 2 === 0 ? '#13131A' : 'rgba(255,255,255,0.02)', borderBottom: i < valueItems.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
-                  <div>
-                    <p className="text-sm font-semibold text-white">{item.label}</p>
-                    <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{item.desc}</p>
-                  </div>
-                  <span className="text-sm font-bold shrink-0" style={{ color: '#00FF88' }}>{item.value}</span>
-                </div>
-              ))}
-              <div className="flex items-center justify-between px-5 py-5"
-                style={{ background: 'linear-gradient(135deg, rgba(245,200,66,0.08), rgba(245,200,66,0.04))', borderTop: '1px solid rgba(245,200,66,0.2)' }}>
-                <div>
-                  <p className="text-white font-black text-lg">Total value</p>
-                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>If you bought each tool separately</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm line-through mb-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>$125/month</p>
-                  <p className="text-white font-black text-2xl">$10<span className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.4)' }}>/mo</span></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── 6. GUARANTEE ── */}
-        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.015)' }}>
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
-            <div className="rounded-2xl p-8 sm:p-10 text-center relative overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, #0f1a0d 0%, #13131A 50%, #0a0f1a 100%)', border: '1px solid rgba(0,255,136,0.2)' }}>
-              <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(0,255,136,0.07) 0%, transparent 70%)' }} />
-              <div className="relative">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-5"
-                  style={{ background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.2)' }}>
-                  <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="#00FF88" strokeWidth="1.75">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                </div>
-                <p className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: '#00FF88' }}>The Shortlistr Guarantee</p>
-                <h2 className="text-2xl sm:text-3xl font-black text-white mb-4 leading-tight">
-                  Your score goes up. Guaranteed.
-                </h2>
-                <p className="text-sm leading-relaxed mb-6 max-w-lg mx-auto" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                  If your ATS score doesn't improve after using Shortlistr, email us and we'll refund your first month instantly. No questions. No forms. One email.
-                </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                  {['No questions asked', '30-day window', 'Instant refund'].map((item, i) => (
-                    <span key={item} className="flex items-center gap-1.5">
-                      {i > 0 && <span className="hidden sm:inline" style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>}
-                      <span style={{ color: '#00FF88' }}>✓</span> {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── 7. PRICING TEASER ── */}
-        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
-            <div className="text-center mb-8">
-              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#F5C842' }}>Pricing</p>
-              <h2 className="text-2xl sm:text-3xl font-black text-white mb-3">One price. Everything included.</h2>
-              <p className="text-base" style={{ color: 'rgba(255,255,255,0.45)' }}>No tiers. No paywalled features. No gotchas.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
-              {/* Monthly */}
-              <div className="rounded-2xl p-6 flex flex-col" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: 'rgba(255,255,255,0.4)' }}>Pro Monthly</p>
-                <div className="mb-1">
-                  <span className="text-4xl font-black text-white">$10</span>
-                  <span className="text-sm ml-1" style={{ color: 'rgba(255,255,255,0.35)' }}>/month</span>
-                </div>
-                <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>Cancel anytime. No contracts.</p>
-                <Link to={ctaHref} className="mt-auto">
-                  <button className="w-full py-3 rounded-xl font-bold text-sm transition-all"
-                    style={{ border: '1px solid rgba(245,200,66,0.35)', color: '#F5C842', background: 'rgba(245,200,66,0.05)' }}>
-                    Start free — $10/mo
-                  </button>
-                </Link>
-              </div>
-              {/* Lifetime */}
-              <div className="rounded-2xl p-6 flex flex-col relative overflow-hidden"
-                style={{ background: 'linear-gradient(160deg, #1a1408 0%, #13131A 100%)', border: '1px solid rgba(245,200,66,0.3)' }}>
-                <div className="absolute top-4 right-4">
-                  <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full" style={{ background: '#F5C842', color: '#0A0A0F' }}>Best Value</span>
-                </div>
-                <p className="text-xs font-bold uppercase tracking-wider mb-4" style={{ color: '#F5C842' }}>Pro Lifetime</p>
-                <div className="mb-0.5">
-                  <span className="text-4xl font-black text-white">$149</span>
-                  <span className="text-sm ml-1" style={{ color: 'rgba(255,255,255,0.35)' }}>once</span>
-                </div>
-                <p className="text-sm font-semibold mb-4" style={{ color: '#00FF88' }}>Pay once. Use forever.</p>
-                <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.4)' }}>No subscriptions, no renewals.</p>
-                <Link to={ctaHref} className="mt-auto">
-                  <button className="w-full py-3 rounded-xl font-bold text-sm transition-all hover:opacity-90"
-                    style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F' }}>
-                    Get Lifetime Access — $149
-                  </button>
-                </Link>
-              </div>
-            </div>
-            <p className="text-center text-xs mt-5" style={{ color: 'rgba(255,255,255,0.25)' }}>
-              First scan free. No card required. 30-day money-back guarantee on both plans.
-            </p>
-          </div>
-        </section>
-
-        {/* ── 8. FAQ ── */}
-        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.015)' }}>
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
-            <div className="text-center mb-10">
-              <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: '#3B82F6' }}>FAQ</p>
-              <h2 className="text-2xl sm:text-3xl font-black text-white">Every question you have, answered.</h2>
-            </div>
-            <div className="space-y-3">
-              {faqs.map((faq) => (
-                <FAQItem key={faq.q} q={faq.q} a={faq.a} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── 9. BOTTOM CTA ── */}
-        <section style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-3 leading-tight">
-              Still applying with the same resume?
-            </h2>
-            <p className="text-base mb-8 max-w-lg mx-auto" style={{ color: 'rgba(255,255,255,0.5)' }}>
-              Every day you wait is another application the ATS deletes.
-            </p>
-            <Link to={ctaHref}>
-              <button className="px-10 py-5 rounded-2xl font-black text-lg transition-all hover:scale-105 active:scale-100 mb-4"
-                style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 12px 40px rgba(245,200,66,0.35)' }}>
-                Get my ATS score now — it's free →
-              </button>
-            </Link>
-            <p className="text-xs mb-10" style={{ color: 'rgba(255,255,255,0.25)' }}>
-              No credit card required · Takes 90 seconds · $10/mo after free scan
-            </p>
-            <div className="pt-8 flex items-center justify-center gap-2 text-xs" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.25)' }}>
-              <span>Shortlistr.us — Built for job seekers who are done being ignored.</span>
-              <span>·</span>
-              <a href="https://www.linkedin.com/in/isaac-christensen-18ba0a3b7" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-1.5 transition-colors hover:text-white/50">
-                <LinkedInIcon />
-                LinkedIn
-              </a>
-            </div>
-          </div>
-        </section>
-
-      </div>
+      {/* ── Final CTA ─────────────────────────────────────────────────────── */}
+      <FinalCTA />
     </Layout>
   )
 }
 
-/* ─────────────────────────────────────────────
-   FAQ ACCORDION
-───────────────────────────────────────────── */
-function FAQItem({ q, a }) {
-  const [open, setOpen] = useState(false)
+// ─── Social proof strip ───────────────────────────────────────────────────────
+
+const STATS = [
+  { value: 12847, label: 'Resumes Analyzed', suffix: '+' },
+  { value: 73,    label: 'Avg Score Increase', suffix: '%' },
+  { value: 4.9,   label: 'User Rating', suffix: '★' },
+]
+
+function StatCounter({ value, suffix, isFloat = false }) {
+  const count   = useMotionValue(0)
+  const rounded = isFloat
+    ? useTransform(count, v => v.toFixed(1))
+    : useTransform(count, Math.round)
+  const ref     = useRef(null)
+  const inView  = useInView(ref, { once: true })
+
+  useEffect(() => {
+    if (!inView) return
+    const ctrl = animate(count, value, { duration: 1.6, ease: 'easeOut', delay: 0.1 })
+    return () => ctrl.stop()
+  }, [inView, count, value])
+
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-6 py-5 text-left transition-colors hover:bg-white/[0.02]"
-        aria-expanded={open}>
-        <span className="text-sm font-semibold text-white pr-4">{q}</span>
-        <svg className="w-4 h-4 shrink-0 transition-transform" style={{ color: 'rgba(255,255,255,0.4)', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
-          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      {open && (
-        <div className="px-6 pb-5" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-          <p className="text-sm leading-relaxed pt-4" style={{ color: 'rgba(255,255,255,0.5)' }}>{a}</p>
-        </div>
-      )}
+    <span ref={ref}>
+      <motion.span>{rounded}</motion.span>{suffix}
+    </span>
+  )
+}
+
+function SocialProofStrip() {
+  const ref    = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
+
+  return (
+    <div
+      ref={ref}
+      style={{ background: '#0D0D14', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}
+    >
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-0 sm:divide-x"
+          style={{ '--tw-divide-opacity': 1 }}
+          variants={staggerContainer}
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+        >
+          {STATS.map((s, i) => (
+            <motion.div
+              key={s.label}
+              variants={staggerItem}
+              className="flex flex-col items-center text-center sm:px-8"
+            >
+              <span
+                className="text-3xl sm:text-4xl font-black mb-1"
+                style={{ color: '#F5C842' }}
+              >
+                <StatCounter
+                  value={s.value}
+                  suffix={s.suffix}
+                  isFloat={s.value === 4.9}
+                />
+              </span>
+              <span className="text-xs uppercase tracking-widest font-medium" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                {s.label}
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </div>
   )
 }

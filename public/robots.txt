@@ -36,3 +36,4 @@ Disallow: /linkedin-optimizer
 Disallow: /salary-negotiator
 
 Sitemap: https://www.shortlistr.us/sitemap.xml
+Sitemap: https://www.shortlistr.us/sitemap-pseo.xml
