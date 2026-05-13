@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Eye, EyeOff, ArrowLeft, CheckCircle, Zap,
-  Mail, Lock, Chrome, Github,
+  Mail, Lock,
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import Logo from '../components/ui/Logo'
