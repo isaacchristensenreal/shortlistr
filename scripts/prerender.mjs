@@ -172,6 +172,12 @@ const pages = [
   },
   // Tool pages
   {
+    route: '/tools/cover-letter-first-paragraph-generator',
+    title: 'Cover Letter Opening Paragraph Generator — 3 Options, Free',
+    description: 'The hardest sentence to write. Get 3 cover letter opening paragraphs tailored to your role — direct, story-driven, or question-based. No signup.',
+    canonical: 'https://www.shortlistr.us/tools/cover-letter-first-paragraph-generator',
+  },
+  {
     route: '/tools/resume-bullet-rewriter',
     title: 'Free Resume Bullet Point Rewriter — Stronger Bullets in Seconds',
     description: 'Paste a weak resume bullet and get 3 rewritten versions with strong action verbs and ATS-friendly phrasing. Free, instant, no signup.',

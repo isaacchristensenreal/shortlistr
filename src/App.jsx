@@ -47,6 +47,7 @@ import SeoPage from './pages/SeoPage'
 import AtsScoreChecker from './pages/tools/AtsScoreChecker'
 import ResumeKeywordExtractor from './pages/tools/ResumeKeywordExtractor'
 import ResumeBulletRewriter from './pages/tools/ResumeBulletRewriter'
+import CoverLetterOpenerGenerator from './pages/tools/CoverLetterOpenerGenerator'
 
 export default function App() {
   return (
@@ -93,6 +94,7 @@ export default function App() {
               <Route path="/tools/ats-score-checker" element={<AtsScoreChecker />} />
               <Route path="/tools/resume-keyword-extractor" element={<ResumeKeywordExtractor />} />
               <Route path="/tools/resume-bullet-rewriter" element={<ResumeBulletRewriter />} />
+              <Route path="/tools/cover-letter-first-paragraph-generator" element={<CoverLetterOpenerGenerator />} />
 
               {/* Protected */}
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
