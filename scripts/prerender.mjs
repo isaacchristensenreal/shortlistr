@@ -172,6 +172,12 @@ const pages = [
   },
   // Tool pages
   {
+    route: '/tools/ats-job-title-normalizer',
+    title: 'ATS Job Title Normalizer — Fix Unusual Job Titles for Resume ATS',
+    description: "Creative job titles like 'Growth Ninja' get filtered by ATS before anyone reads your resume. Find the standard equivalent and fix it free.",
+    canonical: 'https://www.shortlistr.us/tools/ats-job-title-normalizer',
+  },
+  {
     route: '/tools/interview-question-generator',
     title: 'Interview Question Generator from Job Description — Free Tool',
     description: 'Paste a job posting and get the 10 most likely interview questions by type, with what each question is actually testing for. Free, no signup.',
