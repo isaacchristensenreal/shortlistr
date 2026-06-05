@@ -172,6 +172,12 @@ const pages = [
   },
   // Tool pages
   {
+    route: '/tools/salary-range-estimator',
+    title: 'Free Salary Range Estimator — Know Your Worth Before You Negotiate',
+    description: 'Get a realistic salary range for any job title and location. Includes what pushes you to the high end and a negotiation tip. Free, no signup.',
+    canonical: 'https://www.shortlistr.us/tools/salary-range-estimator',
+  },
+  {
     route: '/tools/ats-job-title-normalizer',
     title: 'ATS Job Title Normalizer — Fix Unusual Job Titles for Resume ATS',
     description: "Creative job titles like 'Growth Ninja' get filtered by ATS before anyone reads your resume. Find the standard equivalent and fix it free.",

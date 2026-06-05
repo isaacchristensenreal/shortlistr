@@ -53,6 +53,7 @@ import AtsResumeFormatChecker from './pages/tools/AtsResumeFormatChecker'
 import JobDescriptionRedFlagDetector from './pages/tools/JobDescriptionRedFlagDetector'
 import InterviewQuestionGenerator from './pages/tools/InterviewQuestionGenerator'
 import AtsJobTitleNormalizer from './pages/tools/AtsJobTitleNormalizer'
+import SalaryRangeEstimator from './pages/tools/SalaryRangeEstimator'
 
 export default function App() {
   return (
@@ -105,6 +106,7 @@ export default function App() {
               <Route path="/tools/job-description-red-flag-detector" element={<JobDescriptionRedFlagDetector />} />
               <Route path="/tools/interview-question-generator" element={<InterviewQuestionGenerator />} />
               <Route path="/tools/ats-job-title-normalizer" element={<AtsJobTitleNormalizer />} />
+              <Route path="/tools/salary-range-estimator" element={<SalaryRangeEstimator />} />
 
               {/* Protected */}
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
