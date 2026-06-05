@@ -82,12 +82,9 @@ export default function CoverLetterOpenerGenerator() {
     const userContent = `Role and company: ${trimmedRole.slice(0, 100)}${trimmedFit ? `\n\nWhat makes me a fit: ${trimmedFit.slice(0, 300)}` : ''}`
 
     try {
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/openai-proxy`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_KEY}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'gpt-4o-mini',
           temperature: 0.7,
@@ -100,8 +97,7 @@ export default function CoverLetterOpenerGenerator() {
       })
 
       if (!res.ok) {
-        const body = await res.text().catch(() => '')
-        throw new Error(`API error ${res.status}${body ? ': ' + body.slice(0, 120) : ''}`)
+        throw new Error('Something went wrong with the API connection. Please try again.')
       }
 
       const data = await res.json()

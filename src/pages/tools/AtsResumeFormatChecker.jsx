@@ -92,12 +92,9 @@ export default function AtsResumeFormatChecker() {
     setResult(null)
 
     try {
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/openai-proxy`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_KEY}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'gpt-4o-mini',
           temperature: 0,
@@ -110,8 +107,7 @@ export default function AtsResumeFormatChecker() {
       })
 
       if (!res.ok) {
-        const body = await res.text().catch(() => '')
-        throw new Error(`API error ${res.status}${body ? ': ' + body.slice(0, 120) : ''}`)
+        throw new Error('Something went wrong with the API connection. Please try again.')
       }
 
       const data = await res.json()
