@@ -170,6 +170,13 @@ const pages = [
     description: 'If you\'re not getting interviews, there\'s a specific reason. This diagnostic guide walks through the most common causes — ATS filtering, tailoring, formatting, targeting — and how to fix each one.',
     canonical: 'https://www.shortlistr.us/why-am-i-not-getting-interviews',
   },
+  // Tool pages
+  {
+    route: '/tools/ats-score-checker',
+    title: 'Free ATS Score Checker — See How Your Resume Ranks',
+    description: 'Paste your resume and job description. Get an instant ATS match score, missing keywords, and a plain-English verdict. Free, no signup.',
+    canonical: 'https://www.shortlistr.us/tools/ats-score-checker',
+  },
   // pSEO index page
   {
     route: '/ats-resume',
