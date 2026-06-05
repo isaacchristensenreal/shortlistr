@@ -51,6 +51,7 @@ import CoverLetterOpenerGenerator from './pages/tools/CoverLetterOpenerGenerator
 import LinkedInHeadlineGenerator from './pages/tools/LinkedInHeadlineGenerator'
 import AtsResumeFormatChecker from './pages/tools/AtsResumeFormatChecker'
 import JobDescriptionRedFlagDetector from './pages/tools/JobDescriptionRedFlagDetector'
+import InterviewQuestionGenerator from './pages/tools/InterviewQuestionGenerator'
 
 export default function App() {
   return (
@@ -101,6 +102,7 @@ export default function App() {
               <Route path="/tools/linkedin-headline-generator" element={<LinkedInHeadlineGenerator />} />
               <Route path="/tools/ats-resume-format-checker" element={<AtsResumeFormatChecker />} />
               <Route path="/tools/job-description-red-flag-detector" element={<JobDescriptionRedFlagDetector />} />
+              <Route path="/tools/interview-question-generator" element={<InterviewQuestionGenerator />} />
 
               {/* Protected */}
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

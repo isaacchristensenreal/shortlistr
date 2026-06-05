@@ -172,6 +172,12 @@ const pages = [
   },
   // Tool pages
   {
+    route: '/tools/interview-question-generator',
+    title: 'Interview Question Generator from Job Description — Free Tool',
+    description: 'Paste a job posting and get the 10 most likely interview questions by type, with what each question is actually testing for. Free, no signup.',
+    canonical: 'https://www.shortlistr.us/tools/interview-question-generator',
+  },
+  {
     route: '/tools/job-description-red-flag-detector',
     title: 'Job Posting Red Flag Detector — Free Tool to Spot Bad Job Listings',
     description: 'Paste any job description and find the warning signs before you spend hours applying. Vague salary, unrealistic requirements, ghost postings — surfaced instantly.',
