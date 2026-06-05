@@ -45,6 +45,7 @@ import WhyNotGettingInterviews from './pages/WhyNotGettingInterviews'
 import SeoIndex from './pages/SeoIndex'
 import SeoPage from './pages/SeoPage'
 import AtsScoreChecker from './pages/tools/AtsScoreChecker'
+import ResumeKeywordExtractor from './pages/tools/ResumeKeywordExtractor'
 
 export default function App() {
   return (
@@ -89,6 +90,7 @@ export default function App() {
               <Route path="/ats-resume" element={<SeoIndex />} />
               <Route path="/ats-resume/:slug" element={<SeoPage />} />
               <Route path="/tools/ats-score-checker" element={<AtsScoreChecker />} />
+              <Route path="/tools/resume-keyword-extractor" element={<ResumeKeywordExtractor />} />
 
               {/* Protected */}
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

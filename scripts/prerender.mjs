@@ -172,6 +172,12 @@ const pages = [
   },
   // Tool pages
   {
+    route: '/tools/resume-keyword-extractor',
+    title: 'Free Resume Keyword Extractor — Find the Exact ATS Keywords for Any Job',
+    description: 'Paste a job posting and get the exact keywords ATS systems scan for. Free tool, instant results, no account needed.',
+    canonical: 'https://www.shortlistr.us/tools/resume-keyword-extractor',
+  },
+  {
     route: '/tools/ats-score-checker',
     title: 'Free ATS Score Checker — See How Your Resume Ranks',
     description: 'Paste your resume and job description. Get an instant ATS match score, missing keywords, and a plain-English verdict. Free, no signup.',
