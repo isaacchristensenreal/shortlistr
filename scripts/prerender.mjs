@@ -172,6 +172,12 @@ const pages = [
   },
   // Tool pages
   {
+    route: '/tools/linkedin-headline-generator',
+    title: 'Free LinkedIn Headline Generator — 5 Options Instantly',
+    description: 'Enter your job title and top skills. Get 5 LinkedIn headline options optimized for recruiter search and ATS. Free, instant, no account.',
+    canonical: 'https://www.shortlistr.us/tools/linkedin-headline-generator',
+  },
+  {
     route: '/tools/cover-letter-first-paragraph-generator',
     title: 'Cover Letter Opening Paragraph Generator — 3 Options, Free',
     description: 'The hardest sentence to write. Get 3 cover letter opening paragraphs tailored to your role — direct, story-driven, or question-based. No signup.',
