@@ -172,6 +172,12 @@ const pages = [
   },
   // Tool pages
   {
+    route: '/tools/resume-bullet-rewriter',
+    title: 'Free Resume Bullet Point Rewriter — Stronger Bullets in Seconds',
+    description: 'Paste a weak resume bullet and get 3 rewritten versions with strong action verbs and ATS-friendly phrasing. Free, instant, no signup.',
+    canonical: 'https://www.shortlistr.us/tools/resume-bullet-rewriter',
+  },
+  {
     route: '/tools/resume-keyword-extractor',
     title: 'Free Resume Keyword Extractor — Find the Exact ATS Keywords for Any Job',
     description: 'Paste a job posting and get the exact keywords ATS systems scan for. Free tool, instant results, no account needed.',
