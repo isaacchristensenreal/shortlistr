@@ -44,6 +44,7 @@ import TechResumeAts from './pages/TechResumeAts'
 import WhyNotGettingInterviews from './pages/WhyNotGettingInterviews'
 import SeoIndex from './pages/SeoIndex'
 import SeoPage from './pages/SeoPage'
+import AtsScoreChecker from './pages/tools/AtsScoreChecker'
 
 export default function App() {
   return (
@@ -87,6 +88,7 @@ export default function App() {
               <Route path="/why-am-i-not-getting-interviews" element={<WhyNotGettingInterviews />} />
               <Route path="/ats-resume" element={<SeoIndex />} />
               <Route path="/ats-resume/:slug" element={<SeoPage />} />
+              <Route path="/tools/ats-score-checker" element={<AtsScoreChecker />} />
 
               {/* Protected */}
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
