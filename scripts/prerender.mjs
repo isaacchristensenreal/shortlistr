@@ -172,6 +172,12 @@ const pages = [
   },
   // Tool pages
   {
+    route: '/tools/ats-resume-format-checker',
+    title: 'Free ATS Resume Format Checker — Find Formatting Errors Instantly',
+    description: 'Paste your resume and see exactly which formatting issues will cause ATS systems to misparse or reject it. Free, no signup required.',
+    canonical: 'https://www.shortlistr.us/tools/ats-resume-format-checker',
+  },
+  {
     route: '/tools/linkedin-headline-generator',
     title: 'Free LinkedIn Headline Generator — 5 Options Instantly',
     description: 'Enter your job title and top skills. Get 5 LinkedIn headline options optimized for recruiter search and ATS. Free, instant, no account.',
