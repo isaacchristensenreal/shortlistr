@@ -172,6 +172,12 @@ const pages = [
   },
   // Tool pages
   {
+    route: '/tools/job-description-red-flag-detector',
+    title: 'Job Posting Red Flag Detector — Free Tool to Spot Bad Job Listings',
+    description: 'Paste any job description and find the warning signs before you spend hours applying. Vague salary, unrealistic requirements, ghost postings — surfaced instantly.',
+    canonical: 'https://www.shortlistr.us/tools/job-description-red-flag-detector',
+  },
+  {
     route: '/tools/ats-resume-format-checker',
     title: 'Free ATS Resume Format Checker — Find Formatting Errors Instantly',
     description: 'Paste your resume and see exactly which formatting issues will cause ATS systems to misparse or reject it. Free, no signup required.',
