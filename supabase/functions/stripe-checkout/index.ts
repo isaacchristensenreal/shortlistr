@@ -42,48 +42,14 @@ serve(async (req) => {
       customerId = customer.id
     }
 
-    // ── Salary add-on (one-time $4.99) ─────────────────────────────────────
-    if (mode === 'salary_addon') {
-      const priceId = Deno.env.get('STRIPE_SALARY_PRICE_ID') ?? ''
-      if (!priceId) throw new Error('STRIPE_SALARY_PRICE_ID is not configured')
+    // B2B pivot: there is now a single plan — $99/mo per coach. The old
+    // salary add-on (one-time $4.99) and Pro Lifetime (one-time $149) modes
+    // are gone; `mode`/`billing` params are accepted but ignored so older
+    // cached frontend bundles calling this function don't hard-fail.
+    void mode
+    void billing
 
-      const session = await stripe.checkout.sessions.create({
-        customer: customerId,
-        mode: 'payment',
-        line_items: [{ price: priceId, quantity: 1 }],
-        success_url: `${baseUrl}/salary-negotiator?unlocked=1`,
-        cancel_url: cancelUrl || `${baseUrl}/salary-negotiator`,
-        client_reference_id: userId,
-        metadata: { purchase_type: 'salary_addon', supabase_uid: userId },
-      })
-
-      return new Response(JSON.stringify({ url: session.url }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
-    }
-
-    // ── Pro Lifetime (one-time $149) ────────────────────────────────────────
-    if (billing === 'lifetime') {
-      const priceId = Deno.env.get('STRIPE_PRO_LIFETIME_PRICE_ID') ?? ''
-      if (!priceId) throw new Error('STRIPE_PRO_LIFETIME_PRICE_ID is not configured')
-      if (!baseUrl) throw new Error('SITE_URL is not configured')
-
-      const session = await stripe.checkout.sessions.create({
-        customer: customerId,
-        mode: 'payment',
-        line_items: [{ price: priceId, quantity: 1 }],
-        success_url: `${baseUrl}/upgrade/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: cancelUrl || `${baseUrl}/pricing`,
-        client_reference_id: userId,
-        metadata: { purchase_type: 'pro_lifetime', supabase_uid: userId },
-      })
-
-      return new Response(JSON.stringify({ url: session.url }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
-    }
-
-    // ── Pro Monthly (subscription $10/mo) ───────────────────────────────────
+    // ── Coach Monthly ($99/mo subscription) ─────────────────────────────────
     const priceId = Deno.env.get('STRIPE_PRO_PRICE_ID') ?? ''
     if (!priceId) {
       return new Response(JSON.stringify({ stripe_not_configured: true }), {
@@ -99,7 +65,7 @@ serve(async (req) => {
       success_url: `${baseUrl}/upgrade/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: cancelUrl || `${baseUrl}/pricing`,
       client_reference_id: userId,
-      metadata: { purchase_type: 'pro_monthly', supabase_uid: userId },
+      metadata: { purchase_type: 'coach_monthly', supabase_uid: userId },
       subscription_data: {
         metadata: { supabase_uid: userId },
       },

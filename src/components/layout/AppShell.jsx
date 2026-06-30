@@ -2,67 +2,61 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import Logo from '../ui/Logo'
+import { FEATURES } from '../../config/features'
 
-const NAV_ITEMS = [
+const LINKEDIN_ICON = (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+    <circle cx="4" cy="4" r="2" stroke="currentColor" strokeWidth="1.75" fill="none" />
+  </svg>
+)
+
+const SALARY_ICON = (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+)
+
+const SETTINGS_ICON = (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+  </svg>
+)
+
+const CLIENTS_ICON = (
+  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m5-7.13a4 4 0 110 8 4 4 0 010-8zm6 3a4 4 0 010 5.13M7 9.13a4 4 0 010-5.13" />
+  </svg>
+)
+
+const ALL_NAV_ITEMS = [
   {
     to: '/dashboard',
-    label: 'Dashboard',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-      </svg>
-    ),
-  },
-  {
-    to: '/optimize',
-    label: 'Scan Resume',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
-  },
-  {
-    to: '/library',
-    label: 'My Library',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-      </svg>
-    ),
+    label: 'Clients',
+    icon: CLIENTS_ICON,
   },
   {
     to: '/linkedin-optimizer',
     label: 'LinkedIn',
     badge: 'Pro',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
-        <circle cx="4" cy="4" r="2" stroke="currentColor" strokeWidth="1.75" fill="none" />
-      </svg>
-    ),
+    icon: LINKEDIN_ICON,
+    enabled: FEATURES.linkedinOptimizer,
   },
   {
     to: '/salary-negotiator',
     label: 'Salary Tool',
-    icon: (
-      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
+    icon: SALARY_ICON,
+    enabled: FEATURES.salaryNegotiator,
   },
 ]
 
+// B2C-only tools (LinkedIn optimizer, salary negotiator) are hidden from
+// nav via the `enabled` flag rather than deleted — see src/config/features.js.
+const NAV_ITEMS = ALL_NAV_ITEMS.filter(item => item.enabled !== false)
+
 const BOTTOM_TABS = [
-  { to: '/dashboard', label: 'Home', icon: NAV_ITEMS[0].icon },
-  { to: '/optimize', label: 'Scan', icon: NAV_ITEMS[1].icon },
-  { to: '/library', label: 'Library', icon: NAV_ITEMS[2].icon },
-  { to: '/salary-negotiator', label: 'Salary', icon: NAV_ITEMS[4].icon },
-  { to: '/settings', label: 'Account', icon: (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-    </svg>
-  )},
+  { to: '/dashboard', label: 'Clients', icon: CLIENTS_ICON },
+  { to: '/settings', label: 'Account', icon: SETTINGS_ICON },
 ]
 
 function SidebarItem({ item, active }) {
@@ -148,9 +142,9 @@ export default function AppShell({ children }) {
   }
 
   const PAGE_TITLES = {
-    '/dashboard': 'Dashboard',
+    '/dashboard': 'Clients',
+    '/clients/new': 'Add Client',
     '/optimize': 'Scan Resume',
-    '/library': 'My Library',
     '/linkedin-optimizer': 'LinkedIn',
     '/salary-negotiator': 'Salary Tool',
     '/settings': 'Settings',

@@ -41,9 +41,9 @@ serve(async (req) => {
       })
     }
 
-    // Helper: patch a user's profile
-    const patchProfile = async (userId: string, fields: Record<string, unknown>) => {
-      const res = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}`, {
+    // Patch a row by id in a given table via service role (bypasses RLS).
+    const patchRow = async (table: string, userId: string, fields: Record<string, unknown>) => {
+      const res = await fetch(`${supabaseUrl}/rest/v1/${table}?id=eq.${userId}`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${serviceRoleKey}`,
@@ -55,10 +55,14 @@ serve(async (req) => {
       })
       if (!res.ok) {
         const text = await res.text()
-        console.error(`Failed to patch profile for user ${userId}: ${text}`)
+        console.error(`Failed to patch ${table} for user ${userId}: ${text}`)
       }
     }
 
+    // B2B pivot: a single $99/mo plan. `profiles.tier` stays the source of
+    // truth the rest of the app already gates on (AuthContext, Optimizer,
+    // etc. — left untouched here); `coaches.plan` is kept in sync alongside
+    // it since coaches is now the canonical paying-account record.
     switch (event.type) {
 
       case 'checkout.session.completed': {
@@ -66,53 +70,26 @@ serve(async (req) => {
         if (session.payment_status !== 'paid') break
 
         const userId = session.client_reference_id
-        const purchaseType = session.metadata?.purchase_type
-
         if (!userId) {
           console.error('checkout.session.completed: missing client_reference_id')
           break
         }
 
-        if (purchaseType === 'salary_addon') {
-          // One-time salary negotiation add-on
-          await patchProfile(userId, { salary_negotiator_unlocked: true })
-          console.log(`Unlocked salary negotiator for user ${userId}`)
-        } else if (purchaseType === 'pro_lifetime') {
-          // One-time lifetime Pro purchase — set tier AND mark as lifetime so
-          // a future subscription cancellation doesn't downgrade them
-          await patchProfile(userId, { tier: 'pro', is_lifetime_pro: true })
-          console.log(`Granted lifetime Pro to user ${userId}`)
-        } else {
-          // pro_monthly or legacy sessions without metadata
-          await patchProfile(userId, { tier: 'pro' })
-          console.log(`Upgraded user ${userId} to Pro (monthly)`)
-        }
+        await patchRow('profiles', userId, { tier: 'pro' })
+        await patchRow('coaches', userId, { plan: 'active' })
+        console.log(`Activated coach plan for user ${userId}`)
         break
       }
 
       case 'customer.subscription.deleted': {
-        // Subscription cancelled and period ended — downgrade to free,
-        // but only if the user is NOT a lifetime Pro member
+        // Subscription cancelled and period ended — downgrade.
         const subscription = event.data.object as Stripe.Subscription
         const userId = subscription.metadata?.supabase_uid
         if (!userId) break
 
-        // Fetch current profile to check lifetime status
-        const profileRes = await fetch(`${supabaseUrl}/rest/v1/profiles?id=eq.${userId}&select=is_lifetime_pro`, {
-          headers: {
-            'Authorization': `Bearer ${serviceRoleKey}`,
-            'apikey': serviceRoleKey,
-          },
-        })
-        const profiles = await profileRes.json()
-        const isLifetime = profiles?.[0]?.is_lifetime_pro === true
-
-        if (!isLifetime) {
-          await patchProfile(userId, { tier: 'free' })
-          console.log(`Downgraded user ${userId} to free (subscription ended)`)
-        } else {
-          console.log(`Skipped downgrade for lifetime user ${userId}`)
-        }
+        await patchRow('profiles', userId, { tier: 'free' })
+        await patchRow('coaches', userId, { plan: 'canceled' })
+        console.log(`Deactivated coach plan for user ${userId} (subscription ended)`)
         break
       }
 

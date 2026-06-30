@@ -6,6 +6,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
 import ProtectedRoute from './components/ui/ProtectedRoute'
 import ScrollToTop from './components/ui/ScrollToTop'
+import { FEATURES } from './config/features'
 
 import Home from './pages/Home'
 import Auth from './pages/Auth'
@@ -22,7 +23,8 @@ import Contact from './pages/Contact'
 import CookiePolicy from './pages/CookiePolicy'
 import UpgradeSuccess from './pages/UpgradeSuccess'
 import Settings from './pages/Settings'
-import Library from './pages/Library'
+import AddClient from './pages/AddClient'
+import ClientWorkspace from './pages/ClientWorkspace'
 import Welcome from './pages/Welcome'
 import LinkedInOptimizer from './pages/LinkedInOptimizer'
 import SalaryNegotiator from './pages/SalaryNegotiator'
@@ -111,11 +113,15 @@ export default function App() {
               {/* Protected */}
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/optimize"  element={<ProtectedRoute><Optimizer /></ProtectedRoute>} />
-              <Route path="/library"   element={<ProtectedRoute><Library /></ProtectedRoute>} />
+              {/* Superseded by per-client workspaces — a global cross-client library has no place in the B2B model */}
+              <Route path="/library"   element={<Navigate to="/dashboard" replace />} />
+              <Route path="/clients/new" element={<ProtectedRoute><AddClient /></ProtectedRoute>} />
+              <Route path="/clients/:clientId" element={<ProtectedRoute><ClientWorkspace /></ProtectedRoute>} />
               <Route path="/settings"  element={<ProtectedRoute><Settings /></ProtectedRoute>} />
               <Route path="/welcome"   element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
-              <Route path="/linkedin-optimizer" element={<ProtectedRoute><LinkedInOptimizer /></ProtectedRoute>} />
-              <Route path="/salary-negotiator"  element={<ProtectedRoute><SalaryNegotiator /></ProtectedRoute>} />
+              {/* B2C-only tools, hidden (not deleted) in the B2B pivot — see src/config/features.js */}
+              <Route path="/linkedin-optimizer" element={FEATURES.linkedinOptimizer ? <ProtectedRoute><LinkedInOptimizer /></ProtectedRoute> : <Navigate to="/dashboard" replace />} />
+              <Route path="/salary-negotiator"  element={FEATURES.salaryNegotiator ? <ProtectedRoute><SalaryNegotiator /></ProtectedRoute> : <Navigate to="/dashboard" replace />} />
               <Route path="/roast"              element={<ProtectedRoute><RoastResume /></ProtectedRoute>} />
 
               {/* Catch-all — redirect unknown paths to home */}

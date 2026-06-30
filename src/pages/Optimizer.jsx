@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback, lazy, Suspense } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import AppShell from '../components/layout/AppShell'
+import { FEATURES } from '../config/features'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
 import {
@@ -417,23 +418,22 @@ function InterviewPrepTab({ questions, loading, isPro }) {
   )
 }
 
-function LibraryTab({ user }) {
+function LibraryTab({ clientId }) {
   const [resumes, setResumes] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!user) return
     supabase
       .from('saved_resumes')
       .select('id, title, ats_score, created_at')
-      .eq('user_id', user.id)
+      .eq('client_id', clientId)
       .order('created_at', { ascending: false })
       .limit(20)
       .then(({ data, error }) => {
         if (!error) setResumes(data ?? [])
         setLoading(false)
       })
-  }, [user])
+  }, [clientId])
 
   const formatDate = (ts) => new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
   const scoreColor = (s) => s >= 70 ? '#00FF88' : s >= 50 ? '#F59E0B' : '#FF4444'
@@ -882,6 +882,9 @@ export default function Optimizer() {
   const { success, error: toastError, warn } = useToast()
   const { search } = useLocation()
   const isPro = profile?.tier === 'pro'
+  const clientId = new URLSearchParams(search).get('client')
+  const [client, setClient] = useState(null)
+  const [loadingClient, setLoadingClient] = useState(!!clientId)
 
   // Inputs
   const [resumeMode, setResumeMode] = useState('upload')
@@ -940,6 +943,17 @@ export default function Optimizer() {
       setActiveTab(t)
     }
   }, [search])
+
+  // Resolve the client this scan belongs to — every resume is now owned by
+  // a client, not the coach directly (RLS also enforces this on read/write).
+  useEffect(() => {
+    if (!clientId) { setLoadingClient(false); return }
+    let cancelled = false
+    supabase.from('clients').select('*').eq('id', clientId).single().then(({ data }) => {
+      if (!cancelled) { setClient(data ?? null); setLoadingClient(false) }
+    })
+    return () => { cancelled = true }
+  }, [clientId])
 
   // Auto-load job matches when the matches tab becomes active
   useEffect(() => {
@@ -1021,8 +1035,10 @@ export default function Optimizer() {
         const title = result?.experience?.[0]
           ? `${result.experience[0].title} — ${result.experience[0].company}`
           : result?.name ?? 'Optimized Resume'
-        supabase.from('saved_resumes').insert({ user_id: user?.id, title, resume_data: result, ats_score: score })
+        supabase.from('saved_resumes').insert({ client_id: clientId, title, resume_data: result, ats_score: score })
           .then(({ error }) => { if (error) console.error('Auto-save failed:', error.message) })
+        supabase.from('clients').update({ last_activity_at: new Date().toISOString() }).eq('id', clientId)
+          .then(({ error }) => { if (error) console.error('Activity update failed:', error.message) })
       } else {
         throw new Error(optimizeRes.reason?.message ?? 'Optimization failed')
       }
@@ -1034,33 +1050,42 @@ export default function Optimizer() {
       success('Your resume has been optimized!')
 
       // Run all post-scan analysis in background (non-blocking)
+      // Gated by FEATURES — these are B2C-only tools hidden in the B2B
+      // pivot, so skip the calls entirely rather than fetch data nobody
+      // can see.
 
-      // Job matches (AI — fast)
-      setLoadingMatches(true)
-      generateJobMatches(resumeText)
-        .then(r => setJobMatches(r?.matches ?? []))
-        .catch(() => {})
-        .finally(() => setLoadingMatches(false))
+      if (FEATURES.jobRecommendations) {
+        // Job matches (AI — fast)
+        setLoadingMatches(true)
+        generateJobMatches(resumeText)
+          .then(r => setJobMatches(r?.matches ?? []))
+          .catch(() => {})
+          .finally(() => setLoadingMatches(false))
 
-      // Live jobs (web search — slower, ~5-10s)
-      setLoadingLiveJobs(true)
-      clearJobRecsCache()
-      getRealJobRecommendations(resumeText, { forceRefresh: true })
-        .then(r => { setLiveJobs(r.jobs); setLiveJobsProfile(r.profile) })
-        .catch(e => setLiveJobsError(e?.message ?? 'Job search failed'))
-        .finally(() => setLoadingLiveJobs(false))
+        // Live jobs (web search — slower, ~5-10s)
+        setLoadingLiveJobs(true)
+        clearJobRecsCache()
+        getRealJobRecommendations(resumeText, { forceRefresh: true })
+          .then(r => { setLiveJobs(r.jobs); setLiveJobsProfile(r.profile) })
+          .catch(e => setLiveJobsError(e?.message ?? 'Job search failed'))
+          .finally(() => setLoadingLiveJobs(false))
+      }
 
       if (isPro) {
-        setLoadingRejection(true)
-        analyzeRejectionReasons(resumeText, jobText, atsScore).then(r => setRejectionData(r)).catch(() => {
-          toastError('Rejection analysis temporarily unavailable')
-        }).finally(() => setLoadingRejection(false))
+        if (FEATURES.rejectionReasonPredictor) {
+          setLoadingRejection(true)
+          analyzeRejectionReasons(resumeText, jobText, atsScore).then(r => setRejectionData(r)).catch(() => {
+            toastError('Rejection analysis temporarily unavailable')
+          }).finally(() => setLoadingRejection(false))
+        }
 
-        setScanStep(4) // interview questions
-        setLoadingInterview(true)
-        predictInterviewQuestions(resumeText, jobText).then(r => setInterviewQuestions(r?.questions ?? [])).catch(() => {
-          toastError('Interview prep temporarily unavailable')
-        }).finally(() => setLoadingInterview(false))
+        if (FEATURES.interviewPrep) {
+          setScanStep(4) // interview questions
+          setLoadingInterview(true)
+          predictInterviewQuestions(resumeText, jobText).then(r => setInterviewQuestions(r?.questions ?? [])).catch(() => {
+            toastError('Interview prep temporarily unavailable')
+          }).finally(() => setLoadingInterview(false))
+        }
       }
 
       setScanStep(5)
@@ -1166,12 +1191,38 @@ export default function Optimizer() {
   const hasResume = !!resumeText?.trim()
   const TABS = [
     { id: 'resume',    label: 'Optimized Resume', disabled: false },
-    { id: 'rejection', label: 'Rejection Reasons', proOnly: true, disabled: !hasScan },
-    { id: 'interview', label: 'Interview Prep',    proOnly: true, disabled: !hasScan },
-    { id: 'matches',   label: 'Job Matches',       disabled: !hasScan },
-    { id: 'livejobs',  label: 'Live Jobs',         disabled: !hasResume },
+    ...(FEATURES.rejectionReasonPredictor ? [{ id: 'rejection', label: 'Rejection Reasons', proOnly: true, disabled: !hasScan }] : []),
+    ...(FEATURES.interviewPrep ? [{ id: 'interview', label: 'Interview Prep', proOnly: true, disabled: !hasScan }] : []),
+    ...(FEATURES.jobRecommendations ? [{ id: 'matches', label: 'Job Matches', disabled: !hasScan }] : []),
+    ...(FEATURES.jobRecommendations ? [{ id: 'livejobs', label: 'Live Jobs', disabled: !hasResume }] : []),
     { id: 'library',   label: 'Library',           disabled: false },
   ]
+
+  // Every resume belongs to a client now — there's no path into this page
+  // without one. Loading and not-found get their own small screens rather
+  // than rebuilding the scan UI's empty/error states.
+  if (loadingClient) {
+    return (
+      <AppShell>
+        <div className="min-h-screen flex items-center justify-center" style={{ background: '#0A0A0F' }}>
+          <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'rgba(245,200,66,0.3)', borderTopColor: '#F5C842' }} />
+        </div>
+      </AppShell>
+    )
+  }
+  if (!clientId || !client) {
+    return (
+      <AppShell>
+        <div className="min-h-screen flex flex-col items-center justify-center text-center px-6" style={{ background: '#0A0A0F' }}>
+          <p className="text-white font-semibold mb-2">Select a client to scan a resume</p>
+          <p className="text-white/40 text-sm mb-6 max-w-sm">Resumes are scoped to a client. Open a client's workspace and use "Rewrite Resume" to get here.</p>
+          <Link to="/dashboard" className="px-5 py-2.5 rounded-xl font-bold text-sm" style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F' }}>
+            Go to Client Roster
+          </Link>
+        </div>
+      </AppShell>
+    )
+  }
 
   return (
     <AppShell>
@@ -1180,8 +1231,8 @@ export default function Optimizer() {
 
           {/* Header */}
           <div className="mb-6">
-            <h1 className="text-2xl font-bold text-white mb-1">Make Recruiters Stop Scrolling</h1>
-            <p className="text-white/40 text-sm">Upload your resume and paste a job description to see your Hiring Probability Score.</p>
+            <h1 className="text-2xl font-bold text-white mb-1">{client.name}'s Resume</h1>
+            <p className="text-white/40 text-sm">Upload a resume and paste a job description to see {client.name.split(' ')[0]}'s Hiring Probability Score.</p>
           </div>
 
           {/* Limit warning */}
@@ -1518,8 +1569,8 @@ export default function Optimizer() {
                   {/* Tab panels */}
                   <div className="card-dark p-4 min-h-[500px]">
                     {activeTab === 'library' ? (
-                      <LibraryTab user={user} />
-                    ) : activeTab === 'livejobs' ? (
+                      <LibraryTab clientId={clientId} />
+                    ) : activeTab === 'livejobs' && FEATURES.jobRecommendations ? (
                       <LiveJobsTab
                         jobs={liveJobs}
                         profile={liveJobsProfile}
@@ -1571,7 +1622,7 @@ export default function Optimizer() {
                             )}
                           </div>
                         )}
-                        {activeTab === 'rejection' && (
+                        {activeTab === 'rejection' && FEATURES.rejectionReasonPredictor && (
                           <RejectionReasonsTab
                             reasons={rejectionData?.reasons}
                             stage={rejectionData?.stage}
@@ -1579,14 +1630,14 @@ export default function Optimizer() {
                             loading={loadingRejection}
                           />
                         )}
-                        {activeTab === 'interview' && (
+                        {activeTab === 'interview' && FEATURES.interviewPrep && (
                           <InterviewPrepTab
                             questions={interviewQuestions}
                             loading={loadingInterview}
                             isPro={isPro}
                           />
                         )}
-                        {activeTab === 'matches' && (
+                        {activeTab === 'matches' && FEATURES.jobRecommendations && (
                           <JobMatchesTab
                             matches={jobMatches}
                             loading={loadingMatches}

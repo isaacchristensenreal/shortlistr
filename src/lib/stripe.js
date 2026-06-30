@@ -1,13 +1,12 @@
 import { supabase } from './supabase'
 
 /**
- * Initiates a Stripe Checkout session.
- * billing: 'monthly' (subscription $10/mo) | 'lifetime' (one-time $149)
+ * Initiates a Stripe Checkout session for the single $99/mo coach plan.
  */
-export async function startCheckout(userId, userEmail, billing = 'monthly') {
+export async function startCheckout(userId, userEmail) {
   const cancelUrl = window.location.href
   const { data, error } = await supabase.functions.invoke('stripe-checkout', {
-    body: { userId, userEmail, billing, cancelUrl },
+    body: { userId, userEmail, cancelUrl },
   })
 
   if (error) throw new Error(error.message)
