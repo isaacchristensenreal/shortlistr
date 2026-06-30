@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Eye, EyeOff, ArrowLeft, CheckCircle, Zap,
-  Mail, Lock,
+  Mail, Lock, BarChart3,
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import Logo from '../components/ui/Logo'
@@ -22,7 +22,7 @@ const GoogleIcon = () => (
 )
 
 const GitHubIcon = () => (
-  <svg style={{ width: 18, height: 18, flexShrink: 0 }} viewBox="0 0 24 24" fill="white">
+  <svg style={{ width: 18, height: 18, flexShrink: 0 }} viewBox="0 0 24 24" fill="#0a0b0d">
     <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
   </svg>
 )
@@ -40,11 +40,11 @@ const PASSWORD_CHECKS = [
 function getStrength(password) {
   const passed = PASSWORD_CHECKS.filter(c => c.test(password)).length
   if (!password) return null
-  if (passed <= 1) return { score: 1, label: 'Very weak',  color: '#FF4444' }
-  if (passed === 2) return { score: 2, label: 'Weak',       color: '#F97316' }
-  if (passed === 3) return { score: 3, label: 'Fair',       color: '#F59E0B' }
-  if (passed === 4) return { score: 4, label: 'Good',       color: '#00FF88' }
-  return               { score: 5, label: 'Strong',      color: '#00FF88' }
+  if (passed <= 1) return { score: 1, label: 'Very weak',  color: '#dc2626' }
+  if (passed === 2) return { score: 2, label: 'Weak',       color: '#f97316' }
+  if (passed === 3) return { score: 3, label: 'Fair',       color: '#f59e0b' }
+  if (passed === 4) return { score: 4, label: 'Good',       color: '#059669' }
+  return               { score: 5, label: 'Strong',      color: '#059669' }
 }
 
 function PasswordStrength({ password }) {
@@ -59,7 +59,7 @@ function PasswordStrength({ password }) {
     >
       <div className="flex gap-1 mb-2.5">
         {[1,2,3,4,5].map(i => (
-          <div key={i} className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.07)' }}>
+          <div key={i} className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.07)' }}>
             <motion.div
               className="h-full rounded-full"
               initial={{ width: 0 }}
@@ -72,14 +72,14 @@ function PasswordStrength({ password }) {
       </div>
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs font-semibold" style={{ color: strength.color }}>{strength.label}</span>
-        <span className="text-[10px]" style={{ color: 'rgba(255,255,255,0.25)' }}>{strength.score}/5</span>
+        <span className="text-[10px]" style={{ color: '#94a3b8' }}>{strength.score}/5</span>
       </div>
       <div className="grid grid-cols-2 gap-1">
         {PASSWORD_CHECKS.map(c => {
           const ok = c.test(password)
           return (
-            <div key={c.id} className="flex items-center gap-1.5 text-[11px]" style={{ color: ok ? '#00FF88' : 'rgba(255,255,255,0.3)' }}>
-              <CheckCircle size={10} style={{ color: ok ? '#00FF88' : 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
+            <div key={c.id} className="flex items-center gap-1.5 text-[11px]" style={{ color: ok ? '#059669' : '#94a3b8' }}>
+              <CheckCircle size={10} style={{ color: ok ? '#059669' : '#cbd5e1', flexShrink: 0 }} />
               {c.label}
             </div>
           )
@@ -94,57 +94,60 @@ function PasswordStrength({ password }) {
 function FloatingCards() {
   return (
     <div className="w-full max-w-sm mx-auto mt-8 mb-6 space-y-3">
+      {/* ATS Score card */}
       <motion.div
         animate={{ y: [0, -9, -4, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
         className="rounded-2xl p-4"
-        style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}
+        style={{ background: '#ffffff', border: '1px solid #e5e7eb', boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}
       >
         <div className="flex items-center justify-between mb-3">
           <div>
-            <p className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: 'rgba(255,255,255,0.45)' }}>ATS Match Score</p>
-            <p className="font-black text-2xl leading-none" style={{ color: '#00FF88' }}>94<span className="text-sm font-normal" style={{ color: 'rgba(255,255,255,0.4)' }}>%</span></p>
+            <p className="text-[10px] uppercase tracking-wider mb-0.5" style={{ color: '#94a3b8' }}>Client ATS Score</p>
+            <p className="font-black text-2xl leading-none" style={{ color: '#059669' }}>94<span className="text-sm font-normal" style={{ color: '#94a3b8' }}>%</span></p>
           </div>
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(0,255,136,0.12)', border: '1px solid rgba(0,255,136,0.25)' }}>
-            <CheckCircle size={18} style={{ color: '#00FF88' }} />
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: '#ecfdf5', border: '1px solid #86efac' }}>
+            <CheckCircle size={18} style={{ color: '#059669' }} />
           </div>
         </div>
-        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
-          <div className="h-full rounded-full" style={{ width: '94%', background: 'linear-gradient(90deg, #00FF88, #10b981)' }} />
+        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(0,0,0,0.06)' }}>
+          <div className="h-full rounded-full" style={{ width: '94%', background: 'linear-gradient(90deg, #059669, #10b981)' }} />
         </div>
-        <p className="text-[10px] mt-2" style={{ color: 'rgba(255,255,255,0.3)' }}>Marketing Manager · Apex Corp</p>
+        <p className="text-[10px] mt-2" style={{ color: '#94a3b8' }}>Sarah K. · Product Manager · +41 pts</p>
       </motion.div>
 
+      {/* AI Rewrite card */}
       <motion.div
         animate={{ y: [0, -7, -11, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
         className="rounded-2xl p-3.5 ml-4"
-        style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}
+        style={{ background: '#ffffff', border: '1px solid #e5e7eb', boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}
       >
-        <p className="text-[9px] uppercase tracking-wider mb-1.5" style={{ color: 'rgba(255,255,255,0.35)' }}>AI Bullet Rewrite</p>
-        <p className="text-[11px] font-medium leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)' }}>
+        <p className="text-[9px] uppercase tracking-wider mb-1.5" style={{ color: '#94a3b8' }}>AI Resume Rewrite</p>
+        <p className="text-[11px] font-medium leading-relaxed" style={{ color: '#374151' }}>
           "Increased regional revenue by 34% YoY by restructuring a 12-person sales team and implementing a new CRM workflow."
         </p>
         <div className="flex items-center gap-1.5 mt-2">
-          <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(245,200,66,0.12)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.25)' }}>+34% impact</span>
-          <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.2)' }}>ATS ready</span>
+          <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full" style={{ background: '#eff6ff', color: '#3b82f6', border: '1px solid #bfdbfe' }}>+34% impact</span>
+          <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded-full" style={{ background: '#ecfdf5', color: '#166534', border: '1px solid #86efac' }}>ATS ready</span>
         </div>
       </motion.div>
 
+      {/* Scorecard ready card */}
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 2.5 }}
         className="rounded-2xl p-3.5 mr-4 flex items-center gap-3"
-        style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}
+        style={{ background: '#ffffff', border: '1px solid #e5e7eb', boxShadow: '0 8px 24px rgba(0,0,0,0.06)' }}
       >
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(245,200,66,0.12)', border: '1px solid rgba(245,200,66,0.25)' }}>
-          <Mail size={16} style={{ color: '#F5C842' }} />
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: '#eff6ff', border: '1px solid #bfdbfe' }}>
+          <BarChart3 size={16} style={{ color: '#3b82f6' }} />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-white">Interview request received</p>
-          <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.4)' }}>Horizon Brands · 2 min ago</p>
+          <p className="text-xs font-semibold" style={{ color: '#0a0b0d' }}>Scorecard ready for James R.</p>
+          <p className="text-[10px]" style={{ color: '#94a3b8' }}>ATS: 89 · +47 pts · 2 min ago</p>
         </div>
-        <div className="w-2 h-2 bg-green-400 rounded-full shrink-0 animate-pulse" />
+        <div className="w-2 h-2 rounded-full shrink-0 animate-pulse" style={{ background: '#059669' }} />
       </motion.div>
     </div>
   )
@@ -155,7 +158,7 @@ function FloatingCards() {
 function Field({ label, children }) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-1.5" style={{ color: 'rgba(255,255,255,0.65)' }}>
+      <label className="block text-sm font-medium mb-1.5" style={{ color: 'rgba(10,11,13,0.6)' }}>
         {label}
       </label>
       {children}
@@ -169,13 +172,13 @@ function Input({ icon: Icon, suffix, ...props }) {
     <div
       className="relative flex items-center rounded-xl transition-all duration-200"
       style={{
-        background: focused ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.04)',
-        border: `1px solid ${focused ? 'rgba(245,200,66,0.5)' : 'rgba(255,255,255,0.09)'}`,
-        boxShadow: focused ? '0 0 0 3px rgba(245,200,66,0.08)' : 'none',
+        background: focused ? 'rgba(59,130,246,0.04)' : 'rgba(0,0,0,0.02)',
+        border: `1px solid ${focused ? 'rgba(59,130,246,0.4)' : 'rgba(0,0,0,0.09)'}`,
+        boxShadow: focused ? '0 0 0 3px rgba(59,130,246,0.08)' : 'none',
       }}
     >
       {Icon && (
-        <div className="absolute left-3.5 transition-colors duration-200" style={{ color: focused ? '#F5C842' : 'rgba(255,255,255,0.25)' }}>
+        <div className="absolute left-3.5 transition-colors duration-200" style={{ color: focused ? '#3b82f6' : 'rgba(10,11,13,0.3)' }}>
           <Icon size={15} />
         </div>
       )}
@@ -187,8 +190,8 @@ function Input({ icon: Icon, suffix, ...props }) {
         style={{
           paddingLeft: Icon ? '2.5rem' : '1rem',
           paddingRight: suffix ? '2.75rem' : '1rem',
-          color: 'rgba(255,255,255,0.9)',
-          caretColor: '#F5C842',
+          color: '#0a0b0d',
+          caretColor: '#3b82f6',
         }}
       />
       {suffix && <div className="absolute right-3.5">{suffix}</div>}
@@ -206,24 +209,23 @@ function OAuthButton({ id, label, IconComponent, iconBg, hoverBg, hoverBorder, l
       whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.13 }}
-      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium disabled:opacity-50 transition-all duration-200 group"
+      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium disabled:opacity-50 transition-all duration-200"
       style={{
-        background: 'rgba(255,255,255,0.04)',
-        border: '1px solid rgba(255,255,255,0.1)',
-        color: 'rgba(255,255,255,0.8)',
+        background: 'rgba(0,0,0,0.02)',
+        border: '1px solid rgba(0,0,0,0.09)',
+        color: 'rgba(10,11,13,0.7)',
       }}
       onMouseEnter={e => {
         e.currentTarget.style.background = hoverBg
         e.currentTarget.style.borderColor = hoverBorder
-        e.currentTarget.style.color = 'rgba(255,255,255,1)'
+        e.currentTarget.style.color = 'rgba(10,11,13,0.9)'
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
-        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
-        e.currentTarget.style.color = 'rgba(255,255,255,0.8)'
+        e.currentTarget.style.background = 'rgba(0,0,0,0.02)'
+        e.currentTarget.style.borderColor = 'rgba(0,0,0,0.09)'
+        e.currentTarget.style.color = 'rgba(10,11,13,0.7)'
       }}
     >
-      {/* Icon container */}
       <span
         className="flex items-center justify-center rounded-lg shrink-0"
         style={{ width: 28, height: 28, background: iconBg, flexShrink: 0 }}
@@ -232,7 +234,7 @@ function OAuthButton({ id, label, IconComponent, iconBg, hoverBg, hoverBorder, l
           <motion.span
             animate={{ rotate: 360 }}
             transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
-            style={{ display: 'block', width: 14, height: 14, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.15)', borderTopColor: 'rgba(255,255,255,0.7)' }}
+            style={{ display: 'block', width: 14, height: 14, borderRadius: '50%', border: '2px solid rgba(0,0,0,0.1)', borderTopColor: 'rgba(0,0,0,0.5)' }}
           />
         ) : <IconComponent />}
       </span>
@@ -311,12 +313,12 @@ export default function Auth() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0A0A0F' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#ffffff' }}>
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 0.9, repeat: Infinity, ease: 'linear' }}
           className="w-8 h-8 rounded-full"
-          style={{ border: '2px solid rgba(245,200,66,0.15)', borderTopColor: '#F5C842' }}
+          style={{ border: '2px solid rgba(59,130,246,0.15)', borderTopColor: '#3b82f6' }}
         />
       </div>
     )
@@ -339,30 +341,30 @@ export default function Auth() {
   }
 
   return (
-    <div className="min-h-screen flex" style={{ background: '#0A0A0F' }}>
+    <div className="min-h-screen flex" style={{ background: '#ffffff' }}>
 
       {/* ── Left panel ──────────────────────────────────────────────────── */}
       <div className="hidden lg:flex lg:w-[52%] relative flex-col justify-between p-12 overflow-hidden">
 
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(140deg, #08060F 0%, #0F0A20 45%, #080810 100%)' }} />
-        <div className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.04)_1px,transparent_0)] [background-size:28px_28px]" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(140deg, #f0f9ff 0%, #e0f2fe 45%, #eff6ff 100%)' }} />
+        <div className="absolute inset-0 [background-image:radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.08)_1px,transparent_0)] [background-size:28px_28px]" />
 
         <motion.div
           className="absolute rounded-full pointer-events-none"
-          style={{ width: 480, height: 480, top: '15%', left: '10%', background: 'radial-gradient(circle, rgba(245,200,66,0.07) 0%, transparent 65%)' }}
+          style={{ width: 480, height: 480, top: '15%', left: '10%', background: 'radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 65%)' }}
           animate={{ scale: [1, 1.08, 1], x: [0, 20, 0], y: [0, -15, 0] }}
           transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="absolute rounded-full pointer-events-none"
-          style={{ width: 360, height: 360, bottom: '20%', right: '5%', background: 'radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 65%)' }}
+          style={{ width: 360, height: 360, bottom: '20%', right: '5%', background: 'radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 65%)' }}
           animate={{ scale: [1, 1.06, 1], x: [0, -20, 0], y: [0, 15, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
         />
 
         <Link to="/" className="relative flex items-center gap-2.5 w-fit z-10">
           <Logo size={32} />
-          <span className="text-white font-bold text-lg tracking-tight">ShortListr</span>
+          <span className="font-bold text-lg tracking-tight" style={{ color: '#0a0b0d' }}>ShortListr</span>
         </Link>
 
         <div className="relative flex-1 flex flex-col justify-center -mt-8 z-10">
@@ -376,24 +378,22 @@ export default function Auth() {
             >
               <div
                 className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full mb-5"
-                style={isSignup
-                  ? { background: 'rgba(139,92,246,0.12)', color: '#A78BFA', border: '1px solid rgba(139,92,246,0.25)' }
-                  : { background: 'rgba(245,200,66,0.1)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.2)' }}
+                style={{ background: 'rgba(59,130,246,0.1)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.2)' }}
               >
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: isSignup ? '#A78BFA' : '#F5C842' }} />
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#3b82f6' }} />
                 {isSignup ? 'Join ShortListr' : 'Welcome back'}
               </div>
-              <h2 className="text-4xl font-black text-white leading-tight mb-4">
+              <h2 className="text-4xl font-black leading-tight mb-4" style={{ color: '#0a0b0d' }}>
                 {isSignup ? (
-                  <>Your resume,<br /><span style={{ color: '#F5C842' }}>optimized in 60s</span></>
+                  <>Your practice,<br /><span style={{ color: '#3b82f6' }}>organized from day one</span></>
                 ) : (
-                  <>Good to see<br /><span style={{ color: '#F5C842' }}>you again</span></>
+                  <>Good to see<br /><span style={{ color: '#3b82f6' }}>you again</span></>
                 )}
               </h2>
-              <p className="text-base max-w-xs" style={{ color: 'rgba(255,255,255,0.45)', lineHeight: 1.6 }}>
+              <p className="text-base max-w-xs" style={{ color: '#475569', lineHeight: 1.6 }}>
                 {isSignup
-                  ? 'Paste your resume and a job description. AI analyzes the gap and rewrites your content for that specific role.'
-                  : 'Your saved resume versions are waiting. Continue optimizing for new roles.'}
+                  ? 'One workspace for all your clients\' resumes, ATS scores, and progress. No more Google Drive chaos.'
+                  : 'Your client workspaces are waiting. Pick up where you left off.'}
               </p>
             </motion.div>
           </AnimatePresence>
@@ -402,46 +402,46 @@ export default function Auth() {
 
           <div className="relative flex items-center gap-8 mt-2">
             {[
-              { value: '12K+', label: 'Resumes analyzed' },
+              { value: '50+',  label: 'Coaches onboarded' },
               { value: '6',    label: 'AI-powered tools' },
-              { value: '90s',  label: 'Avg. optimization' },
+              { value: '90s',  label: 'Avg. scan time' },
             ].map((s, i) => (
               <div key={s.label} className="relative">
-                {i > 0 && <div className="absolute -left-4 top-1 bottom-1 w-px" style={{ background: 'rgba(255,255,255,0.1)' }} />}
-                <p className="text-white font-black text-xl">{s.value}</p>
-                <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.label}</p>
+                {i > 0 && <div className="absolute -left-4 top-1 bottom-1 w-px" style={{ background: 'rgba(0,0,0,0.08)' }} />}
+                <p className="font-black text-xl" style={{ color: '#0a0b0d' }}>{s.value}</p>
+                <p className="text-xs mt-0.5" style={{ color: '#64748b' }}>{s.label}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="relative z-10 pt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-          <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.3)' }}>
+        <div className="relative z-10 pt-6" style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+          <p className="text-xs leading-relaxed" style={{ color: '#94a3b8' }}>
             All output is AI-generated. Review everything before submitting. Results are not guaranteed.
           </p>
         </div>
       </div>
 
       {/* ── Right panel ─────────────────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col relative overflow-hidden" style={{ background: '#0D0D14' }}>
+      <div className="flex-1 flex flex-col relative overflow-hidden" style={{ background: '#fafbfc' }}>
 
         {/* Ambient glows */}
-        <div className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(245,200,66,0.04) 0%, transparent 70%)', transform: 'translate(30%, -30%)' }} />
-        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.05) 0%, transparent 70%)', transform: 'translate(-30%, 30%)' }} />
+        <div className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%)', transform: 'translate(30%, -30%)' }} />
+        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.04) 0%, transparent 70%)', transform: 'translate(-30%, 30%)' }} />
 
         {/* Top bar */}
         <div className="relative z-10 flex items-center justify-between px-6 pt-6 pb-2">
           <Link to="/" className="lg:hidden flex items-center gap-2">
             <Logo size={28} />
-            <span className="font-bold text-white">ShortListr</span>
+            <span className="font-bold" style={{ color: '#0a0b0d' }}>ShortListr</span>
           </Link>
           <div className="hidden lg:block" />
           <Link
             to="/"
             className="flex items-center gap-1.5 text-sm transition-colors"
-            style={{ color: 'rgba(255,255,255,0.3)' }}
-            onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}
-            onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.3)'}
+            style={{ color: '#94a3b8' }}
+            onMouseEnter={e => e.currentTarget.style.color = '#475569'}
+            onMouseLeave={e => e.currentTarget.style.color = '#94a3b8'}
           >
             <ArrowLeft size={15} />
             Back to home
@@ -450,24 +450,24 @@ export default function Auth() {
 
         <div className="relative z-10 flex-1 flex items-center justify-center px-6 py-8">
 
-          {/* Glass card */}
+          {/* Card */}
           <div
             className="w-full max-w-[420px] rounded-3xl p-8"
             style={{
-              background: 'rgba(255,255,255,0.025)',
-              border: '1px solid rgba(255,255,255,0.07)',
-              boxShadow: '0 32px 80px rgba(0,0,0,0.4)',
+              background: '#ffffff',
+              border: '1px solid #e5e7eb',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.06)',
             }}
           >
 
             {/* Mode toggle */}
             <div
               className="relative flex p-1 mb-8 rounded-2xl"
-              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
+              style={{ background: '#f1f5f9', border: '1px solid #e5e7eb' }}
             >
               <motion.div
                 className="absolute top-1 bottom-1 rounded-xl"
-                style={{ width: 'calc(50% - 4px)', background: '#1A1A24', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}
+                style={{ width: 'calc(50% - 4px)', background: '#ffffff', border: '1px solid #e5e7eb', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
                 animate={{ x: isSignup ? 'calc(100% + 8px)' : 0 }}
                 transition={{ duration: 0.38, ease: [0.34, 1.56, 0.64, 1] }}
               />
@@ -476,7 +476,7 @@ export default function Auth() {
                   key={label}
                   onClick={() => (i === 0 ? isSignup : !isSignup) && switchMode()}
                   className="relative flex-1 py-2.5 rounded-xl text-sm font-semibold z-10 transition-colors duration-200"
-                  style={{ color: (i === 0 ? !isSignup : isSignup) ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.35)' }}
+                  style={{ color: (i === 0 ? !isSignup : isSignup) ? '#0a0b0d' : '#94a3b8' }}
                 >
                   {label}
                 </button>
@@ -498,11 +498,11 @@ export default function Auth() {
               >
                 {/* Heading */}
                 <motion.div variants={staggerItem} className="mb-7">
-                  <h1 className="text-2xl font-black text-white mb-1.5">
+                  <h1 className="text-2xl font-black mb-1.5" style={{ color: '#0a0b0d' }}>
                     {isSignup ? 'Create your account' : 'Welcome back'}
                   </h1>
-                  <p className="text-sm" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                    {isSignup ? 'Start optimizing your resume today. Free to get started.' : 'Sign in to continue to your dashboard.'}
+                  <p className="text-sm" style={{ color: '#64748b' }}>
+                    {isSignup ? 'Start managing your clients in one workspace. Free to try.' : 'Sign in to continue to your dashboard.'}
                   </p>
                 </motion.div>
 
@@ -513,8 +513,8 @@ export default function Auth() {
                     label="Continue with Google"
                     IconComponent={GoogleIcon}
                     iconBg="white"
-                    hoverBg="rgba(66,133,244,0.08)"
-                    hoverBorder="rgba(66,133,244,0.3)"
+                    hoverBg="rgba(66,133,244,0.06)"
+                    hoverBorder="rgba(66,133,244,0.25)"
                     loading={socialLoading === 'google'}
                     disabled={!!socialLoading}
                     onClick={() => handleSocial('google')}
@@ -523,9 +523,9 @@ export default function Auth() {
                     id="github"
                     label="Continue with GitHub"
                     IconComponent={GitHubIcon}
-                    iconBg="rgba(255,255,255,0.1)"
-                    hoverBg="rgba(255,255,255,0.07)"
-                    hoverBorder="rgba(255,255,255,0.2)"
+                    iconBg="rgba(0,0,0,0.04)"
+                    hoverBg="rgba(0,0,0,0.04)"
+                    hoverBorder="rgba(0,0,0,0.15)"
                     loading={socialLoading === 'github'}
                     disabled={!!socialLoading}
                     onClick={() => handleSocial('github')}
@@ -534,9 +534,9 @@ export default function Auth() {
 
                 {/* Divider */}
                 <motion.div variants={staggerItem} className="flex items-center gap-3 mb-6">
-                  <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.07)' }} />
-                  <span className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.25)' }}>or continue with email</span>
-                  <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.07)' }} />
+                  <div className="flex-1 h-px" style={{ background: '#e5e7eb' }} />
+                  <span className="text-xs font-medium" style={{ color: '#94a3b8' }}>or continue with email</span>
+                  <div className="flex-1 h-px" style={{ background: '#e5e7eb' }} />
                 </motion.div>
 
                 {/* Form */}
@@ -569,9 +569,9 @@ export default function Auth() {
                           <button
                             type="button"
                             onClick={() => setShowPassword(v => !v)}
-                            style={{ color: 'rgba(255,255,255,0.3)', lineHeight: 0 }}
-                            onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.65)'}
-                            onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.3)'}
+                            style={{ color: '#94a3b8', lineHeight: 0 }}
+                            onMouseEnter={e => e.currentTarget.style.color = '#475569'}
+                            onMouseLeave={e => e.currentTarget.style.color = '#94a3b8'}
                           >
                             {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                           </button>
@@ -591,8 +591,8 @@ export default function Auth() {
                         transition={{ duration: 0.25 }}
                         className="text-sm rounded-xl px-4 py-3"
                         style={message.type === 'error'
-                          ? { background: 'rgba(255,68,68,0.1)', color: '#FF6B6B', border: '1px solid rgba(255,68,68,0.2)' }
-                          : { background: 'rgba(59,130,246,0.1)', color: '#60A5FA', border: '1px solid rgba(59,130,246,0.2)' }}
+                          ? { background: '#fef2f2', color: '#dc2626', border: '1px solid #fca5a5' }
+                          : { background: '#eff6ff', color: '#3b82f6', border: '1px solid #bfdbfe' }}
                       >
                         {message.text}
                       </motion.div>
@@ -607,17 +607,17 @@ export default function Auth() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.97 }}
                       transition={{ duration: 0.15 }}
-                      className="w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 disabled:opacity-50"
+                      className="w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 disabled:opacity-50 btn-shimmer"
                       style={{
-                        background: 'linear-gradient(135deg, #F5C842 0%, #e6b800 100%)',
-                        color: '#0A0A0F',
-                        boxShadow: '0 4px 24px rgba(245,200,66,0.28), 0 1px 0 rgba(255,255,255,0.15) inset',
+                        background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                        color: '#ffffff',
+                        boxShadow: '0 4px 24px rgba(59,130,246,0.28)',
                       }}
                     >
                       {formLoading ? (
                         <>
                           <motion.span animate={{ rotate: 360 }} transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
-                            style={{ display: 'block', width: 16, height: 16, borderRadius: '50%', border: '2px solid rgba(10,10,15,0.25)', borderTopColor: '#0A0A0F' }} />
+                            style={{ display: 'block', width: 16, height: 16, borderRadius: '50%', border: '2px solid rgba(255,255,255,0.2)', borderTopColor: '#ffffff' }} />
                           Please wait…
                         </>
                       ) : (
@@ -631,10 +631,10 @@ export default function Auth() {
                 </form>
 
                 {isSignup && (
-                  <motion.p variants={staggerItem} className="text-center text-xs mt-5 leading-relaxed" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                  <motion.p variants={staggerItem} className="text-center text-xs mt-5 leading-relaxed" style={{ color: '#94a3b8' }}>
                     By signing up you agree to our{' '}
-                    <Link to="/terms" style={{ color: '#F5C842' }} className="hover:underline">Terms</Link>{' '}and{' '}
-                    <Link to="/privacy" style={{ color: '#F5C842' }} className="hover:underline">Privacy Policy</Link>.
+                    <Link to="/terms" style={{ color: '#3b82f6' }} className="hover:underline">Terms</Link>{' '}and{' '}
+                    <Link to="/privacy" style={{ color: '#3b82f6' }} className="hover:underline">Privacy Policy</Link>.
                   </motion.p>
                 )}
               </motion.div>
