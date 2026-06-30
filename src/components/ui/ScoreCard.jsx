@@ -30,7 +30,7 @@ function Ring({ score, color, label }) {
           <circle
             cx={cx} cy={cy} r={R}
             fill="none"
-            stroke="rgba(255,255,255,0.07)"
+            stroke="rgba(10,11,13,0.07)"
             strokeWidth={SW}
           />
           {/* Arc — rotated so it starts at 12 o'clock */}
@@ -68,7 +68,7 @@ function Ring({ score, color, label }) {
       <span style={{
         fontSize: 11, fontWeight: 800, letterSpacing: '0.22em',
         textTransform: 'uppercase',
-        color: 'rgba(255,255,255,0.45)',
+        color: 'rgba(10,11,13,0.45)',
         fontFamily: 'inherit',
       }}>{label}</span>
     </div>
@@ -107,7 +107,7 @@ export const ScoreCard = forwardRef(function ScoreCard(
       {/* ── subtle grid dots ── */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
-        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0)',
+        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(10,11,13,0.035) 1px, transparent 0)',
         backgroundSize: '32px 32px',
       }} />
 
@@ -161,7 +161,7 @@ export const ScoreCard = forwardRef(function ScoreCard(
         flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
         gap: 0, position: 'relative',
       }}>
-        <Ring score={beforeScore} color="#FF4444" label="Before" />
+        <Ring score={beforeScore} color="#dc2626" label="Before" />
 
         {/* Divider */}
         <div style={{ margin: '0 56px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
@@ -182,7 +182,7 @@ export const ScoreCard = forwardRef(function ScoreCard(
           <div style={{ width: 1, height: 72, background: `linear-gradient(to bottom, transparent, ${GOLD}, transparent)` }} />
         </div>
 
-        <Ring score={afterScore} color="#00FF88" label="After" />
+        <Ring score={afterScore} color="#059669" label="After" />
       </div>
 
       {/* ── Gold rule ── */}
@@ -193,20 +193,20 @@ export const ScoreCard = forwardRef(function ScoreCard(
         {stats.map((s, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
             {i > 0 && (
-              <div style={{ width: 1, height: 36, background: 'rgba(255,255,255,0.1)', margin: '0 48px' }} />
+              <div style={{ width: 1, height: 36, background: 'rgba(10,11,13,0.1)', margin: '0 48px' }} />
             )}
             <div style={{ textAlign: 'center' }}>
               <span style={{
                 display: 'block',
                 fontSize: i === 2 ? 20 : 26, fontWeight: 900,
-                color: i === 2 ? '#00FF88' : '#fff',
+                color: i === 2 ? '#059669' : '#fff',
                 lineHeight: 1.1, fontFamily: 'inherit',
               }}>{s.value}</span>
               <span style={{
                 display: 'block',
                 fontSize: 10, fontWeight: 700,
                 letterSpacing: '0.14em', textTransform: 'uppercase',
-                color: i === 2 ? '#00FF8890' : 'rgba(255,255,255,0.38)',
+                color: i === 2 ? '#05966990' : 'rgba(10,11,13,0.38)',
                 marginTop: 4, fontFamily: 'inherit',
               }}>{s.sub}</span>
             </div>
@@ -218,7 +218,7 @@ export const ScoreCard = forwardRef(function ScoreCard(
       <div style={{
         position: 'absolute', bottom: 22, right: 52,
         fontSize: 11, fontWeight: 500, letterSpacing: '0.06em',
-        color: 'rgba(255,255,255,0.18)', fontFamily: 'inherit',
+        color: 'rgba(10,11,13,0.18)', fontFamily: 'inherit',
       }}>
         shortlistr.us
       </div>
@@ -249,8 +249,8 @@ function SharePrompt({ beforeScore, afterScore, onClose }) {
       />
       <div style={{
         position: 'relative', width: '100%', maxWidth: 520,
-        background: '#13131A', borderRadius: 20,
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: '#ffffff', borderRadius: 20,
+        border: '1px solid rgba(10,11,13,0.08)',
         padding: '32px 28px',
         boxShadow: '0 32px 80px rgba(0,0,0,0.6)',
       }}>
@@ -260,7 +260,7 @@ function SharePrompt({ beforeScore, afterScore, onClose }) {
           style={{
             position: 'absolute', top: 16, right: 16,
             background: 'none', border: 'none', cursor: 'pointer',
-            color: 'rgba(255,255,255,0.35)', padding: 4,
+            color: 'rgba(10,11,13,0.35)', padding: 4,
           }}
         >
           <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -281,17 +281,17 @@ function SharePrompt({ beforeScore, afterScore, onClose }) {
           </div>
           <div>
             <p style={{ color: '#fff', fontWeight: 700, fontSize: 14, lineHeight: 1 }}>Share on LinkedIn</p>
-            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, marginTop: 2 }}>Copy the caption below, then post your downloaded image</p>
+            <p style={{ color: 'rgba(10,11,13,0.4)', fontSize: 11, marginTop: 2 }}>Copy the caption below, then post your downloaded image</p>
           </div>
         </div>
 
         {/* Caption preview */}
         <div style={{
-          background: 'rgba(255,255,255,0.04)',
-          border: '1px solid rgba(255,255,255,0.08)',
+          background: 'rgba(10,11,13,0.04)',
+          border: '1px solid rgba(10,11,13,0.08)',
           borderRadius: 12, padding: '14px 16px', marginBottom: 14,
           fontSize: 13, lineHeight: 1.65,
-          color: 'rgba(255,255,255,0.7)',
+          color: 'rgba(10,11,13,0.7)',
           whiteSpace: 'pre-line',
           fontFamily: 'inherit',
         }}>
@@ -303,9 +303,9 @@ function SharePrompt({ beforeScore, afterScore, onClose }) {
           onClick={handleCopy}
           style={{
             width: '100%', padding: '13px 0', borderRadius: 12,
-            background: copied ? 'rgba(0,255,136,0.12)' : `${GOLD}15`,
-            border: `1px solid ${copied ? 'rgba(0,255,136,0.3)' : `${GOLD}35`}`,
-            color: copied ? '#00FF88' : GOLD,
+            background: copied ? 'rgba(5,150,105,0.12)' : `${GOLD}15`,
+            border: `1px solid ${copied ? 'rgba(5,150,105,0.3)' : `${GOLD}35`}`,
+            color: copied ? '#059669' : GOLD,
             fontWeight: 700, fontSize: 14, cursor: 'pointer',
             transition: 'all 0.2s',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -376,20 +376,20 @@ export function ScoreCardModal({ beforeScore, afterScore, keywordsAdded, bullets
           position: 'relative', width: '100%', maxWidth: 860,
           background: '#0d0d0d',
           borderRadius: 24,
-          border: '1px solid rgba(255,255,255,0.08)',
+          border: '1px solid rgba(10,11,13,0.08)',
           overflow: 'hidden',
           boxShadow: '0 40px 100px rgba(0,0,0,0.7)',
         }}>
           {/* Header */}
           <div style={{
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            padding: '20px 24px', borderBottom: '1px solid rgba(255,255,255,0.06)',
+            padding: '20px 24px', borderBottom: '1px solid rgba(10,11,13,0.06)',
           }}>
             <div>
               <p style={{ color: '#fff', fontWeight: 700, fontSize: 15, margin: 0 }}>Your Score Card</p>
-              <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12, margin: '2px 0 0' }}>1080 × 566 px — LinkedIn optimal</p>
+              <p style={{ color: 'rgba(10,11,13,0.4)', fontSize: 12, margin: '2px 0 0' }}>1080 × 566 px — LinkedIn optimal</p>
             </div>
-            <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(255,255,255,0.4)', padding: 4 }}>
+            <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(10,11,13,0.4)', padding: 4 }}>
               <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -407,7 +407,7 @@ export function ScoreCardModal({ beforeScore, afterScore, keywordsAdded, bullets
               height: CARD_H * PREVIEW_SCALE,
               overflow: 'hidden',
               borderRadius: 14,
-              border: '1px solid rgba(255,255,255,0.08)',
+              border: '1px solid rgba(10,11,13,0.08)',
               flexShrink: 0,
             }}>
               <div style={{

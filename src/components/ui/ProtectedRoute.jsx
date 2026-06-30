@@ -2,13 +2,13 @@ import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 export default function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth()
+  const { user, profile, loading } = useAuth()
   const { pathname } = useLocation()
 
-  if (loading) {
+  if (loading || (user && !profile)) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0A0A0F' }}>
-        <div className="w-8 h-8 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(245,200,66,0.3)', borderTopColor: '#F5C842' }} />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#fafbfc' }}>
+        <div className="w-8 h-8 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(59,130,246,0.3)', borderTopColor: '#3b82f6' }} />
       </div>
     )
   }
@@ -17,13 +17,13 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to="/auth" replace />
   }
 
-  // Redirect brand-new accounts to welcome sequence (runs once per user, per device)
-  if (pathname !== '/welcome') {
-    const ageMs = Date.now() - new Date(user.created_at).getTime()
-    const isNewAccount = ageMs < 5 * 60 * 1000
-    if (isNewAccount && !localStorage.getItem(`sl_onboarded_${user.id}`)) {
-      return <Navigate to="/welcome" replace />
-    }
+  // Send accounts that have never finished onboarding to the welcome
+  // sequence — runs exactly once, ever, per account (profiles.onboarded),
+  // not a per-device localStorage flag. Premium accounts always skip it,
+  // even if onboarded somehow wasn't recorded (e.g. they paid mid-wizard).
+  const needsOnboarding = !profile.onboarded && profile.tier !== 'pro'
+  if (needsOnboarding && pathname !== '/welcome') {
+    return <Navigate to="/welcome" replace />
   }
 
   return children

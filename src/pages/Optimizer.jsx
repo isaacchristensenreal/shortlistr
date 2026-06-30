@@ -27,13 +27,13 @@ const getPdfUtils = () => import('../lib/pdfUtils')
 function ScoreRing({ score, size = 160, animate = true }) {
   const r = 42
   const circ = 2 * Math.PI * r
-  const color = score >= 70 ? '#00FF88' : score >= 50 ? '#F59E0B' : '#FF4444'
+  const color = score >= 70 ? '#059669' : score >= 50 ? '#F59E0B' : '#dc2626'
   const offset = circ - (score / 100) * circ
 
   return (
     <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="8" />
+        <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(10,11,13,0.06)" strokeWidth="8" />
         <circle
           cx="50" cy="50" r={r}
           fill="none"
@@ -82,7 +82,7 @@ function MultiStepLoader({ currentStep }) {
                   ? 'bg-neon-400 step-complete'
                   : active
                   ? 'border-2 border-gold-500 bg-gold-500/10'
-                  : 'border-2 border-white/20'
+                  : 'border-2 border-black/20'
               }`}>
                 {done && (
                   <svg className="w-3 h-3 text-midnight" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
@@ -341,7 +341,7 @@ function InterviewPrepTab({ questions, loading, isPro }) {
           value={answer}
           onChange={e => setAnswer(e.target.value)}
           placeholder="Type your answer here…"
-          className="w-full bg-surface border border-white/10 rounded-xl px-4 py-3 text-white/80 placeholder-white/25 text-sm resize-none focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20"
+          className="w-full bg-surface border border-black/10 rounded-xl px-4 py-3 text-white/80 placeholder-white/25 text-sm resize-none focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20"
         />
         <div className="flex gap-2">
           <button
@@ -354,7 +354,7 @@ function InterviewPrepTab({ questions, loading, isPro }) {
             Get Feedback
           </button>
           {mockIdx < questions.length - 1 && (
-            <button onClick={() => { setMockIdx(i => i + 1); setAnswer(''); setFeedback(null) }} className="px-4 py-2.5 rounded-xl border border-white/10 text-white/60 text-sm hover:border-white/20 hover:text-white transition-all">
+            <button onClick={() => { setMockIdx(i => i + 1); setAnswer(''); setFeedback(null) }} className="px-4 py-2.5 rounded-xl border border-black/10 text-white/60 text-sm hover:border-black/20 hover:text-white transition-all">
               Next →
             </button>
           )}
@@ -399,7 +399,7 @@ function InterviewPrepTab({ questions, loading, isPro }) {
             </svg>
           </button>
           {expanded[i] && (
-            <div className="px-4 pb-4 border-t border-white/5 pt-3">
+            <div className="px-4 pb-4 border-t border-black/5 pt-3">
               <p className="text-white/40 text-xs mb-3">{q.why_asked}</p>
               <p className="text-white/60 text-xs font-semibold uppercase tracking-wider mb-2">STAR Framework</p>
               <ul className="space-y-2">
@@ -436,7 +436,7 @@ function LibraryTab({ clientId }) {
   }, [clientId])
 
   const formatDate = (ts) => new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-  const scoreColor = (s) => s >= 70 ? '#00FF88' : s >= 50 ? '#F59E0B' : '#FF4444'
+  const scoreColor = (s) => s >= 70 ? '#059669' : s >= 50 ? '#F59E0B' : '#dc2626'
 
   if (loading) {
     return (
@@ -457,7 +457,7 @@ function LibraryTab({ clientId }) {
   if (!resumes.length) {
     return (
       <div className="flex flex-col items-center justify-center py-14 text-center">
-        <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-3">
+        <div className="w-12 h-12 rounded-2xl bg-black/5 flex items-center justify-center mb-3">
           <svg className="w-6 h-6 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
           </svg>
@@ -468,7 +468,7 @@ function LibraryTab({ clientId }) {
   }
 
   return (
-    <div className="divide-y divide-white/5">
+    <div className="divide-y divide-black/5">
       {resumes.map(r => (
         <div key={r.id} className="flex items-center gap-3 py-3 px-1">
           <div
@@ -477,7 +477,7 @@ function LibraryTab({ clientId }) {
               background: `${scoreColor(r.ats_score)}10`,
               borderColor: `${scoreColor(r.ats_score)}25`,
               color: scoreColor(r.ats_score),
-            } : { background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.3)' }}
+            } : { background: 'rgba(10,11,13,0.05)', borderColor: 'rgba(10,11,13,0.08)', color: 'rgba(10,11,13,0.3)' }}
           >
             {r.ats_score !== null ? r.ats_score : '?'}
           </div>
@@ -535,14 +535,14 @@ function JobMatchesTab({ matches, loading, resumeText, onPreFill }) {
             </span>
             <div className="flex items-center gap-1">
               <span className="text-white/30 text-xs">{m.match_score}% match</span>
-              <div className="w-16 h-1 bg-white/10 rounded-full overflow-hidden">
+              <div className="w-16 h-1 bg-black/10 rounded-full overflow-hidden">
                 <div className="h-full bg-neon-400 rounded-full" style={{ width: `${m.match_score}%` }} />
               </div>
             </div>
           </div>
           <div className="flex flex-wrap gap-1 mb-3">
             {m.key_matches?.map(kw => (
-              <span key={kw} className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-white/50">{kw}</span>
+              <span key={kw} className="text-[10px] px-2 py-0.5 rounded-full bg-black/5 text-white/50">{kw}</span>
             ))}
           </div>
           <button
@@ -562,7 +562,7 @@ function LiveJobsTab({ jobs, profile, loading, error, onRefresh }) {
     return (
       <div className="flex flex-col items-center justify-center py-14 gap-4 text-center">
         <div className="w-10 h-10 border-2 border-t-transparent rounded-full animate-spin"
-          style={{ borderColor: 'rgba(0,255,136,0.3)', borderTopColor: '#00FF88' }} />
+          style={{ borderColor: 'rgba(5,150,105,0.3)', borderTopColor: '#059669' }} />
         <div>
           <p className="text-white font-semibold mb-1">Searching for live job listings…</p>
           <p className="text-white/40 text-sm">Scanning the web for real openings matched to your resume</p>
@@ -584,7 +584,7 @@ function LiveJobsTab({ jobs, profile, loading, error, onRefresh }) {
           <p className="text-white/45 text-sm max-w-xs">{error}</p>
         </div>
         <button onClick={onRefresh}
-          className="px-5 py-2.5 rounded-xl border border-white/10 text-white/60 text-sm hover:border-white/20 hover:text-white transition-all">
+          className="px-5 py-2.5 rounded-xl border border-black/10 text-white/60 text-sm hover:border-black/20 hover:text-white transition-all">
           Try again
         </button>
       </div>
@@ -612,18 +612,18 @@ function LiveJobsTab({ jobs, profile, loading, error, onRefresh }) {
           <div className="flex flex-wrap gap-1.5">
             {profile.jobTitles?.slice(0, 2).map(t => (
               <span key={t} className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
-                style={{ background: 'rgba(0,255,136,0.1)', border: '1px solid rgba(0,255,136,0.2)', color: '#00FF88' }}>
+                style={{ background: 'rgba(5,150,105,0.1)', border: '1px solid rgba(5,150,105,0.2)', color: '#059669' }}>
                 {t}
               </span>
             ))}
             <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full capitalize"
-              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.5)' }}>
+              style={{ background: 'rgba(10,11,13,0.06)', border: '1px solid rgba(10,11,13,0.1)', color: 'rgba(10,11,13,0.5)' }}>
               {profile.experienceLevel} level
             </span>
           </div>
         )}
         <button onClick={onRefresh}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border border-white/10 text-white/50 hover:border-white/20 hover:text-white">
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border border-black/10 text-white/50 hover:border-black/20 hover:text-white">
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
@@ -639,7 +639,7 @@ function LiveJobsTab({ jobs, profile, loading, error, onRefresh }) {
               <p className="text-white font-semibold text-sm leading-snug">{job.title}</p>
               {job.salary && (
                 <span className="text-[10px] font-bold shrink-0 px-2 py-0.5 rounded-full whitespace-nowrap"
-                  style={{ background: 'rgba(0,255,136,0.1)', color: '#00FF88', border: '1px solid rgba(0,255,136,0.2)' }}>
+                  style={{ background: 'rgba(5,150,105,0.1)', color: '#059669', border: '1px solid rgba(5,150,105,0.2)' }}>
                   {job.salary}
                 </span>
               )}
@@ -655,9 +655,9 @@ function LiveJobsTab({ jobs, profile, loading, error, onRefresh }) {
             )}
             <a href={job.applyUrl} target="_blank" rel="noopener noreferrer"
               className="mt-1 w-full py-2 rounded-lg text-xs font-bold text-center transition-all flex items-center justify-center gap-1.5"
-              style={{ background: 'rgba(0,255,136,0.08)', border: '1px solid rgba(0,255,136,0.2)', color: '#00FF88' }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,255,136,0.15)' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,255,136,0.08)' }}>
+              style={{ background: 'rgba(5,150,105,0.08)', border: '1px solid rgba(5,150,105,0.2)', color: '#059669' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(5,150,105,0.15)' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(5,150,105,0.08)' }}>
               Apply Now
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -667,7 +667,7 @@ function LiveJobsTab({ jobs, profile, loading, error, onRefresh }) {
         ))}
       </div>
 
-      <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
+      <p className="text-center text-xs" style={{ color: 'rgba(10,11,13,0.2)' }}>
         Live job data · Click "Refresh Jobs" for fresh listings
       </p>
     </div>
@@ -706,7 +706,7 @@ function TransformationCard({ beforeScore, afterScore, resumeName, cardRef }) {
             <p className="text-neon-400 font-black" style={{ fontSize: 56, lineHeight: 1 }}>{afterScore}</p>
           </div>
         </div>
-        <div className="mt-4 pt-4 border-t border-white/8 text-center">
+        <div className="mt-4 pt-4 border-t border-black/8 text-center">
           <p className="text-white/30 text-[10px]">shortlistr.us · Hiring Probability Score</p>
         </div>
       </div>
@@ -718,16 +718,16 @@ function ResumeJudgeResults({ data }) {
   if (!data) return null
 
   const gradeColor = (grade) => {
-    if (grade?.startsWith('A')) return '#00FF88'
+    if (grade?.startsWith('A')) return '#059669'
     if (grade?.startsWith('B')) return '#3B82F6'
-    if (grade?.startsWith('C')) return '#F5C842'
-    return '#FF4444'
+    if (grade?.startsWith('C')) return '#3b82f6'
+    return '#dc2626'
   }
 
   const atsColor = (readiness) => {
-    if (readiness === 'High') return { text: '#00FF88', bg: 'rgba(0,255,136,0.12)', border: 'rgba(0,255,136,0.25)' }
-    if (readiness === 'Medium') return { text: '#F5C842', bg: 'rgba(245,200,66,0.12)', border: 'rgba(245,200,66,0.25)' }
-    return { text: '#FF4444', bg: 'rgba(255,68,68,0.12)', border: 'rgba(255,68,68,0.25)' }
+    if (readiness === 'High') return { text: '#059669', bg: 'rgba(5,150,105,0.12)', border: 'rgba(5,150,105,0.25)' }
+    if (readiness === 'Medium') return { text: '#3b82f6', bg: 'rgba(59,130,246,0.12)', border: 'rgba(59,130,246,0.25)' }
+    return { text: '#dc2626', bg: 'rgba(220,38,38,0.12)', border: 'rgba(220,38,38,0.25)' }
   }
 
   const atsStyle = atsColor(data.ats_readiness)
@@ -785,9 +785,9 @@ function ResumeJudgeResults({ data }) {
               key={i}
               className="rounded-xl p-4 border-l-4"
               style={{
-                background: '#13131A',
-                border: '1px solid rgba(0,255,136,0.12)',
-                borderLeft: '4px solid #00FF88',
+                background: '#ffffff',
+                border: '1px solid rgba(5,150,105,0.12)',
+                borderLeft: '4px solid #059669',
               }}
             >
               <p className="text-white font-semibold text-sm mb-1">{s.title}</p>
@@ -807,9 +807,9 @@ function ResumeJudgeResults({ data }) {
               key={i}
               className="rounded-xl p-4"
               style={{
-                background: '#13131A',
-                border: '1px solid rgba(255,68,68,0.12)',
-                borderLeft: '4px solid #FF4444',
+                background: '#ffffff',
+                border: '1px solid rgba(220,38,38,0.12)',
+                borderLeft: '4px solid #dc2626',
               }}
             >
               <p className="text-white font-semibold text-sm mb-1">{w.title}</p>
@@ -830,14 +830,14 @@ function ResumeJudgeResults({ data }) {
         <h3 className="text-white font-semibold text-sm mb-4">Section Scores</h3>
         <div className="space-y-3">
           {Object.entries(data.sections ?? {}).map(([key, val]) => {
-            const barColor = val.score >= 70 ? '#00FF88' : val.score >= 50 ? '#F5C842' : '#FF4444'
+            const barColor = val.score >= 70 ? '#059669' : val.score >= 50 ? '#3b82f6' : '#dc2626'
             return (
               <div key={key}>
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-white/70 text-xs font-semibold">{SECTION_LABELS[key] ?? key}</span>
                   <span className="text-xs font-bold" style={{ color: barColor }}>{val.score}</span>
                 </div>
-                <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(10,11,13,0.06)' }}>
                   <div
                     className="h-full rounded-full transition-all duration-700"
                     style={{ width: `${val.score}%`, background: barColor }}
@@ -863,7 +863,7 @@ function ResumeJudgeResults({ data }) {
             <div
               key={i}
               className="flex items-start gap-3 rounded-xl px-4 py-3"
-              style={{ background: 'rgba(245,200,66,0.06)', border: '1px solid rgba(245,200,66,0.18)' }}
+              style={{ background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.18)' }}
             >
               <span className="text-gold-500 font-black text-sm shrink-0 mt-0.5">{i + 1}</span>
               <p className="text-white/75 text-sm leading-relaxed">{win}</p>
@@ -1204,8 +1204,8 @@ export default function Optimizer() {
   if (loadingClient) {
     return (
       <AppShell>
-        <div className="min-h-screen flex items-center justify-center" style={{ background: '#0A0A0F' }}>
-          <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'rgba(245,200,66,0.3)', borderTopColor: '#F5C842' }} />
+        <div className="min-h-screen flex items-center justify-center" style={{ background: '#fafbfc' }}>
+          <div className="w-8 h-8 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'rgba(59,130,246,0.3)', borderTopColor: '#3b82f6' }} />
         </div>
       </AppShell>
     )
@@ -1213,10 +1213,10 @@ export default function Optimizer() {
   if (!clientId || !client) {
     return (
       <AppShell>
-        <div className="min-h-screen flex flex-col items-center justify-center text-center px-6" style={{ background: '#0A0A0F' }}>
+        <div className="min-h-screen flex flex-col items-center justify-center text-center px-6" style={{ background: '#fafbfc' }}>
           <p className="text-white font-semibold mb-2">Select a client to scan a resume</p>
           <p className="text-white/40 text-sm mb-6 max-w-sm">Resumes are scoped to a client. Open a client's workspace and use "Rewrite Resume" to get here.</p>
-          <Link to="/dashboard" className="px-5 py-2.5 rounded-xl font-bold text-sm" style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F' }}>
+          <Link to="/dashboard" className="px-5 py-2.5 rounded-xl font-bold text-sm" style={{ background: 'linear-gradient(135deg, #3b82f6, #2563eb)', color: '#ffffff' }}>
             Go to Client Roster
           </Link>
         </div>
@@ -1226,7 +1226,7 @@ export default function Optimizer() {
 
   return (
     <AppShell>
-      <div className="min-h-screen" style={{ background: '#0A0A0F' }}>
+      <div className="min-h-screen" style={{ background: '#fafbfc' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
 
           {/* Header */}
@@ -1252,20 +1252,20 @@ export default function Optimizer() {
             <div className="lg:col-span-2 space-y-4">
 
               {/* Resume input */}
-              <div className="rounded-2xl overflow-hidden" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
+              <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(10,11,13,0.07)' }}>
                 {/* Card header */}
                 <div className="px-5 pt-5 pb-3 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: 'rgba(245,200,66,0.12)', color: '#F5C842' }}>1</div>
+                    <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: 'rgba(59,130,246,0.12)', color: '#3b82f6' }}>1</div>
                     <span className="text-white font-semibold text-sm">Your Resume</span>
                   </div>
-                  <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>
+                  <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(10,11,13,0.08)', background: 'rgba(10,11,13,0.03)' }}>
                     {['upload', 'paste'].map(m => (
                       <button key={m} onClick={() => setResumeMode(m)}
                         className="px-3 py-1.5 text-xs font-medium transition-all"
                         style={resumeMode === m
-                          ? { background: 'rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.9)' }
-                          : { color: 'rgba(255,255,255,0.35)' }}>
+                          ? { background: 'rgba(10,11,13,0.10)', color: 'rgba(10,11,13,0.9)' }
+                          : { color: 'rgba(10,11,13,0.35)' }}>
                         {m === 'upload' ? 'Upload PDF' : 'Paste Text'}
                       </button>
                     ))}
@@ -1280,66 +1280,66 @@ export default function Optimizer() {
                         onClick={() => fileInputRef.current?.click()}
                         className="rounded-xl cursor-pointer transition-all text-center"
                         style={{
-                          border: dragging ? '2px dashed #F5C842' : pdfName ? '2px dashed rgba(0,255,136,0.4)' : '2px dashed rgba(255,255,255,0.08)',
-                          background: dragging ? 'rgba(245,200,66,0.04)' : pdfName ? 'rgba(0,255,136,0.04)' : 'rgba(255,255,255,0.02)',
+                          border: dragging ? '2px dashed #3b82f6' : pdfName ? '2px dashed rgba(5,150,105,0.4)' : '2px dashed rgba(10,11,13,0.08)',
+                          background: dragging ? 'rgba(59,130,246,0.04)' : pdfName ? 'rgba(5,150,105,0.04)' : 'rgba(10,11,13,0.02)',
                           padding: '28px 20px',
                         }}
                       >
                         <input ref={fileInputRef} type="file" accept=".pdf" className="hidden" onChange={e => handleFile(e.target.files?.[0])} />
                         {pdfParsing ? (
                           <div className="flex flex-col items-center gap-2">
-                            <div className="w-7 h-7 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'rgba(245,200,66,0.3)', borderTopColor: '#F5C842' }} />
-                            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Reading your PDF…</p>
+                            <div className="w-7 h-7 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'rgba(59,130,246,0.3)', borderTopColor: '#3b82f6' }} />
+                            <p className="text-xs" style={{ color: 'rgba(10,11,13,0.4)' }}>Reading your PDF…</p>
                           </div>
                         ) : pdfName ? (
                           <div className="flex flex-col items-center gap-1.5">
-                            <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-1" style={{ background: 'rgba(0,255,136,0.1)' }}>
-                              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#00FF88" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-1" style={{ background: 'rgba(5,150,105,0.1)' }}>
+                              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#059669" strokeWidth="1.75"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                             </div>
-                            <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.9)' }}>{pdfName}</p>
-                            <p className="text-xs font-medium" style={{ color: '#00FF88' }}>{resumeText.length.toLocaleString()} characters extracted</p>
-                            <button onClick={e => { e.stopPropagation(); setPdfName(null); setResumeText('') }} className="text-xs mt-1 transition-colors" style={{ color: 'rgba(255,255,255,0.25)' }} onMouseEnter={e => e.target.style.color='rgba(255,68,68,0.7)'} onMouseLeave={e => e.target.style.color='rgba(255,255,255,0.25)'}>Remove file</button>
+                            <p className="text-sm font-semibold" style={{ color: 'rgba(10,11,13,0.9)' }}>{pdfName}</p>
+                            <p className="text-xs font-medium" style={{ color: '#059669' }}>{resumeText.length.toLocaleString()} characters extracted</p>
+                            <button onClick={e => { e.stopPropagation(); setPdfName(null); setResumeText('') }} className="text-xs mt-1 transition-colors" style={{ color: 'rgba(10,11,13,0.25)' }} onMouseEnter={e => e.target.style.color='rgba(220,38,38,0.7)'} onMouseLeave={e => e.target.style.color='rgba(10,11,13,0.25)'}>Remove file</button>
                           </div>
                         ) : (
                           <div className="flex flex-col items-center gap-3">
-                            <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>
+                            <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(10,11,13,0.04)', border: '1px solid rgba(10,11,13,0.08)' }}>
+                              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="rgba(10,11,13,0.3)" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>
                             </div>
                             <div>
-                              <p className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.6)' }}>Drop your PDF here</p>
-                              <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.25)' }}>or click to browse files</p>
+                              <p className="text-sm font-medium" style={{ color: 'rgba(10,11,13,0.6)' }}>Drop your PDF here</p>
+                              <p className="text-xs mt-0.5" style={{ color: 'rgba(10,11,13,0.25)' }}>or click to browse files</p>
                             </div>
                           </div>
                         )}
                       </div>
-                      {pdfError && <p className="text-xs mt-2" style={{ color: '#FF4444' }}>{pdfError}</p>}
+                      {pdfError && <p className="text-xs mt-2" style={{ color: '#dc2626' }}>{pdfError}</p>}
                     </div>
                   ) : (
                     <textarea rows={10} value={resumeText} onChange={e => setResumeText(e.target.value)}
                       placeholder="Paste your full resume text here — the more detail, the better your score…"
                       className="w-full resize-none text-sm outline-none transition-all rounded-xl px-4 py-3.5"
                       style={{
-                        background: 'rgba(255,255,255,0.03)',
-                        border: '1px solid rgba(255,255,255,0.07)',
-                        color: 'rgba(255,255,255,0.8)',
-                        caretColor: '#F5C842',
+                        background: 'rgba(10,11,13,0.03)',
+                        border: '1px solid rgba(10,11,13,0.07)',
+                        color: 'rgba(10,11,13,0.8)',
+                        caretColor: '#3b82f6',
                         lineHeight: '1.65',
                       }}
-                      onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
-                      onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
+                      onFocus={e => { e.target.style.border = '1px solid rgba(59,130,246,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(59,130,246,0.06)' }}
+                      onBlur={e => { e.target.style.border = '1px solid rgba(10,11,13,0.07)'; e.target.style.boxShadow = 'none' }}
                     />
                   )}
                 </div>
               </div>
 
               {/* Mode toggle */}
-              <div className="flex rounded-2xl overflow-hidden" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)', padding: '4px' }}>
+              <div className="flex rounded-2xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(10,11,13,0.07)', padding: '4px' }}>
                 <button
                   onClick={() => setJudgeMode(false)}
                   className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all"
                   style={!judgeMode
-                    ? { background: 'rgba(245,200,66,0.15)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.25)' }
-                    : { color: 'rgba(255,255,255,0.35)', border: '1px solid transparent' }}
+                    ? { background: 'rgba(59,130,246,0.15)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.25)' }
+                    : { color: 'rgba(10,11,13,0.35)', border: '1px solid transparent' }}
                 >
                   Optimize for Job
                 </button>
@@ -1347,8 +1347,8 @@ export default function Optimizer() {
                   onClick={() => setJudgeMode(true)}
                   className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all"
                   style={judgeMode
-                    ? { background: 'rgba(245,200,66,0.15)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.25)' }
-                    : { color: 'rgba(255,255,255,0.35)', border: '1px solid transparent' }}
+                    ? { background: 'rgba(59,130,246,0.15)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.25)' }
+                    : { color: 'rgba(10,11,13,0.35)', border: '1px solid transparent' }}
                 >
                   Grade My Resume
                 </button>
@@ -1356,19 +1356,19 @@ export default function Optimizer() {
 
               {/* Job description (hidden in judge mode) */}
               {!judgeMode && (
-                <div className="rounded-2xl overflow-hidden" style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.07)' }}>
+                <div className="rounded-2xl overflow-hidden" style={{ background: '#ffffff', border: '1px solid rgba(10,11,13,0.07)' }}>
                   <div className="px-5 pt-5 pb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: 'rgba(245,200,66,0.12)', color: '#F5C842' }}>2</div>
+                      <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: 'rgba(59,130,246,0.12)', color: '#3b82f6' }}>2</div>
                       <span className="text-white font-semibold text-sm">Job Description</span>
                     </div>
-                    <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>
+                    <div className="flex rounded-lg overflow-hidden" style={{ border: '1px solid rgba(10,11,13,0.08)', background: 'rgba(10,11,13,0.03)' }}>
                       {[['url','Paste Link'],['paste','Paste Text']].map(([m, l]) => (
                         <button key={m} onClick={() => setJobMode(m)}
                           className="px-3 py-1.5 text-xs font-medium transition-all"
                           style={jobMode === m
-                            ? { background: 'rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.9)' }
-                            : { color: 'rgba(255,255,255,0.35)' }}>
+                            ? { background: 'rgba(10,11,13,0.10)', color: 'rgba(10,11,13,0.9)' }
+                            : { color: 'rgba(10,11,13,0.35)' }}>
                           {l}
                         </button>
                       ))}
@@ -1382,31 +1382,31 @@ export default function Optimizer() {
                           <input type="url" value={jobUrl} onChange={e => setJobUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleFetchJob()}
                             placeholder="https://jobs.company.com/role"
                             className="flex-1 text-sm outline-none rounded-xl px-4 py-2.5 transition-all"
-                            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.8)', caretColor: '#F5C842' }}
-                            onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
-                            onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
+                            style={{ background: 'rgba(10,11,13,0.03)', border: '1px solid rgba(10,11,13,0.07)', color: 'rgba(10,11,13,0.8)', caretColor: '#3b82f6' }}
+                            onFocus={e => { e.target.style.border = '1px solid rgba(59,130,246,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(59,130,246,0.06)' }}
+                            onBlur={e => { e.target.style.border = '1px solid rgba(10,11,13,0.07)'; e.target.style.boxShadow = 'none' }}
                           />
                           <button onClick={handleFetchJob} disabled={!jobUrl.trim() || fetchingJob}
                             className="px-4 py-2.5 text-sm rounded-xl transition-all whitespace-nowrap font-medium disabled:opacity-30"
-                            style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.8)' }}>
-                            {fetchingJob ? <span className="flex items-center gap-1.5"><span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />Fetching</span> : 'Fetch'}
+                            style={{ background: 'rgba(10,11,13,0.07)', border: '1px solid rgba(10,11,13,0.10)', color: 'rgba(10,11,13,0.8)' }}>
+                            {fetchingJob ? <span className="flex items-center gap-1.5"><span className="w-3 h-3 border-2 border-black/30 border-t-white rounded-full animate-spin" />Fetching</span> : 'Fetch'}
                           </button>
                         </div>
-                        {fetchError && <p className="text-xs mt-1" style={{ color: '#FF4444' }}>{fetchError}</p>}
+                        {fetchError && <p className="text-xs mt-1" style={{ color: '#dc2626' }}>{fetchError}</p>}
                       </div>
                     ) : (
                       <textarea rows={7} value={jobText} onChange={e => setJobText(e.target.value)}
                         placeholder="Paste the full job description here — title, requirements, responsibilities…"
                         className="w-full resize-none text-sm outline-none transition-all rounded-xl px-4 py-3.5"
                         style={{
-                          background: 'rgba(255,255,255,0.03)',
-                          border: '1px solid rgba(255,255,255,0.07)',
-                          color: 'rgba(255,255,255,0.8)',
-                          caretColor: '#F5C842',
+                          background: 'rgba(10,11,13,0.03)',
+                          border: '1px solid rgba(10,11,13,0.07)',
+                          color: 'rgba(10,11,13,0.8)',
+                          caretColor: '#3b82f6',
                           lineHeight: '1.65',
                         }}
-                        onFocus={e => { e.target.style.border = '1px solid rgba(245,200,66,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(245,200,66,0.06)' }}
-                        onBlur={e => { e.target.style.border = '1px solid rgba(255,255,255,0.07)'; e.target.style.boxShadow = 'none' }}
+                        onFocus={e => { e.target.style.border = '1px solid rgba(59,130,246,0.35)'; e.target.style.boxShadow = '0 0 0 3px rgba(59,130,246,0.06)' }}
+                        onBlur={e => { e.target.style.border = '1px solid rgba(10,11,13,0.07)'; e.target.style.boxShadow = 'none' }}
                       />
                     )}
                   </div>
@@ -1422,10 +1422,10 @@ export default function Optimizer() {
                     className="w-full rounded-2xl font-bold text-sm transition-all disabled:cursor-not-allowed"
                     style={{
                       padding: '15px 24px',
-                      background: canJudge ? 'linear-gradient(135deg, #F5C842 0%, #d4a017 100%)' : 'rgba(255,255,255,0.04)',
-                      color: canJudge ? '#0A0A0F' : 'rgba(255,255,255,0.2)',
-                      border: canJudge ? 'none' : '1px solid rgba(255,255,255,0.06)',
-                      boxShadow: canJudge ? '0 0 32px rgba(245,200,66,0.25), 0 4px 12px rgba(0,0,0,0.4)' : 'none',
+                      background: canJudge ? 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)' : 'rgba(10,11,13,0.04)',
+                      color: canJudge ? '#ffffff' : 'rgba(10,11,13,0.2)',
+                      border: canJudge ? 'none' : '1px solid rgba(10,11,13,0.06)',
+                      boxShadow: canJudge ? '0 0 32px rgba(59,130,246,0.25), 0 4px 12px rgba(0,0,0,0.4)' : 'none',
                       opacity: !canJudge ? 0.5 : 1,
                     }}
                   >
@@ -1451,10 +1451,10 @@ export default function Optimizer() {
                     className="w-full rounded-2xl font-bold text-sm transition-all disabled:cursor-not-allowed"
                     style={{
                       padding: '15px 24px',
-                      background: canSubmit ? 'linear-gradient(135deg, #F5C842 0%, #d4a017 100%)' : 'rgba(255,255,255,0.04)',
-                      color: canSubmit ? '#0A0A0F' : 'rgba(255,255,255,0.2)',
-                      border: canSubmit ? 'none' : '1px solid rgba(255,255,255,0.06)',
-                      boxShadow: canSubmit ? '0 0 32px rgba(245,200,66,0.25), 0 4px 12px rgba(0,0,0,0.4)' : 'none',
+                      background: canSubmit ? 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)' : 'rgba(10,11,13,0.04)',
+                      color: canSubmit ? '#ffffff' : 'rgba(10,11,13,0.2)',
+                      border: canSubmit ? 'none' : '1px solid rgba(10,11,13,0.06)',
+                      boxShadow: canSubmit ? '0 0 32px rgba(59,130,246,0.25), 0 4px 12px rgba(0,0,0,0.4)' : 'none',
                       opacity: !canSubmit ? 0.5 : 1,
                     }}
                   >
@@ -1512,7 +1512,7 @@ export default function Optimizer() {
                 <div>
                   {judging ? (
                     <div className="card-dark min-h-[520px] flex flex-col items-center justify-center gap-4 p-8">
-                      <div className="w-12 h-12 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'rgba(245,200,66,0.3)', borderTopColor: '#F5C842' }} />
+                      <div className="w-12 h-12 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'rgba(59,130,246,0.3)', borderTopColor: '#3b82f6' }} />
                       <div className="text-center">
                         <p className="text-white font-semibold mb-1">Grading your resume…</p>
                         <p className="text-white/40 text-sm">Brutally honest feedback incoming</p>
@@ -1522,7 +1522,7 @@ export default function Optimizer() {
                     <ResumeJudgeResults data={judgeData} />
                   ) : (
                     <div className="card-dark min-h-[520px] flex flex-col items-center justify-center text-center px-8 py-12">
-                      <div className="w-16 h-16 rounded-2xl border border-white/8 bg-white/3 flex items-center justify-center mb-4">
+                      <div className="w-16 h-16 rounded-2xl border border-black/8 bg-black/3 flex items-center justify-center mb-4">
                         <svg className="w-8 h-8 text-white/15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.25">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                         </svg>
@@ -1552,9 +1552,9 @@ export default function Optimizer() {
                             ? 'text-white/15 cursor-not-allowed'
                             : activeTab === tab.id
                             ? 'text-gold-500 border border-gold-500/30'
-                            : 'text-white/40 hover:text-white/70 hover:bg-white/5'
+                            : 'text-white/40 hover:text-white/70 hover:bg-black/5'
                         }`}
-                        style={!tab.disabled && activeTab === tab.id ? { background: 'rgba(245,200,66,0.10)' } : undefined}
+                        style={!tab.disabled && activeTab === tab.id ? { background: 'rgba(59,130,246,0.10)' } : undefined}
                       >
                         {tab.label}
                         {tab.proOnly && !isPro && !tab.disabled && (
@@ -1580,7 +1580,7 @@ export default function Optimizer() {
                       />
                     ) : !resultData ? (
                       <div className="min-h-[460px] flex flex-col items-center justify-center text-center px-8 py-12">
-                        <div className="w-16 h-16 rounded-2xl border border-white/8 bg-white/3 flex items-center justify-center mb-4">
+                        <div className="w-16 h-16 rounded-2xl border border-black/8 bg-black/3 flex items-center justify-center mb-4">
                           <svg className="w-8 h-8 text-white/15" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.25">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
                           </svg>
@@ -1596,14 +1596,14 @@ export default function Optimizer() {
                           <div className="space-y-4">
                             <ResumePreview data={resultData} atsScore={atsScore} />
                             {isPro && (
-                              <div className="border-t border-white/8 pt-4">
+                              <div className="border-t border-black/8 pt-4">
                                 <div className="flex items-center justify-between mb-3">
                                   <h3 className="text-white font-semibold text-sm">Cover Letter</h3>
                                   <div className="flex gap-2">
                                     {coverText && (
                                       <button
                                         onClick={() => { navigator.clipboard.writeText(coverText); setCoverCopied(true); setTimeout(() => setCoverCopied(false), 2000) }}
-                                        className="px-3 py-1.5 text-xs text-white/60 border border-white/10 rounded-lg hover:border-white/20 hover:text-white transition-all"
+                                        className="px-3 py-1.5 text-xs text-white/60 border border-black/10 rounded-lg hover:border-black/20 hover:text-white transition-all"
                                       >
                                         {coverCopied ? 'Copied!' : 'Copy'}
                                       </button>
@@ -1616,7 +1616,7 @@ export default function Optimizer() {
                                 </div>
                                 {coverText && (
                                   <textarea value={coverText} onChange={e => setCoverText(e.target.value)} rows={8}
-                                    className="w-full bg-white/3 border border-white/8 rounded-xl px-4 py-3 text-white/70 text-sm resize-none focus:outline-none focus:border-electric-500/30 transition-colors" />
+                                    className="w-full bg-black/3 border border-black/8 rounded-xl px-4 py-3 text-white/70 text-sm resize-none focus:outline-none focus:border-electric-500/30 transition-colors" />
                                 )}
                               </div>
                             )}

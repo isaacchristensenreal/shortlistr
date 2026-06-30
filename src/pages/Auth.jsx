@@ -265,10 +265,9 @@ export default function Auth() {
   useEffect(() => {
     if (loading) return
     if (!user) return
-    const ageMs        = Date.now() - new Date(user.created_at).getTime()
-    const isNew        = ageMs < 5 * 60 * 1000
-    const hasOnboarded = localStorage.getItem(`sl_onboarded_${user.id}`)
-    navigate(isNew && !hasOnboarded ? '/welcome' : '/dashboard', { replace: true })
+    if (!profile) return // wait for the profile fetch so we don't guess and flash the wrong screen
+    const needsOnboarding = !profile.onboarded && profile.tier !== 'pro'
+    navigate(needsOnboarding ? '/welcome' : '/dashboard', { replace: true })
   }, [user, profile, loading, navigate])
 
   const switchMode = () => {

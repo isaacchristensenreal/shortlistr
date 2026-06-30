@@ -36,9 +36,9 @@ export default function AddClient() {
 
   return (
     <AppShell>
-      <div className="min-h-screen" style={{ background: '#0A0A0F' }}>
+      <div className="min-h-screen" style={{ background: '#fafbfc' }}>
         <div className="max-w-lg mx-auto px-4 sm:px-6 py-8">
-          <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-sm mb-6 font-medium transition-colors" style={{ color: 'rgba(255,255,255,0.35)' }}>
+          <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-sm mb-6 font-medium transition-colors" style={{ color: 'rgba(10,11,13,0.35)' }}>
             <ArrowLeft size={15} />
             Back to roster
           </Link>
@@ -48,43 +48,49 @@ export default function AddClient() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
             className="rounded-2xl border p-6"
-            style={{ background: '#13131A', borderColor: '#1E1E2E' }}
+            style={{ background: '#ffffff', borderColor: '#e5e7eb' }}
           >
             <h1 className="text-xl font-bold text-white mb-1">Add a client</h1>
-            <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.35)' }}>
+            <p className="text-sm mb-6" style={{ color: 'rgba(10,11,13,0.35)' }}>
               Create a workspace for a client you're coaching.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold mb-1.5" style={{ color: 'rgba(255,255,255,0.5)' }}>Name</label>
+                <label className="block text-xs font-semibold mb-1.5" style={{ color: 'rgba(10,11,13,0.5)' }}>Name</label>
                 <input
                   type="text"
                   value={name}
                   onChange={e => setName(e.target.value)}
                   placeholder="Jordan Lee"
                   autoFocus
-                  className="w-full bg-white/3 border border-white/8 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-gold-500/40 transition-colors"
+                  className="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none transition-colors"
+                  style={{ background: 'rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.09)', color: '#0a0b0d' }}
+                  onFocus={e => { e.currentTarget.style.borderColor = 'rgba(59,130,246,0.4)'; e.currentTarget.style.background = 'rgba(59,130,246,0.04)' }}
+                  onBlur={e => { e.currentTarget.style.borderColor = 'rgba(0,0,0,0.09)'; e.currentTarget.style.background = 'rgba(0,0,0,0.02)' }}
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold mb-1.5" style={{ color: 'rgba(255,255,255,0.5)' }}>Contact email</label>
+                <label className="block text-xs font-semibold mb-1.5" style={{ color: 'rgba(10,11,13,0.5)' }}>Contact email</label>
                 <input
                   type="email"
                   value={contactEmail}
                   onChange={e => setContactEmail(e.target.value)}
                   placeholder="jordan@example.com"
-                  className="w-full bg-white/3 border border-white/8 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-gold-500/40 transition-colors"
+                  className="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none transition-colors"
+                  style={{ background: 'rgba(0,0,0,0.02)', border: '1px solid rgba(0,0,0,0.09)', color: '#0a0b0d' }}
+                  onFocus={e => { e.currentTarget.style.borderColor = 'rgba(59,130,246,0.4)'; e.currentTarget.style.background = 'rgba(59,130,246,0.04)' }}
+                  onBlur={e => { e.currentTarget.style.borderColor = 'rgba(0,0,0,0.09)'; e.currentTarget.style.background = 'rgba(0,0,0,0.02)' }}
                 />
               </div>
 
-              {error && <p className="text-xs" style={{ color: '#FF4444' }}>{error}</p>}
+              {error && <p className="text-xs" style={{ color: '#dc2626' }}>{error}</p>}
 
               <button
                 type="submit"
                 disabled={!canSubmit}
                 className="w-full px-5 py-3 rounded-xl font-bold text-sm disabled:opacity-40 transition-all"
-                style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F' }}
+                style={{ background: 'linear-gradient(135deg, #3b82f6, #2563eb)', color: '#ffffff' }}
               >
                 {saving ? 'Adding…' : 'Add Client'}
               </button>

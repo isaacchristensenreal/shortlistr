@@ -6,7 +6,7 @@ import { supabase } from '../lib/supabase'
 
 function Section({ title, description, children }) {
   return (
-    <div className="rounded-2xl p-5 sm:p-6" style={{ background: '#13131A', border: '1px solid #1E1E2E' }}>
+    <div className="rounded-2xl p-5 sm:p-6" style={{ background: '#ffffff', border: '1px solid #e5e7eb' }}>
       <div className="mb-5">
         <h2 className="text-white font-semibold text-base">{title}</h2>
         {description && <p className="text-white/40 text-sm mt-0.5">{description}</p>}
@@ -128,7 +128,7 @@ export default function Settings() {
 
   return (
     <AppShell>
-      <div className="min-h-screen" style={{ background: '#0A0A0F' }}>
+      <div className="min-h-screen" style={{ background: '#fafbfc' }}>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
 
           <div className="mb-8" data-reveal>
@@ -141,25 +141,25 @@ export default function Settings() {
             {/* ── Profile ─────────────────────────────────────────── */}
             <div data-reveal data-delay="1">
               <Section title="Profile" description="Customize how you appear across the app.">
-                <div className="flex items-start gap-5 mb-6 pb-6" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+                <div className="flex items-start gap-5 mb-6 pb-6" style={{ borderBottom: '1px solid rgba(10,11,13,0.07)' }}>
                   <div className="relative shrink-0">
                     <div
                       className="w-[72px] h-[72px] rounded-2xl overflow-hidden flex items-center justify-center"
-                      style={{ background: 'linear-gradient(135deg, rgba(245,200,66,0.3), rgba(245,200,66,0.12))', border: '1px solid rgba(245,200,66,0.2)' }}
+                      style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.3), rgba(59,130,246,0.12))', border: '1px solid rgba(59,130,246,0.2)' }}
                     >
                       {avatarSrc ? (
                         <img src={avatarSrc} alt="Profile" className="w-full h-full object-cover" />
                       ) : (
-                        <span className="text-2xl font-bold" style={{ color: '#F5C842' }}>{initials}</span>
+                        <span className="text-2xl font-bold" style={{ color: '#3b82f6' }}>{initials}</span>
                       )}
                     </div>
                     <button
                       onClick={() => fileInputRef.current?.click()}
                       className="absolute -bottom-1.5 -right-1.5 w-7 h-7 rounded-full flex items-center justify-center transition-colors"
-                      style={{ background: '#1E1E2E', border: '1px solid rgba(255,255,255,0.15)' }}
+                      style={{ background: '#e5e7eb', border: '1px solid rgba(10,11,13,0.15)' }}
                       title="Change photo"
                     >
-                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.7)" strokeWidth="2">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="rgba(10,11,13,0.7)" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
@@ -178,7 +178,7 @@ export default function Settings() {
                     <button
                       onClick={() => fileInputRef.current?.click()}
                       className="text-xs font-semibold transition-colors"
-                      style={{ color: '#F5C842' }}
+                      style={{ color: '#3b82f6' }}
                     >
                       {avatarSrc ? 'Change photo' : 'Upload photo'}
                     </button>
@@ -186,12 +186,12 @@ export default function Settings() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                  <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: 'rgba(10,11,13,0.3)' }}>
                     Username
                   </label>
                   <div className="flex gap-2.5">
                     <div className="relative flex-1">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm select-none" style={{ color: 'rgba(255,255,255,0.3)' }}>@</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm select-none" style={{ color: 'rgba(10,11,13,0.3)' }}>@</span>
                       <input
                         type="text"
                         value={username}
@@ -200,19 +200,19 @@ export default function Settings() {
                         maxLength={30}
                         className="w-full rounded-xl pl-7 pr-3 py-2.5 text-sm transition-all outline-none"
                         style={{
-                          background: 'rgba(255,255,255,0.04)',
-                          border: '1px solid rgba(255,255,255,0.10)',
-                          color: 'rgba(255,255,255,0.85)',
+                          background: 'rgba(10,11,13,0.04)',
+                          border: '1px solid rgba(10,11,13,0.10)',
+                          color: 'rgba(10,11,13,0.85)',
                         }}
-                        onFocus={e => e.currentTarget.style.borderColor = 'rgba(245,200,66,0.4)'}
-                        onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.10)'}
+                        onFocus={e => e.currentTarget.style.borderColor = 'rgba(59,130,246,0.4)'}
+                        onBlur={e => e.currentTarget.style.borderColor = 'rgba(10,11,13,0.10)'}
                       />
                     </div>
                     <button
                       onClick={handleSaveProfile}
                       disabled={savingProfile}
                       className="px-4 py-2.5 rounded-xl text-sm font-bold transition-all disabled:opacity-50 shrink-0"
-                      style={{ background: '#F5C842', color: '#0A0A0F' }}
+                      style={{ background: '#3b82f6', color: '#ffffff' }}
                     >
                       {savingProfile ? (
                         <span className="flex items-center gap-1.5">
@@ -224,7 +224,7 @@ export default function Settings() {
                   </div>
                   {profileError && <p className="text-crimson-400 text-xs mt-2">{profileError}</p>}
                   {profileSuccess && <p className="text-neon-400 text-xs mt-2">Profile updated successfully!</p>}
-                  <p className="text-xs mt-2" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                  <p className="text-xs mt-2" style={{ color: 'rgba(10,11,13,0.3)' }}>
                     Letters, numbers, and underscores only.
                   </p>
                 </div>
@@ -235,15 +235,15 @@ export default function Settings() {
             <div data-reveal data-delay="2">
               <Section title="Account" description="Your account details.">
                 <div className="space-y-0">
-                  <div className="flex items-center justify-between py-3.5" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+                  <div className="flex items-center justify-between py-3.5" style={{ borderBottom: '1px solid rgba(10,11,13,0.07)' }}>
                     <div>
-                      <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.25)' }}>Email</p>
+                      <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: 'rgba(10,11,13,0.25)' }}>Email</p>
                       <p className="text-sm font-medium text-white/80">{user?.email}</p>
                     </div>
                   </div>
                   <div className="flex items-center justify-between pt-3.5">
                     <div>
-                      <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: 'rgba(255,255,255,0.25)' }}>Plan</p>
+                      <p className="text-[10px] font-bold uppercase tracking-widest mb-1" style={{ color: 'rgba(10,11,13,0.25)' }}>Plan</p>
                       <div className="flex items-center gap-2">
                         <p className="text-sm font-medium text-white/80">{isPro ? 'Pro' : 'Free'}</p>
                         <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
@@ -251,7 +251,7 @@ export default function Settings() {
                             ? cancelDone
                               ? 'bg-amber-500/15 text-amber-400 border border-amber-500/20'
                               : 'bg-gold-500/12 text-gold-500 border border-gold-500/20'
-                            : 'bg-white/8 text-white/35 border border-white/10'
+                            : 'bg-black/8 text-white/35 border border-black/10'
                         }`}>
                           {isPro ? (cancelDone ? 'Cancelling' : 'Active') : 'Free'}
                         </span>
@@ -261,7 +261,7 @@ export default function Settings() {
                       <Link
                         to="/pricing"
                         className="px-4 py-2 rounded-xl text-sm font-bold transition-all"
-                        style={{ background: 'rgba(245,200,66,0.09)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.2)' }}
+                        style={{ background: 'rgba(59,130,246,0.09)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.2)' }}
                       >
                         Upgrade to Pro
                       </Link>
@@ -286,13 +286,13 @@ export default function Settings() {
                         onClick={handleCancelSubscription}
                         disabled={cancelling}
                         className="text-sm font-medium transition-all px-3 py-1.5 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                        style={{ color: 'rgba(255,255,255,0.35)' }}
-                        onMouseEnter={e => { e.currentTarget.style.color = 'rgba(255,68,68,0.8)'; e.currentTarget.style.background = 'rgba(255,68,68,0.08)' }}
-                        onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.35)'; e.currentTarget.style.background = 'transparent' }}
+                        style={{ color: 'rgba(10,11,13,0.35)' }}
+                        onMouseEnter={e => { e.currentTarget.style.color = 'rgba(220,38,38,0.8)'; e.currentTarget.style.background = 'rgba(220,38,38,0.08)' }}
+                        onMouseLeave={e => { e.currentTarget.style.color = 'rgba(10,11,13,0.35)'; e.currentTarget.style.background = 'transparent' }}
                       >
                         {cancelling ? (
                           <span className="flex items-center gap-1.5">
-                            <span className="w-3.5 h-3.5 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(255,255,255,0.2)', borderTopColor: 'rgba(255,255,255,0.6)' }} />
+                            <span className="w-3.5 h-3.5 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(10,11,13,0.2)', borderTopColor: 'rgba(10,11,13,0.6)' }} />
                             Cancelling…
                           </span>
                         ) : 'Downgrade to Free'}
@@ -317,7 +317,7 @@ export default function Settings() {
             {/* ── Danger Zone ───────────────────────────────────── */}
             <div data-reveal data-delay="4">
               <Section title="Danger Zone" description="Permanent actions that cannot be undone.">
-                <div className="rounded-xl p-4" style={{ background: 'rgba(255,68,68,0.05)', border: '1px solid rgba(255,68,68,0.2)' }}>
+                <div className="rounded-xl p-4" style={{ background: 'rgba(220,38,38,0.05)', border: '1px solid rgba(220,38,38,0.2)' }}>
                   <p className="text-sm font-semibold text-crimson-400 mb-1">Delete Account</p>
                   <p className="text-xs text-crimson-400/60 mb-4">
                     This permanently deletes your account, all saved resumes, and cancels any active subscription. This cannot be undone.
@@ -334,12 +334,12 @@ export default function Settings() {
                         placeholder="DELETE"
                         className="w-full rounded-lg px-3 py-2.5 text-sm outline-none transition-all"
                         style={{
-                          background: 'rgba(255,255,255,0.04)',
-                          border: '1px solid rgba(255,68,68,0.25)',
-                          color: 'rgba(255,255,255,0.8)',
+                          background: 'rgba(10,11,13,0.04)',
+                          border: '1px solid rgba(220,38,38,0.25)',
+                          color: 'rgba(10,11,13,0.8)',
                         }}
-                        onFocus={e => e.currentTarget.style.borderColor = 'rgba(255,68,68,0.5)'}
-                        onBlur={e => e.currentTarget.style.borderColor = 'rgba(255,68,68,0.25)'}
+                        onFocus={e => e.currentTarget.style.borderColor = 'rgba(220,38,38,0.5)'}
+                        onBlur={e => e.currentTarget.style.borderColor = 'rgba(220,38,38,0.25)'}
                       />
                     </div>
                     {deleteError && <p className="text-crimson-400 text-xs">{deleteError}</p>}
@@ -347,7 +347,7 @@ export default function Settings() {
                       onClick={handleDeleteAccount}
                       disabled={deleteConfirm !== 'DELETE' || deleting}
                       className="px-4 py-2.5 rounded-lg text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                      style={{ background: '#FF4444', color: '#fff' }}
+                      style={{ background: '#dc2626', color: '#fff' }}
                     >
                       {deleting ? 'Deleting…' : 'Permanently delete my account'}
                     </button>
