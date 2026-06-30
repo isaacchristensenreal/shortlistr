@@ -172,18 +172,18 @@ export default function AppShell({ children }) {
           <button
             onClick={() => setSheetOpen(true)}
             className="flex items-center gap-2 pl-2 pr-2.5 py-1.5 rounded-xl transition-all"
-            style={{ border: '1px solid rgba(255,255,255,0.10)', background: 'rgba(255,255,255,0.04)' }}
+            style={{ border: '1px solid rgba(10,11,13,0.10)', background: 'rgba(10,11,13,0.03)' }}
             aria-label="Account options"
           >
             <div
               className="w-7 h-7 rounded-lg overflow-hidden flex items-center justify-center text-xs font-bold shrink-0"
-              style={{ background: 'rgba(245,200,66,0.2)', border: '1px solid rgba(245,200,66,0.2)', color: '#F5C842' }}
+              style={{ background: 'rgba(59,130,246,0.12)', border: '1px solid rgba(59,130,246,0.2)', color: '#3b82f6' }}
             >
               {profile?.avatar_url
                 ? <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" />
                 : initials}
             </div>
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.4)" strokeWidth="2.5">
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="rgba(10,11,13,0.40)" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </button>
@@ -302,23 +302,23 @@ export default function AppShell({ children }) {
       {/* ── Mobile Account Sheet ──────────────────────────────────────── */}
       {sheetOpen && (
         <div className="fixed inset-0 z-[60] md:hidden" onClick={() => setSheetOpen(false)}>
-          <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)' }} />
+          <div className="absolute inset-0" style={{ background: 'rgba(10,11,13,0.30)', backdropFilter: 'blur(4px)' }} />
           <div
             className="absolute bottom-0 left-0 right-0 rounded-t-2xl overflow-hidden slide-up-sheet"
-            style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.10)', borderBottom: 'none' }}
+            style={{ background: '#ffffff', border: '1px solid rgba(0,0,0,0.08)', borderBottom: 'none' }}
             onClick={e => e.stopPropagation()}
           >
             {/* Drag handle */}
             <div className="flex justify-center pt-3 pb-2">
-              <div className="w-9 h-1 rounded-full" style={{ background: 'rgba(255,255,255,0.18)' }} />
+              <div className="w-9 h-1 rounded-full" style={{ background: 'rgba(10,11,13,0.12)' }} />
             </div>
 
             {/* User info */}
-            <div className="px-5 pb-4 pt-1" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+            <div className="px-5 pb-4 pt-1" style={{ borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
               <div className="flex items-center gap-3">
                 <div
                   className="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center text-base font-bold shrink-0"
-                  style={{ background: 'linear-gradient(135deg, rgba(245,200,66,0.25), rgba(245,200,66,0.10))', border: '1px solid rgba(245,200,66,0.2)', color: '#F5C842' }}
+                  style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.12), rgba(59,130,246,0.06))', border: '1px solid rgba(59,130,246,0.2)', color: '#3b82f6' }}
                 >
                   {profile?.avatar_url
                     ? <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" />
@@ -328,7 +328,7 @@ export default function AppShell({ children }) {
                   {profile?.username && (
                     <p className="text-white font-semibold text-sm truncate">@{profile.username}</p>
                   )}
-                  <p className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.4)' }}>{user?.email}</p>
+                  <p className="text-xs truncate" style={{ color: 'rgba(10,11,13,0.42)' }}>{user?.email}</p>
                 </div>
                 <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0 ${
                   isPro
@@ -347,7 +347,7 @@ export default function AppShell({ children }) {
                   to="/pricing"
                   onClick={() => setSheetOpen(false)}
                   className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-semibold transition-all"
-                  style={{ background: 'rgba(245,200,66,0.09)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.18)' }}
+                  style={{ background: 'rgba(59,130,246,0.09)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.18)' }}
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                   Upgrade to Pro
@@ -357,8 +357,8 @@ export default function AppShell({ children }) {
                 to="/settings"
                 onClick={() => setSheetOpen(false)}
                 className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all"
-                style={{ color: 'rgba(255,255,255,0.6)' }}
-                onTouchStart={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                style={{ color: 'rgba(10,11,13,0.58)' }}
+                onTouchStart={e => e.currentTarget.style.background = 'rgba(10,11,13,0.04)'}
                 onTouchEnd={e => e.currentTarget.style.background = ''}
               >
                 <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
@@ -370,9 +370,9 @@ export default function AppShell({ children }) {
               <button
                 onClick={() => { setSheetOpen(false); handleSignOut() }}
                 className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-medium transition-all w-full text-left"
-                style={{ color: 'rgba(255,255,255,0.35)' }}
-                onTouchStart={e => { e.currentTarget.style.background = 'rgba(255,68,68,0.07)'; e.currentTarget.style.color = 'rgba(255,100,100,0.9)' }}
-                onTouchEnd={e => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'rgba(255,255,255,0.35)' }}
+                style={{ color: 'rgba(10,11,13,0.38)' }}
+                onTouchStart={e => { e.currentTarget.style.background = 'rgba(220,38,38,0.07)'; e.currentTarget.style.color = 'rgba(220,38,38,0.80)' }}
+                onTouchEnd={e => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'rgba(10,11,13,0.38)' }}
               >
                 <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

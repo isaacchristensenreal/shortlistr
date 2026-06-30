@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Legacy palette — kept for public pages / existing components
+        // Legacy palette — kept for compatibility
         navy: {
           900: '#0a0f1e',
           800: '#0d1426',
@@ -20,80 +20,96 @@ export default {
           400: '#60a5fa',
           300: '#93c5fd',
         },
-        // New premium dark design system
+        // Backgrounds — pure white + off-white alternation
         midnight: {
-          DEFAULT: '#0A0A0F',
-          50:  '#f5f5ff',
-          100: '#1a1a2e',
-          200: '#16162a',
-          300: '#13131f',
-          400: '#0f0f18',
-          500: '#0A0A0F',
+          DEFAULT: '#ffffff',
+          50:  '#fafbfc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
         },
+        // Surface: card / panel backgrounds
         surface: {
-          DEFAULT: '#13131A',
-          50:  '#2a2a3d',
-          100: '#222230',
-          200: '#1b1b28',
-          300: '#17171f',
-          400: '#13131A',
-          500: '#0f0f14',
+          DEFAULT: '#ffffff',
+          50:  '#f8fafc',
+          100: '#f1f5f9',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
         },
+        // Borders: light gray + blue glow
         border: {
-          dim:  '#1E1E2E',
-          glow: '#2d2d4a',
+          dim:  '#e5e7eb',
+          glow: '#bfdbfe',
         },
+        // Primary accent: blue (#3b82f6 — WCAG AA on white ✓)
         gold: {
-          DEFAULT: '#F5C842',
-          50:  '#fffbeb',
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#F5C842',
-          600: '#d4a017',
-          700: '#b8860b',
+          DEFAULT: '#3b82f6',
+          50:  '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
         },
+        // Success: emerald
         neon: {
-          DEFAULT: '#00FF88',
-          50:  '#f0fff8',
-          100: '#ccffe8',
-          200: '#99ffd1',
-          300: '#55ffb0',
-          400: '#00FF88',
-          500: '#00d970',
-          600: '#00b35e',
+          DEFAULT: '#059669',
+          50:  '#ecfdf5',
+          100: '#d1fae5',
+          200: '#a7f3d0',
+          300: '#6ee7b7',
+          400: '#059669',
+          500: '#047857',
+          600: '#065f46',
         },
+        // Error: red
         crimson: {
-          DEFAULT: '#FF4444',
-          50:  '#fff5f5',
-          100: '#ffe0e0',
-          200: '#ffbbbb',
-          300: '#ff8888',
-          400: '#FF4444',
-          500: '#e63333',
-          600: '#cc2222',
+          DEFAULT: '#dc2626',
+          50:  '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          300: '#fca5a5',
+          400: '#dc2626',
+          500: '#b91c1c',
+          600: '#991b1b',
         },
+        // Warning: amber
         amber: {
-          DEFAULT: '#F59E0B',
-          400: '#fbbf24',
-          500: '#F59E0B',
+          DEFAULT: '#d97706',
+          400: '#f59e0b',
+          500: '#d97706',
         },
+      },
+      // Remap text-white → near-black for light backgrounds.
+      // Components using text-white get dark text; buttons that need
+      // white text on a colored bg use text-midnight (= #ffffff after remap).
+      textColor: {
+        white: '#0a0b0d',
+      },
+      // Remap placeholder-white → near-black so placeholder text is visible
+      placeholderColor: {
+        white: '#0a0b0d',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gold-shimmer': 'linear-gradient(135deg, #F5C842 0%, #fde68a 50%, #F5C842 100%)',
-        'neon-shimmer': 'linear-gradient(135deg, #00FF88 0%, #55ffb0 50%, #00FF88 100%)',
+        'gold-shimmer': 'linear-gradient(135deg, #3b82f6 0%, #93c5fd 50%, #3b82f6 100%)',
+        'neon-shimmer': 'linear-gradient(135deg, #059669 0%, #6ee7b7 50%, #059669 100%)',
       },
       transitionTimingFunction: {
         'spring': 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       boxShadow: {
-        'gold':  '0 0 20px rgba(245,200,66,0.25), 0 0 40px rgba(245,200,66,0.1)',
-        'neon':  '0 0 20px rgba(0,255,136,0.25), 0 0 40px rgba(0,255,136,0.1)',
-        'glow':  '0 0 24px rgba(59,130,246,0.3)',
-        'card':  '0 1px 3px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.2)',
-        'card-hover': '0 4px 24px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3)',
+        'gold':       '0 1px 3px rgba(59,130,246,0.12), 0 4px 12px rgba(59,130,246,0.08)',
+        'neon':       '0 1px 3px rgba(5,150,105,0.12), 0 4px 12px rgba(5,150,105,0.08)',
+        'glow':       '0 0 0 3px rgba(59,130,246,0.15)',
+        'card':       '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)',
+        'card-hover': '0 4px 20px rgba(0,0,0,0.08), 0 1px 6px rgba(0,0,0,0.04)',
       },
       keyframes: {
         shimmer: {
@@ -120,8 +136,8 @@ export default {
           'to':   { opacity: '0', transform: 'translateX(100%)' },
         },
         goldPulse: {
-          '0%, 100%': { boxShadow: '0 0 0 0 rgba(245,200,66,0)' },
-          '50%':       { boxShadow: '0 0 0 6px rgba(245,200,66,0.15)' },
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(59,130,246,0)' },
+          '50%':       { boxShadow: '0 0 0 6px rgba(59,130,246,0.12)' },
         },
         scoreCount: {
           'from': { opacity: '0', transform: 'scale(0.7)' },

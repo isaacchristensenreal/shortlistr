@@ -31,7 +31,7 @@ const legalLinks = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: '#0D0D14', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+    <footer style={{ background: '#fafbfc', borderTop: '1px solid rgba(0,0,0,0.07)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
@@ -40,9 +40,9 @@ export default function Footer() {
           <div className="sm:col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-2.5 mb-4">
               <Logo size={30} />
-              <span className="font-bold text-lg" style={{ color: 'rgba(255,255,255,0.9)' }}>ShortListr</span>
+              <span className="font-bold text-lg" style={{ color: 'rgba(10,11,13,0.90)' }}>ShortListr</span>
             </Link>
-            <p className="text-sm leading-relaxed max-w-xs mb-5" style={{ color: 'rgba(255,255,255,0.35)' }}>
+            <p className="text-sm leading-relaxed max-w-xs mb-5" style={{ color: 'rgba(10,11,13,0.45)' }}>
               AI-powered resume optimization that beats ATS filters and gets you in front of the humans who matter.
             </p>
             <a
@@ -50,9 +50,9 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm transition-colors"
-              style={{ color: 'rgba(255,255,255,0.3)' }}
-              onMouseEnter={e => e.currentTarget.style.color = '#F5C842'}
-              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.3)'}
+              style={{ color: 'rgba(10,11,13,0.40)' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#3b82f6'}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(10,11,13,0.40)'}
             >
               <LinkedInIcon />
               Connect on LinkedIn
@@ -61,13 +61,13 @@ export default function Footer() {
 
           {/* Product */}
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>Product</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'rgba(10,11,13,0.40)' }}>Product</p>
             <ul className="space-y-2.5">
               {productLinks.map(l => (
                 <li key={l.to}>
-                  <Link to={l.to} className="text-sm transition-colors" style={{ color: 'rgba(255,255,255,0.4)' }}
-                    onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}
-                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
+                  <Link to={l.to} className="text-sm transition-colors" style={{ color: 'rgba(10,11,13,0.45)' }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'rgba(10,11,13,0.88)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(10,11,13,0.45)'}
                   >{l.label}</Link>
                 </li>
               ))}
@@ -76,13 +76,13 @@ export default function Footer() {
 
           {/* Account */}
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>Account</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'rgba(10,11,13,0.40)' }}>Account</p>
             <ul className="space-y-2.5">
               {accountLinks.map(l => (
                 <li key={l.to}>
-                  <Link to={l.to} className="text-sm transition-colors" style={{ color: 'rgba(255,255,255,0.4)' }}
-                    onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}
-                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
+                  <Link to={l.to} className="text-sm transition-colors" style={{ color: 'rgba(10,11,13,0.45)' }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'rgba(10,11,13,0.88)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(10,11,13,0.45)'}
                   >{l.label}</Link>
                 </li>
               ))}
@@ -91,13 +91,13 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'rgba(255,255,255,0.25)' }}>Legal</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'rgba(10,11,13,0.40)' }}>Legal</p>
             <ul className="space-y-2.5">
               {legalLinks.map(l => (
                 <li key={l.to}>
-                  <Link to={l.to} className="text-sm transition-colors" style={{ color: 'rgba(255,255,255,0.4)' }}
-                    onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}
-                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
+                  <Link to={l.to} className="text-sm transition-colors" style={{ color: 'rgba(10,11,13,0.45)' }}
+                    onMouseEnter={e => e.currentTarget.style.color = 'rgba(10,11,13,0.88)'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'rgba(10,11,13,0.45)'}
                   >{l.label}</Link>
                 </li>
               ))}
@@ -107,11 +107,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <p className="text-sm" style={{ color: 'rgba(255,255,255,0.2)' }}>
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '1px solid rgba(0,0,0,0.07)' }}>
+          <p className="text-sm" style={{ color: 'rgba(10,11,13,0.35)' }}>
             &copy; {new Date().getFullYear()} ShortListr. All rights reserved.
           </p>
-          <div className="flex items-center gap-1.5 text-xs" style={{ color: 'rgba(255,255,255,0.2)' }}>
+          <div className="flex items-center gap-1.5 text-xs" style={{ color: 'rgba(10,11,13,0.35)' }}>
             <span>Built by Isaac Christensen</span>
             <span>·</span>
             <a
@@ -119,8 +119,8 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 transition-colors"
-              onMouseEnter={e => e.currentTarget.style.color = '#F5C842'}
-              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.2)'}
+              onMouseEnter={e => e.currentTarget.style.color = '#3b82f6'}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(10,11,13,0.35)'}
             >
               <LinkedInIcon />
               LinkedIn

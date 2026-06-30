@@ -17,15 +17,15 @@ function NavLink({ to, children, active, onClick }) {
       onClick={onClick}
       className="relative text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200"
       style={{
-        color: active ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.4)',
-        background: active ? 'rgba(255,255,255,0.07)' : 'transparent',
+        color: active ? 'rgba(10,11,13,0.95)' : 'rgba(10,11,13,0.45)',
+        background: active ? 'rgba(59,130,246,0.08)' : 'transparent',
       }}
-      onMouseEnter={e => { if (!active) e.currentTarget.style.color = 'rgba(255,255,255,0.75)' }}
-      onMouseLeave={e => { if (!active) e.currentTarget.style.color = 'rgba(255,255,255,0.4)' }}
+      onMouseEnter={e => { if (!active) e.currentTarget.style.color = 'rgba(10,11,13,0.80)' }}
+      onMouseLeave={e => { if (!active) e.currentTarget.style.color = 'rgba(10,11,13,0.45)' }}
     >
       {children}
       {active && (
-        <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full" style={{ background: '#F5C842' }} />
+        <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full" style={{ background: '#3b82f6' }} />
       )}
     </Link>
   )
@@ -52,16 +52,16 @@ function UserMenu({ user, profile, onSignOut }) {
         whileTap={{ scale: 0.97 }}
         transition={{ duration: 0.12 }}
         className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl"
-        style={{ border: '1px solid rgba(255,255,255,0.10)', background: open ? 'rgba(255,255,255,0.07)' : 'rgba(255,255,255,0.04)' }}
+        style={{ border: '1px solid rgba(10,11,13,0.10)', background: open ? 'rgba(10,11,13,0.06)' : 'rgba(10,11,13,0.03)' }}
       >
-        <div className="w-7 h-7 rounded-lg overflow-hidden flex items-center justify-center text-xs font-bold shrink-0" style={{ background: 'linear-gradient(135deg, rgba(245,200,66,0.3), rgba(245,200,66,0.15))', border: '1px solid rgba(245,200,66,0.2)', color: '#F5C842' }}>
+        <div className="w-7 h-7 rounded-lg overflow-hidden flex items-center justify-center text-xs font-bold shrink-0" style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.08))', border: '1px solid rgba(59,130,246,0.2)', color: '#3b82f6' }}>
           {profile?.avatar_url ? <img src={profile.avatar_url} alt="avatar" className="w-full h-full object-cover" /> : initials}
         </div>
-        <span className="text-sm max-w-[120px] truncate hidden sm:block" style={{ color: 'rgba(255,255,255,0.7)' }}>
+        <span className="text-sm max-w-[120px] truncate hidden sm:block" style={{ color: 'rgba(10,11,13,0.70)' }}>
           {profile?.username ? `@${profile.username}` : user?.email}
         </span>
         <motion.div animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2, ease: EASE_OUT }}>
-          <ChevronDown size={14} style={{ color: 'rgba(255,255,255,0.35)' }} />
+          <ChevronDown size={14} style={{ color: 'rgba(10,11,13,0.35)' }} />
         </motion.div>
       </motion.button>
 
@@ -73,20 +73,20 @@ function UserMenu({ user, profile, onSignOut }) {
             exit={{ opacity: 0, scale: 0.95, y: -6 }}
             transition={{ duration: 0.18, ease: EASE_OUT }}
             className="absolute right-0 top-full mt-2 w-60 rounded-xl z-50 overflow-hidden"
-            style={{ background: '#13131A', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 20px 60px rgba(0,0,0,0.6)', maxWidth: 'calc(100vw - 24px)', transformOrigin: 'top right' }}
+            style={{ background: '#ffffff', border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 8px 40px rgba(0,0,0,0.12)', maxWidth: 'calc(100vw - 24px)', transformOrigin: 'top right' }}
           >
             {/* User info */}
-            <div className="px-4 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+            <div className="px-4 py-3" style={{ borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center text-sm font-bold shrink-0" style={{ background: 'linear-gradient(135deg, rgba(245,200,66,0.25), rgba(245,200,66,0.10))', border: '1px solid rgba(245,200,66,0.2)', color: '#F5C842' }}>
+                <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center text-sm font-bold shrink-0" style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.12), rgba(59,130,246,0.06))', border: '1px solid rgba(59,130,246,0.2)', color: '#3b82f6' }}>
                   {profile?.avatar_url ? <img src={profile.avatar_url} alt="avatar" className="w-full h-full object-cover" /> : initials}
                 </div>
                 <div className="min-w-0">
-                  {profile?.username && <p className="text-sm font-semibold truncate" style={{ color: 'rgba(255,255,255,0.9)' }}>@{profile.username}</p>}
-                  <p className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.35)' }}>{user?.email}</p>
+                  {profile?.username && <p className="text-sm font-semibold truncate" style={{ color: 'rgba(10,11,13,0.90)' }}>@{profile.username}</p>}
+                  <p className="text-xs truncate" style={{ color: 'rgba(10,11,13,0.40)' }}>{user?.email}</p>
                 </div>
               </div>
-              <span className="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full" style={isPro ? { background: 'rgba(245,200,66,0.12)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.2)' } : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.35)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <span className="inline-flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full" style={isPro ? { background: 'rgba(59,130,246,0.10)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.2)' } : { background: 'rgba(10,11,13,0.06)', color: 'rgba(10,11,13,0.40)', border: '1px solid rgba(10,11,13,0.08)' }}>
                 {isPro ? '⚡ Pro Plan' : 'Free Plan'}
               </span>
             </div>
@@ -101,9 +101,9 @@ function UserMenu({ user, profile, onSignOut }) {
                 <Link
                   key={item.to} to={item.to} onClick={() => setOpen(false)}
                   className="flex items-center gap-2.5 px-4 py-2.5 text-sm transition-colors"
-                  style={{ color: 'rgba(255,255,255,0.55)' }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'rgba(255,255,255,0.9)' }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.55)' }}
+                  style={{ color: 'rgba(10,11,13,0.55)' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(10,11,13,0.04)'; e.currentTarget.style.color = 'rgba(10,11,13,0.90)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(10,11,13,0.55)' }}
                 >
                   <item.Icon size={15} />
                   {item.label}
@@ -113,8 +113,8 @@ function UserMenu({ user, profile, onSignOut }) {
                 <button
                   onClick={() => { setOpen(false); navigate('/pricing') }}
                   className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-semibold transition-colors text-left"
-                  style={{ color: '#F5C842' }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(245,200,66,0.07)' }}
+                  style={{ color: '#3b82f6' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(59,130,246,0.06)' }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}
                 >
                   <Zap size={15} />
@@ -123,13 +123,13 @@ function UserMenu({ user, profile, onSignOut }) {
               )}
             </div>
 
-            <div className="py-1.5" style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+            <div className="py-1.5" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
               <button
                 onClick={() => { setOpen(false); onSignOut() }}
                 className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm transition-colors text-left"
-                style={{ color: 'rgba(255,255,255,0.3)' }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,68,68,0.07)'; e.currentTarget.style.color = 'rgba(255,68,68,0.8)' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.3)' }}
+                style={{ color: 'rgba(10,11,13,0.35)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(220,38,38,0.07)'; e.currentTarget.style.color = 'rgba(220,38,38,0.8)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(10,11,13,0.35)' }}
               >
                 <LogOut size={15} />
                 Sign Out
@@ -188,10 +188,10 @@ export default function Navbar() {
     <nav
       className="sticky top-0 z-50 transition-all duration-300"
       style={{
-        background: scrolled ? 'rgba(10,10,15,0.97)' : 'rgba(10,10,15,0.85)',
-        borderBottom: '1px solid rgba(255,255,255,0.07)',
+        background: scrolled ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0.92)',
+        borderBottom: '1px solid rgba(0,0,0,0.07)',
         backdropFilter: 'blur(12px)',
-        boxShadow: scrolled ? '0 8px 32px rgba(0,0,0,0.4)' : 'none',
+        boxShadow: scrolled ? '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05)' : 'none',
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
@@ -203,7 +203,7 @@ export default function Navbar() {
           className="flex items-center gap-2.5 shrink-0 group"
         >
           <Logo size={32} />
-          <span className="font-bold text-lg tracking-tight transition-colors" style={{ color: 'rgba(255,255,255,0.95)' }}>
+          <span className="font-bold text-lg tracking-tight transition-colors" style={{ color: 'rgba(10,11,13,0.92)' }}>
             ShortListr
           </span>
         </Link>
@@ -236,7 +236,7 @@ export default function Navbar() {
               <Link
                 to="/auth?mode=signup"
                 className="inline-flex items-center gap-1.5 text-sm font-bold px-4 py-2 rounded-xl btn-shimmer"
-                style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 4px 16px rgba(245,200,66,0.25)' }}
+                style={{ background: 'linear-gradient(135deg, #3b82f6, #2563eb)', color: '#ffffff', boxShadow: '0 4px 16px rgba(59,130,246,0.25)' }}
               >
                 Start Free
                 <ArrowRight size={14} />
@@ -251,8 +251,8 @@ export default function Navbar() {
             transition={{ duration: 0.12 }}
             className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg transition-all"
             style={{
-              color: mobileOpen ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.5)',
-              background: mobileOpen ? 'rgba(255,255,255,0.08)' : 'transparent',
+              color: mobileOpen ? 'rgba(10,11,13,0.80)' : 'rgba(10,11,13,0.45)',
+              background: mobileOpen ? 'rgba(10,11,13,0.06)' : 'transparent',
             }}
             aria-label="Toggle menu"
           >
@@ -281,7 +281,7 @@ export default function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: EASE_OUT }}
             className="md:hidden overflow-hidden"
-            style={{ borderTop: '1px solid rgba(255,255,255,0.07)', background: '#0D0D14' }}
+            style={{ borderTop: '1px solid rgba(0,0,0,0.07)', background: '#fafbfc' }}
           >
             <motion.div
               initial="hidden"
@@ -294,17 +294,17 @@ export default function Navbar() {
                   <motion.div
                     variants={{ hidden: { opacity: 0, y: -8 }, show: { opacity: 1, y: 0, transition: { duration: 0.25 } } }}
                     className="px-4 py-4 mx-3 mt-3 rounded-2xl"
-                    style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+                    style={{ background: 'rgba(10,11,13,0.02)', border: '1px solid rgba(10,11,13,0.07)' }}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center text-sm font-bold shrink-0" style={{ background: 'linear-gradient(135deg, rgba(245,200,66,0.25), rgba(245,200,66,0.10))', border: '1px solid rgba(245,200,66,0.2)', color: '#F5C842' }}>
+                      <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center text-sm font-bold shrink-0" style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.12), rgba(59,130,246,0.06))', border: '1px solid rgba(59,130,246,0.2)', color: '#3b82f6' }}>
                         {profile?.avatar_url ? <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" /> : initials}
                       </div>
                       <div className="min-w-0 flex-1">
-                        {profile?.username && <p className="text-sm font-semibold truncate" style={{ color: 'rgba(255,255,255,0.9)' }}>@{profile.username}</p>}
-                        <p className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.4)' }}>{user?.email}</p>
+                        {profile?.username && <p className="text-sm font-semibold truncate" style={{ color: 'rgba(10,11,13,0.90)' }}>@{profile.username}</p>}
+                        <p className="text-xs truncate" style={{ color: 'rgba(10,11,13,0.40)' }}>{user?.email}</p>
                       </div>
-                      <span className="text-[10px] font-bold px-2 py-1 rounded-full shrink-0" style={isPro ? { background: 'rgba(245,200,66,0.12)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.2)' } : { background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.35)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                      <span className="text-[10px] font-bold px-2 py-1 rounded-full shrink-0" style={isPro ? { background: 'rgba(59,130,246,0.10)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.2)' } : { background: 'rgba(10,11,13,0.06)', color: 'rgba(10,11,13,0.40)', border: '1px solid rgba(10,11,13,0.08)' }}>
                         {isPro ? '⚡ Pro' : 'Free'}
                       </span>
                     </div>
@@ -312,7 +312,7 @@ export default function Navbar() {
 
                   {/* Nav links */}
                   <div className="px-3 pt-3 pb-1">
-                    <p className="text-[10px] font-bold uppercase tracking-widest px-1 mb-1.5" style={{ color: 'rgba(255,255,255,0.2)' }}>Navigation</p>
+                    <p className="text-[10px] font-bold uppercase tracking-widest px-1 mb-1.5" style={{ color: 'rgba(10,11,13,0.35)' }}>Navigation</p>
                     <div className="space-y-0.5">
                       {MOBILE_NAV_LINKS.authenticated.map(item => (
                         <motion.div key={item.to} variants={{ hidden: { opacity: 0, x: -8 }, show: { opacity: 1, x: 0, transition: { duration: 0.22 } } }}>
@@ -320,7 +320,7 @@ export default function Navbar() {
                             to={item.to}
                             onClick={() => setMobileOpen(false)}
                             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all"
-                            style={{ color: pathname === item.to ? '#F5C842' : 'rgba(255,255,255,0.6)', background: pathname === item.to ? 'rgba(245,200,66,0.08)' : 'transparent' }}
+                            style={{ color: pathname === item.to ? '#3b82f6' : 'rgba(10,11,13,0.55)', background: pathname === item.to ? 'rgba(59,130,246,0.08)' : 'transparent' }}
                           >
                             <item.Icon size={16} className="shrink-0" />
                             <span className="flex-1">{item.label}</span>
@@ -330,7 +330,7 @@ export default function Navbar() {
                       ))}
                       {!isPro && (
                         <motion.div variants={{ hidden: { opacity: 0, x: -8 }, show: { opacity: 1, x: 0, transition: { duration: 0.22 } } }}>
-                          <Link to="/pricing" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all" style={{ color: pathname === '/pricing' ? '#F5C842' : 'rgba(255,255,255,0.6)', background: pathname === '/pricing' ? 'rgba(245,200,66,0.08)' : 'transparent' }}>
+                          <Link to="/pricing" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all" style={{ color: pathname === '/pricing' ? '#3b82f6' : 'rgba(10,11,13,0.55)', background: pathname === '/pricing' ? 'rgba(59,130,246,0.08)' : 'transparent' }}>
                             <DollarSign size={16} className="shrink-0" />
                             Pricing
                           </Link>
@@ -340,22 +340,22 @@ export default function Navbar() {
                   </div>
 
                   {/* Account section */}
-                  <div className="px-3 pt-2 pb-3" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: 8 }}>
-                    <p className="text-[10px] font-bold uppercase tracking-widest px-1 mb-1.5" style={{ color: 'rgba(255,255,255,0.2)' }}>Account</p>
+                  <div className="px-3 pt-2 pb-3" style={{ borderTop: '1px solid rgba(10,11,13,0.06)', marginTop: 8 }}>
+                    <p className="text-[10px] font-bold uppercase tracking-widest px-1 mb-1.5" style={{ color: 'rgba(10,11,13,0.35)' }}>Account</p>
                     <div className="space-y-0.5">
                       {!isPro && (
                         <motion.div variants={{ hidden: { opacity: 0, x: -8 }, show: { opacity: 1, x: 0, transition: { duration: 0.22 } } }}>
-                          <Link to="/pricing" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold mb-1" style={{ background: 'rgba(245,200,66,0.09)', color: '#F5C842', border: '1px solid rgba(245,200,66,0.18)' }}>
+                          <Link to="/pricing" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold mb-1" style={{ background: 'rgba(59,130,246,0.09)', color: '#3b82f6', border: '1px solid rgba(59,130,246,0.18)' }}>
                             <Zap size={16} className="shrink-0" />
                             Upgrade to Pro
                           </Link>
                         </motion.div>
                       )}
-                      <Link to="/settings" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                      <Link to="/settings" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all" style={{ color: 'rgba(10,11,13,0.55)' }}>
                         <Settings size={16} className="shrink-0" />
                         Settings
                       </Link>
-                      <button onClick={() => { setMobileOpen(false); handleSignOut() }} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-left" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                      <button onClick={() => { setMobileOpen(false); handleSignOut() }} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-left" style={{ color: 'rgba(10,11,13,0.35)' }}>
                         <LogOut size={16} className="shrink-0" />
                         Sign Out
                       </button>
@@ -372,7 +372,7 @@ export default function Navbar() {
                       <Link
                         key={item.to} to={item.to} onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all"
-                        style={{ color: pathname === item.to ? '#F5C842' : 'rgba(255,255,255,0.65)', background: pathname === item.to ? 'rgba(245,200,66,0.08)' : 'transparent' }}
+                        style={{ color: pathname === item.to ? '#3b82f6' : 'rgba(10,11,13,0.60)', background: pathname === item.to ? 'rgba(59,130,246,0.08)' : 'transparent' }}
                       >
                         <item.Icon size={16} className="shrink-0" />
                         {item.label}
@@ -384,7 +384,7 @@ export default function Navbar() {
                     to="/auth?mode=signup"
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-bold btn-shimmer"
-                    style={{ background: 'linear-gradient(135deg, #F5C842, #d4a017)', color: '#0A0A0F', boxShadow: '0 4px 20px rgba(245,200,66,0.3)' }}
+                    style={{ background: 'linear-gradient(135deg, #3b82f6, #2563eb)', color: '#ffffff', boxShadow: '0 4px 20px rgba(59,130,246,0.25)' }}
                   >
                     Get Started Free
                     <ArrowRight size={16} />
